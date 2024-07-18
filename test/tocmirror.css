@@ -1,8 +1,3 @@
-body {
-  background: #333;
-  color: #ddd;
-}
-
 #toc {
   width: 250px;
   height: 500px;
@@ -65,7 +60,7 @@ a {
 }
 
 #outline-marker-bottom {
-  content: "";
+  content: '';
   background: orange;
   position: absolute;
   width: 6px;
@@ -76,7 +71,7 @@ a {
 }
 
 #outline-marker-top {
-  content: "";
+  content: '';
   background: orange;
   position: absolute;
   width: 6px;

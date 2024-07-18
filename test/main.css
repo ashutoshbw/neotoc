@@ -1,0 +1,23 @@
+body {
+  background: #333;
+  color: #ddd;
+}
+
+#wrapper {
+  display: flex;
+  height: 600px;
+  overflow-y: scroll;
+  border: 2px solid beige;
+}
+
+article {
+  margin: 1rem;
+}
+
+#tocWrapper {
+  width: 200px;
+  border: 1px solid yellow;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+}
