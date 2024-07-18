@@ -1,0 +1,40 @@
+{
+  "name": "tocview",
+  "version": "0.0.0",
+  "description": "A modern tool to make interactive and animated table of contents.",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "browser": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --clean --format esm --minify --sourcemap --dts",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "check-format": "prettier . --check",
+    "format": "prettier . --write"
+  },
+  "keywords": [
+    "table of contents",
+    "toc",
+    "outline",
+    "on this page"
+  ],
+  "author": "Ashutosh Biswas",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^8.57.0",
+    "eslint": "^8.57.0",
+    "prettier": "3.2.5",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3",
+    "typescript-eslint": "^7.6.0"
+  },
+  "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903"
+}
