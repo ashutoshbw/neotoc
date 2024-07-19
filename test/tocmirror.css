@@ -1,88 +1,41 @@
-#toc {
-  width: 250px;
-  height: 500px;
-  border-left: 1px solid teal;
-  position: fixed;
-  background: #444;
-  right: 0;
-  top: 100px;
-  resize: both;
-  padding-inline: 10px;
-}
-
-ul {
-  padding-left: 0rem;
-  list-style-type: none;
-  margin-block: 0;
-}
-
-ul ul {
-  margin-left: 0px;
-  border: none;
-  padding-left: 1rem;
-  transition: opacity 500ms;
-}
-
-.collapsible {
-  display: grid;
-  transition:
-    grid-template-rows 500ms,
-    border 500ms;
-  border-top: 1px solid transparent;
-  border-left: 1px solid transparent;
-}
-
-.collapsible:hover {
-  border-left: 1px solid gray;
-}
-
-.collapsible > ul {
-  overflow: hidden;
-  grid-row: 1 / span 2;
-  margin-top: -1px;
-}
-
-a {
-  color: #ddd;
+.tm-anchor {
   text-decoration: none;
 }
 
-#otherthing {
-  border: 1px solid orange;
-}
-
-#outline-marker {
-  background: orange;
-  position: absolute;
-  width: 1.5px;
-  height: 0px;
-  left: 0px;
-}
-
-#outline-marker-bottom {
-  content: '';
-  background: orange;
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  bottom: -3px;
-  left: -2px;
-}
-
-#outline-marker-top {
-  content: '';
-  background: orange;
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  top: -3px;
-  left: -2px;
-}
-
-button {
-  width: 15px;
-  height: 15px;
+.tm-li-container {
+  list-style-type: none;
   padding: 0;
+  margin: 0;
+}
+
+.tm-li-container .tm-li-container {
+  padding-left: 1rem;
+}
+
+.tm-foldable-div {
+  display: grid;
+  transition:
+    grid-template-rows 200ms,
+    border 200ms;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+  grid-template-rows: 1fr;
+}
+
+.tm-foldable-div ul {
+  transition: opacity 200ms;
+}
+
+.tm-foldable-div-folded {
+  grid-template-rows: 0fr;
+}
+
+.tm-foldable-div-folded ul {
+  opacity: 0;
+}
+
+.tm-foldable-div > ul {
+  overflow: hidden;
+  grid-row: 1 / span 2;
+  margin-top: -1px;
 }

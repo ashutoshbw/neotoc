@@ -14,10 +14,12 @@ article {
   margin: 1rem;
 }
 
-#tocWrapper {
-  width: 200px;
+#tocHolder {
+  background: #111;
+  width: 240px;
   border: 1px solid yellow;
   flex-shrink: 0;
   position: sticky;
   top: 0;
+  padding: 1rem;
 }
