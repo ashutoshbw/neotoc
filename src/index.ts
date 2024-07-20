@@ -1,5 +1,7 @@
 import { elt, fillElt } from './utils.js';
 
+type FoldLevels = 1 | 2 | 3 | 4 | 5 | 6;
+
 interface Options {
   content: HTMLElement;
   headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>;
@@ -20,8 +22,19 @@ interface Options {
   fillFoldButton: (isFolded: boolean) => string | Node;
   foldableDivClass?: string;
   foldableDivFoldedClass?: string;
-  initialFoldLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  initialFoldLevel?: FoldLevels;
 }
+
+interface FoldState {
+  isFolded: boolean;
+  level: FoldLevels;
+  toggleFold: () => void;
+  foldableDiv: HTMLDivElement;
+  anchor: HTMLAnchorElement;
+  isManuallyToggledFoldInAutoFold: boolean;
+}
+
+type FoldStates = FoldState[];
 
 export default function tocMirror({
   headings,
@@ -41,7 +54,7 @@ export default function tocMirror({
   initialFoldLevel = 1,
   autoFold = false,
 }: Options) {
-  const foldState = [];
+  const foldStates: FoldStates = [];
 
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
@@ -63,7 +76,7 @@ export default function tocMirror({
       li.append(anchor);
 
       const subHeadings = [];
-      const curHeadingLevel = +h.tagName[1];
+      const curHeadingLevel = +h.tagName[1] as FoldLevels;
       for (let j = i + 1; j < headings.length; j++) {
         if (+headings[j].tagName[1] > curHeadingLevel) {
           subHeadings.push(headings[j]);
@@ -81,7 +94,6 @@ export default function tocMirror({
           const isFolded = curHeadingLevel >= initialFoldLevel;
           fillElt(foldButton, fillFoldButton(isFolded));
 
-          console.log('is folded', isFolded);
           if (isFolded) {
             foldableDiv.classList.add(foldableDivFoldedClass);
             if (foldButtonFoldedClass) {
@@ -95,7 +107,7 @@ export default function tocMirror({
           foldableDiv.append(nestedListContainer);
           li.append(foldableDiv);
 
-          const curFoldState = {
+          const curFoldState: FoldState = {
             isFolded,
             level: curHeadingLevel,
             toggleFold() {
@@ -107,16 +119,19 @@ export default function tocMirror({
               } else {
                 fillElt(foldButton, fillFoldButton(curFoldState.isFolded));
               }
+              dispatch();
             },
             foldableDiv, // might be useful in future
             anchor, // only useful in autoFold
-            isUserFolding: false, // only useful in autoFold
+            isManuallyToggledFoldInAutoFold: false, // only useful in autoFold
           };
 
-          foldState.push(curFoldState);
+          foldStates.push(curFoldState);
 
           foldButton.addEventListener('click', () => {
-            curFoldState.isUserFolding = true;
+            if (autoFold) {
+              curFoldState.isManuallyToggledFoldInAutoFold = true;
+            }
             curFoldState.toggleFold();
           });
         } else {
@@ -131,11 +146,64 @@ export default function tocMirror({
     return listContainer;
   }
 
+  // Here foldType true means "fold", false means "unfold"
+  // Normalizing folds with foldType true means:
+  //   fold all levels from refLevel and higher.
+  // Normalizing folds with foldType false means:
+  //   unfold all at the same fold level as refLevel or below it.
+  function normalizeFolds(foldType: boolean, refLevel: FoldLevels) {
+    for (let i = 0; i < foldStates.length; i++) {
+      const { isFolded, level, isManuallyToggledFoldInAutoFold, toggleFold } =
+        foldStates[i];
+
+      if (foldType) {
+        if (!isFolded && level >= refLevel) {
+          toggleFold();
+        }
+      } else {
+        if (isFolded && level <= refLevel) {
+          toggleFold();
+        }
+      }
+    }
+  }
+
   const toc = genToc(headings);
+
+  function dispatch() {
+    if (!foldStates.length) return;
+
+    const initialFoldType = foldStates[0].isFolded;
+    let isAllFoldsOfSameType = true;
+
+    for (let i = 1; i < foldStates.length; i++) {
+      if (foldStates[i].isFolded != initialFoldType)
+        isAllFoldsOfSameType = false;
+    }
+
+    if (isAllFoldsOfSameType) {
+      const event = new CustomEvent(
+        initialFoldType ? 'allFolded' : 'allUnfolded',
+      );
+      toc.dispatchEvent(event);
+    }
+  }
+
+  // Makeing it async. Because otherwise when you listen for the custom events
+  // they will be already dispatched, and you will not be able to
+  // react on it.
+  setTimeout(() => dispatch(), 0);
+
   tocHolder?.append(toc);
 
   return {
     element: toc,
+    foldAll() {
+      normalizeFolds(true, 1);
+    },
+    unfoldAll() {
+      normalizeFolds(false, 5);
+    },
     // setupMirror() {},
     // reflect() {},
     // refresh() {},
