@@ -252,6 +252,17 @@ export default function tocMirror({
         normalizeFolds(true, highestUnfoldedLevel);
       }
     },
+    unfold() {
+      const [lowestFoldedLevel] = getFoldBoundaryInfo();
+
+      if (lowestFoldedLevel) {
+        normalizeFolds(
+          true,
+          lowestFoldedLevel == 1 ? 1 : ((lowestFoldedLevel - 1) as FoldLevels),
+        );
+        normalizeFolds(false, lowestFoldedLevel);
+      }
+    },
     // setupMirror() {},
     // reflect() {},
     // refresh() {},

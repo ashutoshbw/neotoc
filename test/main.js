@@ -44,7 +44,7 @@ const toc = tocMirror({
 foldAllBtn.addEventListener('click', toc.foldAll);
 unfoldAllBtn.addEventListener('click', toc.unfoldAll);
 foldBtn.addEventListener('click', toc.fold);
-// unfoldBtn.addEventListener('click', toc.unfold);
+unfoldBtn.addEventListener('click', toc.unfold);
 
 // toc.setupMirror((toc) => {});
 
