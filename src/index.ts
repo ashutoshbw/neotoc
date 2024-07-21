@@ -25,7 +25,7 @@ interface Options {
   foldableDivClass?: string;
   foldableDivFoldedClass?: string;
   initialFoldLevel?: FoldLevels;
-  handleFoldStateChange: (foldStatus: FoldStatus) => void;
+  handleFoldStatusChange: (foldStatus: FoldStatus) => void;
 }
 
 interface FoldState {
@@ -56,7 +56,7 @@ export default function tocMirror({
   fillFoldButton,
   initialFoldLevel = 1,
   autoFold = false,
-  handleFoldStateChange,
+  handleFoldStatusChange,
 }: Options) {
   const foldStates: FoldStates = [];
 
@@ -136,7 +136,7 @@ export default function tocMirror({
               curFoldState.isManuallyToggledFoldInAutoFold = true;
             }
             curFoldState.toggleFold();
-            dispatch(handleFoldStateChange);
+            checkForFoldStatusChange(handleFoldStatusChange);
           });
         } else {
           li.append(nestedListContainer);
@@ -170,14 +170,14 @@ export default function tocMirror({
         }
       }
     }
-    dispatch(handleFoldStateChange);
+    checkForFoldStatusChange(handleFoldStatusChange);
   }
 
   const toc = genToc(headings);
 
   let lastFoldStatus: FoldStatus;
 
-  function dispatch(cb: (foldStatus: FoldStatus) => void) {
+  function checkForFoldStatusChange(cb: (foldStatus: FoldStatus) => void) {
     if (!foldStates.length) {
       lastFoldStatus == 'none';
       cb('none');
