@@ -256,7 +256,7 @@ export default function tocMirror({
       const [lowestFoldedLevel] = getFoldBoundaryInfo();
 
       if (lowestFoldedLevel) {
-        normalizeFolds(true, lowestFoldedLevel - 1);
+        normalizeFolds(true, lowestFoldedLevel + 1);
         normalizeFolds(false, lowestFoldedLevel);
       }
     },
