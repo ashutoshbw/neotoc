@@ -37,14 +37,17 @@ const toc = tocMirror({
       foldBtn.disabled = false;
       unfoldBtn.disabled = false;
     } else {
+      console.log(foldStatus);
     }
   },
 });
 
-foldAllBtn.addEventListener('click', toc.foldAll);
-unfoldAllBtn.addEventListener('click', toc.unfoldAll);
-foldBtn.addEventListener('click', toc.fold);
-unfoldBtn.addEventListener('click', toc.unfold);
+if (toc) {
+  foldAllBtn.addEventListener('click', toc.foldAll);
+  unfoldAllBtn.addEventListener('click', toc.unfoldAll);
+  foldBtn.addEventListener('click', toc.fold);
+  unfoldBtn.addEventListener('click', toc.unfold);
+}
 
 // toc.setupMirror((toc) => {});
 

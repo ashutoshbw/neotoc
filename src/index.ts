@@ -63,7 +63,9 @@ export default function tocMirror({
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
     order: number[] = [],
-  ) {
+  ): HTMLUListElement | HTMLOListElement | undefined {
+    if (!headings.length) return;
+
     order.push(1);
     const listContainer = elt<HTMLUListElement | HTMLOListElement>(
       listType,
@@ -90,7 +92,9 @@ export default function tocMirror({
       }
 
       if (subHeadings.length > 0) {
-        const nestedListContainer = genToc(subHeadings, order);
+        const nestedListContainer = genToc(subHeadings, order) as
+          | HTMLUListElement
+          | HTMLOListElement;
 
         if (foldable) {
           const foldButton = elt<HTMLButtonElement>('button', foldButtonClass);
@@ -228,8 +232,9 @@ export default function tocMirror({
   }
 
   const toc = genToc(headings);
-  checkForFoldStatusChange(handleFoldStatusChange);
 
+  if (!toc) return;
+  checkForFoldStatusChange(handleFoldStatusChange);
   tocHolder?.append(toc);
 
   return {
