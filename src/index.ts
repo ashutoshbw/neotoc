@@ -173,8 +173,6 @@ export default function tocMirror({
     checkForFoldStatusChange(handleFoldStatusChange);
   }
 
-  const toc = genToc(headings);
-
   let lastFoldStatus: FoldStatus;
 
   function checkForFoldStatusChange(cb: (foldStatus: FoldStatus) => void) {
@@ -204,7 +202,33 @@ export default function tocMirror({
     }
   }
 
-  // dispatch((foldType) => {});
+  function getFoldBoundaryInfo() {
+    // 1 is lowest, 5 is highest
+    let highestUnfoldedLevel: FoldLevels | undefined;
+    let lowestFoldedLevel: FoldLevels | undefined;
+
+    for (let i = 0; i < foldStates.length; i++) {
+      const { isFolded, level } = foldStates[i];
+      if (isFolded) {
+        if (!lowestFoldedLevel) {
+          lowestFoldedLevel = level;
+        } else if (level < lowestFoldedLevel) {
+          lowestFoldedLevel = level;
+        }
+      } else {
+        if (!highestUnfoldedLevel) {
+          highestUnfoldedLevel = level;
+        } else if (level > highestUnfoldedLevel) {
+          highestUnfoldedLevel = level;
+        }
+      }
+    }
+
+    return [lowestFoldedLevel, highestUnfoldedLevel];
+  }
+
+  const toc = genToc(headings);
+  checkForFoldStatusChange(handleFoldStatusChange);
 
   tocHolder?.append(toc);
 
@@ -215,6 +239,18 @@ export default function tocMirror({
     },
     unfoldAll() {
       normalizeFolds(false, 5);
+    },
+    fold() {
+      const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
+
+      if (lowestFoldedLevel) {
+        normalizeFolds(
+          true,
+          lowestFoldedLevel == 1 ? 1 : ((lowestFoldedLevel - 1) as FoldLevels),
+        );
+      } else if (highestUnfoldedLevel) {
+        normalizeFolds(true, highestUnfoldedLevel);
+      }
     },
     // setupMirror() {},
     // reflect() {},
