@@ -2,6 +2,8 @@ import { elt, fillElt } from './utils.js';
 
 type FoldLevels = 1 | 2 | 3 | 4 | 5 | 6;
 
+type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
+
 interface Options {
   content: HTMLElement;
   headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>;
@@ -23,6 +25,7 @@ interface Options {
   foldableDivClass?: string;
   foldableDivFoldedClass?: string;
   initialFoldLevel?: FoldLevels;
+  handleFoldStateChange: (foldStatus: FoldStatus) => void;
 }
 
 interface FoldState {
@@ -53,6 +56,7 @@ export default function tocMirror({
   fillFoldButton,
   initialFoldLevel = 1,
   autoFold = false,
+  handleFoldStateChange,
 }: Options) {
   const foldStates: FoldStates = [];
 
@@ -119,7 +123,6 @@ export default function tocMirror({
               } else {
                 fillElt(foldButton, fillFoldButton(curFoldState.isFolded));
               }
-              dispatch();
             },
             foldableDiv, // might be useful in future
             anchor, // only useful in autoFold
@@ -133,6 +136,7 @@ export default function tocMirror({
               curFoldState.isManuallyToggledFoldInAutoFold = true;
             }
             curFoldState.toggleFold();
+            dispatch(handleFoldStateChange);
           });
         } else {
           li.append(nestedListContainer);
@@ -166,33 +170,41 @@ export default function tocMirror({
         }
       }
     }
+    dispatch(handleFoldStateChange);
   }
 
   const toc = genToc(headings);
 
-  function dispatch() {
-    if (!foldStates.length) return;
+  let lastFoldStatus: FoldStatus;
 
-    const initialFoldType = foldStates[0].isFolded;
+  function dispatch(cb: (foldStatus: FoldStatus) => void) {
+    if (!foldStates.length) {
+      lastFoldStatus == 'none';
+      cb('none');
+      return;
+    }
+
+    const firstFoldType = foldStates[0].isFolded;
     let isAllFoldsOfSameType = true;
 
     for (let i = 1; i < foldStates.length; i++) {
-      if (foldStates[i].isFolded != initialFoldType)
-        isAllFoldsOfSameType = false;
+      if (foldStates[i].isFolded != firstFoldType) isAllFoldsOfSameType = false;
     }
 
+    let curFoldStatus: FoldStatus;
     if (isAllFoldsOfSameType) {
-      const event = new CustomEvent(
-        initialFoldType ? 'allFolded' : 'allUnfolded',
-      );
-      toc.dispatchEvent(event);
+      curFoldStatus = firstFoldType ? 'allFolded' : 'allUnfolded';
+    } else {
+      curFoldStatus = 'mixed';
+    }
+
+    if (curFoldStatus != lastFoldStatus) {
+      lastFoldStatus = curFoldStatus;
+      cb(curFoldStatus);
     }
   }
 
-  // Makeing it async. Because otherwise when you listen for the custom events
-  // they will be already dispatched, and you will not be able to
-  // react on it.
-  setTimeout(() => dispatch(), 0);
+  // dispatch((foldType) => {});
 
   tocHolder?.append(toc);
 

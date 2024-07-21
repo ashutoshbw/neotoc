@@ -10,7 +10,7 @@ const toc = tocMirror({
   headings: headings,
   tocHolder,
   foldable: true,
-  initialFoldLevel: 6,
+  initialFoldLevel: 3,
   fillFoldButton(isFolded) {
     if (isFolded) return '+';
     else return '-';
@@ -18,18 +18,13 @@ const toc = tocMirror({
   fillAnchor(h, order) {
     return order.join('.') + ' ' + h.textContent;
   },
+  handleFoldStateChange(foldStatus) {
+    console.log(foldStatus);
+  },
 });
 
 foldAllBtn.addEventListener('click', toc.foldAll);
 unfoldAllBtn.addEventListener('click', toc.unfoldAll);
-
-toc.element.addEventListener('allFolded', (e) => {
-  console.log('all folded. e: ', e);
-});
-
-toc.element.addEventListener('allUnfolded', (e) => {
-  console.log('all unfolded. e: ', e);
-});
 
 // toc.setupMirror((toc) => {});
 
