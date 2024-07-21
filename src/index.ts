@@ -1,7 +1,5 @@
 import { elt, fillElt } from './utils.js';
 
-type FoldLevels = 1 | 2 | 3 | 4 | 5 | 6;
-
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
 interface Options {
@@ -24,13 +22,13 @@ interface Options {
   fillFoldButton: (isFolded: boolean) => string | Node;
   foldableDivClass?: string;
   foldableDivFoldedClass?: string;
-  initialFoldLevel?: FoldLevels;
+  initialFoldLevel?: number;
   handleFoldStatusChange: (foldStatus: FoldStatus) => void;
 }
 
 interface FoldState {
   isFolded: boolean;
-  level: FoldLevels;
+  level: number;
   toggleFold: () => void;
   foldableDiv: HTMLDivElement;
   anchor: HTMLAnchorElement;
@@ -82,7 +80,7 @@ export default function tocMirror({
       li.append(anchor);
 
       const subHeadings = [];
-      const curHeadingLevel = +h.tagName[1] as FoldLevels;
+      const curHeadingLevel = +h.tagName[1];
       for (let j = i + 1; j < headings.length; j++) {
         if (+headings[j].tagName[1] > curHeadingLevel) {
           subHeadings.push(headings[j]);
@@ -159,7 +157,7 @@ export default function tocMirror({
   //   fold all levels from refLevel and higher.
   // Normalizing folds with foldType false means:
   //   unfold all at the same fold level as refLevel or below it.
-  function normalizeFolds(foldType: boolean, refLevel: FoldLevels) {
+  function normalizeFolds(foldType: boolean, refLevel: number) {
     for (let i = 0; i < foldStates.length; i++) {
       const { isFolded, level, isManuallyToggledFoldInAutoFold, toggleFold } =
         foldStates[i];
@@ -208,8 +206,8 @@ export default function tocMirror({
 
   function getFoldBoundaryInfo() {
     // 1 is lowest, 5 is highest
-    let highestUnfoldedLevel: FoldLevels | undefined;
-    let lowestFoldedLevel: FoldLevels | undefined;
+    let highestUnfoldedLevel: number | undefined;
+    let lowestFoldedLevel: number | undefined;
 
     for (let i = 0; i < foldStates.length; i++) {
       const { isFolded, level } = foldStates[i];
@@ -249,10 +247,7 @@ export default function tocMirror({
       const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
 
       if (lowestFoldedLevel) {
-        normalizeFolds(
-          true,
-          lowestFoldedLevel == 1 ? 1 : ((lowestFoldedLevel - 1) as FoldLevels),
-        );
+        normalizeFolds(true, lowestFoldedLevel - 1);
       } else if (highestUnfoldedLevel) {
         normalizeFolds(true, highestUnfoldedLevel);
       }
@@ -261,10 +256,7 @@ export default function tocMirror({
       const [lowestFoldedLevel] = getFoldBoundaryInfo();
 
       if (lowestFoldedLevel) {
-        normalizeFolds(
-          true,
-          lowestFoldedLevel == 1 ? 1 : ((lowestFoldedLevel - 1) as FoldLevels),
-        );
+        normalizeFolds(true, lowestFoldedLevel - 1);
         normalizeFolds(false, lowestFoldedLevel);
       }
     },
