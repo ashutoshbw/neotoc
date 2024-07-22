@@ -232,11 +232,10 @@ export default function tocMirror({
   const toc = genToc(headings);
 
   if (!toc) return;
-  checkForFoldStatusChange(handleFoldStatusChange);
+  if (foldable) checkForFoldStatusChange(handleFoldStatusChange);
   tocHolder?.append(toc);
 
-  return {
-    element: toc,
+  const foldableProps = {
     foldAll() {
       normalizeFolds(true, 1);
     },
@@ -260,9 +259,19 @@ export default function tocMirror({
         normalizeFolds(false, lowestFoldedLevel);
       }
     },
+  };
+
+  const mandatoryProps = {
+    element: toc,
     // setupMirror() {},
     // reflect() {},
     // refresh() {},
     // remove() {},
   };
+
+  if (foldable) {
+    return { ...mandatoryProps, ...foldableProps };
+  } else {
+    return mandatoryProps;
+  }
 }
