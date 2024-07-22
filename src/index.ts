@@ -58,6 +58,9 @@ export default function tocMirror({
 }: Options) {
   const foldStates: FoldStates = [];
 
+  let minHLevel: number = 0,
+    maxHLevel: number = 0;
+
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
     order: number[] = [],
@@ -81,6 +84,14 @@ export default function tocMirror({
 
       const subHeadings = [];
       const curHeadingLevel = +h.tagName[1];
+
+      if (minHLevel && maxHLevel) {
+        if (curHeadingLevel < minHLevel) minHLevel = curHeadingLevel;
+        if (curHeadingLevel > maxHLevel) maxHLevel = curHeadingLevel;
+      } else {
+        minHLevel = maxHLevel = curHeadingLevel;
+      }
+
       for (let j = i + 1; j < headings.length; j++) {
         if (+headings[j].tagName[1] > curHeadingLevel) {
           subHeadings.push(headings[j]);
@@ -263,6 +274,7 @@ export default function tocMirror({
 
   const mandatoryProps = {
     element: toc,
+    depth: maxHLevel - minHLevel + 1,
     // setupMirror() {},
     // reflect() {},
     // refresh() {},

@@ -47,6 +47,7 @@ if (toc) {
   unfoldAllBtn.addEventListener('click', toc.unfoldAll);
   foldBtn.addEventListener('click', toc.fold);
   unfoldBtn.addEventListener('click', toc.unfold);
+  console.log(toc.depth);
 }
 
 // toc.setupMirror((toc) => {});
