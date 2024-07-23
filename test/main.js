@@ -40,6 +40,11 @@ const toc = tocMirror({
       console.log(foldStatus);
     }
   },
+  setMirror(tocHolder) {
+    return () => {
+      console.log('foo');
+    };
+  },
 });
 
 if (toc) {
@@ -47,13 +52,9 @@ if (toc) {
   unfoldAllBtn.addEventListener('click', toc.unfoldAll);
   foldBtn.addEventListener('click', toc.fold);
   unfoldBtn.addEventListener('click', toc.unfold);
-  console.log(toc.depth);
+  //TODO:  based on toc.depth show the only relevant buttons
+
+  // TODO: toc.stopReflection();
 }
 
-// toc.setupMirror((toc) => {});
-
-// toc.reflect(() => {});
-
-// toc.refresh();
-
-// toc.remove();
+console.log(toc);

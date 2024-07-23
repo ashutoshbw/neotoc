@@ -14,12 +14,15 @@ article {
   margin: 1rem;
 }
 
+#toc-main {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+}
+
 #tocHolder {
   background: #111;
   width: 240px;
   border: 1px solid yellow;
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
   padding: 1rem;
 }

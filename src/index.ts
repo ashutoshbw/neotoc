@@ -2,10 +2,12 @@ import { elt, fillElt } from './utils.js';
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
+type MirrorFunc = (tocHolder: HTMLElement) => () => void;
+
 interface Options {
   content: HTMLElement;
   headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>;
-  tocHolder?: HTMLElement;
+  tocHolder: HTMLElement;
   fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
   listType?: 'ul' | 'ol';
   root?: HTMLElement;
@@ -24,6 +26,7 @@ interface Options {
   foldableDivFoldedClass?: string;
   initialFoldLevel?: number;
   handleFoldStatusChange: (foldStatus: FoldStatus) => void;
+  setMirror?: MirrorFunc;
 }
 
 interface FoldState {
@@ -55,6 +58,7 @@ export default function tocMirror({
   initialFoldLevel = 1,
   autoFold = false,
   handleFoldStatusChange,
+  setMirror,
 }: Options) {
   const foldStates: FoldStates = [];
 
@@ -244,7 +248,41 @@ export default function tocMirror({
 
   if (!toc) return;
   if (foldable) checkForFoldStatusChange(handleFoldStatusChange);
-  tocHolder?.append(toc);
+
+  interface MirrorProps {
+    reflectOnce: () => void;
+    startReflection: () => void;
+    stopReflection: () => void;
+  }
+
+  const mirrorProps = <MirrorProps>{};
+
+  tocHolder.append(toc);
+  if (setMirror) {
+    const reflect = setMirror(tocHolder);
+    mirrorProps.reflectOnce = () => reflect(); // provide necessary args
+
+    let rafNum: number;
+
+    let previousTime: number;
+    const step = (timestamp: number) => {
+      if (previousTime !== timestamp) {
+        mirrorProps.reflectOnce();
+      }
+
+      previousTime = timestamp;
+      rafNum = window.requestAnimationFrame(step);
+    };
+
+    mirrorProps.startReflection = () => {
+      rafNum = window.requestAnimationFrame(step);
+    };
+
+    mirrorProps.stopReflection = () => {
+      console.log('rafNum', rafNum);
+      window.cancelAnimationFrame(rafNum);
+    };
+  }
 
   const foldableProps = {
     foldAll() {
@@ -275,6 +313,7 @@ export default function tocMirror({
   const mandatoryProps = {
     element: toc,
     depth: maxHLevel - minHLevel + 1,
+    ...mirrorProps,
     // setupMirror() {},
     // reflect() {},
     // refresh() {},
