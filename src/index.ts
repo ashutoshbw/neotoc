@@ -1,4 +1,9 @@
-import { elt, fillElt, getViewportYSize } from './utils.js';
+import {
+  elt,
+  fillElt,
+  getViewportYSize,
+  findScrollContainer,
+} from './utils.js';
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
@@ -8,13 +13,12 @@ type MirrorFunc = (
 
 interface Options {
   contentHolder?: HTMLElement;
+  marginTop?: number;
+  marginBottom?: number;
   headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>;
   tocHolder: HTMLElement;
   fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
   listType?: 'ul' | 'ol';
-  root?: HTMLElement;
-  rootMarginTop?: number;
-  rootMarginBottom?: number;
   autoFold?: boolean;
   liContainerClass?: string;
   liClass?: string;
@@ -43,10 +47,11 @@ interface FoldState {
 type FoldStates = FoldState[];
 
 export default function tocMirror({
+  // About contentHolder: By default it is first heading's parent element,
+  // it's not possible to set the default value here so it's done with code
   contentHolder,
-  root = document.documentElement,
-  rootMarginTop = 0,
-  rootMarginBottom = 0,
+  marginTop = 0,
+  marginBottom = 0,
   headings,
   tocHolder,
   liContainerClass = 'tm-li-container',
@@ -264,13 +269,18 @@ export default function tocMirror({
   const mirrorProps = <MirrorProps>{};
 
   tocHolder.append(toc);
+
+  if (!contentHolder) contentHolder = headings[0].parentElement!;
+
   if (setMirror) {
+    const scrollContainer = findScrollContainer(contentHolder);
+
     const reflect = setMirror(tocHolder);
     mirrorProps.reflectOnce = () => {
       const [viewportTop, viewportBottom] = getViewportYSize(
-        root,
-        rootMarginTop,
-        rootMarginBottom,
+        scrollContainer,
+        marginTop,
+        marginBottom,
       );
       reflect(viewportTop, viewportBottom); // provide necessary args
     };

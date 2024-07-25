@@ -7,12 +7,10 @@ const foldAllBtn = document.getElementById('fold-all');
 const unfoldAllBtn = document.getElementById('unfold-all');
 const foldBtn = document.getElementById('fold');
 const unfoldBtn = document.getElementById('unfold');
-const root = document.getElementById('wrapper');
 
 const toc = tocMirror({
   headings: headings,
   tocHolder,
-  root,
   foldable: true,
   initialFoldLevel: 3,
   fillFoldButton(isFolded) {
