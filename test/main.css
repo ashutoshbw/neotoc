@@ -1,13 +1,26 @@
+html {
+  border: 10px solid blue;
+  margin: 10px;
+}
 body {
   background: #333;
   color: #ddd;
+  border: 5px solid red;
 }
 
 #wrapper {
   display: flex;
   height: 600px;
+  overflow: scroll;
+  border: 5px solid green;
+  box-sizing: border-box;
+}
+
+#wrapper-wrapper {
+  height: 400px;
   overflow-y: scroll;
-  border: 2px solid beige;
+  border: 5px solid orange;
+  box-sizing: border-box;
 }
 
 article {

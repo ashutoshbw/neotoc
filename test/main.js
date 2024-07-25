@@ -1,3 +1,4 @@
+/*
 import tocMirror from './index.js';
 
 const contentElement = document.querySelector('article');
@@ -58,3 +59,54 @@ if (toc) {
 }
 
 console.log(toc);
+*/
+
+const rootElt = document.getElementById('wrapper');
+const rootEltWrapper = document.getElementById('wrapper-wrapper');
+
+function getYLimits(elt) {
+  if (elt === document.documentElement) return [0, elt.clientHeight];
+
+  const y1 = elt.getBoundingClientRect().y + elt.clientTop;
+  const y2 = y1 + elt.clientHeight;
+
+  return [y1, y2];
+}
+
+function getCroppedY([eY1, eY2], [cY1, cY2]) {
+  let y1 = null,
+    y2 = null;
+
+  // Note that if eY1 is null, eY2 must be null too.
+  if (eY1 === null) return [eY1, eY2];
+
+  if (eY1 <= cY1) {
+    if (eY2 > cY1) {
+      y1 = cY1;
+    }
+  } else if (eY1 < cY2) {
+    y1 = eY1;
+  }
+
+  if (eY2 <= cY2) {
+    if (eY2 > cY1) {
+      y2 = eY2;
+    }
+  } else if (eY1 < cY2) {
+    y2 = cY2;
+  }
+
+  return [y1, y2];
+}
+
+function getViewportInfo(elt) {
+  let parentElt = elt.parentElement;
+  let [y1, y2] = getCroppedY(getYLimits(elt), getYLimits(parentElt));
+
+  while (parentElt !== document.documentElement) {
+    parentElt = parentElt.parentElement;
+    [y1, y2] = getCroppedY([y1, y2], getYLimits(parentElt));
+  }
+
+  return [y1, y2];
+}
