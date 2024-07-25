@@ -1,11 +1,13 @@
-import { elt, fillElt } from './utils.js';
+import { elt, fillElt, getViewportYSize } from './utils.js';
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
-type MirrorFunc = (tocHolder: HTMLElement) => () => void;
+type MirrorFunc = (
+  tocHolder: HTMLElement,
+) => (a: number | null, b: number | null) => void;
 
 interface Options {
-  content: HTMLElement;
+  contentHolder?: HTMLElement;
   headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>;
   tocHolder: HTMLElement;
   fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
@@ -41,6 +43,10 @@ interface FoldState {
 type FoldStates = FoldState[];
 
 export default function tocMirror({
+  contentHolder,
+  root = document.documentElement,
+  rootMarginTop = 0,
+  rootMarginBottom = 0,
   headings,
   tocHolder,
   liContainerClass = 'tm-li-container',
@@ -260,7 +266,14 @@ export default function tocMirror({
   tocHolder.append(toc);
   if (setMirror) {
     const reflect = setMirror(tocHolder);
-    mirrorProps.reflectOnce = () => reflect(); // provide necessary args
+    mirrorProps.reflectOnce = () => {
+      const [viewportTop, viewportBottom] = getViewportYSize(
+        root,
+        rootMarginTop,
+        rootMarginBottom,
+      );
+      reflect(viewportTop, viewportBottom); // provide necessary args
+    };
 
     let rafNum: number;
 
