@@ -270,6 +270,8 @@ export default function tocMirror({
 
   tocHolder.append(toc);
 
+  // Since there is toc, there is heading with more than 0 items.
+  // So we can do this:
   if (!contentHolder) contentHolder = headings[0].parentElement!;
 
   if (setMirror) {
