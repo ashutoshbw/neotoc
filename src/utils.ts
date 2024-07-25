@@ -24,7 +24,7 @@ function getYLimits(elt: HTMLElement): [number, number] {
   return [y1, y2];
 }
 
-type VerticalBoundary = [null, null] | [number, number];
+type VerticalBoundary = [null | number, null | number];
 
 function getCroppedYLimits(
   [eY1, eY2]: VerticalBoundary,
@@ -39,15 +39,15 @@ function getCroppedYLimits(
   if (eY1 === null) return [eY1, eY2];
 
   if (eY1 <= cY1) {
-    if (eY2 > cY1) {
+    if (eY2! > cY1) {
       y1 = cY1;
     }
   } else if (eY1 < cY2) {
     y1 = eY1;
   }
 
-  if (eY2 <= cY2) {
-    if (eY2 > cY1) {
+  if (eY2! <= cY2) {
+    if (eY2! > cY1) {
       y2 = eY2;
     }
   } else if (eY1 < cY2) {
@@ -67,7 +67,7 @@ export function getViewportYSize(
   rootElt: HTMLElement,
   marginTop: number,
   marginBottom: number,
-) {
+): VerticalBoundary {
   const [y1, y2] = getYLimits(rootElt);
   const [ym1, ym2] = [y1 + marginTop, y2 - marginBottom];
 

@@ -278,13 +278,26 @@ export default function tocMirror({
     const scrollContainer = findScrollContainer(contentHolder);
 
     const reflect = setMirror(tocHolder);
+
+    let lastViewportTop: null | number;
+    let lastViewportBottom: null | number;
+
     mirrorProps.reflectOnce = () => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
         marginTop,
         marginBottom,
       );
-      reflect(viewportTop, viewportBottom); // provide necessary args
+
+      if (
+        viewportTop !== lastViewportTop ||
+        viewportBottom !== lastViewportBottom
+      ) {
+        reflect(viewportTop, viewportBottom); // provide necessary args
+      }
+
+      lastViewportTop = viewportTop;
+      lastViewportBottom = viewportBottom;
     };
 
     let rafNum: number;
