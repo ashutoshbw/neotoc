@@ -96,6 +96,7 @@ export function getParentFoldableDiv(
   foldableDivClass: string,
 ) {
   // it assumes elt is an anchor or foldable div that is inside generated toc
+  // and that generated toc is in tocHolder
 
   const greatGrandParent = elt.parentElement!.parentElement!.parentElement!;
 
@@ -104,4 +105,20 @@ export function getParentFoldableDiv(
   } else {
     return null;
   }
+}
+
+export function getDeepFoldableDivs(
+  foldableDiv: HTMLDivElement,
+  foldableDivClass: string,
+) {
+  const result: HTMLDivElement[] = [foldableDiv]; // setting this initial value because it will save some array concat later
+
+  let parent = getParentFoldableDiv(foldableDiv, foldableDivClass);
+
+  while (parent) {
+    result.push(parent);
+    parent = getParentFoldableDiv(parent, foldableDivClass);
+  }
+
+  return result;
 }

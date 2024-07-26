@@ -4,6 +4,7 @@ import {
   getViewportYSize,
   findScrollContainer,
   getParentFoldableDiv,
+  getDeepFoldableDivs,
 } from './utils.js';
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
@@ -80,6 +81,14 @@ export default function tocMirror({
   const anchorToParentFoldableDivMap = new Map<
     HTMLAnchorElement,
     HTMLDivElement | null
+  >();
+
+  // Below is map from a foldableDiv to itself and its ancestor foldableDivs.
+  const deepFoldableDivsMap = new Map<
+    HTMLDivElement,
+    // Note that the first element in the array value will be the same element as the key.
+    // Reason: When we need this array we need that value too. And making that here will boost performance.
+    HTMLDivElement[]
   >();
 
   function genToc(
@@ -284,6 +293,12 @@ export default function tocMirror({
         a,
         getParentFoldableDiv(a, foldableDivClass),
       ),
+    );
+
+  toc
+    .querySelectorAll<HTMLDivElement>(`.${foldableDivClass}`)
+    .forEach((div) =>
+      deepFoldableDivsMap.set(div, getDeepFoldableDivs(div, foldableDivClass)),
     );
 
   // Since there is toc, there is heading with more than 0 items.
