@@ -100,7 +100,7 @@ export function getParentFoldableDiv(
   const greatGrandParent = elt.parentElement!.parentElement!.parentElement!;
 
   if (greatGrandParent.classList.contains(foldableDivClass)) {
-    return greatGrandParent;
+    return greatGrandParent as HTMLDivElement;
   } else {
     return null;
   }

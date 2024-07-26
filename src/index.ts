@@ -3,6 +3,7 @@ import {
   fillElt,
   getViewportYSize,
   findScrollContainer,
+  getParentFoldableDiv,
 } from './utils.js';
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
@@ -74,7 +75,12 @@ export default function tocMirror({
   let minHLevel: number = 0,
     maxHLevel: number = 0;
 
+  // caches below:
   const idToAnchorMap: { [x: string]: HTMLAnchorElement } = {};
+  const anchorToParentFoldableDivMap = new Map<
+    HTMLAnchorElement,
+    HTMLDivElement | null
+  >();
 
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
@@ -270,6 +276,15 @@ export default function tocMirror({
   const mirrorProps = <MirrorProps>{};
 
   tocHolder.append(toc);
+
+  toc
+    .querySelectorAll<HTMLAnchorElement>('a')
+    .forEach((a) =>
+      anchorToParentFoldableDivMap.set(
+        a,
+        getParentFoldableDiv(a, foldableDivClass),
+      ),
+    );
 
   // Since there is toc, there is heading with more than 0 items.
   // So we can do this:
