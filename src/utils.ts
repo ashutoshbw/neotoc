@@ -90,3 +90,18 @@ export function findScrollContainer(element: HTMLElement) {
 
   return document.documentElement;
 }
+
+export function getParentFoldableDiv(
+  elt: HTMLAnchorElement | HTMLDivElement,
+  foldableDivClass: string,
+) {
+  // it assumes elt is an anchor or foldable div that is inside generated toc
+
+  const greatGrandParent = elt.parentElement!.parentElement!.parentElement!;
+
+  if (greatGrandParent.classList.contains(foldableDivClass)) {
+    return greatGrandParent;
+  } else {
+    return null;
+  }
+}
