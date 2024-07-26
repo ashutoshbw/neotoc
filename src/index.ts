@@ -290,6 +290,7 @@ export default function tocMirror({
       const anchorsOfSectionsInView = [];
       let intersectionRatioOfFirstSection: null | number = null;
       let intersectionRatioOfLastSection: null | number = null;
+      let topOffsetRatio: null | number = null;
 
       for (let i = 0; i < headings.length; i++) {
         const curH = headings[i];
@@ -314,6 +315,7 @@ export default function tocMirror({
                 intersectionRatioOfLastSection = intersectionRatio;
               }
               anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
+              topOffsetRatio = 1 - intersectionRatio;
             }
           } else if (sectionTop < viewportBottom!) {
             const intersectionHeight =
@@ -325,6 +327,7 @@ export default function tocMirror({
               intersectionRatioOfLastSection = intersectionRatio;
             }
             anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
+            topOffsetRatio = 0; // This forced to 0 here cause otherwise it would cause meaningless offset
           }
         }
       }
