@@ -41,8 +41,8 @@ const toc = tocMirror({
     }
   },
   setMirror(tocHolder) {
-    return (a, b) => {
-      console.log('foo', a, b);
+    return (anchors) => {
+      console.log('foo', anchors);
     };
   },
 });

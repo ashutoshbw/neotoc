@@ -7,9 +7,7 @@ import {
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
-type MirrorFunc = (
-  tocHolder: HTMLElement,
-) => (a: number | null, b: number | null) => void;
+type MirrorFunc = (tocHolder: HTMLElement) => (a: HTMLAnchorElement[]) => void;
 
 interface Options {
   contentHolder?: HTMLElement;
@@ -76,6 +74,8 @@ export default function tocMirror({
   let minHLevel: number = 0,
     maxHLevel: number = 0;
 
+  const idToAnchorMap: { [x: string]: HTMLAnchorElement } = {};
+
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
     order: number[] = [],
@@ -96,6 +96,7 @@ export default function tocMirror({
       fillElt(anchor, fillAnchor(h, order));
 
       li.append(anchor);
+      idToAnchorMap[h.id] = anchor;
 
       const subHeadings = [];
       const curHeadingLevel = +h.tagName[1];
@@ -279,9 +280,6 @@ export default function tocMirror({
 
     const reflect = setMirror(tocHolder);
 
-    let lastViewportTop: null | number;
-    let lastViewportBottom: null | number;
-
     mirrorProps.reflectOnce = () => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
@@ -289,15 +287,49 @@ export default function tocMirror({
         marginBottom,
       );
 
-      if (
-        viewportTop !== lastViewportTop ||
-        viewportBottom !== lastViewportBottom
-      ) {
-        reflect(viewportTop, viewportBottom); // provide necessary args
+      const anchorsOfSectionsInView = [];
+      let intersectionRatioOfFirstSection: null | number = null;
+      let intersectionRatioOfLastSection: null | number = null;
+
+      for (let i = 0; i < headings.length; i++) {
+        const curH = headings[i];
+        const nextH = headings[i + 1];
+
+        const sectionTop = curH.getBoundingClientRect().top;
+        const sectionBottom = nextH
+          ? nextH.getBoundingClientRect().top
+          : contentHolder.getBoundingClientRect().bottom;
+
+        const sectionHeight = sectionBottom - sectionTop;
+
+        if (viewportTop !== null) {
+          if (sectionTop < viewportTop) {
+            if (sectionBottom > viewportTop) {
+              const intersectionHeight =
+                Math.min(sectionBottom, viewportBottom!) - viewportTop;
+              const intersectionRatio = intersectionHeight / sectionHeight;
+              if (i == 0) {
+                intersectionRatioOfFirstSection = intersectionRatio;
+              } else if (i == headings.length - 1) {
+                intersectionRatioOfLastSection = intersectionRatio;
+              }
+              anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
+            }
+          } else if (sectionTop < viewportBottom!) {
+            const intersectionHeight =
+              Math.min(sectionBottom, viewportBottom!) - sectionTop;
+            const intersectionRatio = intersectionHeight / sectionHeight;
+            if (i == 0) {
+              intersectionRatioOfFirstSection = intersectionRatio;
+            } else if (i == headings.length - 1) {
+              intersectionRatioOfLastSection = intersectionRatio;
+            }
+            anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
+          }
+        }
       }
 
-      lastViewportTop = viewportTop;
-      lastViewportBottom = viewportBottom;
+      reflect(anchorsOfSectionsInView); // provide necessary args
     };
 
     let rafNum: number;
