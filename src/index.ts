@@ -3,13 +3,13 @@ import {
   fillElt,
   getViewportYSize,
   findScrollContainer,
-  getParentFoldableDiv,
   getDeepFoldableDivs,
+  calculateYBasedOnFolding,
 } from './utils.js';
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
-type MirrorFunc = (tocHolder: HTMLElement) => (a: HTMLAnchorElement[]) => void;
+type MirrorFunc = (tocHolder: HTMLElement) => (y1: number, y2: number) => void;
 
 interface Options {
   contentHolder?: HTMLElement;
@@ -78,16 +78,9 @@ export default function tocMirror({
 
   // caches below:
   const idToAnchorMap: { [x: string]: HTMLAnchorElement } = {};
-  const anchorToParentFoldableDivMap = new Map<
-    HTMLAnchorElement,
-    HTMLDivElement | null
-  >();
 
-  // Below is map from a foldableDiv to itself and its ancestor foldableDivs.
-  const deepFoldableDivsMap = new Map<
-    HTMLDivElement,
-    // Note that the first element in the array value will be the same element as the key.
-    // Reason: When we need this array we need that value too. And making that here will boost performance.
+  const anchorToDeepFoldableDivsMap = new Map<
+    HTMLAnchorElement,
     HTMLDivElement[]
   >();
 
@@ -289,16 +282,10 @@ export default function tocMirror({
   toc
     .querySelectorAll<HTMLAnchorElement>('a')
     .forEach((a) =>
-      anchorToParentFoldableDivMap.set(
+      anchorToDeepFoldableDivsMap.set(
         a,
-        getParentFoldableDiv(a, foldableDivClass),
+        getDeepFoldableDivs(a, foldableDivClass),
       ),
-    );
-
-  toc
-    .querySelectorAll<HTMLDivElement>(`.${foldableDivClass}`)
-    .forEach((div) =>
-      deepFoldableDivsMap.set(div, getDeepFoldableDivs(div, foldableDivClass)),
     );
 
   // Since there is toc, there is heading with more than 0 items.
@@ -345,7 +332,8 @@ export default function tocMirror({
                 intersectionRatioOfLastSection = intersectionRatio;
               }
               anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
-              topOffsetRatio = 1 - intersectionRatio;
+              if (topOffsetRatio === null)
+                topOffsetRatio = (viewportTop - sectionTop) / sectionHeight;
             }
           } else if (sectionTop < viewportBottom!) {
             const intersectionHeight =
@@ -357,12 +345,38 @@ export default function tocMirror({
               intersectionRatioOfLastSection = intersectionRatio;
             }
             anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
-            topOffsetRatio = 0; // This forced to 0 here cause otherwise it would cause meaningless offset
+            if (topOffsetRatio === null) topOffsetRatio = 0; // This forced to 0 here cause otherwise it would cause meaningless offset
           }
         }
       }
 
-      reflect(anchorsOfSectionsInView); // provide necessary args
+      if (anchorsOfSectionsInView.length) {
+        const a1 = anchorsOfSectionsInView[0];
+        const a2 = anchorsOfSectionsInView[anchorsOfSectionsInView.length - 1];
+
+        const rect1 = a1.getBoundingClientRect();
+        const rect2 = a1 == a2 ? rect1 : a2.getBoundingClientRect();
+
+        const intersectionHeight =
+          rect2.height *
+          (a1 === a2
+            ? intersectionRatioOfFirstSection!
+            : intersectionRatioOfLastSection!);
+
+        const y1 = calculateYBasedOnFolding(
+          anchorToDeepFoldableDivsMap.get(a1)!,
+          rect1.top + rect1.height * topOffsetRatio!,
+        );
+
+        const y2 = calculateYBasedOnFolding(
+          anchorToDeepFoldableDivsMap.get(a2)!,
+          a1 === a2 ? y1 + intersectionHeight : rect2.top + intersectionHeight,
+        );
+
+        const height = y2 - y1;
+        const top = y1 - tocHolder.getBoundingClientRect().top;
+        reflect(top, height); // provide necessary args
+      }
     };
 
     let rafNum: number;
@@ -382,7 +396,6 @@ export default function tocMirror({
     };
 
     mirrorProps.stopReflection = () => {
-      console.log('rafNum', rafNum);
       window.cancelAnimationFrame(rafNum);
     };
   }

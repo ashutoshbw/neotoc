@@ -41,8 +41,14 @@ const toc = tocMirror({
     }
   },
   setMirror(tocHolder) {
-    return (anchors) => {
-      console.log('foo', anchors);
+    let div = document.createElement('div');
+    div.className = 'outline-marker';
+
+    tocHolder.append(div);
+    return (top, height) => {
+      // console.log(top, height);
+      div.style.top = `${top}px`;
+      div.style.height = `${height}px`;
     };
   },
 });
@@ -55,6 +61,7 @@ if (toc) {
   //TODO:  based on toc.depth show the only relevant buttons
 
   // TODO: toc.stopReflection();
+  toc.startReflection();
 }
 
 console.log(toc);

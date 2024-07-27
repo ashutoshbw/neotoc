@@ -38,4 +38,5 @@ article {
   width: 240px;
   border: 1px solid yellow;
   padding: 1rem;
+  position: relative;
 }

@@ -91,7 +91,7 @@ export function findScrollContainer(element: HTMLElement) {
   return document.documentElement;
 }
 
-export function getParentFoldableDiv(
+function getParentFoldableDiv(
   elt: HTMLAnchorElement | HTMLDivElement,
   foldableDivClass: string,
 ) {
@@ -108,12 +108,11 @@ export function getParentFoldableDiv(
 }
 
 export function getDeepFoldableDivs(
-  foldableDiv: HTMLDivElement,
+  anchor: HTMLAnchorElement,
   foldableDivClass: string,
 ) {
-  const result: HTMLDivElement[] = [foldableDiv]; // setting this initial value because it will save some array concat later
-
-  let parent = getParentFoldableDiv(foldableDiv, foldableDivClass);
+  const result: HTMLDivElement[] = [];
+  let parent = getParentFoldableDiv(anchor, foldableDivClass);
 
   while (parent) {
     result.push(parent);
@@ -121,4 +120,16 @@ export function getDeepFoldableDivs(
   }
 
   return result;
+}
+
+export function calculateYBasedOnFolding(
+  foldableDivs: HTMLDivElement[],
+  startingY: number,
+) {
+  let minY = startingY;
+  for (let i = 0; i < foldableDivs.length; i++) {
+    const y = foldableDivs[i].getBoundingClientRect().bottom;
+    if (y < minY) minY = y;
+  }
+  return minY;
 }

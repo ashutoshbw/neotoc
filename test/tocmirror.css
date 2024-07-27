@@ -39,3 +39,11 @@
   grid-row: 1 / span 2;
   margin-top: -1px;
 }
+
+/* custom styles below */
+
+.outline-marker {
+  position: absolute;
+  width: 2px;
+  background: orange;
+}
