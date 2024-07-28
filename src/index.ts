@@ -359,16 +359,8 @@ export default function tocMirror({
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
 
-        // It doesn't actually matter the what initial value you assign here
-        // as they are assigned the right one in the conditions. But without assigning
-        // any inital value causes a TypeScript error(2454) when they are accessed
-        // outside the conditions where they are assigned some value, even under
-        // proper logical conditions. So the following assignment for initial values are
-        // just for ignoring that annoying TS error. These are however the best initial values
-        // IMO. If you know a better fix, please do a pull request. Your contributions are
-        // most welcome.
-        let y1Min: number = y1Max;
-        let y2Min: number = y2Max;
+        let y1Min: number;
+        let y2Min: number;
 
         if (foldable) {
           const deepFoldableDivsForA1 = anchorToDeepFoldableDivsMap.get(a1)!;
@@ -391,9 +383,14 @@ export default function tocMirror({
           }
         }
 
+        // @ts-expect-error The error 2454 is irrevalent because when foldable is true
+        // y1Min and y2Min are always defined.
         const height = foldable ? y2Min - y1Min : y2Max - y1Max;
         const top =
+          // @ts-expect-error The error 2454 is irrevalent because when foldable is true
+          // y1Min and y2Min are always defined.
           (foldable ? y1Min : y1Max) - tocHolder.getBoundingClientRect().top;
+
         reflect(top, height); // provide necessary args
       }
     };
