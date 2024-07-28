@@ -352,27 +352,29 @@ export default function tocMirror({
 
       if (anchorsOfSectionsInView.length) {
         const a1 = anchorsOfSectionsInView[0];
-        const a2 = anchorsOfSectionsInView[anchorsOfSectionsInView.length - 1];
-
         const rect1 = a1.getBoundingClientRect();
-        const rect2 = a1 == a2 ? rect1 : a2.getBoundingClientRect();
 
-        const intersectionHeight =
-          rect2.height *
-          (a1 === a2
-            ? intersectionRatioOfFirstSection!
-            : intersectionRatioOfLastSection!);
+        const deepFoldableDivsForA1 = anchorToDeepFoldableDivsMap.get(a1)!;
 
         const y1 = calculateYBasedOnFolding(
-          anchorToDeepFoldableDivsMap.get(a1)!,
+          deepFoldableDivsForA1,
           rect1.top + rect1.height * topOffsetRatio!,
         );
-
-        const y2 = calculateYBasedOnFolding(
-          anchorToDeepFoldableDivsMap.get(a2)!,
-          a1 === a2 ? y1 + intersectionHeight : rect2.top + intersectionHeight,
+        let y2 = calculateYBasedOnFolding(
+          deepFoldableDivsForA1,
+          y1 + rect1.height * intersectionRatioOfFirstSection!,
         );
 
+        if (anchorsOfSectionsInView.length > 1) {
+          const a2 =
+            anchorsOfSectionsInView[anchorsOfSectionsInView.length - 1];
+          const rect2 = a2.getBoundingClientRect();
+
+          y2 = calculateYBasedOnFolding(
+            anchorToDeepFoldableDivsMap.get(a2)!,
+            rect2.top + rect2.height * intersectionRatioOfLastSection!,
+          );
+        }
         const height = y2 - y1;
         const top = y1 - tocHolder.getBoundingClientRect().top;
         reflect(top, height); // provide necessary args
