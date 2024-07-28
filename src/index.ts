@@ -9,7 +9,17 @@ import {
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
-type MirrorFunc = (tocHolder: HTMLElement) => (y1: number, y2: number) => void;
+interface OutlineMarkerProps {
+  top: number;
+  bottom: number;
+  height: number;
+  isTopInAFold: boolean;
+  isBottomInAFold: boolean;
+}
+
+type MirrorFunc = (
+  tocHolder: HTMLElement,
+) => (outlineMakerProps: OutlineMarkerProps) => void;
 
 interface Options {
   contentHolder?: HTMLElement;
@@ -359,8 +369,14 @@ export default function tocMirror({
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
 
-        let y1Min: number;
-        let y2Min: number;
+        // The following initial assignment is safe.
+        // There are two resaons for this:
+        // 1. It helps to not use any ts comment to ignore error 2454 which would cause if you
+        //   didn't have any inital value here.
+        // 2. It helps shortening the the logic when used with greater than or less than
+        //   operator.
+        let y1Min: number = y1Max;
+        let y2Min: number = y2Max;
 
         if (foldable) {
           const deepFoldableDivsForA1 = anchorToDeepFoldableDivsMap.get(a1)!;
@@ -383,15 +399,17 @@ export default function tocMirror({
           }
         }
 
-        // @ts-expect-error The error 2454 is irrevalent because when foldable is true
-        // y1Min and y2Min are always defined.
-        const height = foldable ? y2Min - y1Min : y2Max - y1Max;
-        const top =
-          // @ts-expect-error The error 2454 is irrevalent because when foldable is true
-          // y1Min and y2Min are always defined.
-          (foldable ? y1Min : y1Max) - tocHolder.getBoundingClientRect().top;
+        const tocHolderTop = tocHolder.getBoundingClientRect().top;
 
-        reflect(top, height); // provide necessary args
+        const outlineMarkerProps = {
+          height: foldable ? y2Min - y1Min : y2Max - y1Max,
+          top: (foldable ? y1Min : y1Max) - tocHolderTop,
+          bottom: (foldable ? y2Min : y2Max) - tocHolderTop,
+          isTopInAFold: y1Min < y1Max,
+          isBottomInAFold: y2Min < y2Max,
+        };
+
+        reflect(outlineMarkerProps); // provide necessary args
       }
     };
 

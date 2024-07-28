@@ -43,7 +43,29 @@
 /* custom styles below */
 
 .outline-marker {
-  position: absolute;
-  width: 2px;
   background: orange;
+  position: absolute;
+  width: 1.5px;
+  height: 0px;
+  left: 0px;
+}
+
+.outline-marker-bottom {
+  background: orange;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  bottom: -3px;
+  left: -2px;
+}
+
+.outline-marker-top {
+  background: orange;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: -3px;
+  left: -2px;
 }

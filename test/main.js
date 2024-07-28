@@ -11,7 +11,7 @@ const unfoldBtn = document.getElementById('unfold');
 const toc = tocMirror({
   headings: headings,
   tocHolder,
-  foldable: false,
+  foldable: true,
   initialFoldLevel: 3,
   fillFoldButton(isFolded) {
     if (isFolded) return '+';
@@ -41,14 +41,25 @@ const toc = tocMirror({
     }
   },
   setMirror(tocHolder) {
-    let div = document.createElement('div');
-    div.className = 'outline-marker';
+    let outlineMarker = document.createElement('div');
+    let outlineMarkerTop = document.createElement('div');
+    let outlineMarkerBottom = document.createElement('div');
+    outlineMarker.className = 'outline-marker';
+    outlineMarkerTop.className = 'outline-marker-top';
+    outlineMarkerBottom.className = 'outline-marker-bottom';
 
-    tocHolder.append(div);
-    return (top, height) => {
+    outlineMarker.append(outlineMarkerTop, outlineMarkerBottom);
+
+    tocHolder.append(outlineMarker);
+    return ({ top, height, isTopInAFold, isBottomInAFold }) => {
       // console.log(top, height);
-      div.style.top = `${top}px`;
-      div.style.height = `${height}px`;
+      outlineMarker.style.top = `${top}px`;
+      outlineMarker.style.height = `${height}px`;
+
+      outlineMarkerTop.style.backgroundColor = isTopInAFold ? 'beige' : '';
+      outlineMarkerBottom.style.backgroundColor = isBottomInAFold
+        ? 'beige'
+        : '';
     };
   },
 });
