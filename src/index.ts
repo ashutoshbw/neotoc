@@ -356,27 +356,25 @@ export default function tocMirror({
 
         const deepFoldableDivsForA1 = anchorToDeepFoldableDivsMap.get(a1)!;
 
-        const y1 = calculateYBasedOnFolding(
-          deepFoldableDivsForA1,
-          rect1.top + rect1.height * topOffsetRatio!,
-        );
-        let y2 = calculateYBasedOnFolding(
-          deepFoldableDivsForA1,
-          y1 + rect1.height * intersectionRatioOfFirstSection!,
-        );
+        const y1Max = rect1.top + rect1.height * topOffsetRatio!;
+        const y1Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y1Max);
+
+        let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
+        let y2Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y2Max);
 
         if (anchorsOfSectionsInView.length > 1) {
           const a2 =
             anchorsOfSectionsInView[anchorsOfSectionsInView.length - 1];
           const rect2 = a2.getBoundingClientRect();
 
-          y2 = calculateYBasedOnFolding(
+          y2Max = rect2.top + rect2.height * intersectionRatioOfLastSection!;
+          y2Min = calculateYBasedOnFolding(
             anchorToDeepFoldableDivsMap.get(a2)!,
-            rect2.top + rect2.height * intersectionRatioOfLastSection!,
+            y2Max,
           );
         }
-        const height = y2 - y1;
-        const top = y1 - tocHolder.getBoundingClientRect().top;
+        const height = y2Min - y1Min;
+        const top = y1Min - tocHolder.getBoundingClientRect().top;
         reflect(top, height); // provide necessary args
       }
     };
