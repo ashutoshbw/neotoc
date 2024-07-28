@@ -11,7 +11,7 @@ const unfoldBtn = document.getElementById('unfold');
 const toc = tocMirror({
   headings: headings,
   tocHolder,
-  foldable: true,
+  foldable: false,
   initialFoldLevel: 3,
   fillFoldButton(isFolded) {
     if (isFolded) return '+';

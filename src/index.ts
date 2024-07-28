@@ -279,14 +279,16 @@ export default function tocMirror({
 
   tocHolder.append(toc);
 
-  toc
-    .querySelectorAll<HTMLAnchorElement>('a')
-    .forEach((a) =>
-      anchorToDeepFoldableDivsMap.set(
-        a,
-        getDeepFoldableDivs(a, foldableDivClass),
-      ),
-    );
+  if (foldable) {
+    toc
+      .querySelectorAll<HTMLAnchorElement>('a')
+      .forEach((a) =>
+        anchorToDeepFoldableDivsMap.set(
+          a,
+          getDeepFoldableDivs(a, foldableDivClass),
+        ),
+      );
+  }
 
   // Since there is toc, there is heading with more than 0 items.
   // So we can do this:
@@ -354,13 +356,25 @@ export default function tocMirror({
         const a1 = anchorsOfSectionsInView[0];
         const rect1 = a1.getBoundingClientRect();
 
-        const deepFoldableDivsForA1 = anchorToDeepFoldableDivsMap.get(a1)!;
-
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
-        const y1Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y1Max);
-
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
-        let y2Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y2Max);
+
+        // It doesn't actually matter the what initial value you assign here
+        // as they are assigned the right one in the conditions. But without assigning
+        // any inital value causes a TypeScript error(2454) when they are accessed
+        // outside the conditions where they are assigned some value, even under
+        // proper logical conditions. So the following assignment for initial values are
+        // just for ignoring that annoying TS error. These are however the best initial values
+        // IMO. If you know a better fix, please do a pull request. Your contributions are
+        // most welcome.
+        let y1Min: number = y1Max;
+        let y2Min: number = y2Max;
+
+        if (foldable) {
+          const deepFoldableDivsForA1 = anchorToDeepFoldableDivsMap.get(a1)!;
+          y1Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y1Max);
+          y2Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y2Max);
+        }
 
         if (anchorsOfSectionsInView.length > 1) {
           const a2 =
@@ -368,13 +382,18 @@ export default function tocMirror({
           const rect2 = a2.getBoundingClientRect();
 
           y2Max = rect2.top + rect2.height * intersectionRatioOfLastSection!;
-          y2Min = calculateYBasedOnFolding(
-            anchorToDeepFoldableDivsMap.get(a2)!,
-            y2Max,
-          );
+
+          if (foldable) {
+            y2Min = calculateYBasedOnFolding(
+              anchorToDeepFoldableDivsMap.get(a2)!,
+              y2Max,
+            );
+          }
         }
-        const height = y2Min - y1Min;
-        const top = y1Min - tocHolder.getBoundingClientRect().top;
+
+        const height = foldable ? y2Min - y1Min : y2Max - y1Max;
+        const top =
+          (foldable ? y1Min : y1Max) - tocHolder.getBoundingClientRect().top;
         reflect(top, height); // provide necessary args
       }
     };
