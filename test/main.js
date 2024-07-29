@@ -51,18 +51,23 @@ const toc = tocMirror({
     outlineMarker.append(outlineMarkerTop, outlineMarkerBottom);
 
     tocHolder.append(outlineMarker);
-    return ({ top, height, isTopInAFold, isBottomInAFold }) => {
-      // console.log(top, height);
-      outlineMarker.style.top = `${top}px`;
-      outlineMarker.style.height = `${height}px`;
+    return (props) => {
+      if (props.isInside) {
+        const { top, height, isTopInAFold, isBottomInAFold } = props;
+        outlineMarker.style.display = '';
+        outlineMarker.style.top = `${top}px`;
+        outlineMarker.style.height = `${height}px`;
 
-      outlineMarkerTop.style.backgroundColor = isTopInAFold ? 'beige' : '';
-      outlineMarkerBottom.style.backgroundColor = isBottomInAFold
-        ? 'beige'
-        : '';
+        outlineMarkerTop.style.backgroundColor = isTopInAFold ? 'beige' : '';
+        outlineMarkerBottom.style.backgroundColor = isBottomInAFold
+          ? 'beige'
+          : '';
 
-      outlineMarkerTop.style.zIndex = isTopInAFold ? '1' : '';
-      outlineMarkerBottom.style.zIndex = isBottomInAFold ? '1' : '';
+        outlineMarkerTop.style.zIndex = isTopInAFold ? '1' : '';
+        outlineMarkerBottom.style.zIndex = isBottomInAFold ? '1' : '';
+      } else {
+        outlineMarker.style.display = 'none';
+      }
     };
   },
 });

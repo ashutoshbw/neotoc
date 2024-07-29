@@ -9,13 +9,18 @@ import {
 
 type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
 
-interface OutlineMarkerProps {
-  top: number;
-  bottom: number;
-  height: number;
-  isTopInAFold: boolean;
-  isBottomInAFold: boolean;
-}
+type OutlineMarkerProps =
+  | {
+      top: number;
+      bottom: number;
+      height: number;
+      isTopInAFold: boolean;
+      isBottomInAFold: boolean;
+      isInside: true;
+    }
+  | {
+      isInside: false;
+    };
 
 type MirrorFunc = (
   tocHolder: HTMLElement,
@@ -401,15 +406,16 @@ export default function tocMirror({
 
         const tocHolderTop = tocHolder.getBoundingClientRect().top;
 
-        const outlineMarkerProps = {
+        reflect({
           height: foldable ? y2Min - y1Min : y2Max - y1Max,
           top: (foldable ? y1Min : y1Max) - tocHolderTop,
           bottom: (foldable ? y2Min : y2Max) - tocHolderTop,
           isTopInAFold: y1Min < y1Max,
           isBottomInAFold: y2Min < y2Max,
-        };
-
-        reflect(outlineMarkerProps); // provide necessary args
+          isInside: true,
+        });
+      } else {
+        reflect({ isInside: false });
       }
     };
 
