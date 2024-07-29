@@ -322,7 +322,7 @@ export default function tocMirror({
         marginBottom,
       );
 
-      const anchorsOfSectionsInView = [];
+      const anchorsToSectionsInView = [];
       let intersectionRatioOfFirstSection: null | number = null;
       let intersectionRatioOfLastSection: null | number = null;
       let topOffsetRatio: null | number = null;
@@ -349,7 +349,7 @@ export default function tocMirror({
               } else {
                 intersectionRatioOfLastSection = intersectionRatio;
               }
-              anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
+              anchorsToSectionsInView.push(idToAnchorMap[curH.id]);
               if (topOffsetRatio === null)
                 topOffsetRatio = (viewportTop - sectionTop) / sectionHeight;
             }
@@ -362,14 +362,14 @@ export default function tocMirror({
             } else {
               intersectionRatioOfLastSection = intersectionRatio;
             }
-            anchorsOfSectionsInView.push(idToAnchorMap[curH.id]);
+            anchorsToSectionsInView.push(idToAnchorMap[curH.id]);
             if (topOffsetRatio === null) topOffsetRatio = 0; // This forced to 0 here cause otherwise it would cause meaningless offset
           }
         }
       }
 
-      if (anchorsOfSectionsInView.length) {
-        const a1 = anchorsOfSectionsInView[0];
+      if (anchorsToSectionsInView.length) {
+        const a1 = anchorsToSectionsInView[0];
         const rect1 = a1.getBoundingClientRect();
 
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
@@ -390,9 +390,9 @@ export default function tocMirror({
           y2Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y2Max);
         }
 
-        if (anchorsOfSectionsInView.length > 1) {
+        if (anchorsToSectionsInView.length > 1) {
           const a2 =
-            anchorsOfSectionsInView[anchorsOfSectionsInView.length - 1];
+            anchorsToSectionsInView[anchorsToSectionsInView.length - 1];
           const rect2 = a2.getBoundingClientRect();
 
           y2Max = rect2.top + rect2.height * intersectionRatioOfLastSection!;
@@ -413,7 +413,7 @@ export default function tocMirror({
           bottom: (foldable ? y2Min : y2Max) - tocHolderTop,
           isTopInAFold: y1Min < y1Max,
           isBottomInAFold: y2Min < y2Max,
-          anchors: anchorsOfSectionsInView,
+          anchors: anchorsToSectionsInView,
           isInside: true,
         });
       } else {
