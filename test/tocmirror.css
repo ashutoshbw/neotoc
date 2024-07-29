@@ -43,29 +43,35 @@
 /* custom styles below */
 
 .outline-marker {
+  --width: 1.5px;
+  --terminal-side-length: 6px;
   background: orange;
   position: absolute;
-  width: 1.5px;
+  width: var(--width);
   height: 0px;
-  left: 0px;
+  left: 5px;
 }
 
 .outline-marker-bottom {
   background: orange;
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: var(--terminal-side-length);
+  height: var(--terminal-side-length);
   border-radius: 50%;
-  bottom: -3px;
-  left: -2px;
+  bottom: calc(var(--terminal-side-length) / 2 * -1);
+  left: calc(
+    (var(--terminal-side-length) / 2 * -1) + var(--width) / 2
+  ); /* -2px */
 }
 
 .outline-marker-top {
   background: orange;
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: var(--terminal-side-length);
+  height: var(--terminal-side-length);
   border-radius: 50%;
-  top: -3px;
-  left: -2px;
+  top: calc(var(--terminal-side-length) / 2 * -1);
+  left: calc(
+    (var(--terminal-side-length) / 2 * -1) + var(--width) / 2
+  ); /* -2px */
 }

@@ -60,6 +60,9 @@ const toc = tocMirror({
       outlineMarkerBottom.style.backgroundColor = isBottomInAFold
         ? 'beige'
         : '';
+
+      outlineMarkerTop.style.zIndex = isTopInAFold ? '1' : '';
+      outlineMarkerBottom.style.zIndex = isBottomInAFold ? '1' : '';
     };
   },
 });
