@@ -7,7 +7,11 @@ import {
   calculateYBasedOnFolding,
 } from './utils.js';
 
-type FoldStatus = 'none' | 'allFolded' | 'allUnfolded' | 'mixed';
+import {
+  type FoldState,
+  type FoldStates,
+  type FoldStatus,
+} from './fold-types.js';
 
 type OutlineMarkerProps =
   | {
@@ -50,17 +54,6 @@ interface Options {
   handleFoldStatusChange: (foldStatus: FoldStatus) => void;
   setMirror?: MirrorFunc;
 }
-
-interface FoldState {
-  isFolded: boolean;
-  level: number;
-  toggleFold: () => void;
-  foldableDiv: HTMLDivElement;
-  anchor: HTMLAnchorElement;
-  isManuallyToggledFoldInAutoFold: boolean;
-}
-
-type FoldStates = FoldState[];
 
 export default function tocMirror({
   // About contentHolder: By default it is first heading's parent element,
