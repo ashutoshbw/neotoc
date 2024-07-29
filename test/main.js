@@ -12,7 +12,7 @@ const toc = tocMirror({
   headings: headings,
   tocHolder,
   foldable: true,
-  initialFoldLevel: 3,
+  initialFoldLevel: 6,
   fillFoldButton(isFolded) {
     if (isFolded) return '+';
     else return '-';
@@ -53,7 +53,7 @@ const toc = tocMirror({
     tocHolder.append(outlineMarker);
     return (props) => {
       if (props.isInside) {
-        const { top, height, isTopInAFold, isBottomInAFold } = props;
+        const { top, height, isTopInAFold, isBottomInAFold, anchors } = props;
         outlineMarker.style.display = '';
         outlineMarker.style.top = `${top}px`;
         outlineMarker.style.height = `${height}px`;
@@ -65,6 +65,7 @@ const toc = tocMirror({
 
         outlineMarkerTop.style.zIndex = isTopInAFold ? '1' : '';
         outlineMarkerBottom.style.zIndex = isBottomInAFold ? '1' : '';
+        console.log(anchors);
       } else {
         outlineMarker.style.display = 'none';
       }
@@ -80,7 +81,7 @@ if (toc) {
   //TODO:  based on toc.depth show the only relevant buttons
 
   // TODO: toc.stopReflection();
-  toc.startReflection();
+  // toc.startReflection();
 }
 
 console.log(toc);

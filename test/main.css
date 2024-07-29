@@ -14,6 +14,7 @@ body {
   overflow: scroll;
   border: 5px solid green;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 #wrapper-wrapper {

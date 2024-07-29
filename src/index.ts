@@ -16,6 +16,7 @@ type OutlineMarkerProps =
       height: number;
       isTopInAFold: boolean;
       isBottomInAFold: boolean;
+      anchors: HTMLAnchorElement[];
       isInside: true;
     }
   | {
@@ -412,6 +413,7 @@ export default function tocMirror({
           bottom: (foldable ? y2Min : y2Max) - tocHolderTop,
           isTopInAFold: y1Min < y1Max,
           isBottomInAFold: y2Min < y2Max,
+          anchors: anchorsOfSectionsInView,
           isInside: true,
         });
       } else {
