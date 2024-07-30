@@ -12,6 +12,7 @@ import {
   type FoldStates,
   type FoldStatus,
 } from './fold-types.js';
+import { doAutoFold } from './autoFold.js';
 
 type OutlineMarkerProps =
   | {
@@ -75,11 +76,13 @@ export default function tocMirror({
   foldableDivClass = 'tm-foldable-div',
   foldableDivFoldedClass = 'tm-foldable-div-folded',
   fillFoldButton,
-  initialFoldLevel = 1,
+  initialFoldLevel = 6,
   autoFold = false,
   handleFoldStatusChange,
   setMirror,
 }: Options) {
+  if (autoFold) initialFoldLevel = 1;
+
   const foldStates: FoldStates = [];
 
   let minHLevel: number = 0,
@@ -147,7 +150,7 @@ export default function tocMirror({
           if (isFolded) {
             foldableDiv.classList.add(foldableDivFoldedClass);
             if (foldButtonFoldedClass) {
-              foldButton.classList.add(foldableDivFoldedClass);
+              foldButton.classList.add(foldButtonFoldedClass);
             }
           }
 
@@ -178,7 +181,7 @@ export default function tocMirror({
           foldStates.push(curFoldState);
 
           foldButton.addEventListener('click', () => {
-            if (autoFold) {
+            if (autoFold && curFoldState.isFolded) {
               curFoldState.isManuallyToggledFoldInAutoFold = true;
             }
             curFoldState.toggleFold();
@@ -304,9 +307,12 @@ export default function tocMirror({
   if (!contentHolder) contentHolder = headings[0].parentElement!;
 
   if (setMirror) {
+    doAutoFold(foldStates);
     const scrollContainer = findScrollContainer(contentHolder);
 
     const reflect = setMirror(tocHolder);
+
+    let isContentOutOfViewLastTime: null | boolean = null;
 
     mirrorProps.reflectOnce = () => {
       const [viewportTop, viewportBottom] = getViewportYSize(
@@ -409,10 +415,15 @@ export default function tocMirror({
           anchors: anchorsToSectionsInView,
           isInside: true,
         });
+
+        isContentOutOfViewLastTime = false;
       } else {
         reflect({ isInside: false });
+        isContentOutOfViewLastTime = true;
       }
     };
+
+    mirrorProps.reflectOnce();
 
     let rafNum: number;
 
