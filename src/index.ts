@@ -172,6 +172,7 @@ export default function tocMirror({
               } else {
                 fillElt(foldButton, fillFoldButton(curFoldState.isFolded));
               }
+              checkForFoldStatusChange(handleFoldStatusChange);
             },
             foldableDiv, // might be useful in future
             anchor, // only useful in autoFold
@@ -185,7 +186,6 @@ export default function tocMirror({
               curFoldState.isManuallyToggledFoldInAutoFold = true;
             }
             curFoldState.toggleFold();
-            checkForFoldStatusChange(handleFoldStatusChange);
           });
         } else {
           li.append(nestedListContainer);
@@ -199,6 +199,7 @@ export default function tocMirror({
     return listContainer;
   }
 
+  // `normalizeFolds` is intended to be called by the end user through events.
   // Here foldType true means "fold", false means "unfold"
   // Normalizing folds with foldType true means:
   //   fold all levels from refLevel and higher.
@@ -206,16 +207,17 @@ export default function tocMirror({
   //   unfold all at the same fold level as refLevel or below it.
   function normalizeFolds(foldType: boolean, refLevel: number) {
     for (let i = 0; i < foldStates.length; i++) {
-      const { isFolded, level, isManuallyToggledFoldInAutoFold, toggleFold } =
-        foldStates[i];
+      const { isFolded, level, toggleFold } = foldStates[i];
 
       if (foldType) {
         if (!isFolded && level >= refLevel) {
           toggleFold();
+          if (autoFold) foldStates[i].isManuallyToggledFoldInAutoFold = true;
         }
       } else {
         if (isFolded && level <= refLevel) {
           toggleFold();
+          if (autoFold) foldStates[i].isManuallyToggledFoldInAutoFold = true;
         }
       }
     }
@@ -307,7 +309,6 @@ export default function tocMirror({
   if (!contentHolder) contentHolder = headings[0].parentElement!;
 
   if (setMirror) {
-    doAutoFold(foldStates);
     const scrollContainer = findScrollContainer(contentHolder);
 
     const reflect = setMirror(tocHolder);
@@ -421,6 +422,7 @@ export default function tocMirror({
         reflect({ isInside: false });
         isContentOutOfViewLastTime = true;
       }
+      doAutoFold(foldStates, anchorsToSectionsInView);
     };
 
     mirrorProps.reflectOnce();
