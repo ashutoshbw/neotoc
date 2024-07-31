@@ -10,9 +10,12 @@ const unfoldBtn = document.getElementById('unfold');
 
 const toc = tocMirror({
   headings: headings,
+  marginTop: 50,
+  marginBottom: 50,
   tocHolder,
   foldable: true,
-  initialFoldLevel: 6,
+  autoFold: true,
+  initialFoldLevel: 2,
   fillFoldButton(isFolded) {
     if (isFolded) return '+';
     else return '-';
@@ -65,7 +68,7 @@ const toc = tocMirror({
 
         outlineMarkerTop.style.zIndex = isTopInAFold ? '1' : '';
         outlineMarkerBottom.style.zIndex = isBottomInAFold ? '1' : '';
-        console.log(anchors);
+        // console.log(anchors);
       } else {
         outlineMarker.style.display = 'none';
       }
@@ -80,8 +83,7 @@ if (toc) {
   unfoldBtn.addEventListener('click', toc.unfold);
   //TODO:  based on toc.depth show the only relevant buttons
 
-  // TODO: toc.stopReflection();
-  // toc.startReflection();
+  toc.startReflection();
 }
 
 console.log(toc);

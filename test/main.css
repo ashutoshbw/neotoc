@@ -18,7 +18,7 @@ body {
 }
 
 #wrapper-wrapper {
-  height: 400px;
+  height: 600px;
   overflow-y: scroll;
   border: 5px solid orange;
   box-sizing: border-box;
