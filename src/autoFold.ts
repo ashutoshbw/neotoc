@@ -17,34 +17,25 @@ export function doAutoFold(
       if (anchorsToSectionsInView.includes(anchor)) {
         if (isManuallyNotPoked) {
           if (isFolded) toggleFold();
-        } else {
-          if (foldStates[i].isOutsideView === true) {
-            if (isFolded) {
-              toggleFold();
-            }
-            forgetManualPoking();
-          }
+        } else if (foldStates[i].isOutsideView === true) {
+          // means if it was not in view just before, do these:
+          if (isFolded) toggleFold();
+          forgetManualPoking();
         }
         foldStates[i].isOutsideView = false;
       } else if (ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)) {
         if (isFolded) {
           if (isManuallyNotPoked) {
             toggleFold();
-          } else {
-            if (foldStates[i].isOutsideView === true) {
-              forgetManualPoking();
-            }
+          } else if (foldStates[i].isOutsideView === true) {
+            forgetManualPoking();
           }
         } else {
           forgetManualPoking();
         }
-        foldStates[i].isOutsideView = false;
+        foldStates[i].isOutsideView = false; // I consider this inside view for sensible folding
       } else {
-        if (!isFolded) {
-          if (isManuallyNotPoked) {
-            toggleFold();
-          }
-        }
+        if (!isFolded && isManuallyNotPoked) toggleFold();
         foldStates[i].isOutsideView = true;
       }
     } else {
@@ -53,8 +44,7 @@ export function doAutoFold(
       } else {
         if (isManuallyNotPoked) {
           toggleFold();
-        }
-        if (foldStates[i].isOutsideView === false) {
+        } else if (foldStates[i].isOutsideView === false) {
           toggleFold();
         }
       }
