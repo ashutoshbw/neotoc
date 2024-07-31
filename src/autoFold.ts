@@ -8,18 +8,57 @@ export function doAutoFold(
   for (let i = 0; i < foldStates.length; i++) {
     const { anchor, isFolded, toggleFold } = foldStates[i];
 
+    const isManuallyNotPoked = !foldStates[i].isManuallyToggledFoldInAutoFold;
+    const forgetManualPoking = () => {
+      foldStates[i].isManuallyToggledFoldInAutoFold = false;
+    };
+
     if (anchorsToSectionsInView.length) {
       if (anchorsToSectionsInView.includes(anchor)) {
-        if (isFolded) toggleFold();
+        if (isManuallyNotPoked) {
+          if (isFolded) toggleFold();
+        } else {
+          if (foldStates[i].isOutsideView === true) {
+            if (isFolded) {
+              toggleFold();
+            }
+            forgetManualPoking();
+          }
+        }
+        foldStates[i].isOutsideView = false;
       } else if (ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)) {
-        if (isFolded) toggleFold();
+        if (isFolded) {
+          if (isManuallyNotPoked) {
+            toggleFold();
+          } else {
+            if (foldStates[i].isOutsideView === true) {
+              forgetManualPoking();
+            }
+          }
+        } else {
+          forgetManualPoking();
+        }
+        foldStates[i].isOutsideView = false;
       } else {
-        if (!isFolded) toggleFold();
+        if (!isFolded) {
+          if (isManuallyNotPoked) {
+            toggleFold();
+          }
+        }
+        foldStates[i].isOutsideView = true;
       }
     } else {
-      if (!isFolded) {
-        toggleFold();
+      if (isFolded) {
+        forgetManualPoking();
+      } else {
+        if (isManuallyNotPoked) {
+          toggleFold();
+        }
+        if (foldStates[i].isOutsideView === false) {
+          toggleFold();
+        }
       }
+      foldStates[i].isOutsideView = true;
     }
   }
 }

@@ -182,7 +182,7 @@ export default function tocMirror({
           foldStates.push(curFoldState);
 
           foldButton.addEventListener('click', () => {
-            if (autoFold && curFoldState.isFolded) {
+            if (autoFold) {
               curFoldState.isManuallyToggledFoldInAutoFold = true;
             }
             curFoldState.toggleFold();
@@ -313,8 +313,6 @@ export default function tocMirror({
 
     const reflect = setMirror(tocHolder);
 
-    let isContentOutOfViewLastTime: null | boolean = null;
-
     mirrorProps.reflectOnce = () => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
@@ -416,13 +414,10 @@ export default function tocMirror({
           anchors: anchorsToSectionsInView,
           isInside: true,
         });
-
-        isContentOutOfViewLastTime = false;
       } else {
         reflect({ isInside: false });
-        isContentOutOfViewLastTime = true;
       }
-      doAutoFold(foldStates, anchorsToSectionsInView);
+      doAutoFold(foldStates, anchorsToSectionsInView, tocHolder);
     };
 
     mirrorProps.reflectOnce();
