@@ -409,8 +409,10 @@ export default function tocMirror({
           height: foldable ? y2Min - y1Min : y2Max - y1Max,
           top: (foldable ? y1Min : y1Max) - tocHolderTop,
           bottom: (foldable ? y2Min : y2Max) - tocHolderTop,
-          isTopInAFold: y1Min < y1Max,
-          isBottomInAFold: y2Min < y2Max,
+          // Rounding is necssary because where they should be the same,
+          // there may be a very slight difference.
+          isTopInAFold: Math.round(y1Min) < Math.round(y1Max),
+          isBottomInAFold: Math.round(y2Min) < Math.round(y2Max),
           anchors: anchorsToSectionsInView,
           isInside: true,
         });
