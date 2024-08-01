@@ -1,5 +1,7 @@
 import { type FoldStates } from './fold-types.js';
 
+let wasOutside: null | boolean = null;
+
 export function doAutoFold(
   foldStates: FoldStates,
   anchorsToSectionsInView: HTMLAnchorElement[],
@@ -8,52 +10,33 @@ export function doAutoFold(
   for (let i = 0; i < foldStates.length; i++) {
     const { anchor, isFolded, toggleFold } = foldStates[i];
 
-    const isManuallyNotPoked = !foldStates[i].isManuallyToggledFoldInAutoFold;
-    const forgetManualPoking = () => {
+    const isManuallyNotToggled = !foldStates[i].isManuallyToggledFoldInAutoFold;
+    const forgetManualToggling = () => {
       foldStates[i].isManuallyToggledFoldInAutoFold = false;
     };
-    const wasOutsideView = () => foldStates[i].wasOutsideView === true;
-    const wasInsideView = () => foldStates[i].wasOutsideView === false;
-    const setWasOutsideView = (b: boolean) =>
-      (foldStates[i].wasOutsideView = b);
 
     if (anchorsToSectionsInView.length) {
       if (anchorsToSectionsInView.includes(anchor)) {
-        if (isManuallyNotPoked) {
-          if (isFolded) toggleFold();
-        } else if (wasOutsideView()) {
-          // means if it was not in view just before, do these:
-          if (isFolded) toggleFold();
-          forgetManualPoking();
-        }
-        setWasOutsideView(false);
-      } else if (ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)) {
         if (isFolded) {
-          if (isManuallyNotPoked) {
+          if (isManuallyNotToggled) toggleFold();
+          else if (wasOutside === true) {
             toggleFold();
-          } else if (wasOutsideView()) {
-            forgetManualPoking();
+            forgetManualToggling();
           }
         } else {
-          forgetManualPoking();
+          forgetManualToggling();
         }
-        setWasOutsideView(false); // I consider this inside view for sensible folding
+      } else if (ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)) {
       } else {
-        if (!isFolded && isManuallyNotPoked) toggleFold();
-        setWasOutsideView(true);
       }
     } else {
-      if (isFolded) {
-        forgetManualPoking();
-      } else {
-        if (isManuallyNotPoked) {
-          toggleFold();
-        } else if (wasInsideView()) {
-          toggleFold();
-        }
-      }
-      setWasOutsideView(true);
     }
+  }
+
+  if (anchorsToSectionsInView.length) {
+    wasOutside = false;
+  } else {
+    wasOutside = true;
   }
 }
 
