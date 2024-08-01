@@ -5,7 +5,6 @@ export interface FoldState {
   foldableDiv: HTMLDivElement;
   anchor: HTMLAnchorElement;
   isManuallyToggledFoldInAutoFold: boolean;
-  wasOutsideView?: boolean;
 }
 
 export type FoldStates = FoldState[];
