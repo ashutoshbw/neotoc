@@ -28,8 +28,14 @@ export function doAutoFold(
         }
       } else if (ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)) {
       } else {
+        if (isFolded) {
+          forgetManualToggling();
+        } else if (isManuallyNotToggled) {
+          toggleFold();
+        }
       }
     } else {
+      if (!isFolded && isManuallyNotToggled) toggleFold();
     }
   }
 
