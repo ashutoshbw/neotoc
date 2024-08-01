@@ -27,6 +27,11 @@ export function doAutoFold(
           forgetManualToggling();
         }
       } else if (ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)) {
+        if (isFolded) {
+          if (isManuallyNotToggled) toggleFold();
+        } else {
+          forgetManualToggling();
+        }
       } else {
         if (isFolded) {
           forgetManualToggling();
@@ -34,16 +39,11 @@ export function doAutoFold(
           toggleFold();
         }
       }
-    } else {
-      if (!isFolded && isManuallyNotToggled) toggleFold();
-    }
+    } else if (isFolded) forgetManualToggling();
+    else if (isManuallyNotToggled) toggleFold();
   }
 
-  if (anchorsToSectionsInView.length) {
-    wasOutside = false;
-  } else {
-    wasOutside = true;
-  }
+  wasOutside = anchorsToSectionsInView.length ? false : true;
 }
 
 function getParentAnchorsInToc(
