@@ -1,7 +1,5 @@
 import { type FoldStates } from './fold-types.js';
 
-let wasOutside: null | boolean = null;
-
 export function doAutoFold(
   foldStates: FoldStates,
   anchorsToSectionsInView: HTMLAnchorElement[],
@@ -19,10 +17,6 @@ export function doAutoFold(
       if (anchorsToSectionsInView.includes(anchor)) {
         if (isFolded) {
           if (isManuallyNotToggled) toggleFold();
-          else if (wasOutside === true) {
-            toggleFold();
-            forgetManualToggling();
-          }
         } else {
           forgetManualToggling();
         }
@@ -42,8 +36,6 @@ export function doAutoFold(
     } else if (isFolded) forgetManualToggling();
     else if (isManuallyNotToggled) toggleFold();
   }
-
-  wasOutside = anchorsToSectionsInView.length ? false : true;
 }
 
 function getParentAnchorsInToc(
