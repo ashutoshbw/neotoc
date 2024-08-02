@@ -14,13 +14,10 @@ export function doAutoFold(
     };
 
     if (anchorsToSectionsInView.length) {
-      if (anchorsToSectionsInView.includes(anchor)) {
-        if (isFolded) {
-          if (isManuallyNotToggled) toggleFold();
-        } else {
-          forgetManualToggling();
-        }
-      } else if (ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)) {
+      if (
+        anchorsToSectionsInView.includes(anchor) ||
+        ifAncestorAnchor(anchor, anchorsToSectionsInView, tocHolder)
+      ) {
         if (isFolded) {
           if (isManuallyNotToggled) toggleFold();
         } else {
