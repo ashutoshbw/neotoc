@@ -14,9 +14,10 @@ const toc = tocMirror({
   marginBottom: 50,
   tocHolder,
   foldable: true,
+  foldButtonPos: 'end',
   autoFold: true,
   initialFoldLevel: 2,
-  fillFoldButton(isFolded) {
+  useAndFillFoldButton(isFolded) {
     if (isFolded) return '+';
     else return '-';
   },

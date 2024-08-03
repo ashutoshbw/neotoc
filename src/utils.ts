@@ -91,35 +91,62 @@ export function findScrollContainer(element: HTMLElement) {
   return document.documentElement;
 }
 
-function getParentFoldableDiv(
+function getClosestFoldableDiv(
   elt: HTMLAnchorElement | HTMLDivElement,
   foldableDivClass: string,
+  foldButtonUsed: boolean,
 ) {
   // it assumes elt is an anchor or foldable div that is inside generated toc
   // and that generated toc is in tocHolder
 
-  const greatGrandParent = elt.parentElement!.parentElement!.parentElement!;
+  let mayBeClosestFoldableDiv =
+    elt.parentElement!.parentElement!.parentElement!;
+  if (elt.tagName === 'A' && foldButtonUsed)
+    mayBeClosestFoldableDiv = mayBeClosestFoldableDiv.parentElement!;
 
-  if (greatGrandParent.classList.contains(foldableDivClass)) {
-    return greatGrandParent as HTMLDivElement;
+  if (mayBeClosestFoldableDiv.classList.contains(foldableDivClass)) {
+    return mayBeClosestFoldableDiv as HTMLDivElement;
   } else {
     return null;
   }
 }
 
-export function getDeepFoldableDivs(
+export function getAncestors(
   anchor: HTMLAnchorElement,
   foldableDivClass: string,
-) {
-  const result: HTMLDivElement[] = [];
-  let parent = getParentFoldableDiv(anchor, foldableDivClass);
+  foldButtonUsed: boolean,
+  foldButtonPos: 'start' | 'end',
+): [HTMLDivElement[], HTMLAnchorElement[]] {
+  const ancestorDivs: HTMLDivElement[] = [];
+  const ancestorAnchors: HTMLAnchorElement[] = [];
+  let ancestorDiv = getClosestFoldableDiv(
+    anchor,
+    foldableDivClass,
+    foldButtonUsed,
+  );
 
-  while (parent) {
-    result.push(parent);
-    parent = getParentFoldableDiv(parent, foldableDivClass);
+  while (ancestorDiv) {
+    ancestorDivs.push(ancestorDiv);
+
+    if (foldButtonUsed) {
+      const anchorSpan = ancestorDiv.previousSibling! as HTMLSpanElement;
+      const ancestorAnchor =
+        foldButtonPos == 'start'
+          ? (anchorSpan.lastChild! as HTMLAnchorElement)
+          : (anchorSpan.firstChild! as HTMLAnchorElement);
+      ancestorAnchors.push(ancestorAnchor);
+    } else {
+      ancestorAnchors.push(ancestorDiv.previousSibling! as HTMLAnchorElement);
+    }
+
+    ancestorDiv = getClosestFoldableDiv(
+      ancestorDiv,
+      foldableDivClass,
+      foldButtonUsed,
+    );
   }
 
-  return result;
+  return [ancestorDivs, ancestorAnchors];
 }
 
 export function calculateYBasedOnFolding(

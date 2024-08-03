@@ -3,7 +3,7 @@ import {
   fillElt,
   getViewportYSize,
   findScrollContainer,
-  getDeepFoldableDivs,
+  getAncestors,
   calculateYBasedOnFolding,
 } from './utils.js';
 
@@ -48,7 +48,7 @@ interface Options {
   foldButtonClass?: string;
   foldButtonFoldedClass?: string;
   foldButtonPos?: 'start' | 'end';
-  fillFoldButton: (isFolded: boolean) => string | Node;
+  useAndFillFoldButton?: (isFolded: boolean) => string | Node;
   foldableDivClass?: string;
   foldableDivFoldedClass?: string;
   initialFoldLevel?: number;
@@ -75,7 +75,7 @@ export default function tocMirror({
   foldButtonFoldedClass,
   foldableDivClass = 'tm-foldable-div',
   foldableDivFoldedClass = 'tm-foldable-div-folded',
-  fillFoldButton,
+  useAndFillFoldButton,
   initialFoldLevel = 6,
   autoFold = false,
   handleFoldStatusChange,
@@ -91,9 +91,13 @@ export default function tocMirror({
   // caches below:
   const idToAnchorMap: { [x: string]: HTMLAnchorElement } = {};
 
-  const anchorToDeepFoldableDivsMap = new Map<
+  const anchorToAncestorFoldableDivsMap = new Map<
     HTMLAnchorElement,
     HTMLDivElement[]
+  >();
+  const anchorToAncestorAnchorsMap = new Map<
+    HTMLAnchorElement,
+    HTMLAnchorElement[]
   >();
 
   function genToc(
@@ -112,10 +116,13 @@ export default function tocMirror({
       const h = headings[i];
       const li = elt<HTMLLIElement>('li', liClass);
       const anchor = elt<HTMLAnchorElement>('a', anchorClass);
+      const anchorSpan = elt<HTMLSpanElement>('span'); // only used when there is fold button
       anchor.href = `#${h.id}`;
       fillElt(anchor, fillAnchor(h, order));
 
-      li.append(anchor);
+      if (useAndFillFoldButton) anchorSpan.append(anchor);
+      li.append(useAndFillFoldButton ? anchorSpan : anchor);
+
       idToAnchorMap[h.id] = anchor;
 
       const subHeadings = [];
@@ -145,18 +152,21 @@ export default function tocMirror({
           const foldButton = elt<HTMLButtonElement>('button', foldButtonClass);
           const foldableDiv = elt<HTMLDivElement>('div', foldableDivClass);
           const isFolded = curHeadingLevel >= initialFoldLevel;
-          fillElt(foldButton, fillFoldButton(isFolded));
 
-          if (isFolded) {
-            foldableDiv.classList.add(foldableDivFoldedClass);
-            if (foldButtonFoldedClass) {
+          if (isFolded) foldableDiv.classList.add(foldableDivFoldedClass);
+
+          if (useAndFillFoldButton) {
+            fillElt(foldButton, useAndFillFoldButton(isFolded));
+
+            if (isFolded && foldButtonFoldedClass) {
               foldButton.classList.add(foldButtonFoldedClass);
             }
+
+            foldButtonPos == 'start'
+              ? anchorSpan.prepend(foldButton)
+              : anchorSpan.append(foldButton);
           }
 
-          foldButtonPos == 'start'
-            ? li.prepend(foldButton)
-            : li.append(foldButton);
           foldableDiv.append(nestedListContainer);
           li.append(foldableDiv);
 
@@ -167,10 +177,15 @@ export default function tocMirror({
               curFoldState.isFolded = !curFoldState.isFolded;
 
               foldableDiv.classList.toggle(foldableDivFoldedClass);
-              if (foldButtonFoldedClass) {
-                foldButton.classList.toggle(foldButtonFoldedClass);
-              } else {
-                fillElt(foldButton, fillFoldButton(curFoldState.isFolded));
+              if (useAndFillFoldButton) {
+                if (foldButtonFoldedClass) {
+                  foldButton.classList.toggle(foldButtonFoldedClass);
+                } else {
+                  fillElt(
+                    foldButton,
+                    useAndFillFoldButton(curFoldState.isFolded),
+                  );
+                }
               }
               checkForFoldStatusChange(handleFoldStatusChange);
             },
@@ -294,14 +309,16 @@ export default function tocMirror({
   tocHolder.append(toc);
 
   if (foldable) {
-    toc
-      .querySelectorAll<HTMLAnchorElement>('a')
-      .forEach((a) =>
-        anchorToDeepFoldableDivsMap.set(
-          a,
-          getDeepFoldableDivs(a, foldableDivClass),
-        ),
+    toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
+      const [divs, anchors] = getAncestors(
+        a,
+        foldableDivClass,
+        !!useAndFillFoldButton, // make it a boolean equivalent
+        foldButtonPos,
       );
+      anchorToAncestorFoldableDivsMap.set(a, divs);
+      anchorToAncestorAnchorsMap.set(a, anchors);
+    });
   }
 
   // Since there is toc, there is heading with more than 0 items.
@@ -383,7 +400,8 @@ export default function tocMirror({
         let y2Min: number = y2Max;
 
         if (foldable) {
-          const deepFoldableDivsForA1 = anchorToDeepFoldableDivsMap.get(a1)!;
+          const deepFoldableDivsForA1 =
+            anchorToAncestorFoldableDivsMap.get(a1)!;
           y1Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y1Max);
           y2Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y2Max);
         }
@@ -397,7 +415,7 @@ export default function tocMirror({
 
           if (foldable) {
             y2Min = calculateYBasedOnFolding(
-              anchorToDeepFoldableDivsMap.get(a2)!,
+              anchorToAncestorFoldableDivsMap.get(a2)!,
               y2Max,
             );
           }
@@ -419,7 +437,11 @@ export default function tocMirror({
       } else {
         reflect({ isInside: false });
       }
-      doAutoFold(foldStates, anchorsToSectionsInView, tocHolder);
+      doAutoFold(
+        foldStates,
+        anchorsToSectionsInView,
+        anchorToAncestorAnchorsMap,
+      );
     };
 
     mirrorProps.reflectOnce();
