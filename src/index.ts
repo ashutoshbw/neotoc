@@ -28,9 +28,10 @@ type OutlineMarkerProps =
       isInside: false;
     };
 
-type MirrorFunc = (
-  tocHolder: HTMLElement,
-) => (outlineMakerProps: OutlineMarkerProps) => void;
+type MirrorFunc = (props: {
+  tocHolder: HTMLElement;
+  foldButtonPos: 'start' | 'end';
+}) => (outlineMakerProps: OutlineMarkerProps) => void;
 
 interface Options {
   contentHolder?: HTMLElement;
@@ -44,6 +45,7 @@ interface Options {
   liContainerClass?: string;
   liClass?: string;
   anchorClass?: string;
+  spanClass?: string;
   foldable?: boolean;
   foldButtonClass?: string;
   foldButtonFoldedClass?: string;
@@ -67,6 +69,7 @@ export default function tocMirror({
   liContainerClass = 'tm-li-container',
   liClass,
   anchorClass = 'tm-anchor',
+  spanClass = 'tm-span',
   fillAnchor,
   listType = 'ul',
   foldable = false,
@@ -116,7 +119,7 @@ export default function tocMirror({
       const h = headings[i];
       const li = elt<HTMLLIElement>('li', liClass);
       const anchor = elt<HTMLAnchorElement>('a', anchorClass);
-      const anchorSpan = elt<HTMLSpanElement>('span'); // only used when there is fold button
+      const anchorSpan = elt<HTMLSpanElement>('span', spanClass); // only used when there is fold button
       anchor.href = `#${h.id}`;
       fillElt(anchor, fillAnchor(h, order));
 
@@ -328,7 +331,7 @@ export default function tocMirror({
   if (setMirror) {
     const scrollContainer = findScrollContainer(contentHolder);
 
-    const reflect = setMirror(tocHolder);
+    const reflect = setMirror({ tocHolder, foldButtonPos });
 
     mirrorProps.reflectOnce = () => {
       const [viewportTop, viewportBottom] = getViewportYSize(
@@ -385,7 +388,8 @@ export default function tocMirror({
 
       if (anchorsToSectionsInView.length) {
         const a1 = anchorsToSectionsInView[0];
-        const rect1 = a1.getBoundingClientRect();
+        const i1 = useAndFillFoldButton ? a1.parentElement! : a1; // i1 is either the wrapping span(when fold button used) or the anchor
+        const rect1 = i1.getBoundingClientRect();
 
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
@@ -409,7 +413,9 @@ export default function tocMirror({
         if (anchorsToSectionsInView.length > 1) {
           const a2 =
             anchorsToSectionsInView[anchorsToSectionsInView.length - 1];
-          const rect2 = a2.getBoundingClientRect();
+          const i2 = useAndFillFoldButton ? a2.parentElement! : a2;
+
+          const rect2 = i2.getBoundingClientRect();
 
           y2Max = rect2.top + rect2.height * intersectionRatioOfLastSection!;
 

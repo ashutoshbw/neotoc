@@ -1,7 +1,3 @@
-.tm-anchor {
-  text-decoration: none;
-}
-
 .tm-li-container {
   list-style-type: none;
   padding: 0;
@@ -38,6 +34,22 @@
   overflow: hidden;
   grid-row: 1 / span 2;
   margin-top: -1px;
+}
+
+.tm-span {
+  display: flex;
+}
+
+.tm-fold-btn {
+  align-self: flex-start;
+}
+
+.tm-anchor {
+  text-decoration: none;
+}
+
+.tm-span:hover {
+  background: #888;
 }
 
 /* custom styles below */

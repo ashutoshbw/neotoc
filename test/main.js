@@ -44,7 +44,7 @@ const toc = tocMirror({
       console.log(foldStatus);
     }
   },
-  setMirror(tocHolder) {
+  setMirror({ tocHolder, foldButtonPos }) {
     let outlineMarker = document.createElement('div');
     let outlineMarkerTop = document.createElement('div');
     let outlineMarkerBottom = document.createElement('div');
@@ -69,7 +69,6 @@ const toc = tocMirror({
 
         outlineMarkerTop.style.zIndex = isTopInAFold ? '1' : '';
         outlineMarkerBottom.style.zIndex = isBottomInAFold ? '1' : '';
-        // console.log(anchors);
       } else {
         outlineMarker.style.display = 'none';
       }
