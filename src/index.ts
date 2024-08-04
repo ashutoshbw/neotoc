@@ -446,14 +446,13 @@ export default function tocMirror({
       } else {
         reflect({ isInside: false });
       }
-      doAutoFold(
-        foldStates,
-        anchorsToSectionsInView,
-        anchorToAncestorAnchorsMap,
-      );
+      if (foldable && autoFold)
+        doAutoFold(
+          foldStates,
+          anchorsToSectionsInView,
+          anchorToAncestorAnchorsMap,
+        );
     };
-
-    mirrorProps.reflectOnce();
 
     let rafNum: number;
 
