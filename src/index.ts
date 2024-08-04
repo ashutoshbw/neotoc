@@ -422,10 +422,10 @@ export default function tocMirror({
         let y2Min: number = 0;
 
         if (foldable) {
-          const deepFoldableDivsForA1 =
+          const ancestorFoldableDivsForA1 =
             anchorToAncestorFoldableDivsMap.get(a1)!;
-          y1Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y1Max);
-          y2Min = calculateYBasedOnFolding(deepFoldableDivsForA1, y2Max);
+          y1Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y1Max);
+          y2Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y2Max);
         }
 
         if (anchorsToSectionsInView.length > 1) {

@@ -13,7 +13,7 @@ const toc = tocMirror({
   marginTop: 50,
   marginBottom: 50,
   tocHolder,
-  foldable: false,
+  foldable: true,
   foldButtonPos: 'end',
   autoFold: true,
   initialFoldLevel: 2,
@@ -72,6 +72,7 @@ const toc = tocMirror({
       } else {
         outlineMarker.style.display = 'none';
       }
+      // console.log(props.isInside);
     };
   },
 });
