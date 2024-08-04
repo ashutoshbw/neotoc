@@ -333,6 +333,15 @@ export default function tocMirror({
 
     const reflect = setMirror({ tocHolder, foldButtonPos });
 
+    let lastTop: null | number = null;
+    let lastBottom: null | number = null;
+    let top: null | number;
+    let bottom: null | number;
+
+    const callIfTopOrBottomChanges = (cb: () => void) => {
+      if (top !== lastTop || bottom !== lastBottom) cb();
+    };
+
     mirrorProps.reflectOnce = () => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
@@ -340,10 +349,20 @@ export default function tocMirror({
         marginBottom,
       );
 
-      const anchorsToSectionsInView = [];
+      const anchorsToSectionsInView: HTMLAnchorElement[] = [];
       let intersectionRatioOfFirstSection: null | number = null;
       let intersectionRatioOfLastSection: null | number = null;
       let topOffsetRatio: null | number = null;
+
+      const doAutoFoldIfAllowed = () => {
+        if (foldable && autoFold) {
+          doAutoFold(
+            foldStates,
+            anchorsToSectionsInView,
+            anchorToAncestorAnchorsMap,
+          );
+        }
+      };
 
       for (let i = 0; i < headings.length; i++) {
         const curH = headings[i];
@@ -428,30 +447,40 @@ export default function tocMirror({
 
         const tocHolderTop = tocHolder.getBoundingClientRect().top;
 
-        reflect({
-          height: foldable ? y2Min - y1Min : y2Max - y1Max,
-          top: (foldable ? y1Min : y1Max) - tocHolderTop,
-          bottom: (foldable ? y2Min : y2Max) - tocHolderTop,
-          // Rounding is necssary because where they should be the same,
-          // there may be a very slight difference.
-          isTopInAFold: foldable
-            ? Math.round(y1Min) < Math.round(y1Max)
-            : false,
-          isBottomInAFold: foldable
-            ? Math.round(y2Min) < Math.round(y2Max)
-            : false,
-          anchors: anchorsToSectionsInView,
-          isInside: true,
+        top = (foldable ? y1Min : y1Max) - tocHolderTop;
+        bottom = (foldable ? y2Min : y2Max) - tocHolderTop;
+
+        callIfTopOrBottomChanges(() => {
+          reflect({
+            height: foldable ? y2Min - y1Min : y2Max - y1Max,
+            top: top as number,
+            bottom: bottom as number,
+            // Rounding is necssary because where they should be the same,
+            // there may be a very slight difference.
+            isTopInAFold: foldable
+              ? Math.round(y1Min) < Math.round(y1Max)
+              : false,
+            isBottomInAFold: foldable
+              ? Math.round(y2Min) < Math.round(y2Max)
+              : false,
+            anchors: anchorsToSectionsInView,
+            isInside: true,
+          });
+          doAutoFoldIfAllowed();
         });
+
+        lastTop = top;
+        lastBottom = bottom;
       } else {
-        reflect({ isInside: false });
+        top = null;
+        bottom = null;
+        callIfTopOrBottomChanges(() => {
+          reflect({ isInside: false });
+          doAutoFoldIfAllowed();
+        });
+        lastTop = null;
+        lastBottom = null;
       }
-      if (foldable && autoFold)
-        doAutoFold(
-          foldStates,
-          anchorsToSectionsInView,
-          anchorToAncestorAnchorsMap,
-        );
     };
 
     let rafNum: number;
