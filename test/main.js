@@ -13,7 +13,7 @@ const toc = tocMirror({
   marginTop: 50,
   marginBottom: 50,
   tocHolder,
-  foldable: true,
+  foldable: false,
   foldButtonPos: 'end',
   autoFold: true,
   initialFoldLevel: 2,

@@ -395,13 +395,12 @@ export default function tocMirror({
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
 
         // The following initial assignment is safe.
-        // There are two resaons for this:
-        // 1. It helps to not use any ts comment to ignore error 2454 which would cause if you
-        //   didn't have any inital value here.
-        // 2. It helps shortening the the logic when used with greater than or less than
-        //   operator.
-        let y1Min: number = y1Max;
-        let y2Min: number = y2Max;
+        // There is only one reason for this:
+        // - It helps to not use any ts comment to ignore error 2454 which would
+        //   cause if you didn't have any inital value here. It doesn't really
+        //   matter what values you assign here.
+        let y1Min: number = 0;
+        let y2Min: number = 0;
 
         if (foldable) {
           const deepFoldableDivsForA1 =
@@ -435,8 +434,12 @@ export default function tocMirror({
           bottom: (foldable ? y2Min : y2Max) - tocHolderTop,
           // Rounding is necssary because where they should be the same,
           // there may be a very slight difference.
-          isTopInAFold: Math.round(y1Min) < Math.round(y1Max),
-          isBottomInAFold: Math.round(y2Min) < Math.round(y2Max),
+          isTopInAFold: foldable
+            ? Math.round(y1Min) < Math.round(y1Max)
+            : false,
+          isBottomInAFold: foldable
+            ? Math.round(y2Min) < Math.round(y2Max)
+            : false,
           anchors: anchorsToSectionsInView,
           isInside: true,
         });
