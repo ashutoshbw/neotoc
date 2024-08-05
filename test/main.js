@@ -14,9 +14,9 @@ const toc = tocMirror({
   marginBottom: 50,
   tocHolder,
   foldable: true,
-  foldButtonPos: 'end',
-  autoFold: true,
-  initialFoldLevel: 2,
+  foldButtonPos: 'start',
+  autoFold: false,
+  initialFoldLevel: 6,
   useAndFillFoldButton(isFolded) {
     if (isFolded) return '+';
     else return '-';
@@ -53,6 +53,7 @@ const toc = tocMirror({
     outlineMarkerBottom.className = 'outline-marker-bottom';
 
     outlineMarker.append(outlineMarkerTop, outlineMarkerBottom);
+    outlineMarker.style.display = 'none';
 
     tocHolder.append(outlineMarker);
     return (props) => {
