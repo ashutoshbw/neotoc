@@ -446,9 +446,19 @@ export default function tocMirror({
         }
 
         const tocHolderTop = tocHolder.getBoundingClientRect().top;
+        const scrolledY = tocHolder.scrollTop;
+        const borderTopWidth = tocHolder.clientTop;
 
-        top = (foldable ? y1Min : y1Max) - tocHolderTop;
-        bottom = (foldable ? y2Min : y2Max) - tocHolderTop;
+        top =
+          (foldable ? y1Min : y1Max) +
+          scrolledY -
+          tocHolderTop -
+          borderTopWidth;
+        bottom =
+          (foldable ? y2Min : y2Max) +
+          scrolledY -
+          tocHolderTop -
+          borderTopWidth;
 
         callIfTopOrBottomChanges(() => {
           reflect({

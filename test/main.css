@@ -38,6 +38,11 @@ article {
   background: #111;
   width: 240px;
   border: 1px solid yellow;
+  border-top: 50px solid yellow;
   padding: 1rem;
   position: relative;
+  height: 300px;
+  overflow-y: auto;
+  padding-top: 50px;
+  margin-top: 50px;
 }
