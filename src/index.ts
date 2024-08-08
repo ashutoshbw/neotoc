@@ -13,6 +13,7 @@ import {
   type FoldStatus,
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
+import { doAutoScroll } from './autoScroll.js';
 
 type OutlineMarkerProps =
   | {
@@ -449,22 +450,24 @@ export default function tocMirror({
         const scrolledY = tocHolder.scrollTop;
         const borderTopWidth = tocHolder.clientTop;
 
-        top =
+        top = Math.round(
           (foldable ? y1Min : y1Max) +
-          scrolledY -
-          tocHolderTop -
-          borderTopWidth;
-        bottom =
+            scrolledY -
+            tocHolderTop -
+            borderTopWidth,
+        );
+        bottom = Math.round(
           (foldable ? y2Min : y2Max) +
-          scrolledY -
-          tocHolderTop -
-          borderTopWidth;
+            scrolledY -
+            tocHolderTop -
+            borderTopWidth,
+        );
 
         callIfTopOrBottomChanges(() => {
           reflect({
             height: foldable ? y2Min - y1Min : y2Max - y1Max,
-            top: top as number,
-            bottom: bottom as number,
+            top: top!,
+            bottom: bottom!,
             // Rounding is necssary because where they should be the same,
             // there may be a very slight difference.
             isTopInAFold: foldable
@@ -477,6 +480,7 @@ export default function tocMirror({
             isInside: true,
           });
           doAutoFoldIfAllowed();
+          doAutoScroll(tocHolder, top!, bottom!, 50);
         });
 
         lastTop = top;

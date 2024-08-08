@@ -43,6 +43,7 @@ article {
   position: relative;
   height: 300px;
   overflow-y: auto;
-  padding-top: 50px;
+  padding-block: 20px;
   margin-top: 50px;
+  overscroll-behavior: contain;
 }
