@@ -13,7 +13,11 @@ import {
   type FoldStatus,
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
-import { doAutoScroll } from './autoScroll.js';
+import {
+  type ScrollInfo,
+  doAutoScroll,
+  updateScrollInfo,
+} from './autoScroll.js';
 
 type OutlineMarkerProps =
   | {
@@ -43,6 +47,8 @@ interface Options {
   fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
   listType?: 'ul' | 'ol';
   autoFold?: boolean;
+  autoScroll?: boolean;
+  autoScrollOffset?: number;
   liContainerClass?: string;
   liClass?: string;
   anchorClass?: string;
@@ -58,6 +64,11 @@ interface Options {
   handleFoldStatusChange: (foldStatus: FoldStatus) => void;
   setMirror?: MirrorFunc;
 }
+
+const scrollInfo: ScrollInfo = {
+  topScrollNeeded: true,
+  bottomScrollNeeded: true,
+};
 
 export default function tocMirror({
   // About contentHolder: By default it is first heading's parent element,
@@ -82,6 +93,8 @@ export default function tocMirror({
   useAndFillFoldButton,
   initialFoldLevel = 6,
   autoFold = false,
+  autoScroll = false,
+  autoScrollOffset = 20,
   handleFoldStatusChange,
   setMirror,
 }: Options) {
@@ -464,6 +477,15 @@ export default function tocMirror({
         );
 
         callIfTopOrBottomChanges(() => {
+          if (autoScroll) {
+            doAutoScroll(
+              tocHolder,
+              top!,
+              bottom!,
+              autoScrollOffset,
+              scrollInfo,
+            );
+          }
           reflect({
             height: foldable ? y2Min - y1Min : y2Max - y1Max,
             top: top!,
@@ -480,8 +502,16 @@ export default function tocMirror({
             isInside: true,
           });
           doAutoFoldIfAllowed();
-          doAutoScroll(tocHolder, top!, bottom!, 50);
         });
+        if (autoScroll) {
+          updateScrollInfo(
+            tocHolder,
+            top!,
+            bottom!,
+            autoScrollOffset,
+            scrollInfo,
+          );
+        }
 
         lastTop = top;
         lastBottom = bottom;

@@ -62,6 +62,7 @@
   width: var(--width);
   height: 0px;
   left: 5px;
+  /* transition: 50ms; */
 }
 
 .outline-marker-bottom {

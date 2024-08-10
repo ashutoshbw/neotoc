@@ -46,4 +46,5 @@ article {
   padding-block: 20px;
   margin-top: 50px;
   overscroll-behavior: contain;
+  /* scroll-behavior: smooth; */
 }
