@@ -17,6 +17,7 @@ import {
   type ScrollInfo,
   doAutoScroll,
   updateScrollInfo,
+  scrollIntoViewIfNeeded,
 } from './autoScroll.js';
 
 type OutlineMarkerProps =
@@ -49,6 +50,7 @@ interface Options {
   autoFold?: boolean;
   autoScroll?: boolean;
   autoScrollOffset?: number;
+  autoScrollDuration?: number;
   liContainerClass?: string;
   liClass?: string;
   anchorClass?: string;
@@ -66,8 +68,14 @@ interface Options {
 }
 
 const scrollInfo: ScrollInfo = {
-  topScrollNeeded: true,
-  bottomScrollNeeded: true,
+  upScrollNeeded: true,
+  downScrollNeeded: true,
+  bigUpScrollNeeded: false,
+  bigDownScrollNeeded: false,
+  bigTopOverflow: 0,
+  bigBottomOverflow: 0,
+  scrollDir: 'down',
+  timeLeft: 0,
 };
 
 export default function tocMirror({
@@ -95,10 +103,12 @@ export default function tocMirror({
   autoFold = false,
   autoScroll = false,
   autoScrollOffset = 20,
+  autoScrollDuration = 1000,
   handleFoldStatusChange,
   setMirror,
 }: Options) {
   if (autoFold) initialFoldLevel = 1;
+  scrollInfo.timeLeft = autoScrollDuration;
 
   const foldStates: FoldStates = [];
 
@@ -477,6 +487,17 @@ export default function tocMirror({
         );
 
         callIfTopOrBottomChanges(() => {
+          // TODO: May be you need to do the top bottom calc based on y1Max and y2Max
+          if (lastTop !== null && lastBottom !== null) {
+            const topDiff = top! - lastTop;
+            const bottomDiff = bottom! - lastBottom;
+            if (topDiff > 0 || bottomDiff > 0) {
+              scrollInfo.scrollDir = 'down';
+            } else if (topDiff < 0 || bottomDiff < 0) {
+              scrollInfo.scrollDir = 'up';
+            }
+          }
+
           if (autoScroll) {
             doAutoScroll(
               tocHolder,
@@ -504,6 +525,7 @@ export default function tocMirror({
           doAutoFoldIfAllowed();
         });
         if (autoScroll) {
+          scrollIntoViewIfNeeded(tocHolder, scrollInfo, false);
           updateScrollInfo(
             tocHolder,
             top!,
