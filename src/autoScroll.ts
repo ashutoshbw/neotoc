@@ -36,7 +36,10 @@ export function doAutoScroll(
     }
   }
 
-  if (scrollInfo.bigUpScrollNeeded || scrollInfo.bigDownScrollNeeded) {
+  if (
+    (scrollInfo.bigUpScrollNeeded && scrollInfo.scrollDir == 'up') ||
+    (scrollInfo.bigDownScrollNeeded && scrollInfo.scrollDir == 'down')
+  ) {
     // TODO: only do if smooth scrolling enabled, may be
     scrollInfo.isScrolling = true;
   }
@@ -64,21 +67,25 @@ export function scrollIntoViewIfNeeded(
       if (scrollInfo.isScrolling) {
         if (scrollInfo.timeLeft > 0) {
           const timeDiff = curTimestamp - lastTimestamp;
-          if (scrollInfo.bigUpScrollNeeded && scrollInfo.bigDownScrollNeeded) {
-            // TODO
-          } else if (scrollInfo.bigUpScrollNeeded) {
+          if (scrollInfo.bigUpScrollNeeded && scrollInfo.scrollDir == 'up') {
             scrollInfo.bigTopOverflow = topBoundary - outlineMarkerTop;
             const distanceToBeScrolled =
               (scrollInfo.bigTopOverflow / scrollInfo.timeLeft) * timeDiff;
             tocHolder.scrollTop = curScrollTop - distanceToBeScrolled;
             scrollInfo.timeLeft = scrollInfo.timeLeft - timeDiff;
-          } else if (scrollInfo.bigDownScrollNeeded) {
+            // console.log('top', distanceToBeScrolled);
+          }
+
+          if (
+            scrollInfo.bigDownScrollNeeded &&
+            scrollInfo.scrollDir == 'down'
+          ) {
             scrollInfo.bigBottomOverflow = outlineMarkerBottom - bottomBoundary;
             const distanceToBeScrolled =
               (scrollInfo.bigBottomOverflow / scrollInfo.timeLeft) * timeDiff;
             tocHolder.scrollTop = curScrollTop + distanceToBeScrolled;
             scrollInfo.timeLeft = scrollInfo.timeLeft - timeDiff;
-            console.log(scrollInfo.bigBottomOverflow, scrollInfo.timeLeft);
+            // console.log('bottom', distanceToBeScrolled);
           }
         } else {
           scrollInfo.timeLeft = autoScrollDuration;
@@ -114,26 +121,31 @@ export function updateScrollInfo(
   const bottomBoundary = curScrollTop + tocHolderInnerHeight - offset;
 
   // because of manually scrolling the tocHolder
-  if (scrollInfo.bigUpScrollNeeded == false) {
-    if (outlineMarkerTop < topBoundary) {
-      scrollInfo.upScrollNeeded = false;
-      if (outlineMarkerTop <= curScrollTop) {
-        scrollInfo.bigUpScrollNeeded = true;
-      }
-    } else {
-      scrollInfo.upScrollNeeded = true;
-    }
+  // if (scrollInfo.bigUpScrollNeeded == false) {
+  if (outlineMarkerTop < topBoundary) {
+    scrollInfo.upScrollNeeded = false;
+    scrollInfo.bigUpScrollNeeded = true;
+    // console.log('set up true');
+  } else {
+    scrollInfo.upScrollNeeded = true;
   }
+  // }
 
   // because of manually scrolling the tocHolder
-  if (scrollInfo.bigDownScrollNeeded == false) {
-    if (outlineMarkerBottom > bottomBoundary) {
-      scrollInfo.downScrollNeeded = false;
-      if (outlineMarkerBottom >= curScrollTop + tocHolderInnerHeight) {
-        scrollInfo.bigDownScrollNeeded = true;
-      }
-    } else {
-      scrollInfo.downScrollNeeded = true;
-    }
+  // if (scrollInfo.bigDownScrollNeeded == false) {
+  if (outlineMarkerBottom > bottomBoundary) {
+    scrollInfo.downScrollNeeded = false;
+    scrollInfo.bigDownScrollNeeded = true;
+    // console.log('set down true');
+  } else {
+    scrollInfo.downScrollNeeded = true;
   }
+  // }
+
+  // console.log(
+  //   'isScrolling',
+  //   scrollInfo.isScrolling,
+  //   scrollInfo.bigUpScrollNeeded,
+  //   scrollInfo.bigDownScrollNeeded,
+  // );
 }
