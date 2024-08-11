@@ -76,6 +76,7 @@ const scrollInfo: ScrollInfo = {
   bigBottomOverflow: 0,
   scrollDir: 'down',
   timeLeft: 0,
+  isScrolling: false,
 };
 
 export default function tocMirror({
@@ -326,7 +327,7 @@ export default function tocMirror({
   if (foldable) checkForFoldStatusChange(handleFoldStatusChange);
 
   interface MirrorProps {
-    reflectOnce: () => void;
+    reflectOnce: (curTimestamp: number, lastTimestamp: null | number) => void;
     startReflection: () => void;
     stopReflection: () => void;
   }
@@ -366,7 +367,7 @@ export default function tocMirror({
       if (top !== lastTop || bottom !== lastBottom) cb();
     };
 
-    mirrorProps.reflectOnce = () => {
+    mirrorProps.reflectOnce = (curTimestamp, lastTimestamp) => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
         marginTop,
@@ -525,7 +526,17 @@ export default function tocMirror({
           doAutoFoldIfAllowed();
         });
         if (autoScroll) {
-          scrollIntoViewIfNeeded(tocHolder, scrollInfo, false);
+          scrollIntoViewIfNeeded(
+            tocHolder,
+            scrollInfo,
+            true,
+            curTimestamp,
+            lastTimestamp,
+            autoScrollDuration,
+            top!,
+            bottom!,
+            autoScrollOffset,
+          );
           updateScrollInfo(
             tocHolder,
             top!,
@@ -551,10 +562,10 @@ export default function tocMirror({
 
     let rafNum: number;
 
-    let previousTime: number;
+    let previousTime: number | null = null;
     const step = (timestamp: number) => {
       if (previousTime !== timestamp) {
-        mirrorProps.reflectOnce();
+        mirrorProps.reflectOnce(timestamp, previousTime);
       }
 
       previousTime = timestamp;
