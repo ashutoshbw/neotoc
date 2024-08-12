@@ -13,12 +13,7 @@ import {
   type FoldStatus,
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
-import {
-  type ScrollInfo,
-  doAutoScroll,
-  updateScrollInfo,
-  scrollIntoViewIfNeeded,
-} from './autoScroll.js';
+import { type ScrollInfo } from './autoScroll.js';
 
 type OutlineMarkerProps =
   | {
@@ -68,15 +63,7 @@ interface Options {
 }
 
 const scrollInfo: ScrollInfo = {
-  upScrollNeeded: true,
-  downScrollNeeded: true,
-  bigUpScrollNeeded: false,
-  bigDownScrollNeeded: false,
-  bigTopOverflow: 0,
-  bigBottomOverflow: 0,
   scrollDir: 'down',
-  timeLeft: 0,
-  isScrolling: false,
 };
 
 export default function tocMirror({
@@ -109,7 +96,6 @@ export default function tocMirror({
   setMirror,
 }: Options) {
   if (autoFold) initialFoldLevel = 1;
-  scrollInfo.timeLeft = autoScrollDuration;
 
   const foldStates: FoldStates = [];
 
@@ -499,15 +485,6 @@ export default function tocMirror({
             }
           }
 
-          if (autoScroll) {
-            doAutoScroll(
-              tocHolder,
-              top!,
-              bottom!,
-              autoScrollOffset,
-              scrollInfo,
-            );
-          }
           reflect({
             height: foldable ? y2Min - y1Min : y2Max - y1Max,
             top: top!,
@@ -525,26 +502,6 @@ export default function tocMirror({
           });
           doAutoFoldIfAllowed();
         });
-        if (autoScroll) {
-          scrollIntoViewIfNeeded(
-            tocHolder,
-            scrollInfo,
-            true,
-            curTimestamp,
-            lastTimestamp,
-            autoScrollDuration,
-            top!,
-            bottom!,
-            autoScrollOffset,
-          );
-          updateScrollInfo(
-            tocHolder,
-            top!,
-            bottom!,
-            autoScrollOffset,
-            scrollInfo,
-          );
-        }
 
         lastTop = top;
         lastBottom = bottom;
