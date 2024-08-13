@@ -13,7 +13,7 @@ import {
   type FoldStatus,
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
-import { type ScrollInfo } from './autoScroll.js';
+import { type ScrollState } from './autoScroll.js';
 
 type OutlineMarkerProps =
   | {
@@ -62,8 +62,8 @@ interface Options {
   setMirror?: MirrorFunc;
 }
 
-const scrollInfo: ScrollInfo = {
-  scrollDir: 'down',
+const scrollState: ScrollState = {
+  dir: null,
 };
 
 export default function tocMirror({
@@ -479,28 +479,29 @@ export default function tocMirror({
             const topDiff = top! - lastTop;
             const bottomDiff = bottom! - lastBottom;
             if (topDiff > 0 || bottomDiff > 0) {
-              scrollInfo.scrollDir = 'down';
+              scrollState.dir = 'down';
             } else if (topDiff < 0 || bottomDiff < 0) {
-              scrollInfo.scrollDir = 'up';
+              scrollState.dir = 'up';
             }
           }
 
-          reflect({
-            height: foldable ? y2Min - y1Min : y2Max - y1Max,
-            top: top!,
-            bottom: bottom!,
-            // Rounding is necssary because where they should be the same,
-            // there may be a very slight difference.
-            isTopInAFold: foldable
-              ? Math.round(y1Min) < Math.round(y1Max)
-              : false,
-            isBottomInAFold: foldable
-              ? Math.round(y2Min) < Math.round(y2Max)
-              : false,
-            anchors: anchorsToSectionsInView,
-            isInside: true,
-          });
           doAutoFoldIfAllowed();
+        });
+
+        reflect({
+          height: foldable ? y2Min - y1Min : y2Max - y1Max,
+          top: top!,
+          bottom: bottom!,
+          // Rounding is necssary because where they should be the same,
+          // there may be a very slight difference.
+          isTopInAFold: foldable
+            ? Math.round(y1Min) < Math.round(y1Max)
+            : false,
+          isBottomInAFold: foldable
+            ? Math.round(y2Min) < Math.round(y2Max)
+            : false,
+          anchors: anchorsToSectionsInView,
+          isInside: true,
         });
 
         lastTop = top;
