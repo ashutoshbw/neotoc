@@ -13,7 +13,11 @@ import {
   type FoldStatus,
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
-import { type ScrollState } from './autoScroll.js';
+import {
+  doAutoScroll,
+  updateScrollState,
+  type ScrollState,
+} from './autoScroll.js';
 
 type OutlineMarkerProps =
   | {
@@ -64,6 +68,8 @@ interface Options {
 
 const scrollState: ScrollState = {
   yMaxDir: null,
+  wasTopEndAboveTopBoundary: null,
+  wasBottomEndBelowBottomBoundary: null,
 };
 
 export default function tocMirror({
@@ -344,13 +350,17 @@ export default function tocMirror({
 
     const reflect = setMirror({ tocHolder, foldButtonPos });
 
-    let lastY1Max: null | number = null;
-    let lastY2Max: null | number = null;
-    let curY1Max: null | number = null;
-    let curY2Max: null | number = null;
+    let lastTopInUnfoldedState: null | number = null;
+    let lastBottomInUnfoldedState: null | number = null;
+    let topInUnfoldedState: null | number = null;
+    let bottomInUnfoldedState: null | number = null;
 
     const handleYMaxChange = (cb: () => void) => {
-      if (curY1Max !== lastY1Max || curY2Max !== lastY2Max) cb();
+      if (
+        topInUnfoldedState !== lastTopInUnfoldedState ||
+        bottomInUnfoldedState !== lastBottomInUnfoldedState
+      )
+        cb();
     };
 
     mirrorProps.reflectOnce = (curTimestamp, lastTimestamp) => {
@@ -473,12 +483,21 @@ export default function tocMirror({
             borderTopWidth,
         );
 
-        curY1Max = y1Max;
-        curY2Max = y2Max;
+        topInUnfoldedState = Math.round(
+          y1Max + scrolledY - tocHolderTop - borderTopWidth,
+        );
+        bottomInUnfoldedState = Math.round(
+          y2Max + scrolledY - tocHolderTop - borderTopWidth,
+        );
+
         handleYMaxChange(() => {
-          if (lastY1Max !== null && lastY2Max !== null) {
-            const topDiff = curY1Max! - lastY1Max;
-            const bottomDiff = curY2Max! - lastY2Max;
+          if (
+            lastTopInUnfoldedState !== null &&
+            lastBottomInUnfoldedState !== null
+          ) {
+            const topDiff = topInUnfoldedState! - lastTopInUnfoldedState;
+            const bottomDiff =
+              bottomInUnfoldedState! - lastBottomInUnfoldedState;
             if (topDiff > 0 || bottomDiff > 0) {
               scrollState.yMaxDir = 'down';
             } else if (topDiff < 0 || bottomDiff < 0) {
@@ -487,7 +506,15 @@ export default function tocMirror({
           }
 
           doAutoFoldIfAllowed();
+          doAutoScroll(scrollState, tocHolder, top, bottom, autoScrollOffset);
         });
+        updateScrollState(
+          scrollState,
+          tocHolder,
+          top,
+          bottom,
+          autoScrollOffset,
+        );
 
         reflect({
           height: foldable ? y2Min - y1Min : y2Max - y1Max,
@@ -505,17 +532,17 @@ export default function tocMirror({
           isInside: true,
         });
 
-        lastY1Max = y1Max;
-        lastY2Max = y2Max;
+        lastTopInUnfoldedState = topInUnfoldedState;
+        lastBottomInUnfoldedState = bottomInUnfoldedState;
       } else {
-        curY1Max = null;
-        curY2Max = null;
+        topInUnfoldedState = null;
+        bottomInUnfoldedState = null;
         handleYMaxChange(() => {
           doAutoFoldIfAllowed();
         });
         reflect({ isInside: false });
-        lastY1Max = null;
-        lastY2Max = null;
+        lastTopInUnfoldedState = null;
+        lastBottomInUnfoldedState = null;
       }
     };
 
