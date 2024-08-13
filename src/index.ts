@@ -17,6 +17,7 @@ import {
   doAutoScroll,
   updateScrollState,
   type ScrollState,
+  type AutoScrollProps,
 } from './autoScroll.js';
 
 type OutlineMarkerProps =
@@ -490,6 +491,14 @@ export default function tocMirror({
           y2Max + scrolledY - tocHolderTop - borderTopWidth,
         );
 
+        const autoScrollProps: AutoScrollProps = {
+          state: scrollState,
+          tocHolder,
+          outlineMarkerTop: top,
+          outlineMarkerBottom: bottom,
+          offset: autoScrollOffset,
+        };
+
         runIfTopOrBottomChangesInUnfoldedState(() => {
           if (
             lastTopInUnfoldedState !== null &&
@@ -506,15 +515,9 @@ export default function tocMirror({
           }
 
           doAutoFoldIfAllowed();
-          doAutoScroll(scrollState, tocHolder, top, bottom, autoScrollOffset);
+          doAutoScroll(autoScrollProps);
         });
-        updateScrollState(
-          scrollState,
-          tocHolder,
-          top,
-          bottom,
-          autoScrollOffset,
-        );
+        updateScrollState(autoScrollProps);
 
         reflect({
           height: foldable ? y2Min - y1Min : y2Max - y1Max,
