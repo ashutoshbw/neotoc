@@ -355,7 +355,7 @@ export default function tocMirror({
     let topInUnfoldedState: null | number = null;
     let bottomInUnfoldedState: null | number = null;
 
-    const handleYMaxChange = (cb: () => void) => {
+    const runIfTopOrBottomChangesInUnfoldedState = (cb: () => void) => {
       if (
         topInUnfoldedState !== lastTopInUnfoldedState ||
         bottomInUnfoldedState !== lastBottomInUnfoldedState
@@ -490,7 +490,7 @@ export default function tocMirror({
           y2Max + scrolledY - tocHolderTop - borderTopWidth,
         );
 
-        handleYMaxChange(() => {
+        runIfTopOrBottomChangesInUnfoldedState(() => {
           if (
             lastTopInUnfoldedState !== null &&
             lastBottomInUnfoldedState !== null
@@ -537,7 +537,7 @@ export default function tocMirror({
       } else {
         topInUnfoldedState = null;
         bottomInUnfoldedState = null;
-        handleYMaxChange(() => {
+        runIfTopOrBottomChangesInUnfoldedState(() => {
           doAutoFoldIfAllowed();
         });
         reflect({ isInside: false });
