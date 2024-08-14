@@ -98,14 +98,8 @@ export function doAutoScroll({
     [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   }
 
-  if (
-    !(
-      (outlineMarkerTop === topBoundary && state.yMaxDir == 'up') ||
-      (outlineMarkerBottom === bottomBoundary && state.yMaxDir == 'down')
-    )
-  ) {
-    state.isScrolling = true;
-  } else {
-    state.isScrolling = false;
-  }
+  state.isScrolling = !(
+    (outlineMarkerTop === topBoundary && state.yMaxDir == 'up') ||
+    (outlineMarkerBottom === bottomBoundary && state.yMaxDir == 'down')
+  );
 }
