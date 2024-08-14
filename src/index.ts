@@ -49,6 +49,7 @@ interface Options {
   listType?: 'ul' | 'ol';
   autoFold?: boolean;
   autoScroll?: boolean;
+  autoScrollBehavior?: 'instant' | 'smooth';
   autoScrollOffset?: number;
   autoScrollDuration?: number;
   liContainerClass?: string;
@@ -71,6 +72,7 @@ const scrollState: ScrollState = {
   yMaxDir: null,
   wasTopEndAboveTopBoundary: null,
   wasBottomEndBelowBottomBoundary: null,
+  isScrolling: false,
 };
 
 export default function tocMirror({
@@ -97,6 +99,7 @@ export default function tocMirror({
   initialFoldLevel = 6,
   autoFold = false,
   autoScroll = false,
+  autoScrollBehavior = 'smooth',
   autoScrollOffset = 20,
   autoScrollDuration = 1000,
   handleFoldStatusChange,
@@ -497,6 +500,7 @@ export default function tocMirror({
           outlineMarkerTop: top,
           outlineMarkerBottom: bottom,
           offset: autoScrollOffset,
+          scrollBehavior: autoScrollBehavior,
         };
 
         runIfTopOrBottomChangesInUnfoldedState(() => {
@@ -520,7 +524,7 @@ export default function tocMirror({
         updateScrollState(autoScrollProps);
 
         reflect({
-          height: foldable ? y2Min - y1Min : y2Max - y1Max,
+          height: Math.round(foldable ? y2Min - y1Min : y2Max - y1Max),
           top: top,
           bottom: bottom,
           // Rounding is necssary because where they should be the same,
