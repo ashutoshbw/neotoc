@@ -1,6 +1,8 @@
 let isScrolling: boolean = false;
 let wasTopEndAboveTopBoundary: null | boolean = null;
 let wasBottomEndBelowBottomBoundary: null | boolean = null;
+let timeFrac = 0;
+let scrollNeeded = 0;
 
 export interface AutoScrollProps {
   yMaxDir?: 'up' | 'down';
@@ -38,9 +40,10 @@ export function updateScrollState({
   wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
 
   if (isScrolling) {
+    const curScrollTop = tocHolder.scrollTop;
     if (scrollBehavior == 'instant') {
-      // tocHolder.scrollTop = curScrollTop + scrollNeeded;
-      // isScrolling = false;
+      tocHolder.scrollTop = curScrollTop + scrollNeeded;
+      isScrolling = false;
     } else {
       // TODO
     }
@@ -84,8 +87,9 @@ export function doAutoScroll({
     (outlineMarkerBottom === bottomBoundary && yMaxDir == 'down')
   );
 
+  // update scrollNeeded global variable
   if (isScrolling) {
-    let scrollNeeded =
+    scrollNeeded =
       yMaxDir == 'up'
         ? outlineMarkerTop - topBoundary
         : outlineMarkerBottom - bottomBoundary;
@@ -100,4 +104,5 @@ export function doAutoScroll({
       scrollNeeded = maxScrollTop - curScrollTop;
     }
   }
+  timeFrac = 0;
 }
