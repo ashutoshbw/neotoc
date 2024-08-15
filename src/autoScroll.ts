@@ -3,15 +3,15 @@ let wasTopEndAboveTopBoundary: null | boolean = null;
 let wasBottomEndBelowBottomBoundary: null | boolean = null;
 let timeFrac = 0;
 let scrollNeeded = 0;
+let startingSmoothScrollTop = 0;
+let smoothScrollStartTime: number;
 
-export interface AutoScrollProps {
-  yMaxDir?: 'up' | 'down';
-  tocHolder: HTMLElement;
-  outlineMarkerTop: number;
-  outlineMarkerBottom: number;
-  offset: number;
-  scrollBehavior?: 'instant' | 'smooth';
+// Credit: https://easings.net/#easeOutCubic
+export function easeOutCubic(t: number): number {
+  return 1 - Math.pow(1 - t, 3);
 }
+
+export type EasingFunc = (timeFrac: number) => number;
 
 function getBoundaries(
   tocHolder: HTMLElement,
@@ -25,13 +25,16 @@ function getBoundaries(
   return [topBoundary, bottomBoundary];
 }
 
-export function updateScrollState({
-  tocHolder,
-  outlineMarkerTop,
-  outlineMarkerBottom,
-  offset,
-  scrollBehavior,
-}: AutoScrollProps) {
+export function updateScrollState(
+  tocHolder: HTMLElement,
+  outlineMarkerTop: number,
+  outlineMarkerBottom: number,
+  offset: number,
+  scrollBehavior: 'instant' | 'smooth',
+  easingFunc: EasingFunc,
+  duration: number,
+  curTimestamp: number,
+) {
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
   const isBottomEndBelowBottomBoundary = outlineMarkerBottom > bottomBoundary;
@@ -45,19 +48,27 @@ export function updateScrollState({
       tocHolder.scrollTop = curScrollTop + scrollNeeded;
       isScrolling = false;
     } else {
-      // TODO
+      timeFrac = (curTimestamp - smoothScrollStartTime) / duration;
+      if (timeFrac > 1) timeFrac = 1;
+      const scrollProgress = scrollNeeded * easingFunc(timeFrac);
+      tocHolder.scrollTop = startingSmoothScrollTop + scrollProgress;
+
+      if (timeFrac == 1) {
+        isScrolling = false;
+      }
     }
   }
 }
 
-export function doAutoScroll({
-  yMaxDir,
-  tocHolder,
-  outlineMarkerTop,
-  outlineMarkerBottom,
-  offset,
-}: AutoScrollProps) {
-  const curScrollTop = tocHolder.scrollTop;
+export function doAutoScroll(
+  yMaxDir: 'up' | 'down',
+  tocHolder: HTMLElement,
+  outlineMarkerTop: number,
+  outlineMarkerBottom: number,
+  offset: number,
+  curTimestamp: number,
+) {
+  let curScrollTop = tocHolder.scrollTop;
   let [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
   const isBottomEndBelowBottomBoundary = outlineMarkerBottom > bottomBoundary;
@@ -87,14 +98,15 @@ export function doAutoScroll({
     (outlineMarkerBottom === bottomBoundary && yMaxDir == 'down')
   );
 
-  // update scrollNeeded global variable
+  // Update scrollNeeded global variable
+  // Also update isScrolling to be more precise
   if (isScrolling) {
     scrollNeeded =
       yMaxDir == 'up'
         ? outlineMarkerTop - topBoundary
         : outlineMarkerBottom - bottomBoundary;
 
-    const curScrollTop = tocHolder.scrollTop;
+    curScrollTop = tocHolder.scrollTop;
     const maxScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
     const freeScrollTop = curScrollTop + scrollNeeded;
 
@@ -103,6 +115,10 @@ export function doAutoScroll({
     } else if (freeScrollTop > maxScrollTop) {
       scrollNeeded = maxScrollTop - curScrollTop;
     }
+
+    if (!scrollNeeded) isScrolling = false;
+    timeFrac = 0;
+    smoothScrollStartTime = curTimestamp;
+    startingSmoothScrollTop = curScrollTop;
   }
-  timeFrac = 0;
 }

@@ -14,9 +14,10 @@ import {
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
 import {
+  easeOutCubic,
   doAutoScroll,
   updateScrollState,
-  type AutoScrollProps,
+  type EasingFunc,
 } from './autoScroll.js';
 
 type OutlineMarkerProps =
@@ -51,6 +52,7 @@ interface Options {
   autoScrollBehavior?: 'instant' | 'smooth';
   autoScrollOffset?: number;
   autoScrollDuration?: number;
+  autoScrollEasingFunc?: EasingFunc;
   liContainerClass?: string;
   liClass?: string;
   anchorClass?: string;
@@ -94,6 +96,7 @@ export default function tocMirror({
   autoScrollBehavior = 'smooth',
   autoScrollOffset = 20,
   autoScrollDuration = 1000,
+  autoScrollEasingFunc = easeOutCubic,
   handleFoldStatusChange,
   setMirror,
 }: Options) {
@@ -315,7 +318,7 @@ export default function tocMirror({
   if (foldable) checkForFoldStatusChange(handleFoldStatusChange);
 
   interface MirrorProps {
-    reflectOnce: (curTimestamp: number, lastTimestamp: null | number) => void;
+    reflectOnce: (curTimestamp: number) => void;
     startReflection: () => void;
     stopReflection: () => void;
   }
@@ -350,6 +353,7 @@ export default function tocMirror({
     let lastBottomInUnfoldedState: null | number = null;
     let topInUnfoldedState: null | number = null;
     let bottomInUnfoldedState: null | number = null;
+    let yMaxDir: 'up' | 'down';
 
     const runIfTopOrBottomChangesInUnfoldedState = (cb: () => void) => {
       if (
@@ -359,7 +363,7 @@ export default function tocMirror({
         cb();
     };
 
-    mirrorProps.reflectOnce = (curTimestamp, lastTimestamp) => {
+    mirrorProps.reflectOnce = (curTimestamp) => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
         marginTop,
@@ -486,14 +490,6 @@ export default function tocMirror({
           y2Max + scrolledY - tocHolderTop - borderTopWidth,
         );
 
-        const autoScrollProps: AutoScrollProps = {
-          tocHolder,
-          outlineMarkerTop: top,
-          outlineMarkerBottom: bottom,
-          offset: autoScrollOffset,
-          scrollBehavior: autoScrollBehavior,
-        };
-
         runIfTopOrBottomChangesInUnfoldedState(() => {
           if (
             lastTopInUnfoldedState !== null &&
@@ -503,16 +499,36 @@ export default function tocMirror({
             const bottomDiff =
               bottomInUnfoldedState! - lastBottomInUnfoldedState;
             if (topDiff > 0 || bottomDiff > 0) {
-              autoScrollProps.yMaxDir = 'down';
+              yMaxDir = 'down';
             } else if (topDiff < 0 || bottomDiff < 0) {
-              autoScrollProps.yMaxDir = 'up';
+              yMaxDir = 'up';
             }
           }
 
           doAutoFoldIfAllowed();
-          doAutoScroll(autoScrollProps);
+          if (autoScroll) {
+            doAutoScroll(
+              yMaxDir,
+              tocHolder,
+              top,
+              bottom,
+              autoScrollOffset,
+              curTimestamp,
+            );
+          }
         });
-        updateScrollState(autoScrollProps);
+        if (autoScroll) {
+          updateScrollState(
+            tocHolder,
+            top,
+            bottom,
+            autoScrollOffset,
+            autoScrollBehavior,
+            autoScrollEasingFunc,
+            autoScrollDuration,
+            curTimestamp,
+          );
+        }
 
         reflect({
           height: Math.round(foldable ? y2Min - y1Min : y2Max - y1Max),
@@ -546,10 +562,10 @@ export default function tocMirror({
 
     let rafNum: number;
 
-    let previousTime: number | null = null;
+    let previousTime: number;
     const step = (timestamp: number) => {
       if (previousTime !== timestamp) {
-        mirrorProps.reflectOnce(timestamp, previousTime);
+        mirrorProps.reflectOnce(timestamp);
       }
 
       previousTime = timestamp;
