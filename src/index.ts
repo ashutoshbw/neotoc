@@ -16,7 +16,6 @@ import { doAutoFold } from './autoFold.js';
 import {
   doAutoScroll,
   updateScrollState,
-  type ScrollState,
   type AutoScrollProps,
 } from './autoScroll.js';
 
@@ -67,13 +66,6 @@ interface Options {
   handleFoldStatusChange: (foldStatus: FoldStatus) => void;
   setMirror?: MirrorFunc;
 }
-
-const scrollState: ScrollState = {
-  yMaxDir: null,
-  wasTopEndAboveTopBoundary: null,
-  wasBottomEndBelowBottomBoundary: null,
-  isScrolling: false,
-};
 
 export default function tocMirror({
   // About contentHolder: By default it is first heading's parent element,
@@ -495,7 +487,6 @@ export default function tocMirror({
         );
 
         const autoScrollProps: AutoScrollProps = {
-          state: scrollState,
           tocHolder,
           outlineMarkerTop: top,
           outlineMarkerBottom: bottom,
@@ -512,9 +503,9 @@ export default function tocMirror({
             const bottomDiff =
               bottomInUnfoldedState! - lastBottomInUnfoldedState;
             if (topDiff > 0 || bottomDiff > 0) {
-              scrollState.yMaxDir = 'down';
+              autoScrollProps.yMaxDir = 'down';
             } else if (topDiff < 0 || bottomDiff < 0) {
-              scrollState.yMaxDir = 'up';
+              autoScrollProps.yMaxDir = 'up';
             }
           }
 
