@@ -144,6 +144,10 @@ export function initSmoothScrolling(
     (outlineMarkerBottom === bottomBoundary && yMaxDir == 'down')
   );
 
+  if (outlineMarkerTop > topBoundary && outlineMarkerBottom < bottomBoundary) {
+    isScrolling = false;
+  }
+
   // Update scrollNeeded global variable
   // Also update isScrolling to be more precise
   if (isScrolling) {
