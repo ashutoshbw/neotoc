@@ -74,16 +74,14 @@ export function animateMacroScrollingIfNeeded(
   }
 }
 
-export function doAutoScroll(
-  yMaxDir: 'up' | 'down',
+export function animateMicroScrollIfNeeded(
   tocHolder: HTMLElement,
   outlineMarkerTop: number,
   outlineMarkerBottom: number,
   offset: number,
-  curTimestamp: number,
 ) {
-  let curScrollTop = tocHolder.scrollTop;
-  let [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
+  const curScrollTop = tocHolder.scrollTop;
+  const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
   const isBottomEndBelowBottomBoundary = outlineMarkerBottom > bottomBoundary;
 
@@ -95,7 +93,6 @@ export function doAutoScroll(
   if (isTopEndAboveTopBoundary && wasTopEndAboveTopBoundary === false) {
     // executed when outlineMarkerTop just went above top boundary
     tocHolder.scrollTop = curScrollTop - (topBoundary - outlineMarkerTop);
-    [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   }
 
   if (
@@ -104,8 +101,18 @@ export function doAutoScroll(
   ) {
     // executed when outlineMarkerBottom just went below bottom boundary
     tocHolder.scrollTop = curScrollTop + outlineMarkerBottom - bottomBoundary;
-    [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   }
+}
+
+export function initSmoothScrolling(
+  yMaxDir: 'up' | 'down',
+  tocHolder: HTMLElement,
+  outlineMarkerTop: number,
+  outlineMarkerBottom: number,
+  offset: number,
+  curTimestamp: number,
+) {
+  const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
 
   isScrolling = !(
     (outlineMarkerTop === topBoundary && yMaxDir == 'up') ||
@@ -120,7 +127,7 @@ export function doAutoScroll(
         ? outlineMarkerTop - topBoundary
         : outlineMarkerBottom - bottomBoundary;
 
-    curScrollTop = tocHolder.scrollTop;
+    const curScrollTop = tocHolder.scrollTop;
     const maxScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
     const freeScrollTop = curScrollTop + scrollNeeded;
 

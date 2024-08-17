@@ -15,9 +15,10 @@ import {
 import { doAutoFold } from './autoFold.js';
 import {
   easeOutCubic,
-  doAutoScroll,
+  initSmoothScrolling,
   prepareForMicroScrolling,
   animateMacroScrollingIfNeeded,
+  animateMicroScrollIfNeeded,
   type EasingFunc,
 } from './autoScroll.js';
 
@@ -508,7 +509,13 @@ export default function tocMirror({
 
           doAutoFoldIfAllowed();
           if (autoScroll) {
-            doAutoScroll(
+            animateMicroScrollIfNeeded(
+              tocHolder,
+              top,
+              bottom,
+              autoScrollOffset,
+            );
+            initSmoothScrolling(
               yMaxDir,
               tocHolder,
               top,
