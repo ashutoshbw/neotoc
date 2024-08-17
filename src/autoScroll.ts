@@ -26,15 +26,11 @@ function getBoundaries(
   return [topBoundary, bottomBoundary];
 }
 
-export function updateScrollState(
+export function prepareForMicroScrolling(
   tocHolder: HTMLElement,
   outlineMarkerTop: number,
   outlineMarkerBottom: number,
   offset: number,
-  scrollBehavior: 'instant' | 'smooth',
-  easingFunc: EasingFunc,
-  duration: number,
-  curTimestamp: number,
 ) {
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
@@ -42,7 +38,15 @@ export function updateScrollState(
 
   wasTopEndAboveTopBoundary = isTopEndAboveTopBoundary;
   wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
+}
 
+export function animateMacroScrollingIfNeeded(
+  tocHolder: HTMLElement,
+  scrollBehavior: 'instant' | 'smooth',
+  easingFunc: EasingFunc,
+  duration: number,
+  curTimestamp: number,
+) {
   if (isScrolling) {
     const curScrollTop = tocHolder.scrollTop;
     if (scrollBehavior == 'instant') {

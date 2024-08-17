@@ -18,7 +18,7 @@ const toc = tocMirror({
   autoFold: false,
   autoScroll: true,
   autoScrollOffset: 150,
-  autoScrollDuration: 5000,
+  autoScrollDuration: 250,
   autoScrollBehavior: 'smooth',
   initialFoldLevel: 6,
   useAndFillFoldButton(isFolded) {
