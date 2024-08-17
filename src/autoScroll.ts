@@ -5,6 +5,7 @@ let timeFrac = 0;
 let scrollNeeded = 0;
 let startingSmoothScrollTop = 0;
 let smoothScrollStartTime: number;
+let lastAutoScrollTop: null | number = null; // For stoping auto scrolling the toc when it's manually scrolled
 
 // Credit: https://easings.net/#easeOutCubic
 export function easeOutCubic(t: number): number {
@@ -51,7 +52,16 @@ export function updateScrollState(
       timeFrac = (curTimestamp - smoothScrollStartTime) / duration;
       if (timeFrac > 1) timeFrac = 1;
       const scrollProgress = scrollNeeded * easingFunc(timeFrac);
-      tocHolder.scrollTop = startingSmoothScrollTop + scrollProgress;
+
+      // The role lastAutoScrollTop here is to prevent auto scrolling the toc
+      // when it's manually scrolled.
+      if (lastAutoScrollTop === null || lastAutoScrollTop === curScrollTop) {
+        tocHolder.scrollTop = startingSmoothScrollTop + scrollProgress;
+        lastAutoScrollTop = tocHolder.scrollTop;
+      } else {
+        isScrolling = false;
+        lastAutoScrollTop = null;
+      }
 
       if (timeFrac == 1) {
         isScrolling = false;
