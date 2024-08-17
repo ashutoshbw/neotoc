@@ -16,9 +16,9 @@ import { doAutoFold } from './autoFold.js';
 import {
   easeOutCubic,
   initSmoothScrolling,
-  prepareForMicroScrolling,
-  animateMacroScrollingIfNeeded,
-  animateMicroScrollIfNeeded,
+  prepareForBicycleScrolling,
+  animateMotorcycleScrollingIfNeeded,
+  animateBicycleScrollingIfNeeded,
   type EasingFunc,
 } from './autoScroll.js';
 
@@ -509,7 +509,7 @@ export default function tocMirror({
 
           doAutoFoldIfAllowed();
           if (autoScroll) {
-            animateMicroScrollIfNeeded(
+            animateBicycleScrollingIfNeeded(
               tocHolder,
               top,
               bottom,
@@ -526,9 +526,9 @@ export default function tocMirror({
           }
         });
         if (autoScroll) {
-          prepareForMicroScrolling(tocHolder, top, bottom, autoScrollOffset);
+          prepareForBicycleScrolling(tocHolder, top, bottom, autoScrollOffset);
 
-          animateMacroScrollingIfNeeded(
+          animateMotorcycleScrollingIfNeeded(
             tocHolder,
             autoScrollBehavior,
             autoScrollEasingFunc,

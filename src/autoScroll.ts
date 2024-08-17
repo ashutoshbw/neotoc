@@ -1,3 +1,28 @@
+/*  # A Note on bicycle and motorcycle Scrolling
+ *
+ * These names might be kind of werid, but I haven't yet found anything better
+ * than them to help me remember what they do! If you think you found better
+ * names, you can let me know by opening an issue.
+ *
+ *
+ * ## Bicycle Scrolling:
+ *
+ * It is somewhat similar to riding a bicyle. You need to put effort to make it
+ * happen. It happens when scrolling the content, if the outline marker goes
+ * from inside the boundaries(set by `autoScrollOffset`) to outside. The
+ * `tocHolder` is then automatically scrolled so that the outline marker appears
+ * right on a boundary. Two functions makes it happen together:
+ * `prepareForBicycleScrolling` and `animateBicyleScrollingIfNeeded`
+ *
+ * ## Motorcycle Scrolling
+ *
+ * Like a motorcyle you just need to start and then it runs automatically!
+ * It happens when scrolling the content, if there is any need to scroll the toc
+ * in any situation. It then automatially scrolls the `tocHolder` so that the
+ * outline marker is visible in a sensible way. The function that makes it
+ * happen is: `animateMotorcycleScrollingIfNeeded`
+ * */
+
 let isScrolling: boolean = false;
 let wasTopEndAboveTopBoundary: null | boolean = null;
 let wasBottomEndBelowBottomBoundary: null | boolean = null;
@@ -26,7 +51,7 @@ function getBoundaries(
   return [topBoundary, bottomBoundary];
 }
 
-export function prepareForMicroScrolling(
+export function prepareForBicycleScrolling(
   tocHolder: HTMLElement,
   outlineMarkerTop: number,
   outlineMarkerBottom: number,
@@ -40,7 +65,7 @@ export function prepareForMicroScrolling(
   wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
 }
 
-export function animateMacroScrollingIfNeeded(
+export function animateMotorcycleScrollingIfNeeded(
   tocHolder: HTMLElement,
   scrollBehavior: 'instant' | 'smooth',
   easingFunc: EasingFunc,
@@ -74,7 +99,7 @@ export function animateMacroScrollingIfNeeded(
   }
 }
 
-export function animateMicroScrollIfNeeded(
+export function animateBicycleScrollingIfNeeded(
   tocHolder: HTMLElement,
   outlineMarkerTop: number,
   outlineMarkerBottom: number,
