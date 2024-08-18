@@ -28,8 +28,8 @@ let wasTopEndAboveTopBoundary: null | boolean = null;
 let wasBottomEndBelowBottomBoundary: null | boolean = null;
 let timeFrac = 0;
 let scrollNeeded = 0;
-let startingSmoothScrollTop = 0;
-let smoothScrollStartTime: number;
+let motorcycleScrollingStartScrollTop = 0;
+let motorcycleScrollingStartTime: number;
 let lastAutoScrollTop: null | number = null; // For stoping auto scrolling the toc when it's manually scrolled
 
 // Credit: https://easings.net/#easeOutCubic
@@ -78,14 +78,15 @@ export function animateMotorcycleScrollingIfNeeded(
       tocHolder.scrollTop = curScrollTop + scrollNeeded;
       isScrolling = false;
     } else {
-      timeFrac = (curTimestamp - smoothScrollStartTime) / duration;
+      timeFrac = (curTimestamp - motorcycleScrollingStartTime) / duration;
       if (timeFrac > 1) timeFrac = 1;
       const scrollProgress = scrollNeeded * easingFunc(timeFrac);
 
       // The role lastAutoScrollTop here is to prevent auto scrolling the toc
       // when it's manually scrolled.
       if (lastAutoScrollTop === null || lastAutoScrollTop === curScrollTop) {
-        tocHolder.scrollTop = startingSmoothScrollTop + scrollProgress;
+        tocHolder.scrollTop =
+          motorcycleScrollingStartScrollTop + scrollProgress;
         lastAutoScrollTop = tocHolder.scrollTop;
       } else {
         isScrolling = false;
@@ -129,7 +130,7 @@ export function animateBicycleScrollingIfNeeded(
   }
 }
 
-export function initSmoothScrolling(
+export function initMotorcycleScrolling(
   yMaxDir: 'up' | 'down',
   tocHolder: HTMLElement,
   outlineMarkerTop: number,
@@ -181,7 +182,7 @@ export function initSmoothScrolling(
 
     if (!scrollNeeded) isScrolling = false;
     timeFrac = 0;
-    smoothScrollStartTime = curTimestamp;
-    startingSmoothScrollTop = curScrollTop;
+    motorcycleScrollingStartTime = curTimestamp;
+    motorcycleScrollingStartScrollTop = curScrollTop;
   }
 }
