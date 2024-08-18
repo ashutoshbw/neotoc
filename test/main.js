@@ -18,7 +18,7 @@ const toc = tocMirror({
   autoFold: false,
   autoScroll: true,
   autoScrollOffset: 50,
-  autoScrollDuration: 150,
+  autoScrollDuration: 300,
   autoScrollBehavior: 'smooth',
   autoScrollEasingFunc: (x) => x,
   initialFoldLevel: 6,

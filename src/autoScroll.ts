@@ -139,13 +139,26 @@ export function initSmoothScrolling(
 ) {
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
 
-  isScrolling = !(
-    (outlineMarkerTop === topBoundary && yMaxDir == 'up') ||
-    (outlineMarkerBottom === bottomBoundary && yMaxDir == 'down')
-  );
-
   if (outlineMarkerTop > topBoundary && outlineMarkerBottom < bottomBoundary) {
     isScrolling = false;
+  } else if (outlineMarkerTop === topBoundary) {
+    if (yMaxDir == 'up') {
+      isScrolling = false;
+    } else if (outlineMarkerBottom > bottomBoundary) {
+      isScrolling = true;
+    } else {
+      isScrolling = false;
+    }
+  } else if (outlineMarkerBottom === bottomBoundary) {
+    if (yMaxDir == 'down') {
+      isScrolling = false;
+    } else if (outlineMarkerTop < topBoundary) {
+      isScrolling = true;
+    } else {
+      isScrolling = false;
+    }
+  } else {
+    isScrolling = true;
   }
 
   // Update scrollNeeded global variable
