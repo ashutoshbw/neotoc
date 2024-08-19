@@ -1,5 +1,5 @@
 {
-  "name": "tocmirror",
+  "name": "neotoc",
   "version": "0.0.0",
   "description": "A modern tool to make interactive and animated table of contents.",
   "type": "module",
