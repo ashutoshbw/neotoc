@@ -434,16 +434,13 @@ export default function neotoc({
         const i1 = useAndFillFoldButton ? a1.parentElement! : a1; // i1 is either the wrapping span(when fold button used) or the anchor
         const rect1 = i1.getBoundingClientRect();
 
+        // Vertical coordinates of outline marker when toc is fully unfolded
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
 
-        // The following initial assignment is safe.
-        // There is only one reason for this:
-        // - It helps to not use any ts comment to ignore error 2454 which would
-        //   cause if you didn't have any inital value here. It doesn't really
-        //   matter what values you assign here.
-        let y1Min: number = 0;
-        let y2Min: number = 0;
+        // Vertical coordinates of outline maker when toc may be folded somehow
+        let y1Min: number;
+        let y2Min: number;
 
         if (foldable) {
           const ancestorFoldableDivsForA1 =
@@ -474,13 +471,13 @@ export default function neotoc({
         const borderTopWidth = tocHolder.clientTop;
 
         const top = Math.round(
-          (foldable ? y1Min : y1Max) +
+          (foldable ? y1Min! : y1Max) +
             scrolledY -
             tocHolderTop -
             borderTopWidth,
         );
         const bottom = Math.round(
-          (foldable ? y2Min : y2Max) +
+          (foldable ? y2Min! : y2Max) +
             scrolledY -
             tocHolderTop -
             borderTopWidth,
@@ -539,16 +536,16 @@ export default function neotoc({
         }
 
         draw({
-          height: Math.round(foldable ? y2Min - y1Min : y2Max - y1Max),
+          height: Math.round(foldable ? y2Min! - y1Min! : y2Max - y1Max),
           top: top,
           bottom: bottom,
           // Rounding is necssary because where they should be the same,
           // there may be a very slight difference.
           isTopInAFold: foldable
-            ? Math.round(y1Min) < Math.round(y1Max)
+            ? Math.round(y1Min!) < Math.round(y1Max)
             : false,
           isBottomInAFold: foldable
-            ? Math.round(y2Min) < Math.round(y2Max)
+            ? Math.round(y2Min!) < Math.round(y2Max)
             : false,
           anchors: anchorsToSectionsInView,
           time: curTimestamp,
