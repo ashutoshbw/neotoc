@@ -11,15 +11,15 @@
 .tm-foldable-div {
   display: grid;
   transition:
-    grid-template-rows 200ms,
-    border 200ms;
+    grid-template-rows 300ms,
+    border 300ms;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   grid-template-rows: 1fr;
 }
 
 .tm-foldable-div ul {
-  transition: opacity 200ms;
+  transition: opacity 300ms;
 }
 
 .tm-foldable-div-folded {
@@ -50,6 +50,11 @@
 
 .tm-span:hover {
   background: #888;
+}
+
+.tm-fold-btn {
+  width: 20px;
+  border: 1px solid black;
 }
 
 /* custom styles below */
