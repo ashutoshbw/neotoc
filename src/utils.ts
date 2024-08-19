@@ -65,11 +65,11 @@ function getCroppedYLimits(
 
 export function getViewportYSize(
   rootElt: HTMLElement,
-  marginTop: number,
-  marginBottom: number,
+  offsetTop: number,
+  offsetBottom: number,
 ): VerticalBoundary {
   const [y1, y2] = getYLimits(rootElt);
-  const [ym1, ym2] = [y1 + marginTop, y2 - marginBottom];
+  const [ym1, ym2] = [y1 + offsetTop, y2 - offsetBottom];
 
   const parentContainer = rootElt.parentElement;
 

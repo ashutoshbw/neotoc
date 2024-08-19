@@ -10,8 +10,8 @@ const unfoldBtn = document.getElementById('unfold');
 
 const toc = tocMirror({
   headings: headings,
-  marginTop: 50,
-  marginBottom: 50,
+  offsetTop: 50,
+  offsetBottom: 50,
   tocHolder,
   foldable: true,
   foldButtonPos: 'start',
@@ -63,7 +63,8 @@ const toc = tocMirror({
     tocHolder.append(outlineMarker);
     return (props) => {
       if (props.isInside) {
-        const { top, height, isTopInAFold, isBottomInAFold, anchors } = props;
+        const { top, height, isTopInAFold, isBottomInAFold, anchors, time } =
+          props;
         outlineMarker.style.display = '';
         outlineMarker.style.top = `${top}px`;
         outlineMarker.style.height = `${height}px`;

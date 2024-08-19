@@ -42,8 +42,8 @@ type FoldButtonPos = 'start' | 'end';
 
 interface Options {
   contentHolder?: HTMLElement;
-  marginTop?: number;
-  marginBottom?: number;
+  offsetTop?: number;
+  offsetBottom?: number;
   headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>;
   tocHolder: HTMLElement;
   fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
@@ -77,8 +77,8 @@ export default function neotoc({
   // About contentHolder: By default it is first heading's parent element,
   // it's not possible to set the default value here so it's done with code
   contentHolder,
-  marginTop = 0,
-  marginBottom = 0,
+  offsetTop = 0,
+  offsetBottom = 0,
   headings,
   tocHolder,
   liContainerClass = 'tm-li-container',
@@ -369,8 +369,8 @@ export default function neotoc({
     const drawFrame = (curTimestamp: number) => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
-        marginTop,
-        marginBottom,
+        offsetTop,
+        offsetBottom,
       );
 
       const anchorsToSectionsInView: HTMLAnchorElement[] = [];
