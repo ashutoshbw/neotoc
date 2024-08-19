@@ -38,14 +38,9 @@
 
 .tm-span {
   display: flex;
-}
-
-.tm-fold-btn {
-  align-self: flex-start;
-}
-
-.tm-anchor {
-  text-decoration: none;
+  position: relative;
+  margin-left: 20px;
+  padding-left: 3px;
 }
 
 .tm-span:hover {
@@ -53,8 +48,16 @@
 }
 
 .tm-fold-btn {
+  align-self: flex-start;
   width: 20px;
   border: 1px solid black;
+  position: absolute;
+  left: -23px;
+}
+
+.tm-anchor {
+  text-decoration: none;
+  color: #ddd;
 }
 
 /* custom styles below */

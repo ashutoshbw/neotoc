@@ -35,16 +35,14 @@ article {
 }
 
 #tocHolder {
-  background: #111;
+  background: #444;
   width: 240px;
-  border: 1px solid yellow;
-  border-top: 50px solid yellow;
+  border: 1px solid #222;
   padding: 1rem;
   position: relative;
   height: 300px;
   overflow-y: auto;
   padding-block: 20px;
-  margin-top: 50px;
   overscroll-behavior: contain;
   /* scroll-behavior: smooth; */
 }
