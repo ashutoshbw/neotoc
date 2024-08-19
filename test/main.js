@@ -49,7 +49,7 @@ const toc = tocMirror({
       console.log(foldStatus);
     }
   },
-  setMirror({ tocHolder, foldButtonPos }) {
+  addAnimation({ tocHolder, foldButtonPos }) {
     let outlineMarker = document.createElement('div');
     let outlineMarkerTop = document.createElement('div');
     let outlineMarkerBottom = document.createElement('div');
@@ -90,7 +90,7 @@ if (toc) {
   unfoldBtn.addEventListener('click', toc.unfold);
   //TODO:  based on toc.depth show the only relevant buttons
 
-  toc.startReflection();
+  toc.startAnimation();
 }
 
 console.log(toc);

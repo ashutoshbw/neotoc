@@ -31,9 +31,11 @@ type OutlineMarkerProps =
       isBottomInAFold: boolean;
       anchors: HTMLAnchorElement[];
       isInside: true;
+      time: number;
     }
   | {
       isInside: false;
+      time: number;
     };
 
 type FoldButtonPos = 'start' | 'end';
@@ -549,6 +551,7 @@ export default function neotoc({
             ? Math.round(y2Min) < Math.round(y2Max)
             : false,
           anchors: anchorsToSectionsInView,
+          time: curTimestamp,
           isInside: true,
         });
 
@@ -560,7 +563,7 @@ export default function neotoc({
         runIfTopOrBottomChangesInUnfoldedState(() => {
           doAutoFoldIfAllowed();
         });
-        draw({ isInside: false });
+        draw({ isInside: false, time: curTimestamp });
         lastTopInUnfoldedState = null;
         lastBottomInUnfoldedState = null;
       }
