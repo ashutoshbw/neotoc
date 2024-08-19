@@ -23,7 +23,7 @@
  * happen is: `animateMotorcycleScrollingIfNeeded`
  * */
 
-let isScrolling: boolean = false;
+let isScrolling: boolean = false; // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
 let wasTopEndAboveTopBoundary: null | boolean = null;
 let wasBottomEndBelowBottomBoundary: null | boolean = null;
 let timeFrac = 0;
