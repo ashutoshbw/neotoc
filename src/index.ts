@@ -36,10 +36,7 @@ type OutlineMarkerProps =
       isInside: false;
     };
 
-type MirrorFunc = (props: {
-  tocHolder: HTMLElement;
-  foldButtonPos: 'start' | 'end';
-}) => (outlineMakerProps: OutlineMarkerProps) => void;
+type FoldButtonPos = 'start' | 'end';
 
 interface Options {
   contentHolder?: HTMLElement;
@@ -62,16 +59,19 @@ interface Options {
   foldable?: boolean;
   foldButtonClass?: string;
   foldButtonFoldedClass?: string;
-  foldButtonPos?: 'start' | 'end';
+  foldButtonPos?: FoldButtonPos;
   useAndFillFoldButton?: (isFolded: boolean) => string | Node;
   foldableDivClass?: string;
   foldableDivFoldedClass?: string;
   initialFoldLevel?: number;
   handleFoldStatusChange: (foldStatus: FoldStatus) => void;
-  setMirror?: MirrorFunc;
+  addAnimation?: (props: {
+    tocHolder: HTMLElement;
+    foldButtonPos: FoldButtonPos;
+  }) => (outlineMakerProps: OutlineMarkerProps) => void;
 }
 
-export default function tocMirror({
+export default function neotoc({
   // About contentHolder: By default it is first heading's parent element,
   // it's not possible to set the default value here so it's done with code
   contentHolder,
@@ -100,7 +100,7 @@ export default function tocMirror({
   autoScrollDuration = 1000,
   autoScrollEasingFunc = easeOutCubic,
   handleFoldStatusChange,
-  setMirror,
+  addAnimation,
 }: Options) {
   if (autoFold) initialFoldLevel = 1;
 
@@ -319,12 +319,12 @@ export default function tocMirror({
   if (!toc) return;
   if (foldable) checkForFoldStatusChange(handleFoldStatusChange);
 
-  interface MirrorProps {
-    startReflection: () => void;
-    stopReflection: () => void;
+  interface AnimationMethods {
+    startAnimation: () => void;
+    stopAnimation: () => void;
   }
 
-  const mirrorProps = <MirrorProps>{};
+  const animationMethods = <AnimationMethods>{};
 
   tocHolder.append(toc);
 
@@ -345,10 +345,10 @@ export default function tocMirror({
   // So we can do this:
   if (!contentHolder) contentHolder = headings[0].parentElement!;
 
-  if (setMirror) {
+  if (addAnimation) {
     const scrollContainer = findScrollContainer(contentHolder);
 
-    const reflect = setMirror({ tocHolder, foldButtonPos });
+    const draw = addAnimation({ tocHolder, foldButtonPos });
 
     let lastTopInUnfoldedState: null | number = null;
     let lastBottomInUnfoldedState: null | number = null;
@@ -536,7 +536,7 @@ export default function tocMirror({
           );
         }
 
-        reflect({
+        draw({
           height: Math.round(foldable ? y2Min - y1Min : y2Max - y1Max),
           top: top,
           bottom: bottom,
@@ -560,7 +560,7 @@ export default function tocMirror({
         runIfTopOrBottomChangesInUnfoldedState(() => {
           doAutoFoldIfAllowed();
         });
-        reflect({ isInside: false });
+        draw({ isInside: false });
         lastTopInUnfoldedState = null;
         lastBottomInUnfoldedState = null;
       }
@@ -578,11 +578,11 @@ export default function tocMirror({
       rafNum = window.requestAnimationFrame(step);
     };
 
-    mirrorProps.startReflection = () => {
+    animationMethods.startAnimation = () => {
       rafNum = window.requestAnimationFrame(step);
     };
 
-    mirrorProps.stopReflection = () => {
+    animationMethods.stopAnimation = () => {
       window.cancelAnimationFrame(rafNum);
     };
   }
@@ -616,9 +616,7 @@ export default function tocMirror({
   const mandatoryProps = {
     element: toc,
     depth: maxHLevel - minHLevel + 1,
-    ...mirrorProps,
-    // setupMirror() {},
-    // reflect() {},
+    ...animationMethods,
     // refresh() {},
     // remove() {},
   };
