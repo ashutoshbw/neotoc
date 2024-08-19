@@ -1,4 +1,4 @@
-import tocMirror from './index.js';
+import neotoc from './index.js';
 
 const contentElement = document.querySelector('article');
 const headings = contentElement.querySelectorAll('h1, h2, h3, h4, h5, h6');
@@ -8,7 +8,7 @@ const unfoldAllBtn = document.getElementById('unfold-all');
 const foldBtn = document.getElementById('fold');
 const unfoldBtn = document.getElementById('unfold');
 
-const toc = tocMirror({
+const toc = neotoc({
   headings: headings,
   offsetTop: 50,
   offsetBottom: 50,
@@ -61,7 +61,8 @@ const toc = tocMirror({
     outlineMarker.style.display = 'none';
 
     tocHolder.append(outlineMarker);
-    return (props) => {
+
+    function draw(props) {
       if (props.isInside) {
         const { top, height, isTopInAFold, isBottomInAFold, anchors, time } =
           props;
@@ -80,7 +81,9 @@ const toc = tocMirror({
         outlineMarker.style.display = 'none';
       }
       // console.log(props.isInside);
-    };
+    }
+
+    return { draw };
   },
 });
 

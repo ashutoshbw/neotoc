@@ -70,7 +70,10 @@ interface Options {
   addAnimation?: (props: {
     tocHolder: HTMLElement;
     foldButtonPos: FoldButtonPos;
-  }) => (outlineMakerProps: OutlineMarkerProps) => void;
+  }) => {
+    draw: (outlineMakerProps: OutlineMarkerProps) => void;
+    drawAlways?: boolean;
+  };
 }
 
 export default function neotoc({
@@ -350,7 +353,10 @@ export default function neotoc({
   if (addAnimation) {
     const scrollContainer = findScrollContainer(contentHolder);
 
-    const draw = addAnimation({ tocHolder, foldButtonPos });
+    const { draw, drawAlways = false } = addAnimation({
+      tocHolder,
+      foldButtonPos,
+    });
 
     let lastTopInUnfoldedState: null | number = null;
     let lastBottomInUnfoldedState: null | number = null;
@@ -490,6 +496,26 @@ export default function neotoc({
           y2Max + scrolledY - tocHolderTop - borderTopWidth,
         );
 
+        const drawIf = (bool: boolean) => {
+          if (bool)
+            draw({
+              height: Math.round(foldable ? y2Min! - y1Min! : y2Max - y1Max),
+              top: top,
+              bottom: bottom,
+              // Rounding is necssary because where they should be the same,
+              // there may be a very slight difference.
+              isTopInAFold: foldable
+                ? Math.round(y1Min!) < Math.round(y1Max)
+                : false,
+              isBottomInAFold: foldable
+                ? Math.round(y2Min!) < Math.round(y2Max)
+                : false,
+              anchors: anchorsToSectionsInView,
+              time: curTimestamp,
+              isInside: true,
+            });
+        };
+
         runIfTopOrBottomChangesInUnfoldedState(() => {
           if (
             lastTopInUnfoldedState !== null &&
@@ -522,7 +548,9 @@ export default function neotoc({
               curTimestamp,
             );
           }
+          drawIf(!drawAlways);
         });
+
         if (autoScroll) {
           prepareForBicycleScrolling(tocHolder, top, bottom, autoScrollOffset);
 
@@ -535,32 +563,21 @@ export default function neotoc({
           );
         }
 
-        draw({
-          height: Math.round(foldable ? y2Min! - y1Min! : y2Max - y1Max),
-          top: top,
-          bottom: bottom,
-          // Rounding is necssary because where they should be the same,
-          // there may be a very slight difference.
-          isTopInAFold: foldable
-            ? Math.round(y1Min!) < Math.round(y1Max)
-            : false,
-          isBottomInAFold: foldable
-            ? Math.round(y2Min!) < Math.round(y2Max)
-            : false,
-          anchors: anchorsToSectionsInView,
-          time: curTimestamp,
-          isInside: true,
-        });
+        drawIf(drawAlways);
 
         lastTopInUnfoldedState = topInUnfoldedState;
         lastBottomInUnfoldedState = bottomInUnfoldedState;
       } else {
         topInUnfoldedState = null;
         bottomInUnfoldedState = null;
+        const drawIf = (bool: boolean) => {
+          if (bool) draw({ isInside: false, time: curTimestamp });
+        };
         runIfTopOrBottomChangesInUnfoldedState(() => {
           doAutoFoldIfAllowed();
+          drawIf(!drawAlways);
         });
-        draw({ isInside: false, time: curTimestamp });
+        drawIf(drawAlways);
         lastTopInUnfoldedState = null;
         lastBottomInUnfoldedState = null;
       }
