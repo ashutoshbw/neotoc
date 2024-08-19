@@ -320,7 +320,6 @@ export default function tocMirror({
   if (foldable) checkForFoldStatusChange(handleFoldStatusChange);
 
   interface MirrorProps {
-    reflectOnce: (curTimestamp: number) => void;
     startReflection: () => void;
     stopReflection: () => void;
   }
@@ -365,7 +364,7 @@ export default function tocMirror({
         cb();
     };
 
-    mirrorProps.reflectOnce = (curTimestamp) => {
+    const drawFrame = (curTimestamp: number) => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
         marginTop,
@@ -572,7 +571,7 @@ export default function tocMirror({
     let previousTime: number;
     const step = (timestamp: number) => {
       if (previousTime !== timestamp) {
-        mirrorProps.reflectOnce(timestamp);
+        drawFrame(timestamp);
       }
 
       previousTime = timestamp;
