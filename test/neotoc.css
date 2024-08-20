@@ -1,14 +1,14 @@
-.tm-li-container {
+.li-parent {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.tm-li-container .tm-li-container {
+.li-parent .li-parent {
   padding-left: 1rem;
 }
 
-.tm-foldable-div {
+.foldable {
   display: grid;
   transition:
     grid-template-rows 300ms,
@@ -18,46 +18,41 @@
   grid-template-rows: 1fr;
 }
 
-.tm-foldable-div ul {
+.foldable ul {
   transition: opacity 300ms;
 }
 
-.tm-foldable-div-folded {
+.foldable-folded {
   grid-template-rows: 0fr;
 }
 
-.tm-foldable-div-folded ul {
+.foldable-folded ul {
   opacity: 0;
 }
 
-.tm-foldable-div > ul {
+.foldable > ul {
   overflow: hidden;
   grid-row: 1 / span 2;
   margin-top: -1px;
 }
 
-.tm-span {
+.fold-btn-parent {
   display: flex;
   position: relative;
   margin-left: 20px;
   padding-left: 3px;
 }
 
-.tm-span:hover {
+.fold-btn-parent:hover {
   background: #888;
 }
 
-.tm-fold-btn {
+.fold-btn {
   align-self: flex-start;
   width: 20px;
   border: 1px solid black;
   position: absolute;
   left: -23px;
-}
-
-.tm-anchor {
-  text-decoration: none;
-  color: #ddd;
 }
 
 /* custom styles below */

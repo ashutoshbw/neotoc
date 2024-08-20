@@ -20,7 +20,6 @@ const toc = neotoc({
   autoScrollOffset: 150,
   autoScrollDuration: 300,
   autoScrollBehavior: 'smooth',
-  autoScrollEasingFunc: (x) => x,
   initialFoldLevel: 6,
   useAndFillFoldButton(isFolded) {
     if (isFolded) return '+';

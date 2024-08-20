@@ -54,17 +54,17 @@ interface Options {
   autoScrollOffset?: number;
   autoScrollDuration?: number;
   autoScrollEasingFunc?: EasingFunc;
-  liContainerClass?: string;
+  liParentClass?: string;
   liClass?: string;
   anchorClass?: string;
-  spanClass?: string;
+  foldButtonParentClass?: string;
   foldable?: boolean;
   foldButtonClass?: string;
   foldButtonFoldedClass?: string;
   foldButtonPos?: FoldButtonPos;
   useAndFillFoldButton?: (isFolded: boolean) => string | Node;
-  foldableDivClass?: string;
-  foldableDivFoldedClass?: string;
+  foldableClass?: string;
+  foldableFoldedClass?: string;
   initialFoldLevel?: number;
   handleFoldStatusChange: (foldStatus: FoldStatus) => void;
   addAnimation?: (props: {
@@ -84,18 +84,18 @@ export default function neotoc({
   offsetBottom = 0,
   headings,
   tocHolder,
-  liContainerClass = 'tm-li-container',
+  liParentClass = 'li-parent',
   liClass,
-  anchorClass = 'tm-anchor',
-  spanClass = 'tm-span',
+  anchorClass,
   fillAnchor,
   listType = 'ul',
   foldable = false,
+  foldButtonParentClass = 'fold-btn-parent',
   foldButtonPos = 'start',
-  foldButtonClass = 'tm-fold-btn',
+  foldButtonClass = 'fold-btn',
   foldButtonFoldedClass,
-  foldableDivClass = 'tm-foldable-div',
-  foldableDivFoldedClass = 'tm-foldable-div-folded',
+  foldableClass = 'foldable',
+  foldableFoldedClass = 'foldable-folded',
   useAndFillFoldButton,
   initialFoldLevel = 6,
   autoFold = false,
@@ -135,14 +135,14 @@ export default function neotoc({
     order.push(1);
     const listContainer = elt<HTMLUListElement | HTMLOListElement>(
       listType,
-      liContainerClass,
+      liParentClass,
     );
 
     for (let i = 0; i < headings.length; i++) {
       const h = headings[i];
       const li = elt<HTMLLIElement>('li', liClass);
       const anchor = elt<HTMLAnchorElement>('a', anchorClass);
-      const anchorSpan = elt<HTMLSpanElement>('span', spanClass); // only used when there is fold button
+      const anchorSpan = elt<HTMLSpanElement>('span', foldButtonParentClass); // only used when there is fold button
       anchor.href = `#${h.id}`;
       fillElt(anchor, fillAnchor(h, order));
 
@@ -176,10 +176,10 @@ export default function neotoc({
 
         if (foldable) {
           const foldButton = elt<HTMLButtonElement>('button', foldButtonClass);
-          const foldableDiv = elt<HTMLDivElement>('div', foldableDivClass);
+          const foldableDiv = elt<HTMLDivElement>('div', foldableClass);
           const isFolded = curHeadingLevel >= initialFoldLevel;
 
-          if (isFolded) foldableDiv.classList.add(foldableDivFoldedClass);
+          if (isFolded) foldableDiv.classList.add(foldableFoldedClass);
 
           if (useAndFillFoldButton) {
             fillElt(foldButton, useAndFillFoldButton(isFolded));
@@ -202,7 +202,7 @@ export default function neotoc({
             toggleFold() {
               curFoldState.isFolded = !curFoldState.isFolded;
 
-              foldableDiv.classList.toggle(foldableDivFoldedClass);
+              foldableDiv.classList.toggle(foldableFoldedClass);
               if (useAndFillFoldButton) {
                 if (foldButtonFoldedClass) {
                   foldButton.classList.toggle(foldButtonFoldedClass);
@@ -337,7 +337,7 @@ export default function neotoc({
     toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
       const [divs, anchors] = getAncestors(
         a,
-        foldableDivClass,
+        foldableClass,
         !!useAndFillFoldButton, // make it a boolean equivalent
         foldButtonPos,
       );

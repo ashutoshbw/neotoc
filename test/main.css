@@ -46,3 +46,8 @@ article {
   overscroll-behavior: contain;
   /* scroll-behavior: smooth; */
 }
+
+#tocHolder a {
+  text-decoration: none;
+  color: #ddd;
+}
