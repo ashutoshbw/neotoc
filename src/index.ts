@@ -146,8 +146,8 @@ export default function neotoc({
       anchor.href = `#${h.id}`;
       fillElt(anchor, fillAnchor(h, order));
 
-      if (useAndFillFoldButton) anchorSpan.append(anchor);
-      li.append(useAndFillFoldButton ? anchorSpan : anchor);
+      if (foldable && useAndFillFoldButton) anchorSpan.append(anchor);
+      li.append(foldable && useAndFillFoldButton ? anchorSpan : anchor);
 
       idToAnchorMap[h.id] = anchor;
 
@@ -437,7 +437,7 @@ export default function neotoc({
 
       if (anchorsToSectionsInView.length) {
         const a1 = anchorsToSectionsInView[0];
-        const i1 = useAndFillFoldButton ? a1.parentElement! : a1; // i1 is either the wrapping span(when fold button used) or the anchor
+        const i1 = foldable && useAndFillFoldButton ? a1.parentElement! : a1; // i1 is either the wrapping span(when fold button used) or the anchor
         const rect1 = i1.getBoundingClientRect();
 
         // Vertical coordinates of outline marker when toc is fully unfolded
@@ -458,7 +458,7 @@ export default function neotoc({
         if (anchorsToSectionsInView.length > 1) {
           const a2 =
             anchorsToSectionsInView[anchorsToSectionsInView.length - 1];
-          const i2 = useAndFillFoldButton ? a2.parentElement! : a2;
+          const i2 = foldable && useAndFillFoldButton ? a2.parentElement! : a2;
 
           const rect2 = i2.getBoundingClientRect();
 
