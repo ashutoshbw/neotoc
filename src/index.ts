@@ -72,12 +72,11 @@ interface Options {
     foldButtonPos: FoldButtonPos;
   }) => {
     draw: (outlineMakerProps: OutlineMarkerProps) => void;
-    cleanup: () => void;
-    drawAlways?: boolean;
+    cleanup?: () => void;
   };
 }
 
-interface NeotocResult {
+interface NeotocOutput {
   toc: null | HTMLUListElement | HTMLOListElement;
   depth: number;
   destroy: () => void;
@@ -87,7 +86,7 @@ interface NeotocResult {
   unfoldAll: () => void;
 }
 
-const defaultResult: NeotocResult = {
+const output: NeotocOutput = {
   toc: null,
   depth: 0,
   destroy() {},
@@ -122,12 +121,12 @@ export default function neotoc({
   autoFold = false,
   autoScroll = false,
   autoScrollBehavior = 'smooth',
-  autoScrollOffset = 20,
-  autoScrollDuration = 1000,
+  autoScrollOffset = 50,
+  autoScrollDuration = 250,
   autoScrollEasingFunc = easeOutCubic,
   handleFoldStatusChange,
   addAnimation,
-}: Options) {
+}: Options): NeotocOutput {
   if (autoFold) initialFoldLevel = 1;
 
   const foldStates: FoldStates = [];
@@ -345,15 +344,8 @@ export default function neotoc({
 
   const toc = genToc(headings);
 
-  if (!toc) return;
+  if (!toc) return output;
   if (foldable) runOnFoldStatusChange(handleFoldStatusChange);
-
-  interface AnimationMethods {
-    startAnimation: () => void;
-    stopAnimation: () => void;
-  }
-
-  const animationMethods = <AnimationMethods>{};
 
   tocHolder.append(toc);
 
@@ -374,17 +366,17 @@ export default function neotoc({
   // So we can do this:
   if (!contentHolder) contentHolder = headings[0].parentElement!;
 
+  let rafNum: number;
+  let animationCleanupFunc: undefined | (() => void);
   if (addAnimation) {
     const scrollContainer = findScrollContainer(contentHolder);
 
-    const {
-      draw,
-      cleanup,
-      drawAlways = false,
-    } = addAnimation({
+    const { draw, cleanup } = addAnimation({
       tocHolder,
       foldButtonPos,
     });
+
+    animationCleanupFunc = cleanup;
 
     let lastTopInUnfoldedState: null | number = null;
     let lastBottomInUnfoldedState: null | number = null;
@@ -524,26 +516,6 @@ export default function neotoc({
           y2Max + scrolledY - tocHolderTop - borderTopWidth,
         );
 
-        const drawIf = (bool: boolean) => {
-          if (bool)
-            draw({
-              height: Math.round(foldable ? y2Min! - y1Min! : y2Max - y1Max),
-              top: top,
-              bottom: bottom,
-              // Rounding is necssary because where they should be the same,
-              // there may be a very slight difference.
-              isTopInAFold: foldable
-                ? Math.round(y1Min!) < Math.round(y1Max)
-                : false,
-              isBottomInAFold: foldable
-                ? Math.round(y2Min!) < Math.round(y2Max)
-                : false,
-              anchors: anchorsToSectionsInView,
-              time: curTimestamp,
-              isInside: true,
-            });
-        };
-
         runIfTopOrBottomChangesInUnfoldedState(() => {
           if (
             lastTopInUnfoldedState !== null &&
@@ -576,7 +548,6 @@ export default function neotoc({
               curTimestamp,
             );
           }
-          drawIf(!drawAlways);
         });
 
         if (autoScroll) {
@@ -591,27 +562,36 @@ export default function neotoc({
           );
         }
 
-        drawIf(drawAlways);
+        draw({
+          height: Math.round(foldable ? y2Min! - y1Min! : y2Max - y1Max),
+          top: top,
+          bottom: bottom,
+          // Rounding is necssary because where they should be the same,
+          // there may be a very slight difference.
+          isTopInAFold: foldable
+            ? Math.round(y1Min!) < Math.round(y1Max)
+            : false,
+          isBottomInAFold: foldable
+            ? Math.round(y2Min!) < Math.round(y2Max)
+            : false,
+          anchors: anchorsToSectionsInView,
+          time: curTimestamp,
+          isInside: true,
+        });
 
         lastTopInUnfoldedState = topInUnfoldedState;
         lastBottomInUnfoldedState = bottomInUnfoldedState;
       } else {
         topInUnfoldedState = null;
         bottomInUnfoldedState = null;
-        const drawIf = (bool: boolean) => {
-          if (bool) draw({ isInside: false, time: curTimestamp });
-        };
         runIfTopOrBottomChangesInUnfoldedState(() => {
           doAutoFoldIfAllowed();
-          drawIf(!drawAlways);
         });
-        drawIf(drawAlways);
+        draw({ isInside: false, time: curTimestamp });
         lastTopInUnfoldedState = null;
         lastBottomInUnfoldedState = null;
       }
     };
-
-    let rafNum: number;
 
     let previousTime: number;
     const step = (timestamp: number) => {
@@ -623,55 +603,37 @@ export default function neotoc({
       rafNum = window.requestAnimationFrame(step);
     };
 
-    animationMethods.startAnimation = () => {
-      rafNum = window.requestAnimationFrame(step);
-    };
-
-    animationMethods.stopAnimation = () => {
-      cleanup();
-      window.cancelAnimationFrame(rafNum);
-    };
+    rafNum = window.requestAnimationFrame(step);
   }
 
-  const foldableProps = {
-    foldAll() {
-      normalizeFolds(true, 1);
-    },
-    unfoldAll() {
-      normalizeFolds(false, 5);
-    },
-    fold() {
-      const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
+  output.toc = toc;
+  output.depth = maxHLevel - minHLevel + 1;
 
-      if (lowestFoldedLevel) {
-        normalizeFolds(true, lowestFoldedLevel - 1);
-      } else if (highestUnfoldedLevel) {
-        normalizeFolds(true, highestUnfoldedLevel);
-      }
-    },
-    unfold() {
-      const [lowestFoldedLevel] = getFoldBoundaryInfo();
+  output.fold = () => {
+    const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
 
-      if (lowestFoldedLevel) {
-        normalizeFolds(true, lowestFoldedLevel + 1);
-        normalizeFolds(false, lowestFoldedLevel);
-      }
-    },
+    if (lowestFoldedLevel) {
+      normalizeFolds(true, lowestFoldedLevel - 1);
+    } else if (highestUnfoldedLevel) {
+      normalizeFolds(true, highestUnfoldedLevel);
+    }
+  };
+  output.unfold = () => {
+    const [lowestFoldedLevel] = getFoldBoundaryInfo();
+
+    if (lowestFoldedLevel) {
+      normalizeFolds(true, lowestFoldedLevel + 1);
+      normalizeFolds(false, lowestFoldedLevel);
+    }
   };
 
-  const mandatoryProps = {
-    element: toc,
-    depth: maxHLevel - minHLevel + 1,
-    ...animationMethods,
-    remove() {
-      animationMethods.stopAnimation?.();
-      toc.remove();
-    },
+  output.foldAll = () => normalizeFolds(true, 1);
+  output.unfoldAll = () => normalizeFolds(false, 5);
+  output.destroy = () => {
+    toc.remove();
+    window.cancelAnimationFrame(rafNum);
+    animationCleanupFunc?.();
   };
 
-  if (foldable) {
-    return { ...mandatoryProps, ...foldableProps };
-  } else {
-    return mandatoryProps;
-  }
+  return output;
 }

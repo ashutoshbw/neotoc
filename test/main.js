@@ -13,9 +13,9 @@ const toc = neotoc({
   offsetTop: 50,
   offsetBottom: 50,
   tocHolder,
-  foldable: false,
+  foldable: true,
   foldButtonPos: 'start',
-  autoFold: false,
+  autoFold: true,
   autoScroll: true,
   autoScrollOffset: 150,
   autoScrollDuration: 300,
@@ -93,7 +93,7 @@ if (toc) {
   unfoldBtn.addEventListener('click', toc.unfold);
   //TODO:  based on toc.depth show the only relevant buttons
 
-  toc.startAnimation();
+  // toc.startAnimation();
 }
 
 console.log(toc);
