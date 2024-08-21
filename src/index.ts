@@ -77,7 +77,7 @@ interface Options {
 }
 
 interface NeotocOutput {
-  toc: null | HTMLUListElement | HTMLOListElement;
+  list: null | HTMLUListElement | HTMLOListElement;
   depth: number;
   destroy: () => void;
   fold: () => void;
@@ -87,7 +87,7 @@ interface NeotocOutput {
 }
 
 const output: NeotocOutput = {
-  toc: null,
+  list: null,
   depth: 0,
   destroy() {},
   fold() {},
@@ -606,7 +606,7 @@ export default function neotoc({
     rafNum = window.requestAnimationFrame(step);
   }
 
-  output.toc = toc;
+  output.list = toc;
   output.depth = maxHLevel - minHLevel + 1;
 
   output.fold = () => {
