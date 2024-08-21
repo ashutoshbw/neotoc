@@ -400,7 +400,7 @@ export default function neotoc({
         cb();
     };
 
-    const drawFrame = (curTimestamp: number) => {
+    const renderFrame = (curTimestamp: number) => {
       const [viewportTop, viewportBottom] = getViewportYSize(
         scrollContainer,
         offsetTop,
@@ -616,7 +616,7 @@ export default function neotoc({
     let previousTime: number;
     const step = (timestamp: number) => {
       if (previousTime !== timestamp) {
-        drawFrame(timestamp);
+        renderFrame(timestamp);
       }
 
       previousTime = timestamp;
