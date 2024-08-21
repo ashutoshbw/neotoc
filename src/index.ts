@@ -66,15 +66,36 @@ interface Options {
   foldableClass?: string;
   foldableFoldedClass?: string;
   initialFoldLevel?: number;
-  handleFoldStatusChange: (foldStatus: FoldStatus) => void;
+  handleFoldStatusChange?: (foldStatus: FoldStatus) => void;
   addAnimation?: (props: {
     tocHolder: HTMLElement;
     foldButtonPos: FoldButtonPos;
   }) => {
     draw: (outlineMakerProps: OutlineMarkerProps) => void;
+    cleanup: () => void;
     drawAlways?: boolean;
   };
 }
+
+interface NeotocResult {
+  toc: null | HTMLUListElement | HTMLOListElement;
+  depth: number;
+  destroy: () => void;
+  fold: () => void;
+  unfold: () => void;
+  foldAll: () => void;
+  unfoldAll: () => void;
+}
+
+const defaultResult: NeotocResult = {
+  toc: null,
+  depth: 0,
+  destroy() {},
+  fold() {},
+  unfold() {},
+  foldAll() {},
+  unfoldAll() {},
+};
 
 export default function neotoc({
   // About contentHolder: By default it is first heading's parent element,
@@ -213,7 +234,7 @@ export default function neotoc({
                   );
                 }
               }
-              checkForFoldStatusChange(handleFoldStatusChange);
+              runOnFoldStatusChange(handleFoldStatusChange);
             },
             foldableDiv, // might be useful in future
             anchor, // only useful in autoFold
@@ -262,35 +283,38 @@ export default function neotoc({
         }
       }
     }
-    checkForFoldStatusChange(handleFoldStatusChange);
+    runOnFoldStatusChange(handleFoldStatusChange);
   }
 
   let lastFoldStatus: FoldStatus;
 
-  function checkForFoldStatusChange(cb: (foldStatus: FoldStatus) => void) {
-    if (!foldStates.length) {
-      lastFoldStatus == 'none';
-      cb('none');
-      return;
-    }
+  function runOnFoldStatusChange(cb?: (foldStatus: FoldStatus) => void) {
+    if (cb) {
+      if (!foldStates.length) {
+        lastFoldStatus == 'none';
+        cb('none');
+        return;
+      }
 
-    const firstFoldType = foldStates[0].isFolded;
-    let isAllFoldsOfSameType = true;
+      const firstFoldType = foldStates[0].isFolded;
+      let isAllFoldsOfSameType = true;
 
-    for (let i = 1; i < foldStates.length; i++) {
-      if (foldStates[i].isFolded != firstFoldType) isAllFoldsOfSameType = false;
-    }
+      for (let i = 1; i < foldStates.length; i++) {
+        if (foldStates[i].isFolded != firstFoldType)
+          isAllFoldsOfSameType = false;
+      }
 
-    let curFoldStatus: FoldStatus;
-    if (isAllFoldsOfSameType) {
-      curFoldStatus = firstFoldType ? 'allFolded' : 'allUnfolded';
-    } else {
-      curFoldStatus = 'mixed';
-    }
+      let curFoldStatus: FoldStatus;
+      if (isAllFoldsOfSameType) {
+        curFoldStatus = firstFoldType ? 'allFolded' : 'allUnfolded';
+      } else {
+        curFoldStatus = 'mixed';
+      }
 
-    if (curFoldStatus != lastFoldStatus) {
-      lastFoldStatus = curFoldStatus;
-      cb(curFoldStatus);
+      if (curFoldStatus != lastFoldStatus) {
+        lastFoldStatus = curFoldStatus;
+        cb(curFoldStatus);
+      }
     }
   }
 
@@ -322,7 +346,7 @@ export default function neotoc({
   const toc = genToc(headings);
 
   if (!toc) return;
-  if (foldable) checkForFoldStatusChange(handleFoldStatusChange);
+  if (foldable) runOnFoldStatusChange(handleFoldStatusChange);
 
   interface AnimationMethods {
     startAnimation: () => void;
@@ -353,7 +377,11 @@ export default function neotoc({
   if (addAnimation) {
     const scrollContainer = findScrollContainer(contentHolder);
 
-    const { draw, drawAlways = false } = addAnimation({
+    const {
+      draw,
+      cleanup,
+      drawAlways = false,
+    } = addAnimation({
       tocHolder,
       foldButtonPos,
     });
@@ -600,6 +628,7 @@ export default function neotoc({
     };
 
     animationMethods.stopAnimation = () => {
+      cleanup();
       window.cancelAnimationFrame(rafNum);
     };
   }
@@ -634,8 +663,10 @@ export default function neotoc({
     element: toc,
     depth: maxHLevel - minHLevel + 1,
     ...animationMethods,
-    // refresh() {},
-    // remove() {},
+    remove() {
+      animationMethods.stopAnimation?.();
+      toc.remove();
+    },
   };
 
   if (foldable) {
