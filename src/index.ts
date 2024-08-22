@@ -86,16 +86,6 @@ interface NeotocOutput {
   unfoldAll: () => void;
 }
 
-const output: NeotocOutput = {
-  list: null,
-  depth: 0,
-  destroy() {},
-  fold() {},
-  unfold() {},
-  foldAll() {},
-  unfoldAll() {},
-};
-
 export default function neotoc({
   // About contentHolder: By default it is first heading's parent element,
   // it's not possible to set the default value here so it's done with code
@@ -127,6 +117,16 @@ export default function neotoc({
   handleFoldStatusChange,
   addAnimation,
 }: Options): NeotocOutput {
+  const output: NeotocOutput = {
+    list: null,
+    depth: 0,
+    destroy() {},
+    fold() {},
+    unfold() {},
+    foldAll() {},
+    unfoldAll() {},
+  };
+
   if (autoFold) initialFoldLevel = 1;
 
   const foldStates: FoldStates = [];
