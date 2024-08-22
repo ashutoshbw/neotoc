@@ -20,6 +20,7 @@ import {
   animateMotorcycleScrollingIfNeeded,
   animateBicycleScrollingIfNeeded,
   type EasingFunc,
+  type AutoScrollState,
 } from './autoScroll.js';
 
 type OutlineMarkerProps =
@@ -369,6 +370,17 @@ export default function neotoc({
   let rafNum: number;
   let animationCleanupFunc: undefined | (() => void);
   if (addAnimation) {
+    const autoScrollState: AutoScrollState = {
+      isScrolling: false, // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
+      wasTopEndAboveTopBoundary: null,
+      wasBottomEndBelowBottomBoundary: null,
+      timeFrac: 0,
+      scrollNeeded: 0,
+      motorcycleScrollingStartScrollTop: 0,
+      motorcycleScrollingStartTime: 0, // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
+      lastAutoScrollTop: null,
+    };
+
     const scrollContainer = findScrollContainer(contentHolder);
 
     const { draw, cleanup } = addAnimation({
@@ -538,6 +550,7 @@ export default function neotoc({
               top,
               bottom,
               autoScrollOffset,
+              autoScrollState,
             );
             initMotorcycleScrolling(
               yMaxDir,
@@ -546,12 +559,19 @@ export default function neotoc({
               bottom,
               autoScrollOffset,
               curTimestamp,
+              autoScrollState,
             );
           }
         });
 
         if (autoScroll) {
-          prepareForBicycleScrolling(tocHolder, top, bottom, autoScrollOffset);
+          prepareForBicycleScrolling(
+            tocHolder,
+            top,
+            bottom,
+            autoScrollOffset,
+            autoScrollState,
+          );
 
           animateMotorcycleScrollingIfNeeded(
             tocHolder,
@@ -559,6 +579,7 @@ export default function neotoc({
             autoScrollEasingFunc,
             autoScrollDuration,
             curTimestamp,
+            autoScrollState,
           );
         }
 

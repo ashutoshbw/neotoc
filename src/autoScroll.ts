@@ -23,14 +23,16 @@
  * happen is: `animateMotorcycleScrollingIfNeeded`
  * */
 
-let isScrolling: boolean = false; // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
-let wasTopEndAboveTopBoundary: null | boolean = null;
-let wasBottomEndBelowBottomBoundary: null | boolean = null;
-let timeFrac = 0;
-let scrollNeeded = 0;
-let motorcycleScrollingStartScrollTop = 0;
-let motorcycleScrollingStartTime: number;
-let lastAutoScrollTop: null | number = null; // For stoping auto scrolling the toc when it's manually scrolled
+export interface AutoScrollState {
+  isScrolling: boolean;
+  wasTopEndAboveTopBoundary: null | boolean;
+  wasBottomEndBelowBottomBoundary: null | boolean;
+  timeFrac: number;
+  scrollNeeded: number;
+  motorcycleScrollingStartScrollTop: number;
+  motorcycleScrollingStartTime: number;
+  lastAutoScrollTop: null | number;
+}
 
 // Credit: https://easings.net/#easeOutCubic
 export function easeOutCubic(t: number): number {
@@ -56,13 +58,14 @@ export function prepareForBicycleScrolling(
   outlineMarkerTop: number,
   outlineMarkerBottom: number,
   offset: number,
+  state: AutoScrollState,
 ) {
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
   const isBottomEndBelowBottomBoundary = outlineMarkerBottom > bottomBoundary;
 
-  wasTopEndAboveTopBoundary = isTopEndAboveTopBoundary;
-  wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
+  state.wasTopEndAboveTopBoundary = isTopEndAboveTopBoundary;
+  state.wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
 }
 
 export function animateMotorcycleScrollingIfNeeded(
@@ -71,30 +74,35 @@ export function animateMotorcycleScrollingIfNeeded(
   easingFunc: EasingFunc,
   duration: number,
   curTimestamp: number,
+  state: AutoScrollState,
 ) {
-  if (isScrolling) {
+  if (state.isScrolling) {
     const curScrollTop = tocHolder.scrollTop;
     if (scrollBehavior == 'instant') {
-      tocHolder.scrollTop = curScrollTop + scrollNeeded;
-      isScrolling = false;
+      tocHolder.scrollTop = curScrollTop + state.scrollNeeded;
+      state.isScrolling = false;
     } else {
-      timeFrac = (curTimestamp - motorcycleScrollingStartTime) / duration;
-      if (timeFrac > 1) timeFrac = 1;
-      const scrollProgress = scrollNeeded * easingFunc(timeFrac);
+      state.timeFrac =
+        (curTimestamp - state.motorcycleScrollingStartTime) / duration;
+      if (state.timeFrac > 1) state.timeFrac = 1;
+      const scrollProgress = state.scrollNeeded * easingFunc(state.timeFrac);
 
       // The role lastAutoScrollTop here is to prevent auto scrolling the toc
       // when it's manually scrolled.
-      if (lastAutoScrollTop === null || lastAutoScrollTop === curScrollTop) {
+      if (
+        state.lastAutoScrollTop === null ||
+        state.lastAutoScrollTop === curScrollTop
+      ) {
         tocHolder.scrollTop =
-          motorcycleScrollingStartScrollTop + scrollProgress;
-        lastAutoScrollTop = tocHolder.scrollTop;
+          state.motorcycleScrollingStartScrollTop + scrollProgress;
+        state.lastAutoScrollTop = tocHolder.scrollTop;
       } else {
-        isScrolling = false;
-        lastAutoScrollTop = null;
+        state.isScrolling = false;
+        state.lastAutoScrollTop = null;
       }
 
-      if (timeFrac == 1) {
-        isScrolling = false;
+      if (state.timeFrac == 1) {
+        state.isScrolling = false;
       }
     }
   }
@@ -105,25 +113,26 @@ export function animateBicycleScrollingIfNeeded(
   outlineMarkerTop: number,
   outlineMarkerBottom: number,
   offset: number,
+  state: AutoScrollState,
 ) {
   const curScrollTop = tocHolder.scrollTop;
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
   const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
   const isBottomEndBelowBottomBoundary = outlineMarkerBottom > bottomBoundary;
 
-  if (wasTopEndAboveTopBoundary === null)
-    wasTopEndAboveTopBoundary = isTopEndAboveTopBoundary;
-  if (wasBottomEndBelowBottomBoundary === null)
-    wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
+  if (state.wasTopEndAboveTopBoundary === null)
+    state.wasTopEndAboveTopBoundary = isTopEndAboveTopBoundary;
+  if (state.wasBottomEndBelowBottomBoundary === null)
+    state.wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
 
-  if (isTopEndAboveTopBoundary && wasTopEndAboveTopBoundary === false) {
+  if (isTopEndAboveTopBoundary && state.wasTopEndAboveTopBoundary === false) {
     // executed when outlineMarkerTop just went above top boundary
     tocHolder.scrollTop = curScrollTop - (topBoundary - outlineMarkerTop);
   }
 
   if (
     isBottomEndBelowBottomBoundary &&
-    wasBottomEndBelowBottomBoundary === false
+    state.wasBottomEndBelowBottomBoundary === false
   ) {
     // executed when outlineMarkerBottom just went below bottom boundary
     tocHolder.scrollTop = curScrollTop + outlineMarkerBottom - bottomBoundary;
@@ -137,52 +146,53 @@ export function initMotorcycleScrolling(
   outlineMarkerBottom: number,
   offset: number,
   curTimestamp: number,
+  state: AutoScrollState,
 ) {
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
 
   if (outlineMarkerTop > topBoundary && outlineMarkerBottom < bottomBoundary) {
-    isScrolling = false;
+    state.isScrolling = false;
   } else if (outlineMarkerTop === topBoundary) {
     if (yMaxDir == 'up') {
-      isScrolling = false;
+      state.isScrolling = false;
     } else if (outlineMarkerBottom > bottomBoundary) {
-      isScrolling = true;
+      state.isScrolling = true;
     } else {
-      isScrolling = false;
+      state.isScrolling = false;
     }
   } else if (outlineMarkerBottom === bottomBoundary) {
     if (yMaxDir == 'down') {
-      isScrolling = false;
+      state.isScrolling = false;
     } else if (outlineMarkerTop < topBoundary) {
-      isScrolling = true;
+      state.isScrolling = true;
     } else {
-      isScrolling = false;
+      state.isScrolling = false;
     }
   } else {
-    isScrolling = true;
+    state.isScrolling = true;
   }
 
   // Update scrollNeeded global variable
   // Also update isScrolling to be more precise
-  if (isScrolling) {
-    scrollNeeded =
+  if (state.isScrolling) {
+    state.scrollNeeded =
       yMaxDir == 'up'
         ? outlineMarkerTop - topBoundary
         : outlineMarkerBottom - bottomBoundary;
 
     const curScrollTop = tocHolder.scrollTop;
     const maxScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
-    const freeScrollTop = curScrollTop + scrollNeeded;
+    const freeScrollTop = curScrollTop + state.scrollNeeded;
 
     if (freeScrollTop < 0) {
-      scrollNeeded = -curScrollTop;
+      state.scrollNeeded = -curScrollTop;
     } else if (freeScrollTop > maxScrollTop) {
-      scrollNeeded = maxScrollTop - curScrollTop;
+      state.scrollNeeded = maxScrollTop - curScrollTop;
     }
 
-    if (!scrollNeeded) isScrolling = false;
-    timeFrac = 0;
-    motorcycleScrollingStartTime = curTimestamp;
-    motorcycleScrollingStartScrollTop = curScrollTop;
+    if (!state.scrollNeeded) state.isScrolling = false;
+    state.timeFrac = 0;
+    state.motorcycleScrollingStartTime = curTimestamp;
+    state.motorcycleScrollingStartScrollTop = curScrollTop;
   }
 }
