@@ -68,6 +68,32 @@ export function prepareForBicycleScrolling(
   state.wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
 }
 
+// This is for getting rid of inconsistency in different browsers
+// when setting scrollTop in a zoomed in or out view. In chrome, in
+// a zoomed in/out view, if you assign a particular scrollTop, it's not
+// sure that exactly that is the resulted scrollTop. Chrome will assign a
+// value close to it. This function ensures that when `incBool` is true,
+// `tocHolder` will always scroll equal to `expected` or a little higher(never lower)
+// ane when `incBool` is false, `tocHolder` will scroll equal to or a little
+// lower `expected`(never higher).
+function scrollApproximately(
+  tocHolder: HTMLElement,
+  expectedScrollTop: number,
+  incBool: boolean,
+) {
+  const max = incBool ? 30 : -30;
+  const diff = incBool ? 0.5 : -0.5;
+  for (let i = 0; incBool ? i < max : i > max; i += diff) {
+    tocHolder.scrollTop = expectedScrollTop + i;
+    if (
+      incBool
+        ? tocHolder.scrollTop >= expectedScrollTop
+        : tocHolder.scrollTop <= expectedScrollTop
+    )
+      break;
+  }
+}
+
 export function animateMotorcycleScrollingIfNeeded(
   tocHolder: HTMLElement,
   scrollBehavior: 'instant' | 'smooth',
@@ -102,6 +128,15 @@ export function animateMotorcycleScrollingIfNeeded(
       }
 
       if (state.timeFrac == 1) {
+        const expected =
+          state.motorcycleScrollingStartScrollTop + state.scrollNeeded;
+        let incBool = true;
+        if (state.scrollNeeded > 0) {
+          incBool = true;
+        } else if (state.scrollNeeded < 0) {
+          incBool = false;
+        }
+        scrollApproximately(tocHolder, expected, incBool);
         state.isScrolling = false;
       }
     }
@@ -127,7 +162,8 @@ export function animateBicycleScrollingIfNeeded(
 
   if (isTopEndAboveTopBoundary && state.wasTopEndAboveTopBoundary === false) {
     // executed when outlineMarkerTop just went above top boundary
-    tocHolder.scrollTop = curScrollTop - (topBoundary - outlineMarkerTop);
+    const expected = curScrollTop - (topBoundary - outlineMarkerTop);
+    scrollApproximately(tocHolder, expected, false);
   }
 
   if (
@@ -135,7 +171,8 @@ export function animateBicycleScrollingIfNeeded(
     state.wasBottomEndBelowBottomBoundary === false
   ) {
     // executed when outlineMarkerBottom just went below bottom boundary
-    tocHolder.scrollTop = curScrollTop + outlineMarkerBottom - bottomBoundary;
+    const expected = curScrollTop + outlineMarkerBottom - bottomBoundary;
+    scrollApproximately(tocHolder, expected, true);
   }
 }
 
