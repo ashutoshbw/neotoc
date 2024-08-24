@@ -390,8 +390,10 @@ export default function neotoc({
 
     animationCleanupFunc = cleanup;
 
+    let lastScrollContainerScrollTop: null | number = null;
     let lastTopInUnfoldedState: null | number = null;
     let lastBottomInUnfoldedState: null | number = null;
+    let scrollContainerScrollTop: null | number = null;
     let topInUnfoldedState: null | number = null;
     let bottomInUnfoldedState: null | number = null;
     let yMaxDir: 'up' | 'down';
@@ -400,8 +402,15 @@ export default function neotoc({
       if (
         topInUnfoldedState !== lastTopInUnfoldedState ||
         bottomInUnfoldedState !== lastBottomInUnfoldedState
-      )
-        cb();
+      ) {
+        if (scrollContainerScrollTop !== lastScrollContainerScrollTop) {
+          // This check is necessary because sometimes in especially firefox,
+          // even if there is no scroll in the `scrollContainer`, only scroll in
+          // the `tocHolder` causes update to `topInUnfoldedState` and/or it's
+          // related variables.
+          cb();
+        }
+      }
     };
 
     const renderFrame = (curTimestamp: number) => {
@@ -521,6 +530,7 @@ export default function neotoc({
             borderTopWidth,
         );
 
+        scrollContainerScrollTop = scrollContainer.scrollTop;
         topInUnfoldedState = Math.round(
           y1Max + scrolledY - tocHolderTop - borderTopWidth,
         );
@@ -600,15 +610,18 @@ export default function neotoc({
           isInside: true,
         });
 
+        lastScrollContainerScrollTop = scrollContainerScrollTop;
         lastTopInUnfoldedState = topInUnfoldedState;
         lastBottomInUnfoldedState = bottomInUnfoldedState;
       } else {
+        scrollContainerScrollTop = null;
         topInUnfoldedState = null;
         bottomInUnfoldedState = null;
         runIfTopOrBottomChangesInUnfoldedState(() => {
           doAutoFoldIfAllowed();
         });
         draw({ isInside: false, time: curTimestamp });
+        lastScrollContainerScrollTop = null;
         lastTopInUnfoldedState = null;
         lastBottomInUnfoldedState = null;
       }

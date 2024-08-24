@@ -17,7 +17,7 @@ const toc = neotoc({
   foldButtonPos: 'start',
   autoFold: false,
   autoScroll: true,
-  autoScrollOffset: 150,
+  autoScrollOffset: 50,
   autoScrollDuration: 300,
   autoScrollBehavior: 'smooth',
   initialFoldLevel: 6,
