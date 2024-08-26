@@ -390,9 +390,11 @@ export default function neotoc({
 
     animationCleanupFunc = cleanup;
 
+    let lastViewportHeight: null | number = null;
     let lastScrollContainerScrollTop: null | number = null;
     let lastTopInUnfoldedState: null | number = null;
     let lastBottomInUnfoldedState: null | number = null;
+    let viewportHeight: null | number = null;
     let scrollContainerScrollTop: null | number = null;
     let topInUnfoldedState: null | number = null;
     let bottomInUnfoldedState: null | number = null;
@@ -410,6 +412,9 @@ export default function neotoc({
           // related variables.
           cb();
         }
+      }
+      if (viewportHeight !== lastViewportHeight) {
+        cb();
       }
     };
 
@@ -517,6 +522,9 @@ export default function neotoc({
         const scrolledY = tocHolder.scrollTop;
         const borderTopWidth = tocHolder.clientTop;
 
+        viewportHeight =
+          viewportTop === null ? null : viewportBottom! - viewportTop;
+
         const top = Math.round(
           (foldable ? y1Min! : y1Max) +
             scrolledY -
@@ -610,20 +618,27 @@ export default function neotoc({
           isInside: true,
         });
 
+        lastViewportHeight = viewportHeight;
         lastScrollContainerScrollTop = scrollContainerScrollTop;
         lastTopInUnfoldedState = topInUnfoldedState;
         lastBottomInUnfoldedState = bottomInUnfoldedState;
       } else {
-        scrollContainerScrollTop = null;
-        topInUnfoldedState = null;
-        bottomInUnfoldedState = null;
+        viewportHeight =
+          scrollContainerScrollTop =
+          topInUnfoldedState =
+          bottomInUnfoldedState =
+            null;
+
         runIfTopOrBottomChangesInUnfoldedState(() => {
           doAutoFoldIfAllowed();
         });
         draw({ isInside: false, time: curTimestamp });
-        lastScrollContainerScrollTop = null;
-        lastTopInUnfoldedState = null;
-        lastBottomInUnfoldedState = null;
+
+        lastViewportHeight =
+          lastScrollContainerScrollTop =
+          lastTopInUnfoldedState =
+          lastBottomInUnfoldedState =
+            null;
       }
     };
 

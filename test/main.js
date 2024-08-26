@@ -10,14 +10,14 @@ const unfoldBtn = document.getElementById('unfold');
 
 const toc = neotoc({
   headings: headings,
-  offsetTop: 50,
-  offsetBottom: 50,
+  offsetTop: 0,
+  offsetBottom: 0,
   tocHolder,
   foldable: true,
   foldButtonPos: 'start',
-  autoFold: false,
+  autoFold: true,
   autoScroll: true,
-  autoScrollOffset: 50,
+  autoScrollOffset: 150,
   autoScrollDuration: 300,
   autoScrollBehavior: 'smooth',
   initialFoldLevel: 6,
