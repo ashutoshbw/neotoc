@@ -55,6 +55,7 @@ interface Options {
   autoScrollOffset?: number;
   autoScrollDuration?: number;
   autoScrollEasingFunc?: EasingFunc;
+  tocListClass?: string;
   liParentClass?: string;
   liClass?: string;
   anchorClass?: string;
@@ -95,6 +96,7 @@ export default function neotoc({
   offsetBottom = 0,
   headings,
   tocHolder,
+  tocListClass = 'toc-list',
   liParentClass = 'li-parent',
   liClass,
   anchorClass,
@@ -348,6 +350,7 @@ export default function neotoc({
   if (!toc) return output;
   if (foldable) runOnFoldStatusChange(handleFoldStatusChange);
 
+  toc.classList.add(tocListClass);
   tocHolder.append(toc);
 
   if (foldable) {
