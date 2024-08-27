@@ -9,17 +9,18 @@
 }
 
 .foldable {
+  --fold-duration: 300ms;
   display: grid;
   transition:
-    grid-template-rows 300ms,
-    border 300ms;
+    grid-template-rows var(--fold-duration),
+    border var(--fold-duration);
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   grid-template-rows: 1fr;
 }
 
 .foldable ul {
-  transition: opacity 300ms;
+  transition: opacity var(--fold-duration);
 }
 
 .foldable-folded {
