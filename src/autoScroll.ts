@@ -113,7 +113,7 @@ export function animateMotorcycleScrollingIfNeeded(
       if (state.timeFrac > 1) state.timeFrac = 1;
       const scrollProgress = state.scrollNeeded * easingFunc(state.timeFrac);
 
-      // The role lastAutoScrollTop here is to prevent auto scrolling the toc
+      // The role of lastAutoScrollTop here is to prevent auto scrolling the toc
       // when it's manually scrolled.
       if (
         state.lastAutoScrollTop === null ||
