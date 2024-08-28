@@ -12,10 +12,15 @@ export function doAutoFold(
     const forgetManualToggling = () => {
       foldStates[i].isManuallyToggledFoldInAutoFold = false;
     };
+    const toggleFoldIfNeeded = () => {
+      if (isManuallyNotToggled) toggleFold();
+    };
     const handleOutsideViewCase = () => {
       if (isFolded) {
         forgetManualToggling();
-      } else if (isManuallyNotToggled) toggleFold();
+      } else {
+        toggleFoldIfNeeded();
+      }
     };
 
     if (anchorsToSectionsInView.length) {
@@ -28,7 +33,7 @@ export function doAutoFold(
         )
       ) {
         if (isFolded) {
-          if (isManuallyNotToggled) toggleFold();
+          toggleFoldIfNeeded();
         } else {
           forgetManualToggling();
         }
