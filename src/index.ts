@@ -49,7 +49,6 @@ interface Options {
   tocHolder: HTMLElement;
   fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
   listType?: 'ul' | 'ol';
-  foldDuration: number;
   autoFold?: boolean;
   autoScroll?: boolean;
   autoScrollBehavior?: 'instant' | 'smooth';
@@ -103,7 +102,6 @@ export default function neotoc({
   anchorClass,
   fillAnchor,
   listType = 'ul',
-  foldDuration = 300,
   foldable = false,
   foldButtonParentClass = 'fold-btn-parent',
   foldButtonPos = 'start',
@@ -135,21 +133,6 @@ export default function neotoc({
   if (autoFold) initialFoldLevel = 1;
 
   const foldStates: FoldStates = [];
-
-  sheetLoop: for (const sheet of document.styleSheets) {
-    const rules = sheet.cssRules;
-    for (const rule of rules) {
-      if (rule.constructor.name === 'CSSStyleRule') {
-        if ((rule as CSSStyleRule).selectorText === '.foldable') {
-          (rule as CSSStyleRule).style.setProperty(
-            '--fold-duration',
-            `${foldDuration}ms`,
-          );
-          break sheetLoop;
-        }
-      }
-    }
-  }
 
   let minHLevel: number = 0,
     maxHLevel: number = 0;
