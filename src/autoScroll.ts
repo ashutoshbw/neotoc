@@ -108,8 +108,9 @@ export function animateMotorcycleScrollingIfNeeded(
       tocHolder.scrollTop = curScrollTop + state.scrollNeeded;
       state.isScrolling = false;
     } else {
-      state.timeFrac =
-        (curTimestamp - state.motorcycleScrollingStartTime) / duration;
+      state.timeFrac = duration
+        ? (curTimestamp - state.motorcycleScrollingStartTime) / duration
+        : 1;
       if (state.timeFrac > 1) state.timeFrac = 1;
       const scrollProgress = state.scrollNeeded * easingFunc(state.timeFrac);
 
