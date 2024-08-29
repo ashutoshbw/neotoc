@@ -403,7 +403,7 @@ export default function neotoc({
     let bottomInUnfoldedState: null | number = null;
     let yMaxDir: 'up' | 'down';
 
-    const runIfTopOrBottomChangesInUnfoldedState = (cb: () => void) => {
+    const runConditionally = (cb: () => void) => {
       if (
         topInUnfoldedState !== lastTopInUnfoldedState ||
         bottomInUnfoldedState !== lastBottomInUnfoldedState
@@ -549,7 +549,8 @@ export default function neotoc({
           y2Max + scrolledY - tocHolderTop - borderTopWidth,
         );
 
-        runIfTopOrBottomChangesInUnfoldedState(() => {
+        // See it's definition to be clear about its purpose
+        runConditionally(() => {
           if (
             lastTopInUnfoldedState !== null &&
             lastBottomInUnfoldedState !== null
@@ -632,7 +633,7 @@ export default function neotoc({
           bottomInUnfoldedState =
             null;
 
-        runIfTopOrBottomChangesInUnfoldedState(() => {
+        runConditionally(() => {
           doAutoFoldIfAllowed();
         });
         draw({ isInside: false, time: curTimestamp });
