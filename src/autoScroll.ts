@@ -103,10 +103,22 @@ export function animateMotorcycleScrollingIfNeeded(
   state: AutoScrollState,
 ) {
   if (state.isScrolling) {
+    const scrollNeededAndUpdateState = () => {
+      const expected =
+        state.motorcycleScrollingStartScrollTop + state.scrollNeeded;
+      let incBool = true;
+      if (state.scrollNeeded > 0) {
+        incBool = true;
+      } else if (state.scrollNeeded < 0) {
+        incBool = false;
+      }
+      scrollApproximately(tocHolder, expected, incBool);
+      state.isScrolling = false;
+    };
+
     const curScrollTop = tocHolder.scrollTop;
     if (scrollBehavior == 'instant') {
-      tocHolder.scrollTop = curScrollTop + state.scrollNeeded;
-      state.isScrolling = false;
+      scrollNeededAndUpdateState();
     } else {
       state.timeFrac = duration
         ? (curTimestamp - state.motorcycleScrollingStartTime) / duration
@@ -129,16 +141,7 @@ export function animateMotorcycleScrollingIfNeeded(
       }
 
       if (state.timeFrac == 1) {
-        const expected =
-          state.motorcycleScrollingStartScrollTop + state.scrollNeeded;
-        let incBool = true;
-        if (state.scrollNeeded > 0) {
-          incBool = true;
-        } else if (state.scrollNeeded < 0) {
-          incBool = false;
-        }
-        scrollApproximately(tocHolder, expected, incBool);
-        state.isScrolling = false;
+        scrollNeededAndUpdateState();
       }
     }
   }
