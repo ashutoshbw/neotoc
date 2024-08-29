@@ -181,7 +181,7 @@ export function animateBicycleScrollingIfNeeded(
 }
 
 export function initMotorcycleScrolling(
-  yMaxDir: 'up' | 'down',
+  scrollDir: 'up' | 'down',
   tocHolder: HTMLElement,
   outlineMarkerTop: number,
   outlineMarkerBottom: number,
@@ -194,7 +194,7 @@ export function initMotorcycleScrolling(
   if (outlineMarkerTop > topBoundary && outlineMarkerBottom < bottomBoundary) {
     state.isScrolling = false;
   } else if (outlineMarkerTop === topBoundary) {
-    if (yMaxDir == 'up') {
+    if (scrollDir == 'up') {
       state.isScrolling = false;
     } else if (outlineMarkerBottom > bottomBoundary) {
       state.isScrolling = true;
@@ -202,7 +202,7 @@ export function initMotorcycleScrolling(
       state.isScrolling = false;
     }
   } else if (outlineMarkerBottom === bottomBoundary) {
-    if (yMaxDir == 'down') {
+    if (scrollDir == 'down') {
       state.isScrolling = false;
     } else if (outlineMarkerTop < topBoundary) {
       state.isScrolling = true;
@@ -217,7 +217,7 @@ export function initMotorcycleScrolling(
   // Also update isScrolling to be more precise
   if (state.isScrolling) {
     state.scrollNeeded =
-      yMaxDir == 'up'
+      scrollDir == 'up'
         ? outlineMarkerTop - topBoundary
         : outlineMarkerBottom - bottomBoundary;
 

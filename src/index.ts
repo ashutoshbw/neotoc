@@ -401,24 +401,24 @@ export default function neotoc({
     let scrollContainerScrollTop: null | number = null;
     let topInUnfoldedState: null | number = null;
     let bottomInUnfoldedState: null | number = null;
-    let yMaxDir: 'up' | 'down';
 
     const runConditionally = (cb: () => void) => {
-      if (
+      const condition1 =
         topInUnfoldedState !== lastTopInUnfoldedState ||
-        bottomInUnfoldedState !== lastBottomInUnfoldedState
-      ) {
-        if (scrollContainerScrollTop !== lastScrollContainerScrollTop) {
-          // This check is necessary because sometimes in especially firefox,
-          // even if there is no scroll in the `scrollContainer`, only scroll in
-          // the `tocHolder` causes update to `topInUnfoldedState` and/or it's
-          // related variables.
-          cb();
-        }
-      }
-      if (viewportHeight !== lastViewportHeight) {
-        cb();
-      }
+        bottomInUnfoldedState !== lastBottomInUnfoldedState;
+
+      // This check is necessary because sometimes in especially firefox,
+      // even if there is no scroll in the `scrollContainer`, only scroll in
+      // the `tocHolder` causes update to `topInUnfoldedState` and/or it's
+      // related variables.
+      const condition2 =
+        scrollContainerScrollTop !== lastScrollContainerScrollTop;
+
+      const condition3 = viewportHeight !== lastViewportHeight;
+
+      const finalCondition = (condition1 && condition2) || condition3;
+
+      finalCondition && cb();
     };
 
     const renderFrame = (curTimestamp: number) => {
@@ -551,19 +551,11 @@ export default function neotoc({
 
         // See it's definition to be clear about its purpose
         runConditionally(() => {
-          if (
-            lastTopInUnfoldedState !== null &&
-            lastBottomInUnfoldedState !== null
-          ) {
-            const topDiff = topInUnfoldedState! - lastTopInUnfoldedState;
-            const bottomDiff =
-              bottomInUnfoldedState! - lastBottomInUnfoldedState;
-            if (topDiff > 0 || bottomDiff > 0) {
-              yMaxDir = 'down';
-            } else if (topDiff < 0 || bottomDiff < 0) {
-              yMaxDir = 'up';
-            }
-          }
+          const scrollDiff =
+            scrollContainerScrollTop! -
+            (lastScrollContainerScrollTop || scrollContainerScrollTop!);
+          const scrollDir =
+            scrollDiff > 0 ? 'down' : scrollDiff < 0 ? 'up' : 'down';
 
           doAutoFoldIfAllowed();
           if (autoScroll) {
@@ -575,7 +567,7 @@ export default function neotoc({
               autoScrollState,
             );
             initMotorcycleScrolling(
-              yMaxDir,
+              scrollDir,
               tocHolder,
               top,
               bottom,
