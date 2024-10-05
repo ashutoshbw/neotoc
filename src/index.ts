@@ -106,7 +106,7 @@ export default function neotoc({
   foldButtonParentClass = 'fold-btn-parent',
   foldButtonPos = 'start',
   foldButtonClass = 'fold-btn',
-  foldButtonFoldedClass,
+  foldButtonFoldedClass = 'fold-btn-folded',
   foldableClass = 'foldable',
   foldableFoldedClass = 'foldable-folded',
   useAndFillFoldButton,
@@ -227,14 +227,11 @@ export default function neotoc({
 
               foldableDiv.classList.toggle(foldableFoldedClass);
               if (useAndFillFoldButton) {
-                if (foldButtonFoldedClass) {
-                  foldButton.classList.toggle(foldButtonFoldedClass);
-                } else {
-                  fillElt(
-                    foldButton,
-                    useAndFillFoldButton(curFoldState.isFolded),
-                  );
-                }
+                foldButton.classList.toggle(foldButtonFoldedClass);
+                fillElt(
+                  foldButton,
+                  useAndFillFoldButton(curFoldState.isFolded),
+                );
               }
               runOnFoldStatusChange(handleFoldStatusChange);
             },
