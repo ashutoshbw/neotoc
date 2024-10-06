@@ -199,6 +199,8 @@ export default function neotoc({
 
         if (foldable) {
           const foldButton = elt<HTMLButtonElement>('button', foldButtonClass);
+          const foldButtonWrapper = elt<HTMLSpanElement>('span', 'fold-btn-wrapper');
+          foldButtonWrapper.append(foldButton);
           const foldableDiv = elt<HTMLDivElement>('div', foldableClass);
           const isFolded = curHeadingLevel >= initialFoldLevel;
 
@@ -212,8 +214,8 @@ export default function neotoc({
             }
 
             foldButtonPos == 'start'
-              ? anchorSpan.prepend(foldButton)
-              : anchorSpan.append(foldButton);
+              ? anchorSpan.prepend(foldButtonWrapper)
+              : anchorSpan.append(foldButtonWrapper);
           }
 
           foldableDiv.append(nestedListContainer);
