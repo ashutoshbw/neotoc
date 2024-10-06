@@ -42,7 +42,7 @@ export type Highlighter =
 export type Draw = (highlighter: Highlighter) => void;
 export interface AnimationFrame {
   draw: Draw;
-  cleanUp: () => void;
+  cleanup: () => void;
 }
 export type AddAnimation = (props: {
   tocHolder: HTMLElement;
