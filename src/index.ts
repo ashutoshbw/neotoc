@@ -23,6 +23,8 @@ import {
   type AutoScrollState,
 } from './autoScroll.js';
 
+export { elt };
+
 export type HighlightedArea =
   | {
       top: number;
@@ -31,11 +33,11 @@ export type HighlightedArea =
       isTopInAFold: boolean;
       isBottomInAFold: boolean;
       anchors: HTMLAnchorElement[];
-      isInside: true;
+      isVisible: true;
       time: number;
     }
   | {
-      isInside: false;
+      isVisible: false;
       time: number;
     };
 
@@ -615,7 +617,7 @@ export default function neotoc({
             : false,
           anchors: anchorsToSectionsInView,
           time: curTimestamp,
-          isInside: true,
+          isVisible: true,
         });
 
         lastViewportHeight = viewportHeight;
@@ -632,7 +634,7 @@ export default function neotoc({
         runConditionally(() => {
           doAutoFoldIfAllowed();
         });
-        draw({ isInside: false, time: curTimestamp });
+        draw({ isVisible: false, time: curTimestamp });
 
         lastViewportHeight =
           lastScrollContainerScrollTop =
