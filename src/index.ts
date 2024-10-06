@@ -23,7 +23,7 @@ import {
   type AutoScrollState,
 } from './autoScroll.js';
 
-export type Highlighter =
+export type HighlightedArea =
   | {
       top: number;
       bottom: number;
@@ -39,7 +39,7 @@ export type Highlighter =
       time: number;
     };
 
-export type Draw = (highlighter: Highlighter) => void;
+export type Draw = (highlightedArea: HighlightedArea) => void;
 export interface AnimationFrame {
   draw: Draw;
   cleanup: () => void;
@@ -493,11 +493,11 @@ export default function neotoc({
         const i1 = foldable && useAndFillFoldButton ? a1.parentElement! : a1; // i1 is either the wrapping span(when fold button used) or the anchor
         const rect1 = i1.getBoundingClientRect();
 
-        // Vertical coordinates of outline marker when toc is fully unfolded
+        // Vertical coordinates of highlighted area when toc is fully unfolded
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
 
-        // Vertical coordinates of outline maker when toc may be folded somehow
+        // Vertical coordinates of highlighted area when toc may be folded somehow
         let y1Min: number;
         let y2Min: number;
 
