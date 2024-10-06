@@ -8,9 +8,9 @@
  * ## Bicycle Scrolling:
  *
  * It is somewhat similar to riding a bicyle. You need to put effort to make it
- * happen. It happens when scrolling the content, if the outline marker goes
+ * happen. It happens when scrolling the content, if the highlighted area goes
  * from inside the boundaries(set by `autoScrollOffset`) to outside. The
- * `tocHolder` is then automatically scrolled so that the outline marker appears
+ * `tocHolder` is then automatically scrolled so that the highlighted area appears
  * right on a boundary. Two functions makes it happen together:
  * `prepareForBicycleScrolling` and `animateBicyleScrollingIfNeeded`
  *
@@ -19,7 +19,7 @@
  * Like a motorcyle you just need to start and then it runs automatically!
  * It happens when scrolling the content, if there is any need to scroll the toc
  * in any situation. It then automatially scrolls the `tocHolder` so that the
- * outline marker is visible in a sensible way. The function that makes it
+ * highlighted area is visible in a sensible way. The function that makes it
  * happen is: `animateMotorcycleScrollingIfNeeded`
  * */
 
@@ -55,14 +55,14 @@ function getBoundaries(
 
 export function prepareForBicycleScrolling(
   tocHolder: HTMLElement,
-  outlineMarkerTop: number,
-  outlineMarkerBottom: number,
+  highlightedAreaTop: number,
+  highlightedAreaBottom: number,
   offset: number,
   state: AutoScrollState,
 ) {
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
-  const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
-  const isBottomEndBelowBottomBoundary = outlineMarkerBottom > bottomBoundary;
+  const isTopEndAboveTopBoundary = highlightedAreaTop < topBoundary;
+  const isBottomEndBelowBottomBoundary = highlightedAreaBottom > bottomBoundary;
 
   state.wasTopEndAboveTopBoundary = isTopEndAboveTopBoundary;
   state.wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
@@ -149,15 +149,15 @@ export function animateMotorcycleScrollingIfNeeded(
 
 export function animateBicycleScrollingIfNeeded(
   tocHolder: HTMLElement,
-  outlineMarkerTop: number,
-  outlineMarkerBottom: number,
+  highlightedAreaTop: number,
+  highlightedAreaBottom: number,
   offset: number,
   state: AutoScrollState,
 ) {
   const curScrollTop = tocHolder.scrollTop;
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
-  const isTopEndAboveTopBoundary = outlineMarkerTop < topBoundary;
-  const isBottomEndBelowBottomBoundary = outlineMarkerBottom > bottomBoundary;
+  const isTopEndAboveTopBoundary = highlightedAreaTop < topBoundary;
+  const isBottomEndBelowBottomBoundary = highlightedAreaBottom > bottomBoundary;
 
   if (state.wasTopEndAboveTopBoundary === null)
     state.wasTopEndAboveTopBoundary = isTopEndAboveTopBoundary;
@@ -165,8 +165,8 @@ export function animateBicycleScrollingIfNeeded(
     state.wasBottomEndBelowBottomBoundary = isBottomEndBelowBottomBoundary;
 
   if (isTopEndAboveTopBoundary && state.wasTopEndAboveTopBoundary === false) {
-    // executed when outlineMarkerTop just went above top boundary
-    const expected = curScrollTop - (topBoundary - outlineMarkerTop);
+    // executed when highlightedAreaTop just went above top boundary
+    const expected = curScrollTop - (topBoundary - highlightedAreaTop);
     scrollApproximately(tocHolder, expected, false);
   }
 
@@ -174,8 +174,8 @@ export function animateBicycleScrollingIfNeeded(
     isBottomEndBelowBottomBoundary &&
     state.wasBottomEndBelowBottomBoundary === false
   ) {
-    // executed when outlineMarkerBottom just went below bottom boundary
-    const expected = curScrollTop + outlineMarkerBottom - bottomBoundary;
+    // executed when highlightedAreaBottom just went below bottom boundary
+    const expected = curScrollTop + highlightedAreaBottom - bottomBoundary;
     scrollApproximately(tocHolder, expected, true);
   }
 }
@@ -183,28 +183,31 @@ export function animateBicycleScrollingIfNeeded(
 export function initMotorcycleScrolling(
   scrollDir: 'up' | 'down',
   tocHolder: HTMLElement,
-  outlineMarkerTop: number,
-  outlineMarkerBottom: number,
+  highlightedAreaTop: number,
+  highlightedAreaBottom: number,
   offset: number,
   curTimestamp: number,
   state: AutoScrollState,
 ) {
   const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
 
-  if (outlineMarkerTop > topBoundary && outlineMarkerBottom < bottomBoundary) {
+  if (
+    highlightedAreaTop > topBoundary &&
+    highlightedAreaBottom < bottomBoundary
+  ) {
     state.isScrolling = false;
-  } else if (outlineMarkerTop === topBoundary) {
+  } else if (highlightedAreaTop === topBoundary) {
     if (scrollDir == 'up') {
       state.isScrolling = false;
-    } else if (outlineMarkerBottom > bottomBoundary) {
+    } else if (highlightedAreaBottom > bottomBoundary) {
       state.isScrolling = true;
     } else {
       state.isScrolling = false;
     }
-  } else if (outlineMarkerBottom === bottomBoundary) {
+  } else if (highlightedAreaBottom === bottomBoundary) {
     if (scrollDir == 'down') {
       state.isScrolling = false;
-    } else if (outlineMarkerTop < topBoundary) {
+    } else if (highlightedAreaTop < topBoundary) {
       state.isScrolling = true;
     } else {
       state.isScrolling = false;
@@ -218,8 +221,8 @@ export function initMotorcycleScrolling(
   if (state.isScrolling) {
     state.scrollNeeded =
       scrollDir == 'up'
-        ? outlineMarkerTop - topBoundary
-        : outlineMarkerBottom - bottomBoundary;
+        ? highlightedAreaTop - topBoundary
+        : highlightedAreaBottom - bottomBoundary;
 
     const curScrollTop = tocHolder.scrollTop;
     const maxScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
