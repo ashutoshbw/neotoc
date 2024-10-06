@@ -59,7 +59,6 @@ interface Options {
   liParentClass?: string;
   liClass?: string;
   anchorClass?: string;
-  foldButtonParentClass?: string;
   foldable?: boolean;
   foldButtonClass?: string;
   foldButtonFoldedClass?: string;
@@ -103,7 +102,6 @@ export default function neotoc({
   fillAnchor,
   listType = 'ul',
   foldable = false,
-  foldButtonParentClass = 'fold-btn-parent',
   foldButtonPos = 'start',
   foldButtonClass = 'fold-btn',
   foldButtonFoldedClass = 'fold-btn-folded',
@@ -165,7 +163,7 @@ export default function neotoc({
       const h = headings[i];
       const li = elt<HTMLLIElement>('li', liClass);
       const anchor = elt<HTMLAnchorElement>('a', anchorClass);
-      const anchorSpan = elt<HTMLSpanElement>('span', foldButtonParentClass); // only used when there is fold button
+      const anchorSpan = elt<HTMLSpanElement>('span', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
       fillElt(anchor, fillAnchor(h, order));
 
@@ -199,7 +197,10 @@ export default function neotoc({
 
         if (foldable) {
           const foldButton = elt<HTMLButtonElement>('button', foldButtonClass);
-          const foldButtonWrapper = elt<HTMLSpanElement>('span', 'fold-btn-wrapper');
+          const foldButtonWrapper = elt<HTMLSpanElement>(
+            'span',
+            'fold-btn-wrapper',
+          );
           foldButtonWrapper.append(foldButton);
           const foldableDiv = elt<HTMLDivElement>('div', foldableClass);
           const isFolded = curHeadingLevel >= initialFoldLevel;
