@@ -23,7 +23,7 @@ import {
   type AutoScrollState,
 } from './autoScroll.js';
 
-type OutlineMarkerProps =
+export type Highlighter =
   | {
       top: number;
       bottom: number;
@@ -38,6 +38,16 @@ type OutlineMarkerProps =
       isInside: false;
       time: number;
     };
+
+export type Draw = (highlighter: Highlighter) => void;
+export interface AnimationFrame {
+  draw: Draw;
+  cleanUp: () => void;
+}
+export type AddAnimation = (props: {
+  tocHolder: HTMLElement;
+  foldButtonPos: FoldButtonPos;
+}) => AnimationFrame;
 
 type FoldButtonPos = 'start' | 'end';
 
@@ -68,13 +78,7 @@ interface Options {
   foldableFoldedClass?: string;
   initialFoldLevel?: number;
   handleFoldStatusChange?: (foldStatus: FoldStatus) => void;
-  addAnimation?: (props: {
-    tocHolder: HTMLElement;
-    foldButtonPos: FoldButtonPos;
-  }) => {
-    draw: (outlineMakerProps: OutlineMarkerProps) => void;
-    cleanup?: () => void;
-  };
+  addAnimation?: AddAnimation;
 }
 
 interface NeotocOutput {
