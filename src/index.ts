@@ -351,7 +351,7 @@ export default function neotoc({
 
   if (foldable) {
     toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
-      const [divs, anchors] = getAncestors(a, foldableClass, true, 'start');
+      const [divs, anchors] = getAncestors(a, foldableClass);
       anchorToAncestorFoldableDivsMap.set(a, divs);
       anchorToAncestorAnchorsMap.set(a, anchors);
     });

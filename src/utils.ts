@@ -94,14 +94,13 @@ export function findScrollContainer(element: HTMLElement) {
 function getClosestFoldableDiv(
   elt: HTMLAnchorElement | HTMLDivElement,
   foldableDivClass: string,
-  foldButtonUsed: boolean,
 ) {
   // it assumes elt is an anchor or foldable div that is inside generated toc
   // and that generated toc is in tocHolder
 
   let mayBeClosestFoldableDiv =
     elt.parentElement!.parentElement!.parentElement!;
-  if (elt.tagName === 'A' && foldButtonUsed)
+  if (elt.tagName === 'A')
     mayBeClosestFoldableDiv = mayBeClosestFoldableDiv.parentElement!;
 
   if (mayBeClosestFoldableDiv.classList.contains(foldableDivClass)) {
@@ -114,36 +113,19 @@ function getClosestFoldableDiv(
 export function getAncestors(
   anchor: HTMLAnchorElement,
   foldableDivClass: string,
-  foldButtonUsed: boolean,
-  foldButtonPos: 'start' | 'end',
 ): [HTMLDivElement[], HTMLAnchorElement[]] {
   const ancestorDivs: HTMLDivElement[] = [];
   const ancestorAnchors: HTMLAnchorElement[] = [];
-  let ancestorDiv = getClosestFoldableDiv(
-    anchor,
-    foldableDivClass,
-    foldButtonUsed,
-  );
+  let ancestorDiv = getClosestFoldableDiv(anchor, foldableDivClass);
 
   while (ancestorDiv) {
     ancestorDivs.push(ancestorDiv);
 
-    if (foldButtonUsed) {
-      const anchorSpan = ancestorDiv.previousSibling! as HTMLSpanElement;
-      const ancestorAnchor =
-        foldButtonPos == 'start'
-          ? (anchorSpan.lastChild! as HTMLAnchorElement)
-          : (anchorSpan.firstChild! as HTMLAnchorElement);
-      ancestorAnchors.push(ancestorAnchor);
-    } else {
-      ancestorAnchors.push(ancestorDiv.previousSibling! as HTMLAnchorElement);
-    }
-
-    ancestorDiv = getClosestFoldableDiv(
-      ancestorDiv,
-      foldableDivClass,
-      foldButtonUsed,
+    ancestorAnchors.push(
+      ancestorDiv.previousSibling!.lastChild as HTMLAnchorElement,
     );
+
+    ancestorDiv = getClosestFoldableDiv(ancestorDiv, foldableDivClass);
   }
 
   return [ancestorDivs, ancestorAnchors];
