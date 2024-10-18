@@ -72,6 +72,7 @@ interface Options {
   liClass?: string;
   anchorClass?: string;
   foldable?: boolean;
+  toggleButtonSVG: string;
   foldButtonClass?: string;
   foldButtonFoldedClass?: string;
   foldButtonPos?: FoldButtonPos;
@@ -108,6 +109,8 @@ export default function neotoc({
   fillAnchor,
   listType = 'ul',
   foldable = false,
+  // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
+  toggleButtonSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
   foldButtonPos = 'start',
   foldButtonClass = 'fold-btn',
   foldButtonFoldedClass = 'fold-btn-folded',
