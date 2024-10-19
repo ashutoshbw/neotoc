@@ -144,11 +144,9 @@ export default function neotoc({
 
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
-    order: number[] = [],
   ): HTMLUListElement | HTMLOListElement | undefined {
     if (!headings.length) return;
 
-    order.push(1);
     const listContainer = elt<HTMLUListElement | HTMLOListElement>(
       listType,
       liParentClass,
@@ -186,7 +184,7 @@ export default function neotoc({
       }
 
       if (subHeadings.length > 0) {
-        const nestedListContainer = genToc(subHeadings, order) as
+        const nestedListContainer = genToc(subHeadings) as
           | HTMLUListElement
           | HTMLOListElement;
 
@@ -236,10 +234,8 @@ export default function neotoc({
         });
       }
       listContainer.append(li);
-      order[order.length - 1]++;
       i = i + subHeadings.length;
     }
-    order.pop();
     return listContainer;
   }
 
