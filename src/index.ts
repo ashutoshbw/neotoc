@@ -1,6 +1,5 @@
 import {
   elt,
-  fillElt,
   getViewportYSize,
   findScrollContainer,
   getAncestors,
@@ -55,7 +54,7 @@ interface Options {
   offsetBottom?: number;
   selector: string;
   tocHolder: HTMLElement;
-  fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
+  fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
   listType?: 'ul' | 'ol';
   autoFold?: boolean;
   autoScroll?: boolean;
@@ -96,7 +95,7 @@ export default function neotoc({
   liParentClass = 'li-parent',
   liClass,
   anchorClass,
-  fillAnchor,
+  fillAnchor = (h) => h.textContent!,
   listType = 'ul',
   // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
   toggleFoldButtonSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
@@ -161,7 +160,7 @@ export default function neotoc({
       const anchor = elt<HTMLAnchorElement>('a', anchorClass);
       const nonFoldable = elt<HTMLSpanElement>('span', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
-      fillElt(anchor, fillAnchor(h, order));
+      anchor.append(fillAnchor(h));
 
       nonFoldable.append(anchor);
       li.append(nonFoldable);

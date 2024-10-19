@@ -7,14 +7,6 @@ export function elt<T extends HTMLElement>(
   return e;
 }
 
-export function fillElt(elt: HTMLElement, fill: Node | string) {
-  if (typeof fill == 'string') {
-    elt.innerHTML = fill;
-  } else {
-    elt.replaceChildren(fill);
-  }
-}
-
 function getYLimits(elt: HTMLElement): [number, number] {
   if (elt === document.documentElement) return [0, elt.clientHeight];
 
