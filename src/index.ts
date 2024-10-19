@@ -68,7 +68,6 @@ interface Options {
   liParentClass?: string;
   liClass?: string;
   anchorClass?: string;
-  foldable?: boolean;
   toggleFoldButtonSVG: string;
   foldButtonClass?: string;
   foldButtonFoldedClass?: string;
@@ -103,7 +102,6 @@ export default function neotoc({
   anchorClass,
   fillAnchor,
   listType = 'ul',
-  foldable = false,
   // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
   toggleFoldButtonSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
   foldButtonClass = 'fold-btn',
@@ -165,12 +163,12 @@ export default function neotoc({
       const h = headings[i];
       const li = elt<HTMLLIElement>('li', liClass);
       const anchor = elt<HTMLAnchorElement>('a', anchorClass);
-      const anchorSpan = elt<HTMLSpanElement>('span', 'non-foldable'); // only used when there is fold button
+      const nonFoldable = elt<HTMLSpanElement>('span', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
       fillElt(anchor, fillAnchor(h, order));
 
-      if (foldable) anchorSpan.append(anchor);
-      li.append(foldable ? anchorSpan : anchor);
+      nonFoldable.append(anchor);
+      li.append(nonFoldable);
 
       idToAnchorMap[h.id] = anchor;
 
@@ -197,59 +195,50 @@ export default function neotoc({
           | HTMLUListElement
           | HTMLOListElement;
 
-        if (foldable) {
-          const toggleFoldButton = elt<HTMLButtonElement>(
-            'button',
-            foldButtonClass,
-          );
-          const foldButtonWrapper = elt<HTMLSpanElement>(
-            'span',
-            'fold-btn-wrapper',
-          );
-          foldButtonWrapper.append(toggleFoldButton);
-          const foldableDiv = elt<HTMLDivElement>('div', foldableClass);
-          const isFolded = curHeadingLevel >= initialFoldLevel;
+        const toggleFoldButton = elt<HTMLButtonElement>(
+          'button',
+          foldButtonClass,
+        );
+        const foldableDiv = elt<HTMLDivElement>('div', foldableClass);
+        const isFolded = curHeadingLevel >= initialFoldLevel;
 
-          if (isFolded) foldableDiv.classList.add(foldableFoldedClass);
+        if (isFolded) foldableDiv.classList.add(foldableFoldedClass);
 
-          toggleFoldButton.innerHTML = toggleFoldButtonSVG;
+        toggleFoldButton.innerHTML = toggleFoldButtonSVG;
 
-          if (isFolded && foldButtonFoldedClass) {
-            toggleFoldButton.classList.add(foldButtonFoldedClass);
-          }
-
-          anchorSpan.prepend(foldButtonWrapper);
-
-          foldableDiv.append(nestedListContainer);
-          li.append(foldableDiv);
-
-          const curFoldState: FoldState = {
-            isFolded,
-            level: curHeadingLevel,
-            toggleFold() {
-              curFoldState.isFolded = !curFoldState.isFolded;
-
-              foldableDiv.classList.toggle(foldableFoldedClass);
-              toggleFoldButton.classList.toggle(foldButtonFoldedClass);
-
-              runOnFoldStatusChange(handleFoldStatusChange);
-            },
-            foldableDiv, // might be useful in future
-            anchor, // only useful in autoFold
-            isManuallyToggledFoldInAutoFold: false, // only useful in autoFold
-          };
-
-          foldStates.push(curFoldState);
-
-          toggleFoldButton.addEventListener('click', () => {
-            if (autoFold) {
-              curFoldState.isManuallyToggledFoldInAutoFold = true;
-            }
-            curFoldState.toggleFold();
-          });
-        } else {
-          li.append(nestedListContainer);
+        if (isFolded && foldButtonFoldedClass) {
+          toggleFoldButton.classList.add(foldButtonFoldedClass);
         }
+
+        nonFoldable.prepend(toggleFoldButton);
+
+        foldableDiv.append(nestedListContainer);
+        li.append(foldableDiv);
+
+        const curFoldState: FoldState = {
+          isFolded,
+          level: curHeadingLevel,
+          toggleFold() {
+            curFoldState.isFolded = !curFoldState.isFolded;
+
+            foldableDiv.classList.toggle(foldableFoldedClass);
+            toggleFoldButton.classList.toggle(foldButtonFoldedClass);
+
+            runOnFoldStatusChange(handleFoldStatusChange);
+          },
+          foldableDiv, // might be useful in future
+          anchor, // only useful in autoFold
+          isManuallyToggledFoldInAutoFold: false, // only useful in autoFold
+        };
+
+        foldStates.push(curFoldState);
+
+        toggleFoldButton.addEventListener('click', () => {
+          if (autoFold) {
+            curFoldState.isManuallyToggledFoldInAutoFold = true;
+          }
+          curFoldState.toggleFold();
+        });
       }
       listContainer.append(li);
       order[order.length - 1]++;
@@ -344,18 +333,16 @@ export default function neotoc({
   const toc = genToc(headings);
 
   if (!toc) return output;
-  if (foldable) runOnFoldStatusChange(handleFoldStatusChange);
+  runOnFoldStatusChange(handleFoldStatusChange);
 
   toc.classList.add(tocListClass);
   tocHolder.append(toc);
 
-  if (foldable) {
-    toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
-      const [divs, anchors] = getAncestors(a, foldableClass);
-      anchorToAncestorFoldableDivsMap.set(a, divs);
-      anchorToAncestorAnchorsMap.set(a, anchors);
-    });
-  }
+  toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
+    const [divs, anchors] = getAncestors(a, foldableClass);
+    anchorToAncestorFoldableDivsMap.set(a, divs);
+    anchorToAncestorAnchorsMap.set(a, anchors);
+  });
 
   // Since there is toc, there is heading with more than 0 items.
   // So we can do this:
@@ -424,7 +411,7 @@ export default function neotoc({
       let topOffsetRatio: null | number = null;
 
       const doAutoFoldIfAllowed = () => {
-        if (foldable && autoFold) {
+        if (autoFold) {
           doAutoFold(
             foldStates,
             anchorsToSectionsInView,
@@ -476,39 +463,36 @@ export default function neotoc({
 
       if (anchorsToSectionsInView.length) {
         const a1 = anchorsToSectionsInView[0];
-        const i1 = foldable ? a1.parentElement! : a1; // i1 is either the wrapping span(when fold button used) or the anchor
+        const i1 = a1.parentElement!; // it's the nonFoldable
         const rect1 = i1.getBoundingClientRect();
 
         // Vertical coordinates of highlighted area when toc is fully unfolded
         const y1Max = rect1.top + rect1.height * topOffsetRatio!;
         let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
 
-        // Vertical coordinates of highlighted area when toc may be folded somehow
-        let y1Min: number;
-        let y2Min: number;
+        const ancestorFoldableDivsForA1 =
+          anchorToAncestorFoldableDivsMap.get(a1)!;
 
-        if (foldable) {
-          const ancestorFoldableDivsForA1 =
-            anchorToAncestorFoldableDivsMap.get(a1)!;
-          y1Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y1Max);
-          y2Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y2Max);
-        }
+        // Vertical coordinates of highlighted area when toc may be folded somehow
+        const y1Min = calculateYBasedOnFolding(
+          ancestorFoldableDivsForA1,
+          y1Max,
+        );
+        let y2Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y2Max);
 
         if (anchorsToSectionsInView.length > 1) {
           const a2 =
             anchorsToSectionsInView[anchorsToSectionsInView.length - 1];
-          const i2 = foldable ? a2.parentElement! : a2;
+          const i2 = a2.parentElement!; // it's the nonFoldable
 
           const rect2 = i2.getBoundingClientRect();
 
           y2Max = rect2.top + rect2.height * intersectionRatioOfLastSection!;
 
-          if (foldable) {
-            y2Min = calculateYBasedOnFolding(
-              anchorToAncestorFoldableDivsMap.get(a2)!,
-              y2Max,
-            );
-          }
+          y2Min = calculateYBasedOnFolding(
+            anchorToAncestorFoldableDivsMap.get(a2)!,
+            y2Max,
+          );
         }
 
         const tocHolderTop = tocHolder.getBoundingClientRect().top;
@@ -519,16 +503,10 @@ export default function neotoc({
           viewportTop === null ? null : viewportBottom! - viewportTop;
 
         const top = Math.round(
-          (foldable ? y1Min! : y1Max) +
-            scrolledY -
-            tocHolderTop -
-            borderTopWidth,
+          y1Min + scrolledY - tocHolderTop - borderTopWidth,
         );
         const bottom = Math.round(
-          (foldable ? y2Min! : y2Max) +
-            scrolledY -
-            tocHolderTop -
-            borderTopWidth,
+          y2Min + scrolledY - tocHolderTop - borderTopWidth,
         );
 
         scrollContainerScrollTop = scrollContainer.scrollTop;
@@ -588,17 +566,13 @@ export default function neotoc({
         }
 
         draw({
-          height: Math.round(foldable ? y2Min! - y1Min! : y2Max - y1Max),
+          height: Math.round(y2Min - y1Min),
           top: top,
           bottom: bottom,
           // Rounding is necssary because where they should be the same,
           // there may be a very slight difference.
-          isTopInAFold: foldable
-            ? Math.round(y1Min!) < Math.round(y1Max)
-            : false,
-          isBottomInAFold: foldable
-            ? Math.round(y2Min!) < Math.round(y2Max)
-            : false,
+          isTopInAFold: Math.round(y1Min!) < Math.round(y1Max),
+          isBottomInAFold: Math.round(y2Min!) < Math.round(y2Max),
           anchors: anchorsToSectionsInView,
           time: curTimestamp,
           isVisible: true,
