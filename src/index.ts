@@ -55,7 +55,6 @@ interface Options {
   selector: string;
   tocHolder: HTMLElement;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
-  listType?: 'ul' | 'ol';
   autoFold?: boolean;
   autoScroll?: boolean;
   autoScrollBehavior?: 'instant' | 'smooth';
@@ -77,7 +76,7 @@ interface Options {
 }
 
 interface NeotocOutput {
-  list: null | HTMLUListElement | HTMLOListElement;
+  list: null | HTMLUListElement;
   depth: number;
   destroy: () => void;
   fold: () => void;
@@ -96,7 +95,6 @@ export default function neotoc({
   liClass,
   anchorClass,
   fillAnchor = (h) => h.textContent!,
-  listType = 'ul',
   // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
   toggleFoldButtonSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
   foldButtonClass = 'fold-btn',
@@ -144,13 +142,10 @@ export default function neotoc({
 
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
-  ): HTMLUListElement | HTMLOListElement | undefined {
+  ): HTMLUListElement | undefined {
     if (!headings.length) return;
 
-    const listContainer = elt<HTMLUListElement | HTMLOListElement>(
-      listType,
-      liParentClass,
-    );
+    const ul = elt<HTMLUListElement>('ul', liParentClass);
 
     for (let i = 0; i < headings.length; i++) {
       const h = headings[i];
@@ -184,10 +179,7 @@ export default function neotoc({
       }
 
       if (subHeadings.length > 0) {
-        const nestedListContainer = genToc(subHeadings) as
-          | HTMLUListElement
-          | HTMLOListElement;
-
+        const nestedUl = genToc(subHeadings) as HTMLUListElement;
         const toggleFoldButton = elt<HTMLButtonElement>(
           'button',
           foldButtonClass,
@@ -205,7 +197,7 @@ export default function neotoc({
 
         nonFoldable.prepend(toggleFoldButton);
 
-        foldableDiv.append(nestedListContainer);
+        foldableDiv.append(nestedUl);
         li.append(foldableDiv);
 
         const curFoldState: FoldState = {
@@ -233,10 +225,10 @@ export default function neotoc({
           curFoldState.toggleFold();
         });
       }
-      listContainer.append(li);
+      ul.append(li);
       i = i + subHeadings.length;
     }
-    return listContainer;
+    return ul;
   }
 
   // `normalizeFolds` is intended to be called by the end user through events.
