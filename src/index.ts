@@ -12,12 +12,10 @@ import {
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
 import {
-  easeOutCubic,
   initMotorcycleScrolling,
   prepareForBicycleScrolling,
   animateMotorcycleScrollingIfNeeded,
   animateBicycleScrollingIfNeeded,
-  type EasingFunc,
   type AutoScrollState,
 } from './autoScroll.js';
 
@@ -54,10 +52,7 @@ interface Options {
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
   autoFold?: boolean;
   autoScroll?: boolean;
-  autoScrollBehavior?: 'instant' | 'smooth';
   autoScrollOffset?: number;
-  autoScrollDuration?: number;
-  autoScrollEasingFunc?: EasingFunc;
   classPrefix?: string;
   toggleFoldButtonSVG: string;
   initialFoldLevel?: number;
@@ -87,10 +82,7 @@ export default function neotoc({
   initialFoldLevel = 6,
   autoFold = false,
   autoScroll = false,
-  autoScrollBehavior = 'smooth',
   autoScrollOffset = 50,
-  autoScrollDuration = 250,
-  autoScrollEasingFunc = easeOutCubic,
   handleFoldStatusChange,
   addAnimation,
 }: Options): NeotocOutput {
@@ -541,9 +533,6 @@ export default function neotoc({
 
           animateMotorcycleScrollingIfNeeded(
             tocHolder,
-            autoScrollBehavior,
-            autoScrollEasingFunc,
-            autoScrollDuration,
             curTimestamp,
             autoScrollState,
           );

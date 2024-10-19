@@ -35,7 +35,7 @@ export interface AutoScrollState {
 }
 
 // Credit: https://easings.net/#easeOutCubic
-export function easeOutCubic(t: number): number {
+function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
 }
 
@@ -96,12 +96,10 @@ function scrollApproximately(
 
 export function animateMotorcycleScrollingIfNeeded(
   tocHolder: HTMLElement,
-  scrollBehavior: 'instant' | 'smooth',
-  easingFunc: EasingFunc,
-  duration: number,
   curTimestamp: number,
   state: AutoScrollState,
 ) {
+  const duration = 300;
   if (state.isScrolling) {
     const scrollNeededAndUpdateState = () => {
       const expected =
@@ -117,32 +115,28 @@ export function animateMotorcycleScrollingIfNeeded(
     };
 
     const curScrollTop = tocHolder.scrollTop;
-    if (scrollBehavior == 'instant') {
-      scrollNeededAndUpdateState();
+    state.timeFrac = duration
+      ? (curTimestamp - state.motorcycleScrollingStartTime) / duration
+      : 1;
+    if (state.timeFrac > 1) state.timeFrac = 1;
+    const scrollProgress = state.scrollNeeded * easeOutCubic(state.timeFrac);
+
+    // The role of lastAutoScrollTop here is to prevent auto scrolling the toc
+    // when it's manually scrolled.
+    if (
+      state.lastAutoScrollTop === null ||
+      state.lastAutoScrollTop === curScrollTop
+    ) {
+      tocHolder.scrollTop =
+        state.motorcycleScrollingStartScrollTop + scrollProgress;
+      state.lastAutoScrollTop = tocHolder.scrollTop;
     } else {
-      state.timeFrac = duration
-        ? (curTimestamp - state.motorcycleScrollingStartTime) / duration
-        : 1;
-      if (state.timeFrac > 1) state.timeFrac = 1;
-      const scrollProgress = state.scrollNeeded * easingFunc(state.timeFrac);
+      state.isScrolling = false;
+      state.lastAutoScrollTop = null;
+    }
 
-      // The role of lastAutoScrollTop here is to prevent auto scrolling the toc
-      // when it's manually scrolled.
-      if (
-        state.lastAutoScrollTop === null ||
-        state.lastAutoScrollTop === curScrollTop
-      ) {
-        tocHolder.scrollTop =
-          state.motorcycleScrollingStartScrollTop + scrollProgress;
-        state.lastAutoScrollTop = tocHolder.scrollTop;
-      } else {
-        state.isScrolling = false;
-        state.lastAutoScrollTop = null;
-      }
-
-      if (state.timeFrac == 1) {
-        scrollNeededAndUpdateState();
-      }
+    if (state.timeFrac == 1) {
+      scrollNeededAndUpdateState();
     }
   }
 }
