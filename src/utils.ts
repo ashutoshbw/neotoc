@@ -1,12 +1,3 @@
-export function elt<T extends HTMLElement>(
-  type: string,
-  className?: string,
-): T {
-  const e = document.createElement(type) as T;
-  if (className) e.className = className;
-  return e;
-}
-
 function getYLimits(elt: HTMLElement): [number, number] {
   if (elt === document.documentElement) return [0, elt.clientHeight];
 
@@ -105,10 +96,12 @@ function getClosestFoldableDiv(
 export function getAncestors(
   anchor: HTMLAnchorElement,
   foldableDivClass: string,
+  classPrefix: string,
 ): [HTMLDivElement[], HTMLAnchorElement[]] {
   const ancestorDivs: HTMLDivElement[] = [];
   const ancestorAnchors: HTMLAnchorElement[] = [];
-  let ancestorDiv = getClosestFoldableDiv(anchor, foldableDivClass);
+  const fullFoldableDivClass = classPrefix + foldableDivClass;
+  let ancestorDiv = getClosestFoldableDiv(anchor, fullFoldableDivClass);
 
   while (ancestorDiv) {
     ancestorDivs.push(ancestorDiv);
@@ -117,7 +110,7 @@ export function getAncestors(
       ancestorDiv.previousSibling!.lastChild as HTMLAnchorElement,
     );
 
-    ancestorDiv = getClosestFoldableDiv(ancestorDiv, foldableDivClass);
+    ancestorDiv = getClosestFoldableDiv(ancestorDiv, fullFoldableDivClass);
   }
 
   return [ancestorDivs, ancestorAnchors];

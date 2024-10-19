@@ -1,5 +1,4 @@
 import {
-  elt,
   getViewportYSize,
   findScrollContainer,
   getAncestors,
@@ -21,8 +20,6 @@ import {
   type EasingFunc,
   type AutoScrollState,
 } from './autoScroll.js';
-
-export { elt };
 
 export type HighlightedArea =
   | {
@@ -61,15 +58,8 @@ interface Options {
   autoScrollOffset?: number;
   autoScrollDuration?: number;
   autoScrollEasingFunc?: EasingFunc;
-  tocListClass?: string;
-  liParentClass?: string;
-  liClass?: string;
-  anchorClass?: string;
+  classPrefix?: string;
   toggleFoldButtonSVG: string;
-  foldButtonClass?: string;
-  foldButtonFoldedClass?: string;
-  foldableClass?: string;
-  foldableFoldedClass?: string;
   initialFoldLevel?: number;
   handleFoldStatusChange?: (foldStatus: FoldStatus) => void;
   addAnimation?: AddAnimation;
@@ -90,17 +80,10 @@ export default function neotoc({
   offsetBottom = 0,
   selector,
   tocHolder,
-  tocListClass = 'toc-list',
-  liParentClass = 'li-parent',
-  liClass,
-  anchorClass,
+  classPrefix = 'nt-',
   fillAnchor = (h) => h.textContent!,
   // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
   toggleFoldButtonSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
-  foldButtonClass = 'fold-btn',
-  foldButtonFoldedClass = 'fold-btn-folded',
-  foldableClass = 'foldable',
-  foldableFoldedClass = 'foldable-folded',
   initialFoldLevel = 6,
   autoFold = false,
   autoScroll = false,
@@ -111,6 +94,20 @@ export default function neotoc({
   handleFoldStatusChange,
   addAnimation,
 }: Options): NeotocOutput {
+  function elt<T extends HTMLElement>(type: string, className?: string): T {
+    const e = document.createElement(type) as T;
+    if (className) e.className = classPrefix + className;
+    return e;
+  }
+
+  function addClass(elt: HTMLElement, className: string) {
+    elt.classList.add(classPrefix + className);
+  }
+
+  function toggleClass(elt: HTMLElement, className: string) {
+    elt.classList.toggle(classPrefix + className);
+  }
+
   const output: NeotocOutput = {
     list: null,
     depth: 0,
@@ -145,12 +142,12 @@ export default function neotoc({
   ): HTMLUListElement | undefined {
     if (!headings.length) return;
 
-    const ul = elt<HTMLUListElement>('ul', liParentClass);
+    const ul = elt<HTMLUListElement>('ul');
 
     for (let i = 0; i < headings.length; i++) {
       const h = headings[i];
-      const li = elt<HTMLLIElement>('li', liClass);
-      const anchor = elt<HTMLAnchorElement>('a', anchorClass);
+      const li = elt<HTMLLIElement>('li');
+      const anchor = elt<HTMLAnchorElement>('a');
       const nonFoldable = elt<HTMLSpanElement>('span', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
       anchor.append(fillAnchor(h));
@@ -182,17 +179,18 @@ export default function neotoc({
         const nestedUl = genToc(subHeadings) as HTMLUListElement;
         const toggleFoldButton = elt<HTMLButtonElement>(
           'button',
-          foldButtonClass,
+          'toggle-fold-btn',
         );
-        const foldableDiv = elt<HTMLDivElement>('div', foldableClass);
+        const foldableDiv = elt<HTMLDivElement>('div', 'foldable');
         const isFolded = curHeadingLevel >= initialFoldLevel;
 
-        if (isFolded) foldableDiv.classList.add(foldableFoldedClass);
+        if (isFolded) addClass(foldableDiv, 'foldable-folded');
 
         toggleFoldButton.innerHTML = toggleFoldButtonSVG;
 
-        if (isFolded && foldButtonFoldedClass) {
-          toggleFoldButton.classList.add(foldButtonFoldedClass);
+        const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
+        if (isFolded) {
+          addClass(toggleFoldButton, toggleFoldButtonFoldedClass);
         }
 
         nonFoldable.prepend(toggleFoldButton);
@@ -206,8 +204,8 @@ export default function neotoc({
           toggleFold() {
             curFoldState.isFolded = !curFoldState.isFolded;
 
-            foldableDiv.classList.toggle(foldableFoldedClass);
-            toggleFoldButton.classList.toggle(foldButtonFoldedClass);
+            toggleClass(foldableDiv, 'foldable-folded');
+            toggleClass(toggleFoldButton, toggleFoldButtonFoldedClass);
 
             runOnFoldStatusChange(handleFoldStatusChange);
           },
@@ -319,11 +317,11 @@ export default function neotoc({
   if (!toc) return output;
   runOnFoldStatusChange(handleFoldStatusChange);
 
-  toc.classList.add(tocListClass);
+  addClass(toc, 'root-ul');
   tocHolder.append(toc);
 
   toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
-    const [divs, anchors] = getAncestors(a, foldableClass);
+    const [divs, anchors] = getAncestors(a, 'foldable', classPrefix);
     anchorToAncestorFoldableDivsMap.set(a, divs);
     anchorToAncestorAnchorsMap.set(a, anchors);
   });
