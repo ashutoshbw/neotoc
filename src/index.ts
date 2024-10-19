@@ -51,10 +51,9 @@ export type AddAnimation = (props: {
 }) => AnimationFrame;
 
 interface Options {
-  contentHolder?: HTMLElement;
   offsetTop?: number;
   offsetBottom?: number;
-  headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>;
+  selector: string;
   tocHolder: HTMLElement;
   fillAnchor: (heading: HTMLHeadingElement, order: number[]) => string | Node;
   listType?: 'ul' | 'ol';
@@ -89,12 +88,9 @@ interface NeotocOutput {
 }
 
 export default function neotoc({
-  // About contentHolder: By default it is first heading's parent element,
-  // it's not possible to set the default value here so it's done with code
-  contentHolder,
   offsetTop = 0,
   offsetBottom = 0,
-  headings,
+  selector,
   tocHolder,
   tocListClass = 'toc-list',
   liParentClass = 'li-parent',
@@ -330,6 +326,7 @@ export default function neotoc({
     return [lowestFoldedLevel, highestUnfoldedLevel];
   }
 
+  const headings = document.querySelectorAll<HTMLHeadingElement>(selector);
   const toc = genToc(headings);
 
   if (!toc) return output;
@@ -346,7 +343,9 @@ export default function neotoc({
 
   // Since there is toc, there is heading with more than 0 items.
   // So we can do this:
-  if (!contentHolder) contentHolder = headings[0].parentElement!;
+  const contentHolder = document.querySelector<HTMLElement>(
+    selector.split(' ')[0],
+  )!;
 
   let rafNum: number;
   let animationCleanupFunc: undefined | (() => void);
