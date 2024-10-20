@@ -1,7 +1,5 @@
 import neotoc from './index.js';
 
-const contentElement = document.querySelector('article');
-const headings = contentElement.querySelectorAll('h1, h2, h3, h4, h5, h6');
 const tocHolder = document.getElementById('tocHolder');
 const foldAllBtn = document.getElementById('fold-all');
 const unfoldAllBtn = document.getElementById('unfold-all');
@@ -9,25 +7,17 @@ const foldBtn = document.getElementById('fold');
 const unfoldBtn = document.getElementById('unfold');
 
 const toc = neotoc({
-  headings: headings,
+  selector: 'article :is(h1,h2,h3,h4,h5,h6)',
   offsetTop: 0,
   offsetBottom: 0,
   tocHolder,
   foldable: true,
-  foldButtonPos: 'start',
-  autoFold: true,
+  autoFold: false,
   autoScroll: true,
   autoScrollOffset: 150,
   autoScrollDuration: 300,
-  autoScrollBehavior: 'instant',
+  autoScrollBehavior: 'smooth',
   initialFoldLevel: 6,
-  useAndFillFoldButton(isFolded) {
-    if (isFolded) return '+';
-    else return '-';
-  },
-  fillAnchor(h, order) {
-    return order.join('.') + ' ' + h.textContent;
-  },
   handleFoldStatusChange(foldStatus) {
     if (foldStatus == 'allFolded') {
       foldAllBtn.disabled = true;

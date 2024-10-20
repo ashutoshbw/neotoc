@@ -1,59 +1,99 @@
-.li-parent {
+.nt-root-ul {
+  --font-size-percentage: 94;
+  --toggle-fold-btn-width: 0.75em; /* should in em unit */
+  --indent-gap: 15px; /* should be in px unit */
+}
+
+ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  a {
+    padding-inline: 0.125em;
+    color: #ddd;
+    align-self: center;
+  }
 }
 
-.li-parent .li-parent {
-  padding-left: 1rem;
+li li {
+  font-size: calc(var(--font-size-percentage) * 1%);
 }
 
-.foldable {
+.nt-foldable {
   --fold-duration: 300ms;
   display: grid;
   transition:
     grid-template-rows var(--fold-duration),
     border var(--fold-duration);
   border-top: 1px solid transparent;
-  border-left: 1px solid transparent;
   grid-template-rows: 1fr;
 }
 
-.foldable ul {
+.nt-foldable ul {
   transition: opacity var(--fold-duration);
 }
 
-.foldable-folded {
+.nt-foldable-folded {
   grid-template-rows: 0fr;
+  border-top: 1px solid gray;
 }
 
-.foldable-folded ul {
+.nt-foldable-folded ul {
   opacity: 0;
 }
 
-.foldable > ul {
+.nt-foldable > ul {
   overflow: hidden;
   grid-row: 1 / span 2;
   margin-top: -1px;
 }
 
-.fold-btn-parent {
-  display: flex;
-  position: relative;
-  margin-left: 20px;
-  padding-left: 3px;
+.nt-toggle-fold-btn {
+  background: none;
+  border: none;
+  color: #eee;
+  padding: 0;
+  grid-column: -3;
+  display: grid;
+  svg {
+    align-self: center;
+  }
 }
 
-.fold-btn-parent:hover {
-  background: #888;
+.nt-unfoldable-icon {
+  color: #eee;
+  grid-column: -3;
+  display: grid;
+  svg {
+    align-self: center;
+  }
 }
 
-.fold-btn {
-  align-self: flex-start;
-  width: 20px;
-  border: 1px solid black;
-  position: absolute;
-  left: -23px;
+.nt-non-foldable {
+  /* background: lightblue; */
+  display: grid;
+  cursor: pointer;
+  border-radius: 3px;
+  grid-template-rows: 1fr;
+  a {
+    grid-column: -2;
+  }
+}
+
+.nt-non-foldable:hover {
+  background: teal;
+  a {
+    color: white;
+  }
+}
+
+.nt-indent-block {
+  box-sizing: border-box;
+  border-right: 1px solid #eee;
+}
+
+.nt-indent-block:not(:first-child) {
+  grid-column: span 2;
 }
 
 /* custom styles below */

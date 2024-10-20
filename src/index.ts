@@ -54,7 +54,8 @@ interface Options {
   autoScroll?: boolean;
   autoScrollOffset?: number;
   classPrefix?: string;
-  toggleFoldButtonSVG: string;
+  toggleFoldIcon?: string;
+  unfoldableIcon?: string;
   initialFoldLevel?: number;
   handleFoldStatusChange?: (foldStatus: FoldStatus) => void;
   addAnimation?: AddAnimation;
@@ -78,7 +79,9 @@ export default function neotoc({
   classPrefix = 'nt-',
   fillAnchor = (h) => h.textContent!,
   // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
-  toggleFoldButtonSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
+  toggleFoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
+  // https://icon-sets.iconify.design/radix-icons/dot-filled/
+  unfoldableIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path fill="currentColor" d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"/></svg>',
   initialFoldLevel = 6,
   autoFold = false,
   autoScroll = false,
@@ -181,7 +184,7 @@ export default function neotoc({
 
         if (isFolded) addClass(foldableDiv, 'foldable-folded');
 
-        toggleFoldButton.innerHTML = toggleFoldButtonSVG;
+        toggleFoldButton.innerHTML = toggleFoldIcon;
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
         if (isFolded) {
@@ -217,12 +220,26 @@ export default function neotoc({
           }
           curFoldState.toggleFold();
         });
+      } else {
+        const unfoldableIconDiv = elt('div', 'unfoldable-icon');
+        unfoldableIconDiv.innerHTML = unfoldableIcon;
+        nonFoldable.prepend(unfoldableIconDiv);
       }
 
-      for (let k = firstHeadingLevel; k < curHeadingLevel; k++) {
+      let gridTemplateIndentColumns = '';
+      for (
+        let k = firstHeadingLevel, power = 1;
+        k < curHeadingLevel;
+        k++, power++
+      ) {
         const indentBlock = elt<HTMLDivElement>('div', 'indent-block');
         nonFoldable.prepend(indentBlock);
+        gridTemplateIndentColumns =
+          `calc(calc(var(--toggle-fold-btn-width) / 2) * pow(calc(100 / var(--font-size-percentage)), ${power})) var(--indent-gap) ` +
+          gridTemplateIndentColumns;
       }
+
+      nonFoldable.style.cssText = `grid-template-columns: ${gridTemplateIndentColumns} var(--toggle-fold-btn-width) 1fr`;
 
       ul.append(li);
       i = i + subHeadings.length;
