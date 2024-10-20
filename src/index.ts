@@ -235,7 +235,7 @@ export default function neotoc({
         const indentBlock = elt<HTMLDivElement>('div', 'indent-block');
         nonFoldable.prepend(indentBlock);
         gridTemplateIndentColumns =
-          `calc(calc(var(--toggle-fold-btn-width) / 2) * pow(calc(100 / var(--font-size-percentage)), ${power})) var(--indent-gap) ` +
+          `calc(calc(var(--toggle-fold-btn-width) / 2) * pow(calc(100 / var(--font-size-percentage)), ${power})) var(--indent-padding) ` +
           gridTemplateIndentColumns;
       }
 

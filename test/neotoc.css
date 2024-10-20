@@ -1,7 +1,7 @@
 .nt-root-ul {
   --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.75em; /* should in em unit */
-  --indent-gap: 15px; /* should be in px unit */
+  --indent-padding: 15px; /* should be in px unit */
 }
 
 ul {
