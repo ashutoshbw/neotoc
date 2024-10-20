@@ -129,6 +129,9 @@ export default function neotoc({
     HTMLAnchorElement[]
   >();
 
+  const headings = document.querySelectorAll<HTMLHeadingElement>(selector);
+  const firstHeadingLevel = +headings[0].tagName[1];
+
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
   ): HTMLUListElement | undefined {
@@ -140,7 +143,7 @@ export default function neotoc({
       const h = headings[i];
       const li = elt<HTMLLIElement>('li');
       const anchor = elt<HTMLAnchorElement>('a');
-      const nonFoldable = elt<HTMLSpanElement>('span', 'non-foldable'); // only used when there is fold button
+      const nonFoldable = elt<HTMLSpanElement>('div', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
       anchor.append(fillAnchor(h));
 
@@ -215,6 +218,12 @@ export default function neotoc({
           curFoldState.toggleFold();
         });
       }
+
+      for (let k = firstHeadingLevel; k < curHeadingLevel; k++) {
+        const indentBlock = elt<HTMLDivElement>('div', 'indent-block');
+        nonFoldable.prepend(indentBlock);
+      }
+
       ul.append(li);
       i = i + subHeadings.length;
     }
@@ -303,7 +312,6 @@ export default function neotoc({
     return [lowestFoldedLevel, highestUnfoldedLevel];
   }
 
-  const headings = document.querySelectorAll<HTMLHeadingElement>(selector);
   const toc = genToc(headings);
 
   if (!toc) return output;
