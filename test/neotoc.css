@@ -2,6 +2,7 @@
   --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
   --indent-padding: 10px; /* should be in px unit */
+  --folding-duration: 300ms;
 }
 
 ul {
@@ -20,17 +21,16 @@ li li {
 }
 
 .nt-foldable {
-  --fold-duration: 300ms;
   display: grid;
   transition:
-    grid-template-rows var(--fold-duration),
-    border var(--fold-duration);
+    grid-template-rows var(--folding-duration),
+    border var(--folding-duration);
   border-top: 1px solid transparent;
   grid-template-rows: 1fr;
 }
 
 .nt-foldable ul {
-  transition: opacity var(--fold-duration);
+  transition: opacity var(--folding-duration);
 }
 
 .nt-foldable-folded {
@@ -57,6 +57,7 @@ li li {
   cursor: pointer;
   svg {
     vertical-align: middle;
+    transition: transform var(--folding-duration);
   }
 }
 
@@ -68,6 +69,10 @@ li li {
 .nt-toggle-fold-btn:hover {
   background: deepskyblue;
   color: darkslategrey;
+}
+
+.nt-toggle-fold-btn-folded svg {
+  transform: rotate(-90deg);
 }
 
 .nt-unfoldable-icon {
