@@ -175,10 +175,7 @@ export default function neotoc({
 
       if (subHeadings.length > 0) {
         const nestedUl = genToc(subHeadings) as HTMLUListElement;
-        const toggleFoldButton = elt<HTMLButtonElement>(
-          'button',
-          'toggle-fold-btn',
-        );
+        const toggleFoldButton = elt<HTMLDivElement>('div', 'toggle-fold-btn');
         const foldableDiv = elt<HTMLDivElement>('div', 'foldable');
         const isFolded = curHeadingLevel >= initialFoldLevel;
 
