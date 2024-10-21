@@ -103,6 +103,11 @@ li li {
 
 .nt-indent-block {
   box-sizing: border-box;
+  transition: border-right calc(var(--folding-duration) / 2);
+  border-right: 1px solid transparent;
+}
+
+.nt-root-ul:hover .nt-indent-block {
   border-right: 1px solid #eee;
 }
 
