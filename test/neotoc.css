@@ -1,7 +1,7 @@
 .nt-root-ul {
   --font-size-percentage: 94;
-  --toggle-fold-btn-width: 0.75em; /* should in em unit */
-  --indent-padding: 15px; /* should be in px unit */
+  --toggle-fold-btn-width: 0.9em; /* should in em unit */
+  --indent-padding: 10px; /* should be in px unit */
 }
 
 ul {
@@ -49,23 +49,32 @@ li li {
 }
 
 .nt-toggle-fold-btn {
-  background: none;
   border: none;
   color: #eee;
   padding: 0;
+  padding-inline: 1px;
   grid-column: -3;
-  display: grid;
+  cursor: pointer;
   svg {
-    align-self: center;
+    vertical-align: middle;
   }
+}
+
+.nt-toggle-fold-btn:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.nt-toggle-fold-btn:hover {
+  background: deepskyblue;
+  color: darkslategrey;
 }
 
 .nt-unfoldable-icon {
   color: #eee;
   grid-column: -3;
-  display: grid;
   svg {
-    align-self: center;
+    vertical-align: middle;
   }
 }
 
@@ -94,6 +103,12 @@ li li {
 
 .nt-indent-block:not(:first-child) {
   grid-column: span 2;
+}
+
+.nt-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* custom styles below */

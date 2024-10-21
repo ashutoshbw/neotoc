@@ -14,6 +14,7 @@ const toc = neotoc({
   foldable: true,
   autoFold: false,
   autoScroll: true,
+  ellipsis: true,
   autoScrollOffset: 150,
   autoScrollDuration: 300,
   autoScrollBehavior: 'smooth',

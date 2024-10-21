@@ -56,6 +56,7 @@ interface Options {
   classPrefix?: string;
   toggleFoldIcon?: string;
   unfoldableIcon?: string;
+  ellipsis?: boolean;
   initialFoldLevel?: number;
   handleFoldStatusChange?: (foldStatus: FoldStatus) => void;
   addAnimation?: AddAnimation;
@@ -82,6 +83,7 @@ export default function neotoc({
   toggleFoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
   // https://icon-sets.iconify.design/radix-icons/dot-filled/
   unfoldableIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path fill="currentColor" d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"/></svg>',
+  ellipsis = false,
   initialFoldLevel = 6,
   autoFold = false,
   autoScroll = false,
@@ -149,6 +151,10 @@ export default function neotoc({
       const nonFoldable = elt<HTMLSpanElement>('div', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
       anchor.append(fillAnchor(h));
+      if (ellipsis) {
+        addClass(anchor, 'ellipsis');
+        anchor.title = h.textContent!;
+      }
 
       nonFoldable.append(anchor);
       li.append(nonFoldable);
