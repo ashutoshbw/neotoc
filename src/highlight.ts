@@ -34,27 +34,13 @@ export function addHighlight({
   const barTopIndicator = elt<HTMLDivElement>('div', 'bar-top-indicator');
   const barLight = elt<HTMLDivElement>('div', 'bar-light');
   const barBottomIndicator = elt<HTMLDivElement>('div', 'bar-bottom-indicator');
-  const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
-  const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
 
   bar.append(barTopIndicator, barLight, barBottomIndicator);
   bar.style.display = 'none';
 
-  tocHolder.append(bar, topGradient, bottomGradient);
+  tocHolder.append(bar);
 
   let lastActiveAnchors: Array<HTMLAnchorElement> = [];
-
-  function updatePositionGradients() {
-    const scrollTop = tocHolder.scrollTop;
-    const highestScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
-
-    topGradient.style.top = scrollTop + 'px';
-    bottomGradient.style.bottom = -scrollTop + 'px';
-    topGradient.style.opacity = scrollTop > 5 ? '1' : '0';
-    bottomGradient.style.opacity = scrollTop + 5 < highestScrollTop ? '1' : '0';
-  }
-
-  updatePositionGradients();
 
   return {
     draw(highlightedArea) {
@@ -71,8 +57,6 @@ export function addHighlight({
         if (isBottomInAFold) barBottomIndicator.classList.add('onFold');
         else barBottomIndicator.classList.remove('onFold');
 
-        updatePositionGradients();
-
         lastActiveAnchors.forEach((a) => {
           if (!anchors.includes(a)) a.classList.remove('active-a');
         });
@@ -87,8 +71,6 @@ export function addHighlight({
     },
     cleanup() {
       bar.remove();
-      topGradient.remove();
-      bottomGradient.remove();
     },
   };
 }

@@ -339,6 +339,8 @@ export default function neotoc({
   const foldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
   const unfoldBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
   const unfoldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
+  const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
+  const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
   foldBtn.innerHTML = foldIcon;
   foldAllBtn.innerHTML = foldAllIcon;
   unfoldBtn.innerHTML = unfoldIcon;
@@ -356,9 +358,21 @@ export default function neotoc({
 
   titleH2.innerHTML = title;
   topBar.append(titleH2, btnGroup);
-  tocHolder.append(toc);
+  tocHolder.append(toc, topGradient, bottomGradient);
   widget.append(topBar, tocHolder);
   appendTarget.append(widget);
+
+  function updateTopBottomGradientPositions() {
+    const scrollTop = tocHolder.scrollTop;
+    const highestScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
+
+    topGradient.style.top = scrollTop + 'px';
+    bottomGradient.style.bottom = -scrollTop + 'px';
+    topGradient.style.opacity = scrollTop > 5 ? '1' : '0';
+    bottomGradient.style.opacity = scrollTop + 5 < highestScrollTop ? '1' : '0';
+  }
+
+  updateTopBottomGradientPositions();
 
   toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
     const [divs, anchors] = getAncestors(a, 'foldable', classPrefix);
@@ -589,6 +603,7 @@ export default function neotoc({
         time: curTimestamp,
         isVisible: true,
       });
+      updateTopBottomGradientPositions();
 
       lastViewportHeight = viewportHeight;
       lastScrollContainerScrollTop = scrollContainerScrollTop;
@@ -605,6 +620,7 @@ export default function neotoc({
         doAutoFoldIfAllowed();
       });
       draw({ isVisible: false, time: curTimestamp });
+      updateTopBottomGradientPositions();
 
       lastViewportHeight =
         lastScrollContainerScrollTop =

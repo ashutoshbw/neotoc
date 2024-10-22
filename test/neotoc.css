@@ -198,7 +198,7 @@ li li {
   width: 100px;
   height: 100%;
   background: linear-gradient(to left, transparent, var(--bg-color));
-  opacity: 0.1;
+  opacity: 0.2;
   pointer-events: none;
 }
 
@@ -242,15 +242,16 @@ li li {
   left: 0;
   z-index: 1;
   transition: opacity 300ms;
-  opacity: 1;
   pointer-events: none;
 }
 
 .nt-top-gradient {
-  background: linear-gradient(to bottom, orange, transparent);
+  opacity: 0;
+  background: linear-gradient(to bottom, #444, transparent);
 }
 
 .nt-bottom-gradient {
-  background: linear-gradient(to top, orange, transparent);
+  opacity: 1;
+  background: linear-gradient(to top, #444, transparent);
 }
 /* top and bottom gradient overlays end*/
