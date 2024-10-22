@@ -67,7 +67,6 @@ interface Options {
 
 interface NeotocOutput {
   list: null | HTMLUListElement;
-  depth: number;
   destroy: () => void;
 }
 
@@ -113,7 +112,6 @@ export default function neotoc({
 
   const output: NeotocOutput = {
     list: null,
-    depth: 0,
     destroy() {},
   };
 
@@ -375,7 +373,13 @@ export default function neotoc({
   unfoldAllBtn.innerHTML = unfoldAllIcon;
 
   if (foldStates.length) {
-    btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
+    const depth = maxHLevel - minHLevel;
+    console.log(depth);
+    if (depth > 1) {
+      btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
+    } else {
+      btnGroup.append(foldBtn, unfoldBtn);
+    }
     runOnFoldStatusChange();
   }
 
@@ -660,7 +664,6 @@ export default function neotoc({
   }
 
   output.list = toc;
-  output.depth = maxHLevel - minHLevel + 1;
 
   foldBtn.addEventListener('click', () => {
     const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
