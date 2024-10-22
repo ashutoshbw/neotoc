@@ -45,10 +45,10 @@ export type AddAnimation = (props: {
 }) => AnimationFrame;
 
 interface Options {
+  title?: string;
   offsetTop?: number;
   offsetBottom?: number;
   selector: string;
-  tocHolder: HTMLElement;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
   autoFold?: boolean;
   autoScroll?: boolean;
@@ -73,10 +73,10 @@ interface NeotocOutput {
 }
 
 export default function neotoc({
+  title = 'On this page',
   offsetTop = 0,
   offsetBottom = 0,
   selector,
-  tocHolder,
   classPrefix = 'nt-',
   fillAnchor = (h) => h.textContent!,
   // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
@@ -134,7 +134,13 @@ export default function neotoc({
     HTMLAnchorElement[]
   >();
 
-  const headings = document.querySelectorAll<HTMLHeadingElement>(selector);
+  const [selectorPart1, selectorPart2, selectorPart3] = selector
+    .split('>>')
+    .map((s) => s.trim());
+
+  const headings = document.querySelectorAll<HTMLHeadingElement>(
+    `${selectorPart1} :is(${selectorPart2 == 'h*' ? 'h1,h2,h3,h4,h5,h6' : selectorPart2})`,
+  );
   const firstHeadingLevel = +headings[0].tagName[1];
 
   function genToc(
@@ -153,7 +159,7 @@ export default function neotoc({
       anchor.append(fillAnchor(h));
       if (ellipsis) {
         addClass(anchor, 'ellipsis');
-        anchor.title = h.textContent!;
+        anchor.title = h.textContent!.trim();
       }
 
       nonFoldable.append(anchor);
@@ -338,7 +344,21 @@ export default function neotoc({
   runOnFoldStatusChange(handleFoldStatusChange);
 
   addClass(toc, 'root-ul');
+
+  const appendTarget = document.querySelector(selectorPart3);
+  if (!appendTarget) throw new Error('Nothing found to append Neotoc to!');
+
+  const widget = elt('div', 'widget');
+  const tocHolder = elt('div', 'toc-holder');
+  const topBar = elt('div', 'top-bar');
+  const titleH2 = elt('h2', 'title');
+  const btnGroup = elt('div', 'btn-group');
+
+  titleH2.innerHTML = title;
+  topBar.append(titleH2, btnGroup);
   tocHolder.append(toc);
+  widget.append(topBar, tocHolder);
+  appendTarget.append(widget);
 
   toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
     const [divs, anchors] = getAncestors(a, 'foldable', classPrefix);
@@ -348,9 +368,7 @@ export default function neotoc({
 
   // Since there is toc, there is heading with more than 0 items.
   // So we can do this:
-  const contentHolder = document.querySelector<HTMLElement>(
-    selector.split(' ')[0],
-  )!;
+  const contentHolder = document.querySelector<HTMLElement>(selectorPart1)!;
 
   let rafNum: number;
   let animationCleanupFunc: undefined | (() => void);
