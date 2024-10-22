@@ -33,20 +33,3 @@ article {
   position: sticky;
   top: 0;
 }
-
-#tocHolder {
-  background: #444;
-  width: 240px;
-  border: 1px solid #222;
-  padding: 1rem;
-  position: relative;
-  height: 300px;
-  overflow-y: auto;
-  padding-block: 20px;
-  overscroll-behavior: contain;
-  /* scroll-behavior: smooth; */
-}
-
-#tocHolder a {
-  text-decoration: none;
-}

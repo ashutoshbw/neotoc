@@ -7,10 +7,9 @@ const foldBtn = document.getElementById('fold');
 const unfoldBtn = document.getElementById('unfold');
 
 const toc = neotoc({
-  selector: 'article :is(h1,h2,h3,h4,h5,h6)',
+  selector: 'article >> h* >> #toc-main',
   offsetTop: 0,
   offsetBottom: 0,
-  tocHolder,
   foldable: true,
   autoFold: false,
   autoScroll: true,
@@ -19,7 +18,7 @@ const toc = neotoc({
   autoScrollDuration: 300,
   autoScrollBehavior: 'smooth',
   initialFoldLevel: 6,
-  handleFoldStatusChange(foldStatus) {
+  /* handleFoldStatusChange(foldStatus) {
     if (foldStatus == 'allFolded') {
       foldAllBtn.disabled = true;
       unfoldAllBtn.disabled = false;
@@ -74,16 +73,15 @@ const toc = neotoc({
     }
 
     return { draw };
-  },
+  }, */
 });
 
 if (toc) {
-  foldAllBtn.addEventListener('click', toc.foldAll);
+  /* foldAllBtn.addEventListener('click', toc.foldAll);
   unfoldAllBtn.addEventListener('click', toc.unfoldAll);
   foldBtn.addEventListener('click', toc.fold);
-  unfoldBtn.addEventListener('click', toc.unfold);
+  unfoldBtn.addEventListener('click', toc.unfold); */
   //TODO:  based on toc.depth show the only relevant buttons
-
   // toc.startAnimation();
 }
 

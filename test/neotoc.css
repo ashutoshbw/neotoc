@@ -1,3 +1,20 @@
+.nt-toc-holder {
+  background: #444;
+  width: 240px;
+  border: 1px solid #222;
+  padding: 1rem;
+  position: relative;
+  height: 300px;
+  overflow-y: auto;
+  padding-block: 20px;
+  overscroll-behavior: contain;
+  /* scroll-behavior: smooth; */
+}
+
+.nt-toc-holder a {
+  text-decoration: none;
+}
+
 .nt-root-ul {
   --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
@@ -119,6 +136,38 @@ li li {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.nt-top-bar {
+  display: flex;
+  padding: 0.3em;
+  justify-content: space-around;
+  gap: 1em;
+  .nt-title {
+    font-size: 1rem;
+    margin: 0;
+  }
+  .nt-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    .nt-top-bar-btn {
+      background: #ccc;
+      box-sizing: content-box;
+      color: #555;
+      width: 1em;
+      height: 1em;
+      padding: 3px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      color: black;
+    }
+    .nt-top-bar-btn:hover {
+      background: #eee;
+      color: #333;
+    }
+  }
 }
 
 /* custom styles below */
