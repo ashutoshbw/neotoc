@@ -66,7 +66,6 @@ interface Options {
 }
 
 interface NeotocOutput {
-  list: null | HTMLUListElement;
   destroy: () => void;
 }
 
@@ -111,7 +110,6 @@ export default function neotoc({
   }
 
   const output: NeotocOutput = {
-    list: null,
     destroy() {},
   };
 
@@ -661,8 +659,6 @@ export default function neotoc({
 
     rafNum = window.requestAnimationFrame(step);
   }
-
-  output.list = toc;
 
   foldBtn.addEventListener('click', () => {
     const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
