@@ -169,9 +169,13 @@ li li {
       cursor: pointer;
       color: black;
     }
-    .nt-top-bar-btn:hover {
-      background: #eee;
+    .nt-top-bar-btn:not([disabled]):hover {
+      background-color: #eee;
       color: #333;
+    }
+    .nt-top-bar-btn[disabled] {
+      opacity: 0.2;
+      cursor: default;
     }
   }
 }

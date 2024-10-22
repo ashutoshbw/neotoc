@@ -62,7 +62,6 @@ interface Options {
   unfoldAllIcon?: string;
   ellipsis?: boolean;
   initialFoldLevel?: number;
-  handleFoldStatusChange?: (foldStatus: FoldStatus) => void;
   addAnimation?: AddAnimation;
 }
 
@@ -96,7 +95,6 @@ export default function neotoc({
   autoFold = false,
   autoScroll = false,
   autoScrollOffset = 50,
-  handleFoldStatusChange,
   addAnimation,
 }: Options): NeotocOutput {
   function elt<T extends HTMLElement>(type: string, className?: string): T {
@@ -218,7 +216,7 @@ export default function neotoc({
             toggleClass(foldableDiv, 'foldable-folded');
             toggleClass(toggleFoldButton, toggleFoldButtonFoldedClass);
 
-            runOnFoldStatusChange(handleFoldStatusChange);
+            runOnFoldStatusChange();
           },
           foldableDiv, // might be useful in future
           anchor, // only useful in autoFold
@@ -282,12 +280,33 @@ export default function neotoc({
         }
       }
     }
-    runOnFoldStatusChange(handleFoldStatusChange);
+    runOnFoldStatusChange();
   }
 
   let lastFoldStatus: FoldStatus;
 
-  function runOnFoldStatusChange(cb?: (foldStatus: FoldStatus) => void) {
+  function runOnFoldStatusChange() {
+    function cb(foldStatus: FoldStatus) {
+      if (foldStatus == 'allFolded') {
+        foldAllBtn.disabled = true;
+        unfoldAllBtn.disabled = false;
+        foldBtn.disabled = true;
+        unfoldBtn.disabled = false;
+      } else if (foldStatus == 'allUnfolded') {
+        foldAllBtn.disabled = false;
+        unfoldAllBtn.disabled = true;
+        foldBtn.disabled = false;
+        unfoldBtn.disabled = true;
+      } else if (foldStatus == 'mixed') {
+        foldAllBtn.disabled = false;
+        unfoldAllBtn.disabled = false;
+        foldBtn.disabled = false;
+        unfoldBtn.disabled = false;
+      } else {
+        // TODO
+      }
+    }
+
     if (cb) {
       if (!foldStates.length) {
         lastFoldStatus == 'none';
@@ -345,7 +364,6 @@ export default function neotoc({
   const toc = genToc(headings);
 
   if (!toc) return output;
-  runOnFoldStatusChange(handleFoldStatusChange);
 
   addClass(toc, 'root-ul');
 
@@ -367,6 +385,7 @@ export default function neotoc({
   unfoldBtn.innerHTML = unfoldIcon;
   unfoldAllBtn.innerHTML = unfoldAllIcon;
   btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
+  runOnFoldStatusChange();
 
   titleH2.innerHTML = title;
   topBar.append(titleH2, btnGroup);

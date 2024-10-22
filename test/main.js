@@ -18,26 +18,7 @@ const toc = neotoc({
   autoScrollDuration: 300,
   autoScrollBehavior: 'smooth',
   initialFoldLevel: 6,
-  /* handleFoldStatusChange(foldStatus) {
-    if (foldStatus == 'allFolded') {
-      foldAllBtn.disabled = true;
-      unfoldAllBtn.disabled = false;
-      foldBtn.disabled = true;
-      unfoldBtn.disabled = false;
-    } else if (foldStatus == 'allUnfolded') {
-      foldAllBtn.disabled = false;
-      unfoldAllBtn.disabled = true;
-      foldBtn.disabled = false;
-      unfoldBtn.disabled = true;
-    } else if (foldStatus == 'mixed') {
-      foldAllBtn.disabled = false;
-      unfoldAllBtn.disabled = false;
-      foldBtn.disabled = false;
-      unfoldBtn.disabled = false;
-    } else {
-      console.log(foldStatus);
-    }
-  },
+  /* 
   addAnimation({ tocHolder, foldButtonPos }) {
     let outlineMarker = document.createElement('div');
     let outlineMarkerTop = document.createElement('div');
