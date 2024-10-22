@@ -145,7 +145,7 @@ li li {
 .nt-top-bar {
   display: flex;
   padding: 0.3em;
-  justify-content: space-around;
+  justify-content: space-between;
   gap: 1em;
   .nt-title {
     font-size: 1rem;
