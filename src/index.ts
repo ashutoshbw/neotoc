@@ -374,7 +374,6 @@ export default function neotoc({
 
   if (foldStates.length) {
     const depth = maxHLevel - minHLevel;
-    console.log(depth);
     if (depth > 1) {
       btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
     } else {
