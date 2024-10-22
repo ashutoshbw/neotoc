@@ -56,6 +56,10 @@ interface Options {
   classPrefix?: string;
   toggleFoldIcon?: string;
   unfoldableIcon?: string;
+  foldIcon?: string;
+  foldAllIcon?: string;
+  unfoldIcon?: string;
+  unfoldAllIcon?: string;
   ellipsis?: boolean;
   initialFoldLevel?: number;
   handleFoldStatusChange?: (foldStatus: FoldStatus) => void;
@@ -83,6 +87,14 @@ export default function neotoc({
   toggleFoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
   // https://icon-sets.iconify.design/radix-icons/dot-filled/
   unfoldableIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path fill="currentColor" d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"/></svg>',
+  // https://icon-sets.iconify.design/material-symbols/unfold-less-rounded/
+  foldIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m12 16.9l-2.4 2.4q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l3.1-3.1q.15-.15.325-.212t.375-.063t.375.063t.325.212l3.1 3.1q.275.275.275.7t-.275.7t-.7.275t-.7-.275zm0-9.8l2.4-2.4q.275-.275.7-.275t.7.275t.275.7t-.275.7l-3.1 3.1q-.15.15-.325.213T12 9.475t-.375-.062T11.3 9.2L8.2 6.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275z"/></svg>',
+  // https://icon-sets.iconify.design/material-symbols/unfold-less-double-rounded/
+  foldAllIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12.025 20.8L9.55 23.25q-.275.275-.687.288t-.713-.288q-.275-.275-.275-.7t.275-.7l3.175-3.175q.15-.15.325-.213t.375-.062t.375.063t.325.212L15.9 21.85q.275.275.275.688t-.275.712q-.3.3-.712.3t-.713-.3zm0-5L9.55 18.25q-.275.275-.687.288t-.713-.288q-.275-.275-.275-.7t.275-.7l3.175-3.175q.15-.15.325-.213t.375-.062t.375.063t.325.212L15.9 16.85q.275.275.275.688t-.275.712q-.3.3-.712.3t-.713-.3zm0-7.65l2.45-2.45q.3-.3.713-.3t.712.3t.3.7t-.3.7l-3.175 3.2q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.2-3.2q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3zm0-5L14.475.7q.3-.3.713-.3t.712.3t.3.7t-.3.7l-3.175 3.2q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.2-3.2q-.3-.3-.288-.712T8.15.675t.713-.3t.712.3z"/></svg>',
+  // https://icon-sets.iconify.design/material-symbols/unfold-more-rounded/
+  unfoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m12 18.1l2.325-2.325q.3-.3.725-.3t.725.3t.3.725t-.3.725L12.7 20.3q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.075-3.075q-.3-.3-.3-.725t.3-.725t.725-.3t.725.3zM12 6L9.675 8.325q-.3.3-.725.3t-.725-.3t-.3-.725t.3-.725L11.3 3.8q.15-.15.325-.213T12 3.526t.375.063t.325.212l3.075 3.075q.3.3.3.725t-.3.725t-.725.3t-.725-.3z"/></svg>',
+  // https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/
+  unfoldAllIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m12.025 21.15l2.475-2.475q.3-.3.7-.288t.7.313q.275.3.287.7t-.287.7l-3.175 3.175q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213L8.15 20.1q-.275-.275-.288-.687t.288-.713q.275-.275.7-.275t.7.275zm0-5l2.475-2.475q.3-.3.7-.287t.7.312q.275.3.287.7t-.287.7l-3.175 3.175q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213L8.15 15.1q-.275-.275-.288-.687t.288-.713q.275-.275.7-.275t.7.275zm0-8.325L9.55 10.3q-.3.3-.712.288t-.713-.313t-.3-.712t.3-.713l3.2-3.175q.15-.15.325-.213t.375-.062t.375.062t.325.213l3.175 3.2q.3.3.3.7t-.3.7t-.713.3t-.712-.3zm0-5L9.55 5.3q-.3.3-.712.288t-.713-.313t-.3-.712t.3-.713l3.2-3.175q.15-.15.325-.212T12.025.4t.375.063t.325.212l3.175 3.2q.3.3.3.7t-.3.7t-.713.3t-.712-.3z"/></svg>',
   ellipsis = false,
   initialFoldLevel = 6,
   autoFold = false,
@@ -353,6 +365,16 @@ export default function neotoc({
   const topBar = elt('div', 'top-bar');
   const titleH2 = elt('h2', 'title');
   const btnGroup = elt('div', 'btn-group');
+  const topbarBtnClsName = 'top-bar-btn';
+  const foldBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
+  const foldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
+  const unfoldBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
+  const unfoldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
+  foldBtn.innerHTML = foldIcon;
+  foldAllBtn.innerHTML = foldAllIcon;
+  unfoldBtn.innerHTML = unfoldIcon;
+  unfoldAllBtn.innerHTML = unfoldAllIcon;
+  btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
 
   titleH2.innerHTML = title;
   topBar.append(titleH2, btnGroup);
