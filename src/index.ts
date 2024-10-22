@@ -302,37 +302,26 @@ export default function neotoc({
         unfoldAllBtn.disabled = false;
         foldBtn.disabled = false;
         unfoldBtn.disabled = false;
-      } else {
-        // TODO
       }
     }
 
-    if (cb) {
-      if (!foldStates.length) {
-        lastFoldStatus == 'none';
-        cb('none');
-        return;
-      }
+    const firstFoldType = foldStates[0].isFolded;
+    let isAllFoldsOfSameType = true;
 
-      const firstFoldType = foldStates[0].isFolded;
-      let isAllFoldsOfSameType = true;
+    for (let i = 1; i < foldStates.length; i++) {
+      if (foldStates[i].isFolded != firstFoldType) isAllFoldsOfSameType = false;
+    }
 
-      for (let i = 1; i < foldStates.length; i++) {
-        if (foldStates[i].isFolded != firstFoldType)
-          isAllFoldsOfSameType = false;
-      }
+    let curFoldStatus: FoldStatus;
+    if (isAllFoldsOfSameType) {
+      curFoldStatus = firstFoldType ? 'allFolded' : 'allUnfolded';
+    } else {
+      curFoldStatus = 'mixed';
+    }
 
-      let curFoldStatus: FoldStatus;
-      if (isAllFoldsOfSameType) {
-        curFoldStatus = firstFoldType ? 'allFolded' : 'allUnfolded';
-      } else {
-        curFoldStatus = 'mixed';
-      }
-
-      if (curFoldStatus != lastFoldStatus) {
-        lastFoldStatus = curFoldStatus;
-        cb(curFoldStatus);
-      }
+    if (curFoldStatus != lastFoldStatus) {
+      lastFoldStatus = curFoldStatus;
+      cb(curFoldStatus);
     }
   }
 
@@ -384,8 +373,11 @@ export default function neotoc({
   foldAllBtn.innerHTML = foldAllIcon;
   unfoldBtn.innerHTML = unfoldIcon;
   unfoldAllBtn.innerHTML = unfoldAllIcon;
-  btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
-  runOnFoldStatusChange();
+
+  if (foldStates.length) {
+    btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
+    runOnFoldStatusChange();
+  }
 
   titleH2.innerHTML = title;
   topBar.append(titleH2, btnGroup);
