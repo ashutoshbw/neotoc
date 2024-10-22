@@ -70,10 +70,6 @@ interface NeotocOutput {
   list: null | HTMLUListElement;
   depth: number;
   destroy: () => void;
-  fold: () => void;
-  unfold: () => void;
-  foldAll: () => void;
-  unfoldAll: () => void;
 }
 
 export default function neotoc({
@@ -121,10 +117,6 @@ export default function neotoc({
     list: null,
     depth: 0,
     destroy() {},
-    fold() {},
-    unfold() {},
-    foldAll() {},
-    unfoldAll() {},
   };
 
   if (autoFold) initialFoldLevel = 1;
@@ -659,7 +651,7 @@ export default function neotoc({
   output.list = toc;
   output.depth = maxHLevel - minHLevel + 1;
 
-  output.fold = () => {
+  foldBtn.addEventListener('click', () => {
     const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
 
     if (lowestFoldedLevel) {
@@ -667,18 +659,20 @@ export default function neotoc({
     } else if (highestUnfoldedLevel) {
       normalizeFolds(true, highestUnfoldedLevel);
     }
-  };
-  output.unfold = () => {
+  });
+
+  unfoldBtn.addEventListener('click', () => {
     const [lowestFoldedLevel] = getFoldBoundaryInfo();
 
     if (lowestFoldedLevel) {
       normalizeFolds(true, lowestFoldedLevel + 1);
       normalizeFolds(false, lowestFoldedLevel);
     }
-  };
+  });
 
-  output.foldAll = () => normalizeFolds(true, 1);
-  output.unfoldAll = () => normalizeFolds(false, 5);
+  foldAllBtn.addEventListener('click', () => normalizeFolds(true, 1));
+  unfoldAllBtn.addEventListener('click', () => normalizeFolds(false, 5));
+
   output.destroy = () => {
     toc.remove();
     window.cancelAnimationFrame(rafNum);
