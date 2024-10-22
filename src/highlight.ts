@@ -44,6 +44,18 @@ export function addHighlight({
 
   let lastActiveAnchors: Array<HTMLAnchorElement> = [];
 
+  function updatePositionGradients() {
+    const scrollTop = tocHolder.scrollTop;
+    const highestScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
+
+    topGradient.style.top = scrollTop + 'px';
+    bottomGradient.style.bottom = -scrollTop + 'px';
+    topGradient.style.opacity = scrollTop > 5 ? '1' : '0';
+    bottomGradient.style.opacity = scrollTop + 5 < highestScrollTop ? '1' : '0';
+  }
+
+  updatePositionGradients();
+
   return {
     draw(highlightedArea) {
       if (highlightedArea.isVisible) {
@@ -59,15 +71,7 @@ export function addHighlight({
         if (isBottomInAFold) barBottomIndicator.classList.add('onFold');
         else barBottomIndicator.classList.remove('onFold');
 
-        const scrollTop = tocHolder.scrollTop;
-        const highestScrollTop =
-          tocHolder.scrollHeight - tocHolder.clientHeight;
-
-        topGradient.style.top = scrollTop + 'px';
-        bottomGradient.style.bottom = -scrollTop + 'px';
-        topGradient.style.opacity = scrollTop > 5 ? '1' : '0';
-        bottomGradient.style.opacity =
-          scrollTop + 5 < highestScrollTop ? '1' : '0';
+        updatePositionGradients();
 
         lastActiveAnchors.forEach((a) => {
           if (!anchors.includes(a)) a.classList.remove('active-a');

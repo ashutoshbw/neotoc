@@ -180,21 +180,30 @@ li li {
   }
 }
 
-/* custom styles below */
-
-.outline-marker {
+/* highlighted area start */
+.nt-bar {
   --width: 1.5px;
   --terminal-side-length: 6px;
-  background: orange;
+  --bg-color: #94bbff;
+  background: var(--bg-color);
+  /* box-shadow: var(--bg-color) 0 0 40px 5px; */
   position: absolute;
   width: var(--width);
   height: 0px;
   left: 5px;
-  /* transition: 50ms; */
+  /* transition: 250ms; */
 }
 
-.outline-marker-bottom {
-  background: orange;
+.nt-bar-light {
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(to left, transparent, var(--bg-color));
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.nt-bar-bottom-indicator {
+  background: var(--bg-color);
   position: absolute;
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
@@ -205,8 +214,8 @@ li li {
   ); /* -2px */
 }
 
-.outline-marker-top {
-  background: orange;
+.nt-bar-top-indicator {
+  background: var(--bg-color);
   position: absolute;
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
@@ -216,3 +225,32 @@ li li {
     (var(--terminal-side-length) / 2 * -1) + var(--width) / 2
   ); /* -2px */
 }
+
+.nt-bar-top-indicator.onFold,
+.nt-bar-bottom-indicator.onFold {
+  background: white;
+  z-index: 1;
+}
+/* highlighted area end */
+
+/* top and bottom gradient overlays start*/
+.nt-top-gradient,
+.nt-bottom-gradient {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  left: 0;
+  z-index: 1;
+  transition: opacity 300ms;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.nt-top-gradient {
+  background: linear-gradient(to bottom, orange, transparent);
+}
+
+.nt-bottom-gradient {
+  background: linear-gradient(to top, orange, transparent);
+}
+/* top and bottom gradient overlays end*/
