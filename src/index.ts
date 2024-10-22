@@ -18,31 +18,7 @@ import {
   animateBicycleScrollingIfNeeded,
   type AutoScrollState,
 } from './autoScroll.js';
-
-export type HighlightedArea =
-  | {
-      top: number;
-      bottom: number;
-      height: number;
-      isTopInAFold: boolean;
-      isBottomInAFold: boolean;
-      anchors: HTMLAnchorElement[];
-      isVisible: true;
-      time: number;
-    }
-  | {
-      isVisible: false;
-      time: number;
-    };
-
-export type Draw = (highlightedArea: HighlightedArea) => void;
-export interface AnimationFrame {
-  draw: Draw;
-  cleanup: () => void;
-}
-export type AddAnimation = (props: {
-  tocHolder: HTMLElement;
-}) => AnimationFrame;
+import { addHighlight } from './highlight.js';
 
 interface Options {
   title?: string;
@@ -62,7 +38,6 @@ interface Options {
   unfoldAllIcon?: string;
   ellipsis?: boolean;
   initialFoldLevel?: number;
-  addAnimation?: AddAnimation;
 }
 
 interface NeotocOutput {
@@ -93,7 +68,6 @@ export default function neotoc({
   autoFold = false,
   autoScroll = false,
   autoScrollOffset = 50,
-  addAnimation,
 }: Options): NeotocOutput {
   function elt<T extends HTMLElement>(type: string, className?: string): T {
     const e = document.createElement(type) as T;
@@ -396,107 +370,93 @@ export default function neotoc({
   // So we can do this:
   const contentHolder = document.querySelector<HTMLElement>(selectorPart1)!;
 
+  /**** ANIMATION LOGIC START ****/
   let rafNum: number;
-  let animationCleanupFunc: undefined | (() => void);
-  if (addAnimation) {
-    const autoScrollState: AutoScrollState = {
-      isScrolling: false, // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
-      wasTopEndAboveTopBoundary: null,
-      wasBottomEndBelowBottomBoundary: null,
-      timeFrac: 0,
-      scrollNeeded: 0,
-      motorcycleScrollingStartScrollTop: 0,
-      motorcycleScrollingStartTime: 0, // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
-      lastAutoScrollTop: null,
+
+  const autoScrollState: AutoScrollState = {
+    isScrolling: false, // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
+    wasTopEndAboveTopBoundary: null,
+    wasBottomEndBelowBottomBoundary: null,
+    timeFrac: 0,
+    scrollNeeded: 0,
+    motorcycleScrollingStartScrollTop: 0,
+    motorcycleScrollingStartTime: 0, // it doesn't matter what boolean value you assgin here, the appropriate one is set by `initMotorcycleScrolling`
+    lastAutoScrollTop: null,
+  };
+
+  const scrollContainer = findScrollContainer(contentHolder);
+
+  const { draw, cleanup } = addHighlight({
+    tocHolder,
+    elt,
+  });
+
+  let lastViewportHeight: null | number = null;
+  let lastScrollContainerScrollTop: null | number = null;
+  let lastTopInUnfoldedState: null | number = null;
+  let lastBottomInUnfoldedState: null | number = null;
+  let viewportHeight: null | number = null;
+  let scrollContainerScrollTop: null | number = null;
+  let topInUnfoldedState: null | number = null;
+  let bottomInUnfoldedState: null | number = null;
+
+  const runConditionally = (cb: () => void) => {
+    const condition1 =
+      topInUnfoldedState !== lastTopInUnfoldedState ||
+      bottomInUnfoldedState !== lastBottomInUnfoldedState;
+
+    // This check is necessary because sometimes in especially firefox,
+    // even if there is no scroll in the `scrollContainer`, only scroll in
+    // the `tocHolder` causes update to `topInUnfoldedState` and/or it's
+    // related variables.
+    const condition2 =
+      scrollContainerScrollTop !== lastScrollContainerScrollTop;
+
+    const condition3 = viewportHeight !== lastViewportHeight;
+
+    const finalCondition = (condition1 && condition2) || condition3;
+
+    finalCondition && cb();
+  };
+
+  const renderFrame = (curTimestamp: number) => {
+    const [viewportTop, viewportBottom] = getViewportYSize(
+      scrollContainer,
+      offsetTop,
+      offsetBottom,
+    );
+
+    const anchorsToSectionsInView: HTMLAnchorElement[] = [];
+    let intersectionRatioOfFirstSection: null | number = null;
+    let intersectionRatioOfLastSection: null | number = null;
+    let topOffsetRatio: null | number = null;
+
+    const doAutoFoldIfAllowed = () => {
+      if (autoFold) {
+        doAutoFold(
+          foldStates,
+          anchorsToSectionsInView,
+          anchorToAncestorAnchorsMap,
+        );
+      }
     };
 
-    const scrollContainer = findScrollContainer(contentHolder);
+    for (let i = 0; i < headings.length; i++) {
+      const curH = headings[i];
+      const nextH = headings[i + 1];
 
-    const { draw, cleanup } = addAnimation({
-      tocHolder,
-    });
+      const sectionTop = curH.getBoundingClientRect().top;
+      const sectionBottom = nextH
+        ? nextH.getBoundingClientRect().top
+        : contentHolder.getBoundingClientRect().bottom;
 
-    animationCleanupFunc = cleanup;
+      const sectionHeight = sectionBottom - sectionTop;
 
-    let lastViewportHeight: null | number = null;
-    let lastScrollContainerScrollTop: null | number = null;
-    let lastTopInUnfoldedState: null | number = null;
-    let lastBottomInUnfoldedState: null | number = null;
-    let viewportHeight: null | number = null;
-    let scrollContainerScrollTop: null | number = null;
-    let topInUnfoldedState: null | number = null;
-    let bottomInUnfoldedState: null | number = null;
-
-    const runConditionally = (cb: () => void) => {
-      const condition1 =
-        topInUnfoldedState !== lastTopInUnfoldedState ||
-        bottomInUnfoldedState !== lastBottomInUnfoldedState;
-
-      // This check is necessary because sometimes in especially firefox,
-      // even if there is no scroll in the `scrollContainer`, only scroll in
-      // the `tocHolder` causes update to `topInUnfoldedState` and/or it's
-      // related variables.
-      const condition2 =
-        scrollContainerScrollTop !== lastScrollContainerScrollTop;
-
-      const condition3 = viewportHeight !== lastViewportHeight;
-
-      const finalCondition = (condition1 && condition2) || condition3;
-
-      finalCondition && cb();
-    };
-
-    const renderFrame = (curTimestamp: number) => {
-      const [viewportTop, viewportBottom] = getViewportYSize(
-        scrollContainer,
-        offsetTop,
-        offsetBottom,
-      );
-
-      const anchorsToSectionsInView: HTMLAnchorElement[] = [];
-      let intersectionRatioOfFirstSection: null | number = null;
-      let intersectionRatioOfLastSection: null | number = null;
-      let topOffsetRatio: null | number = null;
-
-      const doAutoFoldIfAllowed = () => {
-        if (autoFold) {
-          doAutoFold(
-            foldStates,
-            anchorsToSectionsInView,
-            anchorToAncestorAnchorsMap,
-          );
-        }
-      };
-
-      for (let i = 0; i < headings.length; i++) {
-        const curH = headings[i];
-        const nextH = headings[i + 1];
-
-        const sectionTop = curH.getBoundingClientRect().top;
-        const sectionBottom = nextH
-          ? nextH.getBoundingClientRect().top
-          : contentHolder.getBoundingClientRect().bottom;
-
-        const sectionHeight = sectionBottom - sectionTop;
-
-        if (viewportTop !== null) {
-          if (sectionTop < viewportTop) {
-            if (sectionBottom > viewportTop) {
-              const intersectionHeight =
-                Math.min(sectionBottom, viewportBottom!) - viewportTop;
-              const intersectionRatio = intersectionHeight / sectionHeight;
-              if (!intersectionRatioOfFirstSection) {
-                intersectionRatioOfFirstSection = intersectionRatio;
-              } else {
-                intersectionRatioOfLastSection = intersectionRatio;
-              }
-              anchorsToSectionsInView.push(idToAnchorMap[curH.id]);
-              if (topOffsetRatio === null)
-                topOffsetRatio = (viewportTop - sectionTop) / sectionHeight;
-            }
-          } else if (sectionTop < viewportBottom!) {
+      if (viewportTop !== null) {
+        if (sectionTop < viewportTop) {
+          if (sectionBottom > viewportTop) {
             const intersectionHeight =
-              Math.min(sectionBottom, viewportBottom!) - sectionTop;
+              Math.min(sectionBottom, viewportBottom!) - viewportTop;
             const intersectionRatio = intersectionHeight / sectionHeight;
             if (!intersectionRatioOfFirstSection) {
               intersectionRatioOfFirstSection = intersectionRatio;
@@ -504,161 +464,168 @@ export default function neotoc({
               intersectionRatioOfLastSection = intersectionRatio;
             }
             anchorsToSectionsInView.push(idToAnchorMap[curH.id]);
-            if (topOffsetRatio === null) topOffsetRatio = 0; // This forced to 0 here cause otherwise it would cause meaningless offset
+            if (topOffsetRatio === null)
+              topOffsetRatio = (viewportTop - sectionTop) / sectionHeight;
           }
+        } else if (sectionTop < viewportBottom!) {
+          const intersectionHeight =
+            Math.min(sectionBottom, viewportBottom!) - sectionTop;
+          const intersectionRatio = intersectionHeight / sectionHeight;
+          if (!intersectionRatioOfFirstSection) {
+            intersectionRatioOfFirstSection = intersectionRatio;
+          } else {
+            intersectionRatioOfLastSection = intersectionRatio;
+          }
+          anchorsToSectionsInView.push(idToAnchorMap[curH.id]);
+          if (topOffsetRatio === null) topOffsetRatio = 0; // This forced to 0 here cause otherwise it would cause meaningless offset
         }
       }
+    }
 
-      if (anchorsToSectionsInView.length) {
-        const a1 = anchorsToSectionsInView[0];
-        const i1 = a1.parentElement!; // it's the nonFoldable
-        const rect1 = i1.getBoundingClientRect();
+    if (anchorsToSectionsInView.length) {
+      const a1 = anchorsToSectionsInView[0];
+      const i1 = a1.parentElement!; // it's the nonFoldable
+      const rect1 = i1.getBoundingClientRect();
 
-        // Vertical coordinates of highlighted area when toc is fully unfolded
-        const y1Max = rect1.top + rect1.height * topOffsetRatio!;
-        let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
+      // Vertical coordinates of highlighted area when toc is fully unfolded
+      const y1Max = rect1.top + rect1.height * topOffsetRatio!;
+      let y2Max = y1Max + rect1.height * intersectionRatioOfFirstSection!;
 
-        const ancestorFoldableDivsForA1 =
-          anchorToAncestorFoldableDivsMap.get(a1)!;
+      const ancestorFoldableDivsForA1 =
+        anchorToAncestorFoldableDivsMap.get(a1)!;
 
-        // Vertical coordinates of highlighted area when toc may be folded somehow
-        const y1Min = calculateYBasedOnFolding(
-          ancestorFoldableDivsForA1,
-          y1Max,
+      // Vertical coordinates of highlighted area when toc may be folded somehow
+      const y1Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y1Max);
+      let y2Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y2Max);
+
+      if (anchorsToSectionsInView.length > 1) {
+        const a2 = anchorsToSectionsInView[anchorsToSectionsInView.length - 1];
+        const i2 = a2.parentElement!; // it's the nonFoldable
+
+        const rect2 = i2.getBoundingClientRect();
+
+        y2Max = rect2.top + rect2.height * intersectionRatioOfLastSection!;
+
+        y2Min = calculateYBasedOnFolding(
+          anchorToAncestorFoldableDivsMap.get(a2)!,
+          y2Max,
         );
-        let y2Min = calculateYBasedOnFolding(ancestorFoldableDivsForA1, y2Max);
+      }
 
-        if (anchorsToSectionsInView.length > 1) {
-          const a2 =
-            anchorsToSectionsInView[anchorsToSectionsInView.length - 1];
-          const i2 = a2.parentElement!; // it's the nonFoldable
+      const tocHolderTop = tocHolder.getBoundingClientRect().top;
+      const scrolledY = tocHolder.scrollTop;
+      const borderTopWidth = tocHolder.clientTop;
 
-          const rect2 = i2.getBoundingClientRect();
+      viewportHeight =
+        viewportTop === null ? null : viewportBottom! - viewportTop;
 
-          y2Max = rect2.top + rect2.height * intersectionRatioOfLastSection!;
+      const top = Math.round(y1Min + scrolledY - tocHolderTop - borderTopWidth);
+      const bottom = Math.round(
+        y2Min + scrolledY - tocHolderTop - borderTopWidth,
+      );
 
-          y2Min = calculateYBasedOnFolding(
-            anchorToAncestorFoldableDivsMap.get(a2)!,
-            y2Max,
-          );
-        }
+      scrollContainerScrollTop = scrollContainer.scrollTop;
+      topInUnfoldedState = Math.round(
+        y1Max + scrolledY - tocHolderTop - borderTopWidth,
+      );
+      bottomInUnfoldedState = Math.round(
+        y2Max + scrolledY - tocHolderTop - borderTopWidth,
+      );
 
-        const tocHolderTop = tocHolder.getBoundingClientRect().top;
-        const scrolledY = tocHolder.scrollTop;
-        const borderTopWidth = tocHolder.clientTop;
+      // See it's definition to be clear about its purpose
+      runConditionally(() => {
+        const scrollDiff =
+          scrollContainerScrollTop! -
+          (lastScrollContainerScrollTop || scrollContainerScrollTop!);
+        const scrollDir =
+          scrollDiff > 0 ? 'down' : scrollDiff < 0 ? 'up' : 'down';
 
-        viewportHeight =
-          viewportTop === null ? null : viewportBottom! - viewportTop;
-
-        const top = Math.round(
-          y1Min + scrolledY - tocHolderTop - borderTopWidth,
-        );
-        const bottom = Math.round(
-          y2Min + scrolledY - tocHolderTop - borderTopWidth,
-        );
-
-        scrollContainerScrollTop = scrollContainer.scrollTop;
-        topInUnfoldedState = Math.round(
-          y1Max + scrolledY - tocHolderTop - borderTopWidth,
-        );
-        bottomInUnfoldedState = Math.round(
-          y2Max + scrolledY - tocHolderTop - borderTopWidth,
-        );
-
-        // See it's definition to be clear about its purpose
-        runConditionally(() => {
-          const scrollDiff =
-            scrollContainerScrollTop! -
-            (lastScrollContainerScrollTop || scrollContainerScrollTop!);
-          const scrollDir =
-            scrollDiff > 0 ? 'down' : scrollDiff < 0 ? 'up' : 'down';
-
-          doAutoFoldIfAllowed();
-          if (autoScroll) {
-            animateBicycleScrollingIfNeeded(
-              tocHolder,
-              top,
-              bottom,
-              autoScrollOffset,
-              autoScrollState,
-            );
-            initMotorcycleScrolling(
-              scrollDir,
-              tocHolder,
-              top,
-              bottom,
-              autoScrollOffset,
-              curTimestamp,
-              autoScrollState,
-            );
-          }
-        });
-
+        doAutoFoldIfAllowed();
         if (autoScroll) {
-          prepareForBicycleScrolling(
+          animateBicycleScrollingIfNeeded(
             tocHolder,
             top,
             bottom,
             autoScrollOffset,
             autoScrollState,
           );
-
-          animateMotorcycleScrollingIfNeeded(
+          initMotorcycleScrolling(
+            scrollDir,
             tocHolder,
+            top,
+            bottom,
+            autoScrollOffset,
             curTimestamp,
             autoScrollState,
           );
         }
+      });
 
-        draw({
-          height: Math.round(y2Min - y1Min),
-          top: top,
-          bottom: bottom,
-          // Rounding is necssary because where they should be the same,
-          // there may be a very slight difference.
-          isTopInAFold: Math.round(y1Min!) < Math.round(y1Max),
-          isBottomInAFold: Math.round(y2Min!) < Math.round(y2Max),
-          anchors: anchorsToSectionsInView,
-          time: curTimestamp,
-          isVisible: true,
-        });
+      if (autoScroll) {
+        prepareForBicycleScrolling(
+          tocHolder,
+          top,
+          bottom,
+          autoScrollOffset,
+          autoScrollState,
+        );
 
-        lastViewportHeight = viewportHeight;
-        lastScrollContainerScrollTop = scrollContainerScrollTop;
-        lastTopInUnfoldedState = topInUnfoldedState;
-        lastBottomInUnfoldedState = bottomInUnfoldedState;
-      } else {
-        viewportHeight =
-          scrollContainerScrollTop =
-          topInUnfoldedState =
-          bottomInUnfoldedState =
-            null;
-
-        runConditionally(() => {
-          doAutoFoldIfAllowed();
-        });
-        draw({ isVisible: false, time: curTimestamp });
-
-        lastViewportHeight =
-          lastScrollContainerScrollTop =
-          lastTopInUnfoldedState =
-          lastBottomInUnfoldedState =
-            null;
-      }
-    };
-
-    let previousTime: number;
-    const step = (timestamp: number) => {
-      if (previousTime !== timestamp) {
-        renderFrame(timestamp);
+        animateMotorcycleScrollingIfNeeded(
+          tocHolder,
+          curTimestamp,
+          autoScrollState,
+        );
       }
 
-      previousTime = timestamp;
-      rafNum = window.requestAnimationFrame(step);
-    };
+      draw({
+        height: Math.round(y2Min - y1Min),
+        top: top,
+        bottom: bottom,
+        // Rounding is necssary because where they should be the same,
+        // there may be a very slight difference.
+        isTopInAFold: Math.round(y1Min!) < Math.round(y1Max),
+        isBottomInAFold: Math.round(y2Min!) < Math.round(y2Max),
+        anchors: anchorsToSectionsInView,
+        time: curTimestamp,
+        isVisible: true,
+      });
 
+      lastViewportHeight = viewportHeight;
+      lastScrollContainerScrollTop = scrollContainerScrollTop;
+      lastTopInUnfoldedState = topInUnfoldedState;
+      lastBottomInUnfoldedState = bottomInUnfoldedState;
+    } else {
+      viewportHeight =
+        scrollContainerScrollTop =
+        topInUnfoldedState =
+        bottomInUnfoldedState =
+          null;
+
+      runConditionally(() => {
+        doAutoFoldIfAllowed();
+      });
+      draw({ isVisible: false, time: curTimestamp });
+
+      lastViewportHeight =
+        lastScrollContainerScrollTop =
+        lastTopInUnfoldedState =
+        lastBottomInUnfoldedState =
+          null;
+    }
+  };
+
+  let previousTime: number;
+  const step = (timestamp: number) => {
+    if (previousTime !== timestamp) {
+      renderFrame(timestamp);
+    }
+
+    previousTime = timestamp;
     rafNum = window.requestAnimationFrame(step);
-  }
+  };
+
+  rafNum = window.requestAnimationFrame(step);
+  /**** ANIMATION LOGIC END ****/
 
   foldBtn.addEventListener('click', () => {
     const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
@@ -685,7 +652,7 @@ export default function neotoc({
   output.destroy = () => {
     toc.remove();
     window.cancelAnimationFrame(rafNum);
-    animationCleanupFunc?.();
+    cleanup();
   };
 
   return output;
