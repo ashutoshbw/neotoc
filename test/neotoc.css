@@ -124,10 +124,6 @@ li li {
   border-right: 1px solid transparent;
 }
 
-.nt-root-ul:hover .nt-indent-block {
-  border-right: 1px solid #eee;
-}
-
 .nt-indent-block:not(:first-child) {
   grid-column: span 2;
 }
@@ -136,6 +132,14 @@ li li {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.nt-widget:hover .nt-indent-block {
+  border-right: 1px solid #eee;
+}
+
+.nt-widget:hover .nt-btn-group {
+  opacity: 1;
 }
 
 .nt-top-bar {
@@ -149,6 +153,8 @@ li li {
   }
   .nt-btn-group {
     display: flex;
+    opacity: 0;
+    transition: opacity 150ms;
     align-items: center;
     gap: 5px;
     .nt-top-bar-btn {
