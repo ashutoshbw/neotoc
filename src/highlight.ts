@@ -17,14 +17,16 @@ export type HighlightedArea =
 export type Draw = (highlightedArea: HighlightedArea) => void;
 
 type Elt = <T extends HTMLElement>(type: string, className?: string) => T;
+type ClassModificationFuncType = (elt: HTMLElement, className: string) => void;
+type ClassContains = (elt: HTMLElement, className: string) => boolean;
 
-export function addHighlight({
-  tocHolder,
-  elt,
-}: {
-  tocHolder: HTMLElement;
-  elt: Elt;
-}): Draw {
+export function addHighlight(
+  tocHolder: HTMLElement,
+  elt: Elt,
+  addClass: ClassModificationFuncType,
+  removeClass: ClassModificationFuncType,
+  classContains: ClassContains,
+): Draw {
   const bar = elt<HTMLDivElement>('div', 'bar');
   const barTopIndicator = elt<HTMLDivElement>('div', 'bar-top-indicator');
   const barLight = elt<HTMLDivElement>('div', 'bar-light');
@@ -45,17 +47,17 @@ export function addHighlight({
       bar.style.top = `${top}px`;
       bar.style.height = `${height}px`;
 
-      if (isTopInAFold) barTopIndicator.classList.add('onFold');
-      else barTopIndicator.classList.remove('onFold');
+      if (isTopInAFold) addClass(barTopIndicator, 'on-fold');
+      else removeClass(barTopIndicator, 'on-fold');
 
-      if (isBottomInAFold) barBottomIndicator.classList.add('onFold');
-      else barBottomIndicator.classList.remove('onFold');
+      if (isBottomInAFold) addClass(barBottomIndicator, 'on-fold');
+      else removeClass(barBottomIndicator, 'on-fold');
 
       lastActiveAnchors.forEach((a) => {
-        if (!anchors.includes(a)) a.classList.remove('active-a');
+        if (!anchors.includes(a)) removeClass(a, 'active-a');
       });
       anchors.forEach((a) => {
-        if (!a.classList.contains('active-a')) a.classList.add('active-a');
+        if (!classContains(a, 'active-a')) addClass(a, 'active-a');
       });
 
       lastActiveAnchors = anchors;

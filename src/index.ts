@@ -75,6 +75,14 @@ export default function neotoc({
     elt.classList.add(classPrefix + className);
   }
 
+  function removeClass(elt: HTMLElement, className: string) {
+    elt.classList.remove(classPrefix + className);
+  }
+
+  function classContains(elt: HTMLElement, className: string) {
+    return elt.classList.contains(classPrefix + className);
+  }
+
   function toggleClass(elt: HTMLElement, className: string) {
     elt.classList.toggle(classPrefix + className);
   }
@@ -392,10 +400,13 @@ export default function neotoc({
 
   const scrollContainer = findScrollContainer(contentHolder);
 
-  const draw = addHighlight({
+  const draw = addHighlight(
     tocHolder,
     elt,
-  });
+    addClass,
+    removeClass,
+    classContains,
+  );
 
   let lastViewportHeight: null | number = null;
   let lastScrollContainerScrollTop: null | number = null;

@@ -15,6 +15,10 @@
   text-decoration: none;
 }
 
+.nt-active-a {
+  color: lightskyblue;
+}
+
 .nt-root-ul {
   --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
@@ -121,7 +125,7 @@ li li {
 .nt-indent-block {
   box-sizing: border-box;
   transition: border-right calc(var(--folding-duration) / 2);
-  border-right: 1px solid transparent;
+  border-right: 1px solid #999;
 }
 
 .nt-indent-block:not(:first-child) {
@@ -138,10 +142,6 @@ li li {
   border-right: 1px solid #eee;
 }
 
-.nt-widget:hover .nt-btn-group {
-  opacity: 1;
-}
-
 .nt-top-bar {
   display: flex;
   padding: 0.3em;
@@ -153,7 +153,6 @@ li li {
   }
   .nt-btn-group {
     display: flex;
-    opacity: 0;
     transition: opacity 150ms;
     align-items: center;
     gap: 5px;
