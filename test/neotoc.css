@@ -20,9 +20,10 @@
 }
 
 .nt-root-ul {
-  --font-size-percentage: 94;
+  --font-size-percentage: 90;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
-  --indent-padding: 10px; /* should be in px unit */
+  --indent-padding: 15px; /* should be in px unit */
+  --indent-line-width: 1px;
   --folding-duration: 300ms;
 }
 
@@ -125,7 +126,7 @@ li li {
 .nt-indent-block {
   box-sizing: border-box;
   transition: border-right calc(var(--folding-duration) / 2);
-  border-right: 1px solid #999;
+  border-right: var(--indent-line-width) solid #999;
 }
 
 .nt-indent-block:not(:first-child) {
@@ -136,10 +137,6 @@ li li {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-}
-
-.nt-widget:hover .nt-indent-block {
-  border-right: 1px solid #eee;
 }
 
 .nt-top-bar {
@@ -225,8 +222,8 @@ li li {
   ); /* -2px */
 }
 
-.nt-bar-top-indicator.onFold,
-.nt-bar-bottom-indicator.onFold {
+.nt-bar-top-indicator.nt-on-fold,
+.nt-bar-bottom-indicator.nt-on-fold {
   background: white;
   z-index: 1;
 }
