@@ -40,10 +40,6 @@ interface Options {
   initialFoldLevel?: number;
 }
 
-interface NeotocOutput {
-  destroy: () => void;
-}
-
 export default function neotoc({
   title = 'On this page',
   offsetTop = 0,
@@ -68,7 +64,7 @@ export default function neotoc({
   autoFold = false,
   autoScroll = false,
   autoScrollOffset = 50,
-}: Options): NeotocOutput {
+}: Options) {
   function elt<T extends HTMLElement>(type: string, className?: string): T {
     const e = document.createElement(type) as T;
     if (className) e.className = classPrefix + className;
@@ -82,10 +78,6 @@ export default function neotoc({
   function toggleClass(elt: HTMLElement, className: string) {
     elt.classList.toggle(classPrefix + className);
   }
-
-  const output: NeotocOutput = {
-    destroy() {},
-  };
 
   if (autoFold) initialFoldLevel = 1;
 
@@ -322,7 +314,7 @@ export default function neotoc({
 
   const toc = genToc(headings);
 
-  if (!toc) return output;
+  if (!toc) return () => {};
 
   addClass(toc, 'root-ul');
 
@@ -400,7 +392,7 @@ export default function neotoc({
 
   const scrollContainer = findScrollContainer(contentHolder);
 
-  const { draw, cleanup } = addHighlight({
+  const draw = addHighlight({
     tocHolder,
     elt,
   });
@@ -665,11 +657,8 @@ export default function neotoc({
   foldAllBtn.addEventListener('click', () => normalizeFolds(true, 1));
   unfoldAllBtn.addEventListener('click', () => normalizeFolds(false, 5));
 
-  output.destroy = () => {
-    toc.remove();
+  return () => {
+    widget.remove();
     window.cancelAnimationFrame(rafNum);
-    cleanup();
   };
-
-  return output;
 }

@@ -16,11 +16,6 @@ export type HighlightedArea =
 
 export type Draw = (highlightedArea: HighlightedArea) => void;
 
-interface Frame {
-  draw: Draw;
-  cleanup: () => void;
-}
-
 type Elt = <T extends HTMLElement>(type: string, className?: string) => T;
 
 export function addHighlight({
@@ -29,7 +24,7 @@ export function addHighlight({
 }: {
   tocHolder: HTMLElement;
   elt: Elt;
-}): Frame {
+}): Draw {
   const bar = elt<HTMLDivElement>('div', 'bar');
   const barTopIndicator = elt<HTMLDivElement>('div', 'bar-top-indicator');
   const barLight = elt<HTMLDivElement>('div', 'bar-light');
@@ -42,35 +37,30 @@ export function addHighlight({
 
   let lastActiveAnchors: Array<HTMLAnchorElement> = [];
 
-  return {
-    draw(highlightedArea) {
-      if (highlightedArea.isVisible) {
-        const { top, height, isTopInAFold, isBottomInAFold, anchors } =
-          highlightedArea;
-        bar.style.display = '';
-        bar.style.top = `${top}px`;
-        bar.style.height = `${height}px`;
+  return (highlightedArea) => {
+    if (highlightedArea.isVisible) {
+      const { top, height, isTopInAFold, isBottomInAFold, anchors } =
+        highlightedArea;
+      bar.style.display = '';
+      bar.style.top = `${top}px`;
+      bar.style.height = `${height}px`;
 
-        if (isTopInAFold) barTopIndicator.classList.add('onFold');
-        else barTopIndicator.classList.remove('onFold');
+      if (isTopInAFold) barTopIndicator.classList.add('onFold');
+      else barTopIndicator.classList.remove('onFold');
 
-        if (isBottomInAFold) barBottomIndicator.classList.add('onFold');
-        else barBottomIndicator.classList.remove('onFold');
+      if (isBottomInAFold) barBottomIndicator.classList.add('onFold');
+      else barBottomIndicator.classList.remove('onFold');
 
-        lastActiveAnchors.forEach((a) => {
-          if (!anchors.includes(a)) a.classList.remove('active-a');
-        });
-        anchors.forEach((a) => {
-          if (!a.classList.contains('active-a')) a.classList.add('active-a');
-        });
+      lastActiveAnchors.forEach((a) => {
+        if (!anchors.includes(a)) a.classList.remove('active-a');
+      });
+      anchors.forEach((a) => {
+        if (!a.classList.contains('active-a')) a.classList.add('active-a');
+      });
 
-        lastActiveAnchors = anchors;
-      } else {
-        bar.style.display = 'none';
-      }
-    },
-    cleanup() {
-      bar.remove();
-    },
+      lastActiveAnchors = anchors;
+    } else {
+      bar.style.display = 'none';
+    }
   };
 }
