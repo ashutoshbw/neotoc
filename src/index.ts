@@ -21,32 +21,37 @@ import {
 import { addHighlight } from './highlight.js';
 
 interface Options {
+  selector: string;
   title?: string;
+  fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
+  ellipsis?: boolean;
+  classPrefix?: string;
+  initialFoldLevel?: number;
   offsetTop?: number;
   offsetBottom?: number;
-  selector: string;
-  fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
   autoFold?: boolean;
   autoScroll?: boolean;
   autoScrollOffset?: number;
-  classPrefix?: string;
   toggleFoldIcon?: string;
   unfoldableIcon?: string;
   foldIcon?: string;
   foldAllIcon?: string;
   unfoldIcon?: string;
   unfoldAllIcon?: string;
-  ellipsis?: boolean;
-  initialFoldLevel?: number;
 }
 
 export default function neotoc({
-  title = 'On this page',
-  offsetTop = 0,
-  offsetBottom = 0,
   selector,
-  classPrefix = 'nt-',
+  title = 'On this page',
   fillAnchor = (h) => h.textContent!,
+  ellipsis = false,
+  classPrefix = 'nt-',
+  initialFoldLevel = 6,
+  offsetTop = 50,
+  offsetBottom = 50,
+  autoFold = false,
+  autoScroll = true,
+  autoScrollOffset = 50,
   // icon from https://icon-sets.iconify.design/akar-icons/triangle-down-fill/
   toggleFoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M6 8a1 1 0 0 0-.8 1.6l6 8a1 1 0 0 0 1.6 0l6-8A1 1 0 0 0 18 8z"/></svg>',
   // https://icon-sets.iconify.design/radix-icons/dot-filled/
@@ -59,11 +64,6 @@ export default function neotoc({
   unfoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m12 18.1l2.325-2.325q.3-.3.725-.3t.725.3t.3.725t-.3.725L12.7 20.3q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.075-3.075q-.3-.3-.3-.725t.3-.725t.725-.3t.725.3zM12 6L9.675 8.325q-.3.3-.725.3t-.725-.3t-.3-.725t.3-.725L11.3 3.8q.15-.15.325-.213T12 3.526t.375.063t.325.212l3.075 3.075q.3.3.3.725t-.3.725t-.725.3t-.725-.3z"/></svg>',
   // https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/
   unfoldAllIcon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m12.025 21.15l2.475-2.475q.3-.3.7-.288t.7.313q.275.3.287.7t-.287.7l-3.175 3.175q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213L8.15 20.1q-.275-.275-.288-.687t.288-.713q.275-.275.7-.275t.7.275zm0-5l2.475-2.475q.3-.3.7-.287t.7.312q.275.3.287.7t-.287.7l-3.175 3.175q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213L8.15 15.1q-.275-.275-.288-.687t.288-.713q.275-.275.7-.275t.7.275zm0-8.325L9.55 10.3q-.3.3-.712.288t-.713-.313t-.3-.712t.3-.713l3.2-3.175q.15-.15.325-.213t.375-.062t.375.062t.325.213l3.175 3.2q.3.3.3.7t-.3.7t-.713.3t-.712-.3zm0-5L9.55 5.3q-.3.3-.712.288t-.713-.313t-.3-.712t.3-.713l3.2-3.175q.15-.15.325-.212T12.025.4t.375.063t.325.212l3.175 3.2q.3.3.3.7t-.3.7t-.713.3t-.712-.3z"/></svg>',
-  ellipsis = false,
-  initialFoldLevel = 6,
-  autoFold = false,
-  autoScroll = false,
-  autoScrollOffset = 50,
 }: Options) {
   function elt<T extends HTMLElement>(type: string, className?: string): T {
     const e = document.createElement(type) as T;
