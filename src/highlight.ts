@@ -39,6 +39,9 @@ export function addHighlight(
 
   let lastActiveAnchors: Array<HTMLAnchorElement> = [];
 
+  const onFoldClassName = 'on-fold';
+  const activeAnchorClassName = 'active-a';
+
   return (highlightedArea) => {
     if (highlightedArea.isVisible) {
       const { top, height, isTopInAFold, isBottomInAFold, anchors } =
@@ -47,23 +50,24 @@ export function addHighlight(
       bar.style.top = `${top}px`;
       bar.style.height = `${height}px`;
 
-      if (isTopInAFold) addClass(barTopIndicator, 'on-fold');
-      else removeClass(barTopIndicator, 'on-fold');
+      if (isTopInAFold) addClass(barTopIndicator, onFoldClassName);
+      else removeClass(barTopIndicator, onFoldClassName);
 
-      if (isBottomInAFold) addClass(barBottomIndicator, 'on-fold');
-      else removeClass(barBottomIndicator, 'on-fold');
+      if (isBottomInAFold) addClass(barBottomIndicator, onFoldClassName);
+      else removeClass(barBottomIndicator, onFoldClassName);
 
       lastActiveAnchors.forEach((a) => {
-        if (!anchors.includes(a)) removeClass(a, 'active-a');
+        if (!anchors.includes(a)) removeClass(a, activeAnchorClassName);
       });
       anchors.forEach((a) => {
-        if (!classContains(a, 'active-a')) addClass(a, 'active-a');
+        if (!classContains(a, activeAnchorClassName))
+          addClass(a, activeAnchorClassName);
       });
 
       lastActiveAnchors = anchors;
     } else {
       bar.style.display = 'none';
-      lastActiveAnchors.forEach((a) => removeClass(a, 'active-a'));
+      lastActiveAnchors.forEach((a) => removeClass(a, activeAnchorClassName));
     }
   };
 }
