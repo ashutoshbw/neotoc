@@ -6,6 +6,7 @@ export function indentWidth(power: number) {
   return `calc(calc(var(--toggle-fold-btn-width) / 2) * pow(calc(100 / var(--font-size-percentage)), ${power}) + calc(var(--indent-line-width) / 2))`;
 }
 
+// The purpose of this padding is to make the distance between indent lines equal
 export function getRelativePadding(power: number) {
   return `calc(var(--max-indent-width) - ${indentWidth(power)})`;
 }
