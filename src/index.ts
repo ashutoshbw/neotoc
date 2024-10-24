@@ -214,7 +214,7 @@ export default function neotoc({
       for (let power = 1; power <= hDepth; power++) {
         const indentBlock = elt<HTMLDivElement>('div', 'indent-block');
         nonFoldable.prepend(indentBlock);
-        gridTemplateIndentColumns = `${indentWidth(power)} ${getRelativePadding(power)} var(--indent-padding) ${gridTemplateIndentColumns}`;
+        gridTemplateIndentColumns = `${indentWidth(power)} ${getRelativePadding(power)} var(--indent-line-gap) ${gridTemplateIndentColumns}`;
       }
 
       nonFoldable.style.cssText = `--max-indent-width: ${indentWidth(hDepth)}; grid-template-columns: ${gridTemplateIndentColumns} var(--toggle-fold-btn-width) 1fr`;

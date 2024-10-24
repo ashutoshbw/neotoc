@@ -22,7 +22,7 @@
 .nt-root-ul {
   --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
-  --indent-padding: 6px; /* should be in px unit */
+  --indent-line-gap: 5px; /* should be in px unit */
   --indent-line-width: 2px;
   --folding-duration: 300ms;
 }
