@@ -128,6 +128,8 @@ export default function neotoc({
       const li = elt<HTMLLIElement>('li');
       const anchor = elt<HTMLAnchorElement>('a');
       const nonFoldable = elt<HTMLSpanElement>('div', 'non-foldable'); // only used when there is fold button
+      anchor.tabIndex = -1;
+      nonFoldable.tabIndex = 0;
       anchor.href = `#${h.id}`;
       anchor.append(fillAnchor(h));
       if (ellipsis) {
@@ -166,6 +168,7 @@ export default function neotoc({
 
         if (isFolded) addClass(foldableDiv, 'foldable-folded');
 
+        toggleFoldButton.tabIndex = 0;
         toggleFoldButton.innerHTML = toggleFoldIcon;
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
