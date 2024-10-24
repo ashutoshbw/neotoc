@@ -129,7 +129,11 @@ li li {
   border-right: var(--indent-line-width) solid #999;
 }
 
-.nt-indent-block:not(:first-child) {
+.nt-indent-block:nth-child(2) {
+  grid-column: span 2;
+}
+
+.nt-indent-block:nth-child(n + 3) {
   grid-column: span 3;
 }
 
