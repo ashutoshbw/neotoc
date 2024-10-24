@@ -255,3 +255,18 @@ li li {
   background: linear-gradient(to top, #444, transparent);
 }
 /* top and bottom gradient overlays end*/
+
+/* a11y start */
+.nt-non-foldable:focus,
+.nt-non-foldable:has(.nt-toggle-fold-btn:focus) {
+  outline: none;
+  background: teal;
+  color: white;
+}
+
+.nt-toggle-fold-btn:focus {
+  outline: none;
+  background: deepskyblue;
+  color: darkslategrey;
+}
+/* a11y end */
