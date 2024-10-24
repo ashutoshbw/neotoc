@@ -19,6 +19,7 @@ import {
   type AutoScrollState,
 } from './autoScroll.js';
 import { addHighlight } from './highlight.js';
+import { indentWidth, getRelativePadding } from './indents.js';
 
 interface Options {
   selector: string;
@@ -207,20 +208,16 @@ export default function neotoc({
         nonFoldable.prepend(unfoldableIconDiv);
       }
 
+      const hDepth = curHeadingLevel - firstHeadingLevel;
+
       let gridTemplateIndentColumns = '';
-      for (
-        let k = firstHeadingLevel, power = 1;
-        k < curHeadingLevel;
-        k++, power++
-      ) {
+      for (let power = 1; power <= hDepth; power++) {
         const indentBlock = elt<HTMLDivElement>('div', 'indent-block');
         nonFoldable.prepend(indentBlock);
-        gridTemplateIndentColumns =
-          `calc(calc(var(--toggle-fold-btn-width) / 2) * pow(calc(100 / var(--font-size-percentage)), ${power}) + calc(var(--indent-line-width) / 2)) var(--indent-padding) ` +
-          gridTemplateIndentColumns;
+        gridTemplateIndentColumns = `${indentWidth(power)} ${getRelativePadding(power)} var(--indent-padding) ${gridTemplateIndentColumns}`;
       }
 
-      nonFoldable.style.cssText = `grid-template-columns: ${gridTemplateIndentColumns} var(--toggle-fold-btn-width) 1fr`;
+      nonFoldable.style.cssText = `--max-indent-width: ${indentWidth(hDepth)}; grid-template-columns: ${gridTemplateIndentColumns} var(--toggle-fold-btn-width) 1fr`;
 
       ul.append(li);
       i = i + subHeadings.length;

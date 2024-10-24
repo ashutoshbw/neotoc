@@ -1,0 +1,11 @@
+// The term indent width is used here to refer to width that starts
+// from the start start of a toggle fold button to the half of that button.
+// That button statys in any above parent non-foldable.
+// Note that it's NOT the distance between two indent lines!
+export function indentWidth(power: number) {
+  return `calc(calc(var(--toggle-fold-btn-width) / 2) * pow(calc(100 / var(--font-size-percentage)), ${power}) + calc(var(--indent-line-width) / 2))`;
+}
+
+export function getRelativePadding(power: number) {
+  return `calc(var(--max-indent-width) - ${indentWidth(power)})`;
+}

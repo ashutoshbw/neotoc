@@ -20,10 +20,10 @@
 }
 
 .nt-root-ul {
-  --font-size-percentage: 90;
+  --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
-  --indent-padding: 15px; /* should be in px unit */
-  --indent-line-width: 1px;
+  --indent-padding: 6px; /* should be in px unit */
+  --indent-line-width: 2px;
   --folding-duration: 300ms;
 }
 
@@ -130,7 +130,7 @@ li li {
 }
 
 .nt-indent-block:not(:first-child) {
-  grid-column: span 2;
+  grid-column: span 3;
 }
 
 .nt-ellipsis {
