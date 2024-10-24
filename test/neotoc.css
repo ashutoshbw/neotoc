@@ -58,6 +58,7 @@ li li {
 .nt-foldable-folded {
   grid-template-rows: 0fr;
   border-top: 1px solid gray;
+  visibility: hidden;
 }
 
 .nt-foldable-folded ul {
