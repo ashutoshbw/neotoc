@@ -63,6 +63,7 @@ export function addHighlight(
       lastActiveAnchors = anchors;
     } else {
       bar.style.display = 'none';
+      lastActiveAnchors.forEach((a) => removeClass(a, 'active-a'));
     }
   };
 }

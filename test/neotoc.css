@@ -126,7 +126,7 @@ li li {
 .nt-indent-block {
   box-sizing: border-box;
   transition: border-right calc(var(--folding-duration) / 2);
-  border-right: var(--indent-line-width) solid #999;
+  border-right: var(--indent-line-width) solid rgba(300, 890, 300, 0.2);
 }
 
 .nt-indent-block:nth-child(2) {
