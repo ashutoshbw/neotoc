@@ -52,13 +52,17 @@ li li {
 }
 
 .nt-foldable ul {
-  transition: opacity var(--folding-duration);
+  transition:
+    opacity var(--folding-duration),
+    visibility var(--folding-duration);
 }
 
 .nt-foldable-folded {
   grid-template-rows: 0fr;
   border-top: 1px solid gray;
-  visibility: hidden;
+  ul {
+    visibility: hidden;
+  }
 }
 
 .nt-foldable-folded ul {
@@ -66,7 +70,7 @@ li li {
 }
 
 .nt-foldable > ul {
-  overflow: hidden;
+  overflow: clip;
   grid-row: 1 / span 2;
   margin-top: -1px;
 }
@@ -258,14 +262,18 @@ li li {
 /* top and bottom gradient overlays end*/
 
 /* a11y start */
-.nt-non-foldable:focus,
-.nt-non-foldable:has(.nt-toggle-fold-btn:focus) {
+.nt-toc-holder:focus-within {
+  outline: 2px solid skyblue;
+}
+
+.nt-non-foldable:focus-visible,
+.nt-non-foldable:has(.nt-toggle-fold-btn:focus-visible) {
   outline: none;
   background: teal;
   color: white;
 }
 
-.nt-toggle-fold-btn:focus {
+.nt-toggle-fold-btn:focus-visible {
   outline: none;
   background: deepskyblue;
   color: darkslategrey;

@@ -199,11 +199,24 @@ export default function neotoc({
 
         foldStates.push(curFoldState);
 
-        toggleFoldButton.addEventListener('click', () => {
+        const handleToggleFold = () => {
           if (autoFold) {
             curFoldState.isManuallyToggledFoldInAutoFold = true;
           }
           curFoldState.toggleFold();
+        };
+
+        toggleFoldButton.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleToggleFold();
+        });
+
+        toggleFoldButton.addEventListener('keydown', (e) => {
+          e.stopPropagation();
+
+          if (e.key == 'Enter') {
+            handleToggleFold();
+          }
         });
       } else {
         const unfoldableIconDiv = elt('div', 'unfoldable-icon');
