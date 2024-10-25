@@ -142,6 +142,20 @@ export default function neotoc({
 
       idToAnchorMap[h.id] = anchor;
 
+      anchor.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      nonFoldable.addEventListener('click', () => {
+        anchor.click();
+      });
+
+      nonFoldable.addEventListener('keydown', (e) => {
+        if (e.key == 'Enter') {
+          anchor.click();
+        }
+      });
+
       const subHeadings = [];
       const curHeadingLevel = +h.tagName[1];
 
