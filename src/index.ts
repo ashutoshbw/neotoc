@@ -341,6 +341,7 @@ export default function neotoc({
   const unfoldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
+  tocHolder.tabIndex = 0;
   foldBtn.innerHTML = foldIcon;
   foldAllBtn.innerHTML = foldAllIcon;
   unfoldBtn.innerHTML = unfoldIcon;
