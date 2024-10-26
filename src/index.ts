@@ -146,8 +146,10 @@ export default function neotoc({
         e.stopPropagation();
       });
 
-      nonFoldable.addEventListener('click', () => {
-        anchor.click();
+      nonFoldable.addEventListener('click', (e) => {
+        if (e.target == nonFoldable) {
+          anchor.click();
+        }
       });
 
       nonFoldable.addEventListener('keydown', (e) => {
