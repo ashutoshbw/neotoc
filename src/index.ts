@@ -151,7 +151,7 @@ export default function neotoc({
       });
 
       nonFoldable.addEventListener('keydown', (e) => {
-        if (e.key == 'Enter') {
+        if (e.target == nonFoldable && e.key == 'Enter') {
           anchor.click();
         }
       });
@@ -220,14 +220,11 @@ export default function neotoc({
           curFoldState.toggleFold();
         };
 
-        toggleFoldButton.addEventListener('click', (e) => {
-          e.stopPropagation();
+        toggleFoldButton.addEventListener('click', () => {
           handleToggleFold();
         });
 
         toggleFoldButton.addEventListener('keydown', (e) => {
-          e.stopPropagation();
-
           if (e.key == 'Enter') {
             handleToggleFold();
           }
