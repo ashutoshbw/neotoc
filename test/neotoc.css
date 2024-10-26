@@ -1,3 +1,8 @@
+*:has(.nt-widget) {
+  scroll-padding-top: 50px;
+  scroll-behavior: smooth;
+}
+
 .nt-toc-holder {
   background: #444;
   width: 240px;
@@ -132,6 +137,12 @@ li li {
   box-sizing: border-box;
   transition: border-right calc(var(--folding-duration) / 2);
   border-right: var(--indent-line-width) solid rgba(300, 890, 300, 0.2);
+}
+
+.nt-indent-block,
+.nt-unfoldable-icon {
+  /* if you remove this, clicking on the non anchor part of the non-foldable will not work as intended */
+  pointer-events: none;
 }
 
 .nt-indent-block:nth-child(2) {
