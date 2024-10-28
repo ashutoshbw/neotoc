@@ -1,8 +1,3 @@
-*:has(.nt-widget) {
-  scroll-padding-top: 50px;
-  scroll-behavior: smooth;
-}
-
 .nt-toc-holder {
   background: #444;
   width: 240px;

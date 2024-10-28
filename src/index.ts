@@ -142,10 +142,6 @@ export default function neotoc({
 
       idToAnchorMap[h.id] = anchor;
 
-      anchor.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-
       nonFoldable.addEventListener('click', (e) => {
         if (e.target == nonFoldable) {
           anchor.click();
