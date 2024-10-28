@@ -224,7 +224,8 @@ export default function neotoc({
         });
 
         toggleFoldButton.addEventListener('keydown', (e) => {
-          if (e.key == 'Enter') {
+          if (e.key == 'Enter' || e.key == ' ') {
+            if (e.key == ' ') e.preventDefault(); // prevents scrolling the tocHolder
             handleToggleFold();
           }
         });
