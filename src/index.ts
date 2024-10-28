@@ -181,6 +181,7 @@ export default function neotoc({
         if (isFolded) addClass(foldableDiv, 'foldable-folded');
 
         toggleFoldButton.tabIndex = 0;
+        toggleFoldButton.role = 'button';
         toggleFoldButton.innerHTML = toggleFoldIcon;
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
