@@ -134,7 +134,7 @@ export default function neotoc({
       anchor.append(fillAnchor(h));
       if (ellipsis) {
         addClass(anchor, 'ellipsis');
-        nonFoldable.title = h.textContent!.trim();
+        nonFoldable.title = h.textContent!.trim().replace(/\s+/g, ' ');
       }
 
       nonFoldable.append(anchor);
