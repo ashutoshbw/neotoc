@@ -182,6 +182,7 @@ export default function neotoc({
 
         toggleFoldButton.tabIndex = 0;
         toggleFoldButton.role = 'button';
+        toggleFoldButton.ariaPressed = isFolded ? 'true' : 'false';
         toggleFoldButton.innerHTML = toggleFoldIcon;
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
@@ -199,6 +200,9 @@ export default function neotoc({
           level: curHeadingLevel,
           toggleFold() {
             curFoldState.isFolded = !curFoldState.isFolded;
+            toggleFoldButton.ariaPressed = curFoldState.isFolded
+              ? 'true'
+              : 'false';
 
             toggleClass(foldableDiv, 'foldable-folded');
             toggleClass(toggleFoldButton, toggleFoldButtonFoldedClass);
