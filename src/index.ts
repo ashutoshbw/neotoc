@@ -138,7 +138,6 @@ export default function neotoc({
         addClass(anchor, 'ellipsis');
         nonFoldable.title = anchorText;
       }
-      nonFoldable.ariaLabel = anchorText;
 
       nonFoldable.append(anchor);
       li.append(nonFoldable);
@@ -186,6 +185,7 @@ export default function neotoc({
         toggleFoldButton.tabIndex = 0;
         toggleFoldButton.role = 'button';
         toggleFoldButton.ariaPressed = isFolded ? 'true' : 'false';
+        toggleFoldButton.ariaExpanded = isFolded ? 'false' : 'true';
         toggleFoldButton.ariaLabel = 'Toggle fold';
         toggleFoldButton.title = ''; // i.e. do not inherit the title of the non foldable(i.e when ellipsis are used)
         toggleFoldButton.innerHTML = toggleFoldIcon;
@@ -208,6 +208,9 @@ export default function neotoc({
             toggleFoldButton.ariaPressed = curFoldState.isFolded
               ? 'true'
               : 'false';
+            toggleFoldButton.ariaExpanded = curFoldState.isFolded
+              ? 'false'
+              : 'true';
 
             toggleClass(foldableDiv, 'foldable-folded');
             toggleClass(toggleFoldButton, toggleFoldButtonFoldedClass);
