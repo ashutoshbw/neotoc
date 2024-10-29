@@ -183,6 +183,7 @@ export default function neotoc({
         toggleFoldButton.tabIndex = 0;
         toggleFoldButton.role = 'button';
         toggleFoldButton.ariaPressed = isFolded ? 'true' : 'false';
+        toggleFoldButton.ariaLabel = 'Toggle fold';
         toggleFoldButton.innerHTML = toggleFoldIcon;
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
@@ -374,6 +375,25 @@ export default function neotoc({
   foldAllBtn.innerHTML = foldAllIcon;
   unfoldBtn.innerHTML = unfoldIcon;
   unfoldAllBtn.innerHTML = unfoldAllIcon;
+
+  const foldBtnNames = [
+    'Fold one level',
+    'Fold all',
+    'Unfold one level',
+    'Unfold all',
+  ];
+
+  foldBtn.ariaLabel = foldBtnNames[0];
+  foldBtn.title = foldBtnNames[0];
+
+  foldAllBtn.ariaLabel = foldBtnNames[1];
+  foldAllBtn.title = foldBtnNames[1];
+
+  unfoldBtn.ariaLabel = foldBtnNames[2];
+  unfoldBtn.title = foldBtnNames[2];
+
+  unfoldAllBtn.ariaLabel = foldBtnNames[3];
+  unfoldAllBtn.title = foldBtnNames[3];
 
   if (foldStates.length) {
     const depth = maxHLevel - minHLevel;
