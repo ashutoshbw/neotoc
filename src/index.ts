@@ -132,10 +132,13 @@ export default function neotoc({
       nonFoldable.tabIndex = 0;
       anchor.href = `#${h.id}`;
       anchor.append(fillAnchor(h));
+
+      const anchorText = h.textContent!.trim().replace(/\s+/g, ' ');
       if (ellipsis) {
         addClass(anchor, 'ellipsis');
-        nonFoldable.title = h.textContent!.trim().replace(/\s+/g, ' ');
+        nonFoldable.title = anchorText;
       }
+      nonFoldable.ariaLabel = anchorText;
 
       nonFoldable.append(anchor);
       li.append(nonFoldable);
@@ -371,6 +374,8 @@ export default function neotoc({
   const unfoldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
+
+  tocHolder.ariaLabel = title;
   tocHolder.tabIndex = 0;
   foldBtn.innerHTML = foldIcon;
   foldAllBtn.innerHTML = foldAllIcon;
