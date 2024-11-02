@@ -114,7 +114,7 @@ export default function neotoc({
   const headings = document.querySelectorAll<HTMLHeadingElement>(
     `${selectorPart1} :is(${selectorPart2 == 'h*' ? 'h1,h2,h3,h4,h5,h6' : selectorPart2})`,
   );
-  const firstHeadingLevel = +headings[0].tagName[1];
+  const firstHeadingLevel = headings.length > 0 ? +headings[0].tagName[1] : 0;
 
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
@@ -363,7 +363,7 @@ export default function neotoc({
   addClass(toc, 'root-ul');
 
   const appendTarget = document.querySelector(selectorPart3);
-  if (!appendTarget) throw new Error('Nothing found to append Neotoc to!');
+  if (!appendTarget) throw new Error('Nothing was found to append Neotoc to!');
 
   const widget = elt('div', 'widget');
   const tocHolder = elt('div', 'toc-holder');
