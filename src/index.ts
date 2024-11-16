@@ -491,7 +491,7 @@ export default function neotoc({
 
     const finalCondition = (condition1 && condition2) || condition3;
 
-    finalCondition && cb();
+    if (finalCondition) cb();
   };
 
   const renderFrame = (curTimestamp: number) => {
