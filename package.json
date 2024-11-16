@@ -1,7 +1,7 @@
 {
   "name": "neotoc",
-  "version": "0.0.0",
-  "description": "A modern tool to make interactive and animated table of contents.",
+  "version": "0.1.0",
+  "description": "Beautiful Table of Contents UI, crafted for Developer Documentation.",
   "type": "module",
   "types": "./dist/index.d.ts",
   "browser": "./dist/index.js",
