@@ -18,8 +18,8 @@
     "test": "vitest run --reporter=verbose",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
-    "check-format": "prettier . --check",
-    "format": "prettier . --write"
+    "check-format": "prettier src/ --check",
+    "format": "prettier src/ --write"
   },
   "keywords": [
     "table of contents",
