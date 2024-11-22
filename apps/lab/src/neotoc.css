@@ -1,0 +1,287 @@
+.nt-toc-holder {
+  background: #444;
+  width: 240px;
+  border: 1px solid #222;
+  padding: 1rem;
+  position: relative;
+  height: 300px;
+  overflow-y: auto;
+  padding-block: 20px;
+  overscroll-behavior: contain;
+  /* scroll-behavior: smooth; */
+}
+
+.nt-toc-holder a {
+  text-decoration: none;
+}
+
+.nt-active-a {
+  color: lightskyblue;
+}
+
+.nt-root-ul {
+  --font-size-percentage: 94;
+  --toggle-fold-btn-width: 0.9em; /* should in em unit */
+  --indent-line-gap: 5px; /* should be in px unit */
+  --indent-line-width: 2px;
+  --folding-duration: 300ms;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  a {
+    padding-inline: 0.125em;
+    color: #ddd;
+    align-self: center;
+  }
+}
+
+li li {
+  font-size: calc(var(--font-size-percentage) * 1%);
+}
+
+.nt-foldable {
+  display: grid;
+  transition:
+    grid-template-rows var(--folding-duration),
+    border var(--folding-duration);
+  border-top: 1px solid transparent;
+  grid-template-rows: 1fr;
+}
+
+.nt-foldable ul {
+  transition:
+    opacity var(--folding-duration),
+    visibility var(--folding-duration);
+}
+
+.nt-foldable-folded {
+  grid-template-rows: 0fr;
+  border-top: 1px solid gray;
+  ul {
+    visibility: hidden;
+  }
+}
+
+.nt-foldable-folded ul {
+  opacity: 0;
+}
+
+.nt-foldable > ul {
+  overflow: clip;
+  grid-row: 1 / span 2;
+  margin-top: -1px;
+}
+
+.nt-toggle-fold-btn {
+  border: none;
+  color: #eee;
+  padding: 0;
+  padding-inline: 1px;
+  grid-column: -3;
+  cursor: pointer;
+  svg {
+    vertical-align: middle;
+    transition: transform var(--folding-duration);
+  }
+}
+
+.nt-toggle-fold-btn:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.nt-toggle-fold-btn:hover {
+  background: deepskyblue;
+  color: darkslategrey;
+}
+
+.nt-toggle-fold-btn-folded svg {
+  transform: rotate(-90deg);
+}
+
+.nt-unfoldable-icon {
+  color: #eee;
+  grid-column: -3;
+  svg {
+    vertical-align: middle;
+  }
+}
+
+.nt-non-foldable {
+  /* background: lightblue; */
+  display: grid;
+  cursor: pointer;
+  border-radius: 3px;
+  grid-template-rows: 1fr;
+  a {
+    grid-column: -2;
+  }
+}
+
+.nt-non-foldable:hover {
+  background: teal;
+  a {
+    color: white;
+  }
+}
+
+.nt-indent-block {
+  box-sizing: border-box;
+  transition: border-right calc(var(--folding-duration) / 2);
+  border-right: var(--indent-line-width) solid rgba(300, 890, 300, 0.2);
+}
+
+.nt-indent-block,
+.nt-unfoldable-icon {
+  /* if you remove this, clicking on the non anchor part of the non-foldable will not work as intended */
+  pointer-events: none;
+}
+
+.nt-indent-block:nth-child(2) {
+  grid-column: span 2;
+}
+
+.nt-indent-block:nth-child(n + 3) {
+  grid-column: span 3;
+}
+
+.nt-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.nt-top-bar {
+  display: flex;
+  padding: 0.3em;
+  justify-content: space-between;
+  gap: 1em;
+  .nt-title {
+    font-size: 1rem;
+    margin: 0;
+  }
+  .nt-btn-group {
+    display: flex;
+    transition: opacity 150ms;
+    align-items: center;
+    gap: 5px;
+    .nt-top-bar-btn {
+      background: #ccc;
+      box-sizing: content-box;
+      color: #555;
+      width: 1em;
+      height: 1em;
+      padding: 3px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      color: black;
+    }
+    .nt-top-bar-btn:not([disabled]):hover {
+      background-color: #eee;
+      color: #333;
+    }
+    .nt-top-bar-btn[disabled] {
+      opacity: 0.2;
+      cursor: default;
+    }
+  }
+}
+
+/* highlighted area start */
+.nt-bar {
+  --width: 1.5px;
+  --terminal-side-length: 6px;
+  --bg-color: #94bbff;
+  background: var(--bg-color);
+  /* box-shadow: var(--bg-color) 0 0 40px 5px; */
+  position: absolute;
+  width: var(--width);
+  height: 0px;
+  left: 5px;
+  /* transition: 250ms; */
+}
+
+.nt-bar-light {
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(to left, transparent, var(--bg-color));
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.nt-bar-bottom-indicator {
+  background: var(--bg-color);
+  position: absolute;
+  width: var(--terminal-side-length);
+  height: var(--terminal-side-length);
+  border-radius: 50%;
+  bottom: calc(var(--terminal-side-length) / 2 * -1);
+  left: calc(
+    (var(--terminal-side-length) / 2 * -1) + var(--width) / 2
+  ); /* -2px */
+}
+
+.nt-bar-top-indicator {
+  background: var(--bg-color);
+  position: absolute;
+  width: var(--terminal-side-length);
+  height: var(--terminal-side-length);
+  border-radius: 50%;
+  top: calc(var(--terminal-side-length) / 2 * -1);
+  left: calc(
+    (var(--terminal-side-length) / 2 * -1) + var(--width) / 2
+  ); /* -2px */
+}
+
+.nt-bar-top-indicator.nt-on-fold,
+.nt-bar-bottom-indicator.nt-on-fold {
+  background: white;
+  z-index: 1;
+}
+/* highlighted area end */
+
+/* top and bottom gradient overlays start*/
+.nt-top-gradient,
+.nt-bottom-gradient {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  left: 0;
+  z-index: 1;
+  transition: opacity 300ms;
+  pointer-events: none;
+}
+
+.nt-top-gradient {
+  opacity: 0;
+  background: linear-gradient(to bottom, #444, transparent);
+}
+
+.nt-bottom-gradient {
+  opacity: 1;
+  background: linear-gradient(to top, #444, transparent);
+}
+/* top and bottom gradient overlays end*/
+
+/* a11y start */
+.nt-toc-holder:focus-within {
+  outline: 2px solid skyblue;
+}
+
+.nt-non-foldable:focus-visible,
+.nt-non-foldable:has(.nt-toggle-fold-btn:focus-visible) {
+  outline: none;
+  background: teal;
+  color: white;
+}
+
+.nt-toggle-fold-btn:focus-visible {
+  outline: none;
+  background: deepskyblue;
+  color: darkslategrey;
+}
+/* a11y end */

@@ -8,6 +8,9 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "neotoc": "workspace:*"
+  },
   "devDependencies": {
     "typescript": "~5.6.2",
     "vite": "^5.4.10"
