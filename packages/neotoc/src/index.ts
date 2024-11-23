@@ -126,7 +126,7 @@ export default function neotoc({
     for (let i = 0; i < headings.length; i++) {
       const h = headings[i];
       const li = elt<HTMLLIElement>('li');
-      const anchor = elt<HTMLAnchorElement>('a');
+      const anchor = elt<HTMLAnchorElement>('a', 'a');
       const nonFoldable = elt<HTMLSpanElement>('div', 'non-foldable'); // only used when there is fold button
       anchor.tabIndex = -1;
       nonFoldable.tabIndex = 0;
@@ -250,13 +250,18 @@ export default function neotoc({
       const hDepth = curHeadingLevel - firstHeadingLevel;
 
       let gridTemplateIndentColumns = '';
+      let anchorPadding = '';
       for (let power = 1; power <= hDepth; power++) {
         const indentBlock = elt<HTMLDivElement>('div', 'indent-block');
         nonFoldable.prepend(indentBlock);
         gridTemplateIndentColumns = `${indentWidth(power)} ${power == hDepth ? '' : getRelativePadding(power)} var(--indent-line-gap) ${gridTemplateIndentColumns}`;
+        anchorPadding = `calc(${indentWidth(power)} ${power == hDepth ? '' : `+ ${getRelativePadding(power)}`} + var(--indent-line-gap)) ${anchorPadding ? `+ ${anchorPadding}` : ``}`;
       }
 
       nonFoldable.style.cssText = `--max-indent-width: ${indentWidth(hDepth)}; grid-template-columns: ${gridTemplateIndentColumns} var(--toggle-fold-btn-width) 1fr`;
+
+      anchorPadding = `calc(${anchorPadding ? `${anchorPadding} + ` : ''}var(--toggle-fold-btn-width) + var(--anchor-padding-inline))`;
+      anchor.style.paddingLeft = anchorPadding;
 
       ul.append(li);
       i = i + subHeadings.length;
