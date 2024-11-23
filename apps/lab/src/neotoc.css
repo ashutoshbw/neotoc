@@ -293,10 +293,6 @@ li li {
 /* top and bottom gradient overlays end*/
 
 /* a11y start */
-.nt-toc-holder:focus-within {
-  outline: 2px solid skyblue;
-}
-
 .nt-a:focus-visible {
   outline: none;
   background: teal;
@@ -308,5 +304,4 @@ li li {
   background: deepskyblue;
   color: darkslategrey;
 }
-
 /* a11y end */
