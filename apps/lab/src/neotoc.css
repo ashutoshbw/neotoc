@@ -99,6 +99,11 @@ li li {
   color: darkslategrey;
 }
 
+.nt-toggle-fold-btn:hover + .nt-a,
+.nt-toggle-fold-btn:focus-visible + .nt-a {
+  background: teal;
+}
+
 .nt-toggle-fold-btn-folded svg {
   transform: rotate(-90deg);
 }
@@ -112,10 +117,7 @@ li li {
 }
 
 .nt-non-foldable {
-  /* background: lightblue; */
   display: grid;
-  cursor: pointer;
-  border-radius: 3px;
   grid-template-rows: 1fr;
 }
 
@@ -130,19 +132,19 @@ li li {
   grid-column: 1 / -1;
   padding-block: var(--anchor-padding-block);
   padding-right: var(--anchor-padding-inline);
+  border-radius: 3px;
 }
 
-.nt-non-foldable:hover {
+.nt-a:hover {
   background: teal;
-  a {
-    color: white;
-  }
+  color: white;
 }
 
 .nt-indent-block {
   box-sizing: border-box;
   transition: border-right calc(var(--folding-duration) / 2);
   border-right: var(--indent-line-width) solid rgba(300, 890, 300, 0.2);
+  z-index: 1;
 }
 
 .nt-indent-block,
@@ -295,8 +297,7 @@ li li {
   outline: 2px solid skyblue;
 }
 
-.nt-non-foldable:focus-visible,
-.nt-non-foldable:has(.nt-toggle-fold-btn:focus-visible) {
+.nt-a:focus-visible {
   outline: none;
   background: teal;
   color: white;
@@ -307,4 +308,5 @@ li li {
   background: deepskyblue;
   color: darkslategrey;
 }
+
 /* a11y end */

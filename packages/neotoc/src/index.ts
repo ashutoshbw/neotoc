@@ -128,8 +128,6 @@ export default function neotoc({
       const li = elt<HTMLLIElement>('li');
       const anchor = elt<HTMLAnchorElement>('a', 'a');
       const nonFoldable = elt<HTMLSpanElement>('div', 'non-foldable'); // only used when there is fold button
-      anchor.tabIndex = -1;
-      nonFoldable.tabIndex = 0;
       anchor.href = `#${h.id}`;
       anchor.append(fillAnchor(h));
 
@@ -143,18 +141,6 @@ export default function neotoc({
       li.append(nonFoldable);
 
       idToAnchorMap[h.id] = anchor;
-
-      nonFoldable.addEventListener('click', (e) => {
-        if (e.target == nonFoldable) {
-          anchor.click();
-        }
-      });
-
-      nonFoldable.addEventListener('keydown', (e) => {
-        if (e.target == nonFoldable && e.key == 'Enter') {
-          anchor.click();
-        }
-      });
 
       const subHeadings = [];
       const curHeadingLevel = +h.tagName[1];
