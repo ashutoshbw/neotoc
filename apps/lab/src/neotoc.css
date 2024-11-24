@@ -15,10 +15,6 @@
   text-decoration: none;
 }
 
-.nt-active-a {
-  color: lightskyblue;
-}
-
 .nt-root-ul {
   --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
@@ -138,6 +134,10 @@ li li {
 .nt-a:hover {
   background: teal;
   color: white;
+}
+
+.nt-active-a {
+  color: lightskyblue;
 }
 
 .nt-indent-block {
