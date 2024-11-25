@@ -23,6 +23,7 @@
   --folding-duration: 300ms;
   --anchor-padding-block: 0.2em;
   --anchor-padding-inline: 0.3em;
+  --anchor-border-radius: 4px;
 }
 
 ul {
@@ -86,13 +87,17 @@ li li {
 }
 
 .nt-toggle-fold-btn:first-child {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-top-left-radius: var(--anchor-border-radius);
+  border-bottom-left-radius: var(--anchor-border-radius);
 }
 
 .nt-toggle-fold-btn:hover {
   background: deepskyblue;
   color: darkslategrey;
+}
+
+.nt-root-ul li {
+  border-radius: var(--anchor-border-radius);
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) {
@@ -145,7 +150,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   grid-column: 1 / -1;
   padding-block: var(--anchor-padding-block);
   padding-right: var(--anchor-padding-inline);
-  border-radius: 3px;
+  border-radius: var(--anchor-border-radius);
 }
 
 .nt-a:hover {
