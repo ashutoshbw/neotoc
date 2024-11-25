@@ -1,3 +1,13 @@
+.nt-widget {
+  * {
+    box-sizing: border-box;
+  }
+  svg {
+    display: inline;
+    vertical-align: middle;
+  }
+}
+
 .nt-toc-holder {
   background: #444;
   width: 240px;
@@ -75,7 +85,6 @@ li li {
   grid-column: -3;
   cursor: pointer;
   svg {
-    vertical-align: middle;
     transition: transform var(--folding-duration);
   }
 }
@@ -129,9 +138,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-unfoldable-icon {
   color: #eee;
   grid-column: -3;
-  svg {
-    vertical-align: middle;
-  }
 }
 
 .nt-non-foldable {
@@ -163,7 +169,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-indent-block {
-  box-sizing: border-box;
   transition: border-right calc(var(--folding-duration) / 2);
   border-right: var(--indent-line-width) solid rgba(300, 890, 300, 0.2);
   z-index: 1;
@@ -218,14 +223,15 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
     .nt-top-bar-btn {
       background: #ccc;
       box-sizing: content-box;
-      color: #555;
       width: 1em;
       height: 1em;
       padding: 3px;
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      color: black;
+      svg {
+        display: block;
+      }
     }
     .nt-top-bar-btn:not([disabled]):hover {
       background-color: #eee;
