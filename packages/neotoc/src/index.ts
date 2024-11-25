@@ -160,6 +160,8 @@ export default function neotoc({
         }
       }
 
+      const hDepth = curHeadingLevel - firstHeadingLevel;
+
       if (subHeadings.length > 0) {
         const nestedUl = genToc(subHeadings) as HTMLUListElement;
         const toggleFoldButton = elt<HTMLDivElement>('div', 'toggle-fold-btn');
@@ -175,6 +177,7 @@ export default function neotoc({
         toggleFoldButton.ariaLabel = 'Toggle fold';
         toggleFoldButton.title = ''; // i.e. do not inherit the title of the non foldable(i.e when ellipsis are used)
         toggleFoldButton.innerHTML = toggleFoldIcon;
+        toggleFoldButton.classList.add(classPrefix + `level-${hDepth + 1}`);
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
         if (isFolded) {
@@ -232,8 +235,6 @@ export default function neotoc({
         unfoldableIconDiv.innerHTML = unfoldableIcon;
         nonFoldable.prepend(unfoldableIconDiv);
       }
-
-      const hDepth = curHeadingLevel - firstHeadingLevel;
 
       let gridTemplateIndentColumns = '';
       let anchorPadding = '';

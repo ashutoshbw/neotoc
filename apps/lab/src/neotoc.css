@@ -38,7 +38,7 @@ li li {
 .nt-foldable {
   display: grid;
   transition: grid-template-rows var(--folding-duration),
-    border var(--folding-duration);
+    border var(--folding-duration), background-color var(--folding-duration);
   border-top: 1px solid transparent;
   grid-template-rows: 1fr;
 }
@@ -93,6 +93,23 @@ li li {
 .nt-toggle-fold-btn:hover {
   background: deepskyblue;
   color: darkslategrey;
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) {
+  background: darkolivegreen;
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:hover)
+  .nt-indent-block:nth-child(1),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-2:hover)
+  .nt-indent-block:nth-child(2),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-3:hover)
+  .nt-indent-block:nth-child(3),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:hover)
+  .nt-indent-block:nth-child(4),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
+  .nt-indent-block:nth-child(5) {
+  border-color: greenyellow;
 }
 
 .nt-toggle-fold-btn:hover + .nt-a,
