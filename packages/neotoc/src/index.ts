@@ -23,6 +23,7 @@ import { indentWidth, getRelativePadding } from './indents.js';
 
 interface Options {
   selector: string;
+  theme?: string;
   title?: string;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
   ellipsis?: boolean;
@@ -44,6 +45,7 @@ interface Options {
 export default function neotoc({
   selector,
   title = 'On this page',
+  theme = 'dark',
   fillAnchor = (h) => h.textContent!,
   ellipsis = false,
   classPrefix = 'nt-',
@@ -370,6 +372,7 @@ export default function neotoc({
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
 
+  widget.dataset.theme = theme;
   tocHolder.ariaLabel = title;
   tocHolder.tabIndex = 0;
   foldBtn.innerHTML = foldIcon;
@@ -718,8 +721,13 @@ export default function neotoc({
   foldAllBtn.addEventListener('click', () => normalizeFolds(true, 1));
   unfoldAllBtn.addEventListener('click', () => normalizeFolds(false, 5));
 
-  return () => {
-    widget.remove();
-    window.cancelAnimationFrame(rafNum);
+  return {
+    remove() {
+      widget.remove();
+      window.cancelAnimationFrame(rafNum);
+    },
+    changeTheme(theme: string) {
+      widget.dataset.theme = theme;
+    },
   };
 }
