@@ -1,8 +1,22 @@
 .nt-widget {
+  --bg-color: orange;
+  --text-color: black;
+}
+
+.nt-widget[data-theme="dark"] {
+  --bg-color: #24283b;
+  --text-color: #cdd6f4;
+  --highlight-color: #b0bce8;
+  --anchor-hover-bg-color: #41475e;
+  --toggle-fold-btn-hover-bg-color: #606887;
+  --item-scope-bg-color: #31364d;
+}
+
+.nt-widget {
   --font-size-percentage: 94;
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
   --indent-line-gap: 5px; /* should be in px unit */
-  --indent-line-width: 2px;
+  --indent-line-width: 1px;
   --folding-duration: 300ms;
   --anchor-padding-block: 0.2em;
   --anchor-padding-inline: 0.3em;
@@ -26,7 +40,7 @@
 }
 
 .nt-toc-holder {
-  background: #444;
+  background: var(--bg-color);
   border: 1px solid #222;
   padding: 1rem;
   position: relative;
@@ -95,8 +109,7 @@
 }
 
 .nt-toggle-fold-btn:hover {
-  background: deepskyblue;
-  color: darkslategrey;
+  background: var(--toggle-fold-btn-hover-bg-color);
 }
 
 .nt-root-ul li {
@@ -104,7 +117,7 @@
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) {
-  background: darkolivegreen;
+  background: var(--item-scope-bg-color);
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:hover)
@@ -117,12 +130,12 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:hover)
   .nt-indent-block:nth-child(4),
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   .nt-indent-block:nth-child(5) {
-  border-color: greenyellow;
+  border-color: var(--highlight-color);
 }
 
 .nt-toggle-fold-btn:hover + .nt-a,
 .nt-toggle-fold-btn:focus-visible + .nt-a {
-  background: teal;
+  background-color: var(--anchor-hover-bg-color);
 }
 
 .nt-toggle-fold-btn-folded svg {
@@ -145,7 +158,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-a {
-  color: #ddd;
+  color: var(--text-color);
   align-self: center;
   grid-column: 1 / -1;
   padding-block: var(--anchor-padding-block);
@@ -154,12 +167,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-a:hover {
-  background: teal;
-  color: white;
-}
-
-.nt-active-a {
-  color: lightskyblue;
+  background: var(--anchor-hover-bg-color);
 }
 
 .nt-indent-block {
@@ -250,26 +258,23 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-bar {
   --width: 1.5px;
   --terminal-side-length: 6px;
-  --bg-color: #94bbff;
-  background: var(--bg-color);
-  /* box-shadow: var(--bg-color) 0 0 40px 5px; */
+  background: var(--highlight-color);
   position: absolute;
   width: var(--width);
   height: 0px;
   left: 5px;
-  /* transition: 250ms; */
 }
 
 .nt-bar-light {
   width: 100px;
   height: 100%;
-  background: linear-gradient(to left, transparent, var(--bg-color));
+  background: linear-gradient(to left, transparent, var(--highlight-color));
   opacity: 0.2;
   pointer-events: none;
 }
 
 .nt-bar-bottom-indicator {
-  background: var(--bg-color);
+  background: var(--highlight-color);
   position: absolute;
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
@@ -281,7 +286,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-bar-top-indicator {
-  background: var(--bg-color);
+  background: var(--highlight-color);
   position: absolute;
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
@@ -313,12 +318,12 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-top-gradient {
   opacity: 0;
-  background: linear-gradient(to bottom, #444, transparent);
+  background: linear-gradient(to bottom, var(--bg-color), transparent);
 }
 
 .nt-bottom-gradient {
   opacity: 1;
-  background: linear-gradient(to top, #444, transparent);
+  background: linear-gradient(to top, var(--bg-color), transparent);
 }
 /* top and bottom gradient overlays end*/
 
