@@ -13,6 +13,8 @@ body {
 
 #sidebar {
   position: relative;
+  width: 280px;
+  flex-shrink: 0;
 }
 #sidebar > * {
   position: sticky;

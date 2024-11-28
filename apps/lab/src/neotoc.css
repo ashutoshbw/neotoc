@@ -1,6 +1,22 @@
 .nt-widget {
+  --font-size-percentage: 94;
+  --toggle-fold-btn-width: 0.9em; /* should in em unit */
+  --indent-line-gap: 5px; /* should be in px unit */
+  --indent-line-width: 2px;
+  --folding-duration: 300ms;
+  --anchor-padding-block: 0.2em;
+  --anchor-padding-inline: 0.3em;
+  --anchor-border-radius: 4px;
   * {
     box-sizing: border-box;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  li li {
+    font-size: calc(var(--font-size-percentage) * 1%);
   }
   svg {
     display: inline;
@@ -11,40 +27,17 @@
 
 .nt-toc-holder {
   background: #444;
-  width: 240px;
   border: 1px solid #222;
   padding: 1rem;
   position: relative;
-  height: 300px;
+  height: calc(100vh - 5rem);
   overflow-y: auto;
   padding-block: 20px;
   overscroll-behavior: contain;
-  /* scroll-behavior: smooth; */
 }
 
 .nt-toc-holder a {
   text-decoration: none;
-}
-
-.nt-root-ul {
-  --font-size-percentage: 94;
-  --toggle-fold-btn-width: 0.9em; /* should in em unit */
-  --indent-line-gap: 5px; /* should be in px unit */
-  --indent-line-width: 2px;
-  --folding-duration: 300ms;
-  --anchor-padding-block: 0.2em;
-  --anchor-padding-inline: 0.3em;
-  --anchor-border-radius: 4px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-li li {
-  font-size: calc(var(--font-size-percentage) * 1%);
 }
 
 .nt-foldable {
@@ -213,13 +206,16 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   justify-content: space-between;
   gap: 2px;
   .nt-title {
-    font-size: 1em;
+    font-size: 1.1em;
     margin: 0;
     font-weight: 500;
+    align-self: end;
   }
   .nt-btn-group {
     display: flex;
+    align-self: end;
     transition: opacity 150ms;
+    flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
     border: 1px solid #777;
@@ -230,13 +226,13 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
     .nt-top-bar-btn {
       background-color: #eee;
       box-sizing: content-box;
-      height: 1.2em;
-      width: 1.2em;
-      padding: 2px;
+      padding: 3px;
       border: none;
       cursor: pointer;
       svg {
         display: block;
+        height: 1.4em;
+        width: 1.4em;
       }
     }
     .nt-top-bar-btn:not([disabled]):hover {
