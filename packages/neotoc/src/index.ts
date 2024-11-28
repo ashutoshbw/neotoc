@@ -352,7 +352,7 @@ export default function neotoc({
 
   const toc = genToc(headings);
 
-  if (!toc) return () => {};
+  if (!toc) return { remove() {}, setTheme() {} };
 
   addClass(toc, 'root-ul');
 
@@ -726,7 +726,7 @@ export default function neotoc({
       widget.remove();
       window.cancelAnimationFrame(rafNum);
     },
-    changeTheme(theme: string) {
+    setTheme(theme: string) {
       widget.dataset.theme = theme;
     },
   };
