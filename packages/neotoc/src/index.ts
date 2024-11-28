@@ -22,7 +22,7 @@ import { addHighlight } from './highlight.js';
 import { indentWidth, getRelativePadding } from './indents.js';
 
 interface Options {
-  selector: string;
+  io: string;
   theme?: string;
   title?: string;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
@@ -43,7 +43,7 @@ interface Options {
 }
 
 export default function neotoc({
-  selector,
+  io,
   title = 'On this page',
   theme = 'dark',
   fillAnchor = (h) => h.textContent!,
@@ -109,7 +109,7 @@ export default function neotoc({
     HTMLAnchorElement[]
   >();
 
-  const [selectorPart1, selectorPart2, selectorPart3] = selector
+  const [selectorPart1, selectorPart2, selectorPart3] = io
     .split('>>')
     .map((s) => s.trim());
 
