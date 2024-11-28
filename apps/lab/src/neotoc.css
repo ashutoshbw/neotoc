@@ -5,6 +5,7 @@
   svg {
     display: inline;
     vertical-align: middle;
+    width: 100%;
   }
 }
 
@@ -210,35 +211,40 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   display: flex;
   padding: 0.3em;
   justify-content: space-between;
-  gap: 1em;
+  gap: 2px;
   .nt-title {
-    font-size: 1rem;
+    font-size: 1em;
     margin: 0;
+    font-weight: 500;
   }
   .nt-btn-group {
     display: flex;
     transition: opacity 150ms;
     align-items: center;
-    gap: 5px;
+    justify-content: space-between;
+    border: 1px solid #777;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #777;
+    gap: 1px;
     .nt-top-bar-btn {
-      background: #ccc;
+      background-color: #eee;
       box-sizing: content-box;
-      width: 1em;
-      height: 1em;
-      padding: 3px;
+      height: 1.2em;
+      width: 1.2em;
+      padding: 2px;
       border: none;
-      border-radius: 50%;
       cursor: pointer;
       svg {
         display: block;
       }
     }
     .nt-top-bar-btn:not([disabled]):hover {
-      background-color: #eee;
-      color: #333;
+      background: #444;
+      color: #eee;
     }
     .nt-top-bar-btn[disabled] {
-      opacity: 0.2;
+      opacity: 0.4;
       cursor: default;
     }
   }
