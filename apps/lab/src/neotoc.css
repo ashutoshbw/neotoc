@@ -135,8 +135,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   border-color: var(--indent-line-highlight-color);
 }
 
-.nt-toggle-fold-btn:hover + .nt-a,
-.nt-toggle-fold-btn:focus-visible + .nt-a {
+.nt-toggle-fold-btn:hover + .nt-a {
   background-color: var(--anchor-hover-bg-color);
 }
 
@@ -332,13 +331,32 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 /* a11y start */
 .nt-a:focus-visible {
   outline: none;
-  background: teal;
-  color: white;
+  background: var(--anchor-hover-bg-color);
 }
 
 .nt-toggle-fold-btn:focus-visible {
   outline: none;
-  background: deepskyblue;
-  color: darkslategrey;
+  background: var(--toggle-fold-btn-hover-bg-color);
+}
+
+.nt-toggle-fold-btn:focus-visible + .nt-a {
+  background-color: var(--anchor-hover-bg-color);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:focus-visible) {
+  background: var(--item-scope-bg-color);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:focus-visible)
+  .nt-indent-block:nth-child(1),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-2:focus-visible)
+  .nt-indent-block:nth-child(2),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-3:focus-visible)
+  .nt-indent-block:nth-child(3),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:focus-visible)
+  .nt-indent-block:nth-child(4),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:focus-visible)
+  .nt-indent-block:nth-child(5) {
+  border-color: var(--indent-line-highlight-color);
 }
 /* a11y end */
