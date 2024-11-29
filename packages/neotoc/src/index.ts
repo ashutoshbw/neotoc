@@ -25,6 +25,7 @@ interface Options {
   io: string;
   theme?: string;
   title?: string;
+  topBar?: boolean;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
   ellipsis?: boolean;
   classPrefix?: string;
@@ -46,6 +47,7 @@ export default function neotoc({
   io,
   title = 'On this page',
   theme = 'dark',
+  topBar = true,
   fillAnchor = (h) => h.textContent!,
   ellipsis = false,
   classPrefix = 'nt-',
@@ -366,7 +368,7 @@ export default function neotoc({
 
   const widget = elt('div', 'widget');
   const tocHolder = elt('div', 'toc-holder');
-  const topBar = elt('div', 'top-bar');
+  const topBarDiv = elt('div', 'top-bar');
   const titleH2 = elt('h2', 'title');
   const btnGroup = elt('div', 'btn-group');
   const topbarBtnClsName = 'top-bar-btn';
@@ -415,9 +417,10 @@ export default function neotoc({
   }
 
   titleH2.innerHTML = title;
-  topBar.append(titleH2, btnGroup);
+  topBarDiv.append(titleH2, btnGroup);
   tocHolder.append(toc, topGradient, bottomGradient);
-  widget.append(topBar, tocHolder);
+  if (topBar) widget.append(topBarDiv);
+  widget.append(tocHolder);
   appendTarget.append(widget);
 
   function updateTopBottomGradientPositions() {
