@@ -168,6 +168,7 @@ export default function neotoc({
         const nestedUl = genToc(subHeadings) as HTMLUListElement;
         const toggleFoldButton = elt<HTMLDivElement>('div', 'toggle-fold-btn');
         const foldableDiv = elt<HTMLDivElement>('div', 'foldable');
+        const hr = elt('hr', 'fold-indicator-line');
         const isFolded = curHeadingLevel >= initialFoldLevel;
 
         if (isFolded) addClass(foldableDiv, 'foldable-folded');
@@ -182,12 +183,15 @@ export default function neotoc({
         toggleFoldButton.classList.add(classPrefix + `level-${hDepth + 1}`);
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
+        const opacityUtilityClass = "opacity-1";
         if (isFolded) {
           addClass(toggleFoldButton, toggleFoldButtonFoldedClass);
+          addClass(hr, opacityUtilityClass);
         }
 
         nonFoldable.prepend(toggleFoldButton);
 
+        nonFoldable.append(hr);
         foldableDiv.append(nestedUl);
         li.append(foldableDiv);
 
@@ -205,6 +209,7 @@ export default function neotoc({
 
             toggleClass(foldableDiv, 'foldable-folded');
             toggleClass(toggleFoldButton, toggleFoldButtonFoldedClass);
+            toggleClass(hr, opacityUtilityClass);
 
             runOnFoldStatusChange();
           },
