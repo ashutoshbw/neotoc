@@ -10,6 +10,8 @@
   --anchor-hover-bg-color: #41475e;
   --toggle-fold-btn-hover-bg-color: #606887;
   --item-scope-bg-color: #31364d;
+  --indent-line-color: #4f5261;
+  --indent-line-highlight-color: #818181;
 }
 
 .nt-widget {
@@ -130,7 +132,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:hover)
   .nt-indent-block:nth-child(4),
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   .nt-indent-block:nth-child(5) {
-  border-color: var(--highlight-color);
+  border-color: var(--indent-line-highlight-color);
 }
 
 .nt-toggle-fold-btn:hover + .nt-a,
@@ -172,7 +174,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-indent-block {
   transition: border-right calc(var(--folding-duration) / 2);
-  border-right: var(--indent-line-width) solid rgba(300, 890, 300, 0.2);
+  border-right: var(--indent-line-width) solid var(--indent-line-color);
   z-index: 1;
 }
 
