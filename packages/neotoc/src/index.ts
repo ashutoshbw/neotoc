@@ -185,7 +185,7 @@ export default function neotoc({
         toggleFoldButton.classList.add(classPrefix + `level-${hDepth + 1}`);
 
         const toggleFoldButtonFoldedClass = 'toggle-fold-btn-folded';
-        const opacityUtilityClass = "opacity-1";
+        const opacityUtilityClass = 'opacity-1';
         if (isFolded) {
           addClass(toggleFoldButton, toggleFoldButtonFoldedClass);
           addClass(hr, opacityUtilityClass);
