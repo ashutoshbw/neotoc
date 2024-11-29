@@ -253,13 +253,12 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #777;
     border-radius: 4px;
     overflow: hidden;
-    background: #777;
-    gap: 1px;
+    border: 1px solid var(--indent-line-highlight-color);
     .nt-top-bar-btn {
-      background-color: #eee;
+      color: var(--text-color);
+      background-color: var(--anchor-hover-bg-color);
       box-sizing: content-box;
       padding: 3px;
       border: none;
@@ -270,12 +269,15 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
         width: 1.4em;
       }
     }
+    .nt-top-bar-btn:not(:first-child) {
+      border-left: 1px solid var(--indent-line-highlight-color);
+    }
     .nt-top-bar-btn:not([disabled]):hover {
-      background: #444;
+      background: var(--toggle-fold-btn-hover-bg-color);
       color: #eee;
     }
     .nt-top-bar-btn[disabled] {
-      opacity: 0.4;
+      opacity: 0.3;
       cursor: default;
     }
   }
