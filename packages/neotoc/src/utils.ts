@@ -107,7 +107,8 @@ export function getAncestors(
     ancestorDivs.push(ancestorDiv);
 
     ancestorAnchors.push(
-      ancestorDiv.previousSibling!.lastChild as HTMLAnchorElement,
+      ancestorDiv.previousSibling!.lastChild!
+        .previousSibling as HTMLAnchorElement,
     );
 
     ancestorDiv = getClosestFoldableDiv(ancestorDiv, fullFoldableDivClass);
