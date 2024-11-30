@@ -1,17 +1,25 @@
 .nt-widget {
-  --bg-color: orange;
-  --text-color: black;
+  --color-bg: orange;
+  --color-text: black;
 }
 
 .nt-widget[data-theme="dark"] {
-  --bg-color: #24283b;
-  --text-color: #cdd6f4;
-  --highlight-color: #b0bce8;
-  --anchor-hover-bg-color: #41475e;
-  --toggle-fold-btn-hover-bg-color: #606887;
-  --item-scope-bg-color: #31364d;
-  --indent-line-color: #4f5261;
-  --indent-line-highlight-color: #818181;
+  --color-bg: #24283b;
+  --color-text: #cdd6f4;
+  --color-highlight: #b0bce8;
+  --color-highlight-on-fold: yellow;
+  --color-anchor-hover-bg: #41475e;
+  --color-anchor-active-bg: #333;
+  --color-sub-anchors-bg: #31364d;
+  --color-topbar-btn-bg: #41475e;
+  --color-topbar-btn-hover-bg: #606887;
+  --color-topbar-btn-active-bg: #333;
+  --color-topbar-btn-border: #818181;
+  --color-toggle-fold-btn-hover-bg: #606887;
+  --color-toggle-fold-btn-active-bg: #333;
+  --color-indent-line: #4f5261;
+  --color-indent-line-highlight: #818181;
+  --color-fold-indicator-gradient-mid: #606887;
 }
 
 .nt-widget {
@@ -23,7 +31,7 @@
   --anchor-padding-block: 0.2em;
   --anchor-padding-inline: 0.3em;
   --anchor-border-radius: 4px;
-  background: var(--bg-color);
+  background: var(--color-bg);
   * {
     box-sizing: border-box;
   }
@@ -97,7 +105,7 @@
   border-image: linear-gradient(
       to right,
       transparent,
-      var(--toggle-fold-btn-hover-bg-color),
+      var(--color-fold-indicator-gradient-mid),
       transparent
     )
     1;
@@ -135,7 +143,10 @@
 }
 
 .nt-toggle-fold-btn:hover {
-  background: var(--toggle-fold-btn-hover-bg-color);
+  background: var(--color-toggle-fold-btn-hover-bg);
+}
+.nt-toggle-fold-btn:active {
+  background: var(--color-toggle-fold-btn-active-bg);
 }
 
 .nt-root-ul li {
@@ -143,7 +154,7 @@
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) {
-  background: var(--item-scope-bg-color);
+  background: var(--color-sub-anchors-bg);
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:hover)
@@ -156,11 +167,11 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:hover)
   .nt-indent-block:nth-child(4),
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   .nt-indent-block:nth-child(5) {
-  border-color: var(--indent-line-highlight-color);
+  border-color: var(--color-indent-line-highlight);
 }
 
 .nt-toggle-fold-btn:hover + .nt-a {
-  background-color: var(--anchor-hover-bg-color);
+  background-color: var(--color-anchor-hover-bg);
 }
 
 .nt-toggle-fold-btn-folded svg {
@@ -183,7 +194,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-a {
-  color: var(--text-color);
+  color: var(--color-text);
   align-self: center;
   grid-column: 1 / -1;
   padding-block: var(--anchor-padding-block);
@@ -192,12 +203,16 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-a:hover {
-  background: var(--anchor-hover-bg-color);
+  background: var(--color-anchor-hover-bg);
+}
+
+.nt-a:active {
+  background: var(--color-anchor-active-bg);
 }
 
 .nt-indent-block {
   transition: border-right calc(var(--folding-duration) / 2);
-  border-right: var(--indent-line-width) solid var(--indent-line-color);
+  border-right: var(--indent-line-width) solid var(--color-indent-line);
   z-index: 1;
 }
 
@@ -244,7 +259,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
     margin: 0;
     font-weight: 500;
     align-self: end;
-    color: var(--text-color);
+    color: var(--color-text);
   }
   .nt-btn-group {
     display: flex;
@@ -255,10 +270,10 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
     justify-content: space-between;
     border-radius: 4px;
     overflow: hidden;
-    border: 1px solid var(--indent-line-highlight-color);
+    border: 1px solid var(--color-topbar-btn-border);
     .nt-top-bar-btn {
-      color: var(--text-color);
-      background-color: var(--anchor-hover-bg-color);
+      color: var(--color-text);
+      background-color: var(--color-topbar-btn-bg);
       box-sizing: content-box;
       padding: 3px;
       border: none;
@@ -270,11 +285,13 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
       }
     }
     .nt-top-bar-btn:not(:first-child) {
-      border-left: 1px solid var(--indent-line-highlight-color);
+      border-left: 1px solid var(--color-topbar-btn-border);
     }
     .nt-top-bar-btn:not([disabled]):hover {
-      background: var(--toggle-fold-btn-hover-bg-color);
-      color: #eee;
+      background: var(--color-topbar-btn-hover-bg);
+    }
+    .nt-top-bar-btn:not([disabled]):active {
+      background: var(--color-topbar-btn-active-bg);
     }
     .nt-top-bar-btn[disabled] {
       opacity: 0.3;
@@ -287,7 +304,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-bar {
   --width: 1.5px;
   --terminal-side-length: 6px;
-  background: var(--highlight-color);
+  background: var(--color-highlight);
   position: absolute;
   width: var(--width);
   height: 0px;
@@ -297,13 +314,13 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-bar-light {
   width: 100px;
   height: 100%;
-  background: linear-gradient(to left, transparent, var(--highlight-color));
+  background: linear-gradient(to left, transparent, var(--color-highlight));
   opacity: 0.2;
   pointer-events: none;
 }
 
 .nt-bar-bottom-indicator {
-  background: var(--highlight-color);
+  background: var(--color-highlight);
   position: absolute;
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
@@ -315,7 +332,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-bar-top-indicator {
-  background: var(--highlight-color);
+  background: var(--color-highlight);
   position: absolute;
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
@@ -328,7 +345,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-bar-top-indicator.nt-on-fold,
 .nt-bar-bottom-indicator.nt-on-fold {
-  background: white;
+  background: var(--color-highlight-on-fold);
   z-index: 1;
 }
 /* highlighted area end */
@@ -347,32 +364,32 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-top-gradient {
   opacity: 0;
-  background: linear-gradient(to bottom, var(--bg-color), transparent);
+  background: linear-gradient(to bottom, var(--color-bg), transparent);
 }
 
 .nt-bottom-gradient {
   opacity: 1;
-  background: linear-gradient(to top, var(--bg-color), transparent);
+  background: linear-gradient(to top, var(--color-bg), transparent);
 }
 /* top and bottom gradient overlays end*/
 
 /* a11y start */
 .nt-a:focus-visible {
   outline: none;
-  background: var(--anchor-hover-bg-color);
+  background: var(--color-anchor-hover-bg);
 }
 
 .nt-toggle-fold-btn:focus-visible {
   outline: none;
-  background: var(--toggle-fold-btn-hover-bg-color);
+  background: var(--color-toggle-fold-btn-hover-bg);
 }
 
 .nt-toggle-fold-btn:focus-visible + .nt-a {
-  background-color: var(--anchor-hover-bg-color);
+  background-color: var(--color-anchor-hover-bg);
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn:focus-visible) {
-  background: var(--item-scope-bg-color);
+  background: var(--color-sub-anchors-bg);
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:focus-visible)
@@ -385,6 +402,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:focus-visible)
   .nt-indent-block:nth-child(4),
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:focus-visible)
   .nt-indent-block:nth-child(5) {
-  border-color: var(--indent-line-highlight-color);
+  border-color: var(--color-indent-line-highlight);
 }
 /* a11y end */
