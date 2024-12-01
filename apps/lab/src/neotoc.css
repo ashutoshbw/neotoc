@@ -1,6 +1,22 @@
-.nt-widget {
-  --color-bg: orange;
-  --color-fg: black;
+.nt-widget[data-theme="light"] {
+  --color-bg: #f7f9fc;
+  --color-fg: #2c2f3a;
+  --color-bg-anchor-hover: #dce2eb;
+  --color-bg-anchor-active: #d2d8e0;
+  --color-bg-sub-anchors: #e5e8ed;
+  --color-bg-topbar-btn: #e9edf5;
+  --color-bg-topbar-btn-hover: #d8dee8;
+  --color-bg-topbar-btn-active: #cfd6e2;
+  --color-bg-topbar-btn-disabled: #f0f2f7;
+  --color-fg-topbar-btn-disabled: #a8adb8;
+  --color-border-topbar-btn: #b3bac6;
+  --color-bg-toggle-fold-btn-hover: #bcc1c7;
+  --color-bg-toggle-fold-btn-active: #adb2ba;
+  --color-highlight: #e56d00;
+  --color-highlight-on-fold: #974800;
+  --color-indent-line: #c0c6d2;
+  --color-indent-line-highlight: #a0a4a8;
+  --color-fold-indicator-gradient-mid: #b4bac4;
 }
 
 .nt-widget[data-theme="dark"] {
@@ -18,7 +34,7 @@
   --color-bg-toggle-fold-btn-hover: #606887;
   --color-bg-toggle-fold-btn-active: #697190;
   --color-highlight: #dbee9b;
-  --color-highlight-on-fold: #fff;
+  --color-highlight-on-fold: #c6c72d;
   --color-indent-line: #5d6070;
   --color-indent-line-highlight: #818181;
   --color-fold-indicator-gradient-mid: #606887;
@@ -33,6 +49,7 @@
   --anchor-padding-block: 0.2em;
   --anchor-padding-inline: 0.3em;
   --anchor-border-radius: 4px;
+  --padding-left: 1.5rem;
   background: var(--color-bg);
   * {
     box-sizing: border-box;
@@ -53,12 +70,13 @@
 }
 
 .nt-toc-holder {
+  padding-left: var(--padding-left);
   padding-block: 0.5rem;
-  padding-left: 1rem;
   padding-right: 0.5rem;
   position: relative;
   height: calc(100vh - 5rem);
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
 }
 
@@ -119,7 +137,7 @@
 
 .nt-toggle-fold-btn {
   border: none;
-  color: #eee;
+  color: var(--color-fg);
   padding: 0;
   padding-inline: 1px;
   grid-column: -3;
@@ -181,7 +199,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-unfoldable-icon {
-  color: #eee;
+  color: var(--color-fg);
   grid-column: -3;
 }
 
@@ -253,7 +271,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-top-bar {
   display: flex;
   padding: 0.5rem;
-  padding-left: 1rem;
+  padding-left: var(--padding-left);
   justify-content: space-between;
   gap: 2px;
   .nt-title {
@@ -311,15 +329,19 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   position: absolute;
   width: var(--width);
   height: 0px;
-  left: 5px;
+  left: calc(var(--padding-left) / 2 - var(--width) / 2);
+  z-index: 1;
 }
 
 .nt-bar-light {
-  width: 100px;
+  width: 250px;
   height: 100%;
   background: linear-gradient(to left, transparent, var(--color-highlight));
+  z-index: -1;
+  left: var(--width);
   opacity: 0.2;
   pointer-events: none;
+  position: absolute;
 }
 
 .nt-bar-bottom-indicator {
