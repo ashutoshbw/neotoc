@@ -384,7 +384,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   width: 100%;
   height: 30px;
   left: 0;
-  z-index: 1;
+  z-index: 5;
   transition: opacity 300ms;
   pointer-events: none;
 }
