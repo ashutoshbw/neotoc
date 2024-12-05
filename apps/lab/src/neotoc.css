@@ -1,44 +1,42 @@
 .nt-widget[data-theme="light"] {
-  --bg: #f7f9fc;
-  --fg: #2c2f3a;
-  --bg-anchor-hover: #dce2eb;
-  --bg-anchor-active: #d2d8e0;
-  --bg-sub-anchors: #e5e8ed;
-  --bg-topbar-btn: #e9edf5;
-  --bg-topbar-btn-hover: #d8dee8;
-  --bg-topbar-btn-active: #cfd6e2;
-  --bg-topbar-btn-disabled: #f0f2f7;
-  --fg-topbar-btn-disabled: #a8adb8;
-  --border-topbar-btn: #b3bac6;
-  --bg-toggle-fold-btn-hover: #bcc1c7;
-  --bg-toggle-fold-btn-active: #adb2ba;
-  --light-bar: #e56d00;
-  --light-bar-terminal-on-fold: #974800;
-  --indent-line: #c0c6d2;
-  --indent-line-highlight: #a0a4a8;
-  --fold-indicator-gradient-mid: #b4bac4;
+  --fg: hsl(240 10% 3.9%);
+  --bg: hsl(0 0% 100%);
+  --bg-anchor-hover: hsl(240 4.8% 95.9%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(240 5.9% 90%);
+  --bg-topbar-btn: var(--bg);
+  --bg-topbar-btn-hover: hsl(240 4.8% 95.9%);
+  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
+  --bg-topbar-btn-disabled: var(--bg);
+  --fg-topbar-btn-disabled: hsl(240 3.8% 46.1%);
+  --border-topbar-btn: hsl(240 4.8% 95.9%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(240 4.9% 75%);
+  --indent-line-highlight: hsl(240 4.9% 60%);
+  --fold-indicator-gradient-mid: hsl(240 5.9% 80%);
+  --light-bar: hsl(210 60% 68%);
+  --light-bar-terminal-on-fold: hsl(240 99% 88%);
   --light-opacity: 0.1;
 }
 
 .nt-widget[data-theme="dark"] {
-  --fg: hsl(0 0% 98%); /* zinc-50 */
-  --bg: hsl(240 10% 3.9%); /* zinc-950 */
-  --bg-anchor-hover: hsl(240 3.7% 15.9%); /* zinc-800 */
+  --fg: hsl(0 0% 98%);
+  --bg: hsl(240 10% 3.9%);
+  --bg-anchor-hover: hsl(240 3.7% 15.9%);
   --bg-anchor-active: var(--bg-anchor-hover);
-  --bg-sub-anchors: hsl(240 5.9% 10%); /* zinc-900 */
+  --bg-sub-anchors: hsl(240 5.9% 10%);
   --bg-topbar-btn: var(--bg);
-  --bg-topbar-btn-hover: hsl(240 3.7% 15.9%); /* zinc-800 */
+  --bg-topbar-btn-hover: hsl(240 3.7% 15.9%);
   --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
   --bg-topbar-btn-disabled: var(--bg);
-  --fg-topbar-btn-disabled: hsl(240 5% 64.9%); /* zinc-400 */
-  --border-topbar-btn: hsl(240 3.7% 15.9%); /* zinc-800 */
+  --fg-topbar-btn-disabled: hsl(240 5% 64.9%);
+  --border-topbar-btn: hsl(240 3.7% 15.9%);
   --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
   --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
-  --indent-line: hsl(240 3.7% 15.9%); /* zinc-800 */
-  --indent-line-highlight: hsl(240 5.2% 33.9%); /* zinc-600 */
-  --fold-indicator-gradient-mid: hsl(
-    from var(--bg-sub-anchors) h s calc(l + 20)
-  );
+  --indent-line: hsl(240 3.7% 28%);
+  --indent-line-highlight: hsl(240 5.2% 49%);
+  --fold-indicator-gradient-mid: hsl(240 5.9% 30%);
   --light-bar: hsl(210 60% 68%);
   --light-bar-terminal-on-fold: hsl(240 99% 88%);
   --light-opacity: 0.1;
