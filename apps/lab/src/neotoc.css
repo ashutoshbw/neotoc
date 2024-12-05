@@ -55,6 +55,7 @@
   background: var(--bg);
   * {
     box-sizing: border-box;
+    transition: background-color 0.15s;
   }
   ul {
     list-style-type: none;
@@ -286,7 +287,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   .nt-btn-group {
     display: flex;
     align-self: end;
-    transition: opacity 150ms;
     flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
