@@ -1,6 +1,6 @@
 .nt-widget[data-theme="light"] {
-  --fg: hsl(240 10% 3.9%);
   --bg: hsl(0 0% 100%);
+  --fg: hsl(240 10% 3.9%);
   --bg-anchor-hover: hsl(240 4.8% 95.9%);
   --bg-anchor-active: var(--bg-anchor-hover);
   --bg-sub-anchors: hsl(240 5.9% 90%);
@@ -16,13 +16,13 @@
   --indent-line-highlight: hsl(240 4.9% 60%);
   --fold-indicator-gradient-mid: hsl(240 5.9% 80%);
   --light-bar: hsl(210 60% 68%);
-  --light-bar-terminal-on-fold: hsl(240 99% 88%);
+  --light-bar-tip-on-fold: hsl(240 99% 88%);
   --light-opacity: 0.2;
 }
 
 .nt-widget[data-theme="dark"] {
-  --fg: hsl(0 0% 98%);
   --bg: hsl(240 10% 3.9%);
+  --fg: hsl(0 0% 98%);
   --bg-anchor-hover: hsl(240 3.7% 15.9%);
   --bg-anchor-active: var(--bg-anchor-hover);
   --bg-sub-anchors: hsl(240 5.9% 10%);
@@ -38,7 +38,7 @@
   --indent-line-highlight: hsl(240 5.2% 49%);
   --fold-indicator-gradient-mid: hsl(240 5.9% 30%);
   --light-bar: hsl(210 60% 68%);
-  --light-bar-terminal-on-fold: hsl(240 99% 88%);
+  --light-bar-tip-on-fold: hsl(240 99% 88%);
   --light-opacity: 0.2;
 }
 
@@ -373,7 +373,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-light-bar-top.nt-on-fold,
 .nt-light-bar-bottom.nt-on-fold {
-  background: var(--light-bar-terminal-on-fold);
+  background: var(--light-bar-tip-on-fold);
   z-index: 1;
 }
 /* highlighted area end */
