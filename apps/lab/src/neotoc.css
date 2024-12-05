@@ -17,7 +17,7 @@
   --fold-indicator-gradient-mid: hsl(240 5.9% 80%);
   --light-bar: hsl(210 60% 68%);
   --light-bar-terminal-on-fold: hsl(240 99% 88%);
-  --light-opacity: 0.1;
+  --light-opacity: 0.2;
 }
 
 .nt-widget[data-theme="dark"] {
@@ -39,7 +39,7 @@
   --fold-indicator-gradient-mid: hsl(240 5.9% 30%);
   --light-bar: hsl(210 60% 68%);
   --light-bar-terminal-on-fold: hsl(240 99% 88%);
-  --light-opacity: 0.1;
+  --light-opacity: 0.2;
 }
 
 .nt-widget {
@@ -52,6 +52,8 @@
   --anchor-padding-inline: 0.3em;
   --anchor-border-radius: 4px;
   --padding-left: 1.5rem;
+  --light-bar-width: 1px;
+  --light-bar-tip-radius: 2.5px;
   background: var(--bg);
   * {
     box-sizing: border-box;
@@ -325,13 +327,12 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 /* highlighted area start */
 .nt-light-bar {
-  --width: 1.5px;
-  --terminal-side-length: 6px;
+  --terminal-side-length: calc(var(--light-bar-tip-radius) * 2);
   background: var(--light-bar);
   position: absolute;
-  width: var(--width);
+  width: var(--light-bar-width);
   height: 0px;
-  left: calc(var(--padding-left) / 2 - var(--width) / 2);
+  left: calc(var(--padding-left) / 2 - var(--light-bar-width) / 2);
   z-index: 1;
 }
 
@@ -341,7 +342,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   background: linear-gradient(to left, transparent, var(--light-bar));
   z-index: -1;
   opacity: var(--light-opacity);
-  left: var(--width);
+  left: var(--light-bar-width);
   pointer-events: none;
   position: absolute;
 }
@@ -354,7 +355,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   border-radius: 50%;
   bottom: calc(var(--terminal-side-length) / 2 * -1);
   left: calc(
-    (var(--terminal-side-length) / 2 * -1) + var(--width) / 2
+    (var(--terminal-side-length) / 2 * -1) + var(--light-bar-width) / 2
   ); /* -2px */
 }
 
@@ -366,7 +367,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   border-radius: 50%;
   top: calc(var(--terminal-side-length) / 2 * -1);
   left: calc(
-    (var(--terminal-side-length) / 2 * -1) + var(--width) / 2
+    (var(--terminal-side-length) / 2 * -1) + var(--light-bar-width) / 2
   ); /* -2px */
 }
 
