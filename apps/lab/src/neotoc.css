@@ -9,7 +9,7 @@
   --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
   --bg-topbar-btn-disabled: var(--bg);
   --fg-topbar-btn-disabled: hsl(240 3.8% 46.1%);
-  --border-topbar-btn: hsl(240 4.8% 95.9%);
+  --border-topbar-btn: hsl(240 5.9% 90%);
   --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
   --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
   --indent-line: hsl(240 4.9% 75%);
@@ -27,7 +27,7 @@
   --bg-anchor-active: var(--bg-anchor-hover);
   --bg-sub-anchors: hsl(240 5.9% 10%);
   --bg-topbar-btn: var(--bg);
-  --bg-topbar-btn-hover: hsl(240 3.7% 15.9%);
+  --bg-topbar-btn-hover: hsl(240 3.7% 15.9% / 50%);
   --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
   --bg-topbar-btn-disabled: var(--bg);
   --fg-topbar-btn-disabled: hsl(240 5% 64.9%);
