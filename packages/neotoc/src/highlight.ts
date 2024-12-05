@@ -27,12 +27,12 @@ export function addHighlight(
   removeClass: ClassModificationFuncType,
   classContains: ClassContains,
 ): Draw {
-  const bar = elt<HTMLDivElement>('div', 'bar');
-  const barTopIndicator = elt<HTMLDivElement>('div', 'bar-top-indicator');
-  const barLight = elt<HTMLDivElement>('div', 'bar-light');
-  const barBottomIndicator = elt<HTMLDivElement>('div', 'bar-bottom-indicator');
+  const bar = elt<HTMLDivElement>('div', 'light-bar');
+  const barTopIndicator = elt<HTMLDivElement>('div', 'light-bar-top');
+  const light = elt<HTMLDivElement>('div', 'light');
+  const barBottomIndicator = elt<HTMLDivElement>('div', 'light-bar-bottom');
 
-  bar.append(barTopIndicator, barLight, barBottomIndicator);
+  bar.append(barTopIndicator, light, barBottomIndicator);
   bar.style.display = 'none';
 
   tocHolder.append(bar);
