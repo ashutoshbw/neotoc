@@ -115,6 +115,11 @@
     visibility var(--folding-duration);
 }
 
+.nt-foldable > ul {
+  overflow: clip;
+  grid-row: 1 / span 2;
+}
+
 .nt-foldable-folded {
   grid-template-rows: 0fr;
   ul {
@@ -124,11 +129,6 @@
 
 .nt-foldable-folded ul {
   opacity: 0;
-}
-
-.nt-foldable > ul {
-  overflow: clip;
-  grid-row: 1 / span 2;
 }
 
 .nt-non-foldable:has(> .nt-fold-indicator-line) {
