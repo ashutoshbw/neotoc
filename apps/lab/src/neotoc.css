@@ -103,10 +103,6 @@
   overscroll-behavior: contain;
 }
 
-.nt-toc-holder a {
-  text-decoration: none;
-}
-
 .nt-foldable {
   display: grid;
   transition: grid-template-rows var(--folding-duration),
@@ -238,6 +234,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-a {
   color: var(--fg);
+  text-decoration: none;
   align-self: center;
   grid-column: 1 / -1;
   padding-block: var(--anchor-padding-block);
