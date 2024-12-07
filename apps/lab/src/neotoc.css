@@ -62,6 +62,14 @@
   --folding-duration: 300ms;
 }
 
+/* NEOTOC STYLE */
+/*
+ Following are my recommended styles for Neotoc.
+ Not using or changing some of them will break the design,
+ while others are just stylistic preferences. Feel free
+ to make changes for advanced customization.
+*/
+
 .nt-widget {
   background: var(--bg);
   * {
