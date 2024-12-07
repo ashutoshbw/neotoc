@@ -1,3 +1,6 @@
+/* SETTINGS -> THEME */
+/* You will most likely want to tweak these values to match your site's theme */
+
 .nt-widget[data-theme="light"] {
   --bg: hsl(0 0% 100%);
   --fg: hsl(240 10% 3.9%);
@@ -42,18 +45,24 @@
   --light-opacity: 0.2;
 }
 
+/* SETTINGS -> SIZING AND BEHAVIOR */
+/* Feel free to tweak these values and see what you like most */
+
 .nt-widget {
-  --font-size-percentage: 94;
+  --relative-font-size: 94; /* do not use percentage sign */
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
   --indent-line-gap: 5px; /* should be in px unit */
   --indent-line-width: 1px;
-  --folding-duration: 300ms;
   --anchor-padding-block: 0.2em;
   --anchor-padding-inline: 0.3em;
   --anchor-border-radius: 4px;
   --padding-left: 1.5rem;
   --light-bar-width: 1px;
   --light-bar-tip-radius: 2.5px;
+  --folding-duration: 300ms;
+}
+
+.nt-widget {
   background: var(--bg);
   * {
     box-sizing: border-box;
@@ -65,7 +74,7 @@
     margin: 0;
   }
   li li {
-    font-size: calc(var(--font-size-percentage) * 1%);
+    font-size: calc(var(--relative-font-size) * 1%);
   }
   svg {
     display: inline;
