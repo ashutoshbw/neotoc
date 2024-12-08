@@ -1,4 +1,23 @@
-/* SETTINGS -> THEME */
+/*
+On this Stylesheet:
+
+- SETTINGS
+  - THEME
+  - SIZING AND BEHAVIOR
+- NEOTOC STYLE
+ - FOUNDATION
+ - LIGHT BAR
+ - TOP AND BOTTOM SHADOWS
+ - ACCESSIBILITY
+ - UTILITY CLASSES
+
+Syntax of heading comments:
+- They are capitalized.
+- No extra asterisks denote top level heading. Additional asterisks denote nesting levels.
+*/
+
+/* SETTINGS  */
+/** THEME **/
 /* You will most likely want to tweak these values to match your site's theme */
 
 .nt-widget[data-theme="light"] {
@@ -45,7 +64,7 @@
   --light-opacity: 0.2;
 }
 
-/* SETTINGS -> SIZING AND BEHAVIOR */
+/** SIZING AND BEHAVIOR **/
 /* Feel free to tweak these values and see what you like most */
 
 .nt-widget {
@@ -69,7 +88,17 @@
  Not using or changing some of them will break the design,
  while others are just stylistic preferences. Feel free
  to make changes for advanced customization.
+
+ The styles below are grouped into following categories:
+
+ - FOUNDATION
+ - LIGHT BAR
+ - TOP AND BOTTOM SHADOWS
+ - ACCESSIBILITY
+ - UTILITY CLASSES
 */
+
+/** FOUNDATION **/
 
 .nt-widget {
   background: var(--bg);
@@ -133,9 +162,8 @@
 .nt-fold-indicator-line {
   margin: 0px;
   width: 100%;
-  position: absolute;
   border: none;
-  border-top: 1px solid gray;
+  border-top: 1px solid;
   border-image: linear-gradient(
       to right,
       transparent,
@@ -143,16 +171,15 @@
       transparent
     )
     1;
+  position: absolute;
   bottom: 0;
   z-index: 2;
-  opacity: 0;
   transition: opacity var(--folding-duration);
+  opacity: 0;
 }
 
 .nt-toggle-fold-btn {
-  border: none;
   color: var(--fg);
-  padding: 0;
   padding-inline: 1px;
   grid-column: -3;
   cursor: pointer;
@@ -161,14 +188,10 @@
   }
 }
 
-.nt-opacity-1 {
-  opacity: 1;
-}
-
 .nt-toggle-fold-btn,
 .nt-unfoldable-icon {
   padding-block: var(--anchor-padding-block);
-  z-index: 1;
+  z-index: 1; /* to keep them above anchor and below the light bar's light */
 }
 
 .nt-toggle-fold-btn:first-child {
@@ -335,7 +358,8 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   }
 }
 
-/* highlighted area start */
+/** LIGHT BAR **/
+
 .nt-light-bar {
   --terminal-side-length: calc(var(--light-bar-tip-radius) * 2);
   background: var(--light-bar);
@@ -386,9 +410,9 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   background: var(--light-bar-tip-on-fold);
   z-index: 1;
 }
-/* highlighted area end */
 
-/* top and bottom gradient overlays start*/
+/** TOP AND BOTTOM SHADOWS **/
+
 .nt-top-gradient,
 .nt-bottom-gradient {
   position: absolute;
@@ -409,9 +433,8 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   opacity: 1;
   background: linear-gradient(to top, var(--bg), transparent);
 }
-/* top and bottom gradient overlays end*/
 
-/* a11y start */
+/** ACCESSIBILITY **/
 .nt-a:focus-visible {
   outline: none;
   background: var(--bg-anchor-hover);
@@ -442,4 +465,9 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:focus-visible)
   .nt-indent-block:nth-child(5) {
   border-color: var(--indent-line-highlight);
 }
-/* a11y end */
+
+/** UTILITY CLASSES **/
+
+.nt-opacity-1 {
+  opacity: 1;
+}
