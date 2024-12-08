@@ -361,8 +361,6 @@ export default function neotoc({
 
   if (!toc) return { remove() {}, setTheme() {} };
 
-  addClass(toc, 'root-ul');
-
   const appendTarget = document.querySelector(selectorPart3);
   if (!appendTarget) throw new Error('Nothing was found to append Neotoc to!');
 
