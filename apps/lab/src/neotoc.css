@@ -178,20 +178,20 @@ Syntax of heading comments:
   opacity: 0;
 }
 
-.nt-toggle-fold-btn {
+.nt-toggle-fold-btn,
+.nt-unfoldable-icon {
   color: var(--fg);
-  padding-inline: 1px;
   grid-column: -3;
+  padding-block: var(--anchor-padding-block);
+  z-index: 1; /* to keep them above anchor and below the light bar's light */
+}
+
+.nt-toggle-fold-btn {
+  padding-inline: 1px;
   cursor: pointer;
   svg {
     transition: transform var(--folding-duration);
   }
-}
-
-.nt-toggle-fold-btn,
-.nt-unfoldable-icon {
-  padding-block: var(--anchor-padding-block);
-  z-index: 1; /* to keep them above anchor and below the light bar's light */
 }
 
 .nt-toggle-fold-btn:first-child {
@@ -231,18 +231,12 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   transform: rotate(-90deg);
 }
 
-.nt-unfoldable-icon {
-  color: var(--fg);
-  grid-column: -3;
-}
-
 .nt-non-foldable {
   display: grid;
   grid-template-rows: 1fr;
 }
 
 .nt-non-foldable > * {
-  /* background: rgba(23, 23, 12, 0.3); */
   grid-row: 1 / -1;
 }
 
