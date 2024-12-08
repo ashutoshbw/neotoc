@@ -206,10 +206,6 @@ Syntax of heading comments:
   background: var(--bg-toggle-fold-btn-active);
 }
 
-.nt-root-ul li {
-  border-radius: var(--anchor-border-radius);
-}
-
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) {
   background: var(--bg-sub-anchors);
 }
