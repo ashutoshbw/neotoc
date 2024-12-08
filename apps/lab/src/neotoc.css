@@ -108,27 +108,22 @@
   transition: grid-template-rows var(--folding-duration),
     border var(--folding-duration), background-color var(--folding-duration);
   grid-template-rows: 1fr;
-}
-
-.nt-foldable ul {
-  transition: opacity var(--folding-duration),
-    visibility var(--folding-duration);
-}
-
-.nt-foldable > ul {
-  overflow: clip;
-  grid-row: 1 / span 2;
+  ul {
+    transition: opacity var(--folding-duration),
+      visibility var(--folding-duration);
+  }
+  > ul {
+    overflow: clip;
+    grid-row: 1 / span 2;
+  }
 }
 
 .nt-foldable-folded {
   grid-template-rows: 0fr;
   ul {
     visibility: hidden;
+    opacity: 0;
   }
-}
-
-.nt-foldable-folded ul {
-  opacity: 0;
 }
 
 .nt-non-foldable:has(> .nt-fold-indicator-line) {
