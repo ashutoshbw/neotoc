@@ -22,6 +22,8 @@ Syntax of heading comments:
 /** THEME **/
 /* You will most likely want to tweak these values to match your site's theme */
 
+@import url("themes/github.css");
+
 .nt-widget[data-theme="light"] {
   --bg: hsl(0 0% 100%);
   --fg: hsl(240 10% 3.9%);

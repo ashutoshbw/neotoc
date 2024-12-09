@@ -1,0 +1,45 @@
+/* This theme is ChatGPT generated based on Github's default light and dark theme */
+
+.nt-widget[data-theme="github-light"] {
+  --bg: hsl(0, 0%, 100%); /* Background */
+  --fg: hsl(222, 20%, 20%); /* Foreground */
+  --bg-anchor-hover: hsl(222, 15%, 97%); /* Hover state */
+  --bg-anchor-active: hsl(222, 15%, 95%); /* Active state */
+  --bg-sub-anchors: hsl(222, 15%, 98%); /* Sub-items background */
+  --bg-topbar-btn: hsl(0, 0%, 100%); /* Button background */
+  --bg-topbar-btn-hover: hsl(222, 15%, 97%); /* Button hover */
+  --bg-topbar-btn-active: hsl(222, 15%, 95%); /* Button active */
+  --bg-topbar-btn-disabled: hsl(0, 0%, 100%); /* Disabled button background */
+  --fg-topbar-btn-disabled: hsl(222, 15%, 60%); /* Disabled button text */
+  --border-topbar-btn: hsl(222, 15%, 90%); /* Button border */
+  --bg-toggle-fold-btn-hover: hsl(222, 15%, 97%); /* Fold button hover */
+  --bg-toggle-fold-btn-active: hsl(222, 15%, 95%); /* Fold button active */
+  --indent-line: hsl(222, 10%, 75%); /* Indentation line */
+  --indent-line-highlight: hsl(222, 15%, 60%); /* Highlighted line */
+  --fold-indicator-gradient-mid: hsl(222, 15%, 85%); /* Fold indicator */
+  --light-bar: hsl(208, 90%, 55%); /* Accent line */
+  --light-bar-tip-on-fold: hsl(222, 90%, 65%); /* Tip of the fold indicator */
+  --light-opacity: 0.2;
+}
+
+.nt-widget[data-theme="github-dark"] {
+  --bg: hsl(222, 13%, 15%); /* Background */
+  --fg: hsl(222, 20%, 95%); /* Foreground */
+  --bg-anchor-hover: hsl(222, 14%, 18%); /* Hover state */
+  --bg-anchor-active: hsl(222, 14%, 20%); /* Active state */
+  --bg-sub-anchors: hsl(222, 14%, 12%); /* Sub-items background */
+  --bg-topbar-btn: hsl(222, 13%, 15%); /* Button background */
+  --bg-topbar-btn-hover: hsl(222, 14%, 18%); /* Button hover */
+  --bg-topbar-btn-active: hsl(222, 14%, 20%); /* Button active */
+  --bg-topbar-btn-disabled: hsl(222, 13%, 15%); /* Disabled button background */
+  --fg-topbar-btn-disabled: hsl(222, 10%, 50%); /* Disabled button text */
+  --border-topbar-btn: hsl(222, 14%, 20%); /* Button border */
+  --bg-toggle-fold-btn-hover: hsl(222, 14%, 18%); /* Fold button hover */
+  --bg-toggle-fold-btn-active: hsl(222, 14%, 20%); /* Fold button active */
+  --indent-line: hsl(222, 10%, 30%); /* Indentation line */
+  --indent-line-highlight: hsl(222, 15%, 40%); /* Highlighted line */
+  --fold-indicator-gradient-mid: hsl(222, 10%, 25%); /* Fold indicator */
+  --light-bar: hsl(208, 90%, 55%); /* Accent line */
+  --light-bar-tip-on-fold: hsl(222, 90%, 75%); /* Tip of the fold indicator */
+  --light-opacity: 0.2;
+}
