@@ -6,10 +6,12 @@ On this Stylesheet:
   - SIZING AND BEHAVIOR
 - NEOTOC STYLE
  - FOUNDATION
+ - TOP BAR
  - LIGHT BAR
  - TOP AND BOTTOM SHADOWS
  - ACCESSIBILITY
  - UTILITY CLASSES
+ - UNUSED CLASSES
 
 Syntax of heading comments:
 - They are capitalized.
@@ -79,6 +81,7 @@ Syntax of heading comments:
   --padding-left: 1.5rem;
   --light-bar-width: 1px;
   --light-bar-tip-radius: 2.5px;
+  --light-spread-length: 250px;
   --folding-duration: 300ms;
 }
 
@@ -88,14 +91,6 @@ Syntax of heading comments:
  Not using or changing some of them will break the design,
  while others are just stylistic preferences. Feel free
  to make changes for advanced customization.
-
- The styles below are grouped into following categories:
-
- - FOUNDATION
- - LIGHT BAR
- - TOP AND BOTTOM SHADOWS
- - ACCESSIBILITY
- - UTILITY CLASSES
 */
 
 /** FOUNDATION **/
@@ -110,6 +105,9 @@ Syntax of heading comments:
     list-style-type: none;
     padding: 0;
     margin: 0;
+  }
+  li {
+    border-radius: var(--anchor-border-radius);
   }
   li li {
     font-size: calc(var(--relative-font-size) * 1%);
@@ -134,8 +132,7 @@ Syntax of heading comments:
 
 .nt-foldable {
   display: grid;
-  transition: grid-template-rows var(--folding-duration),
-    border var(--folding-duration), background-color var(--folding-duration);
+  transition: grid-template-rows var(--folding-duration);
   grid-template-rows: 1fr;
   ul {
     transition: opacity var(--folding-duration),
@@ -160,7 +157,7 @@ Syntax of heading comments:
 }
 
 .nt-fold-indicator-line {
-  margin: 0px;
+  margin: 0;
   width: 100%;
   border: none;
   border-top: 1px solid;
@@ -243,11 +240,11 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-a {
   color: var(--fg);
   text-decoration: none;
-  align-self: center;
-  grid-column: 1 / -1;
   padding-block: var(--anchor-padding-block);
   padding-right: var(--anchor-padding-inline);
   border-radius: var(--anchor-border-radius);
+  align-self: center;
+  grid-column: 1 / -1;
 }
 
 .nt-a:hover {
@@ -266,7 +263,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-indent-block,
 .nt-unfoldable-icon {
-  /* if you remove this, clicking on the non anchor part of the non-foldable will not work as intended */
   pointer-events: none;
 }
 
@@ -290,62 +286,61 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   grid-column: 10 / 13;
 }
 
-.nt-ellipsis {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
+/** TOP BAR **/
 
 .nt-top-bar {
   display: flex;
   padding: 0.5rem;
   padding-left: var(--padding-left);
   justify-content: space-between;
-  gap: 2px;
-  .nt-title {
-    font-size: 1.1em;
-    margin: 0;
-    font-weight: 500;
-    align-self: end;
-    color: var(--fg);
+  gap: 1rem;
+}
+
+.nt-title {
+  color: var(--fg);
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0;
+  align-self: end;
+}
+
+.nt-btn-group {
+  display: flex;
+  align-self: end;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid var(--border-topbar-btn);
+}
+
+.nt-top-bar-btn {
+  color: var(--fg);
+  background: var(--bg-topbar-btn);
+  box-sizing: content-box;
+  padding: 3px;
+  border: none;
+  cursor: pointer;
+  svg {
+    height: 1.4em;
+    width: 1.4em;
   }
-  .nt-btn-group {
-    display: flex;
-    align-self: end;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 4px;
-    overflow: hidden;
-    border: 1px solid var(--border-topbar-btn);
-    .nt-top-bar-btn {
-      color: var(--fg);
-      background-color: var(--bg-topbar-btn);
-      box-sizing: content-box;
-      padding: 3px;
-      border: none;
-      cursor: pointer;
-      svg {
-        display: block;
-        height: 1.4em;
-        width: 1.4em;
-      }
-    }
-    .nt-top-bar-btn:not(:first-child) {
-      border-left: 1px solid var(--border-topbar-btn);
-    }
-    .nt-top-bar-btn:not([disabled]):hover {
-      background: var(--bg-topbar-btn-hover);
-    }
-    .nt-top-bar-btn:not([disabled]):active {
-      background: var(--bg-topbar-btn-active);
-    }
-    .nt-top-bar-btn[disabled] {
-      color: var(--fg-topbar-btn-disabled);
-      background: var(--bg-topbar-btn-disabled);
-      cursor: default;
-    }
-  }
+}
+
+.nt-top-bar-btn:not(:first-child) {
+  border-left: 1px solid var(--border-topbar-btn);
+}
+
+.nt-top-bar-btn:not([disabled]):hover {
+  background: var(--bg-topbar-btn-hover);
+}
+
+.nt-top-bar-btn:not([disabled]):active {
+  background: var(--bg-topbar-btn-active);
+}
+
+.nt-top-bar-btn[disabled] {
+  color: var(--fg-topbar-btn-disabled);
+  background: var(--bg-topbar-btn-disabled);
+  cursor: default;
 }
 
 /** LIGHT BAR **/
@@ -353,46 +348,42 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-light-bar {
   --terminal-side-length: calc(var(--light-bar-tip-radius) * 2);
   background: var(--light-bar);
-  position: absolute;
   width: var(--light-bar-width);
-  height: 0px;
+  height: 0;
+  position: absolute;
   left: calc(var(--padding-left) / 2 - var(--light-bar-width) / 2);
   z-index: 1;
 }
 
 .nt-light {
-  width: 250px;
-  height: 100%;
   background: linear-gradient(to left, transparent, var(--light-bar));
-  z-index: -1;
+  width: var(--light-spread-length);
+  height: 100%;
   opacity: var(--light-opacity);
-  left: var(--light-bar-width);
   pointer-events: none;
   position: absolute;
+  z-index: -1;
+  left: var(--light-bar-width);
 }
 
+.nt-light-bar-top,
 .nt-light-bar-bottom {
   background: var(--light-bar);
-  position: absolute;
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
   border-radius: 50%;
-  bottom: calc(var(--terminal-side-length) / 2 * -1);
+  position: absolute;
   left: calc(
     (var(--terminal-side-length) / 2 * -1) + var(--light-bar-width) / 2
-  ); /* -2px */
+  );
 }
 
 .nt-light-bar-top {
-  background: var(--light-bar);
-  position: absolute;
-  width: var(--terminal-side-length);
-  height: var(--terminal-side-length);
-  border-radius: 50%;
   top: calc(var(--terminal-side-length) / 2 * -1);
-  left: calc(
-    (var(--terminal-side-length) / 2 * -1) + var(--light-bar-width) / 2
-  ); /* -2px */
+}
+
+.nt-light-bar-bottom {
+  bottom: calc(var(--terminal-side-length) / 2 * -1);
 }
 
 .nt-light-bar-top.nt-on-fold,
@@ -405,13 +396,13 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-top-gradient,
 .nt-bottom-gradient {
-  position: absolute;
   width: 100%;
   height: 30px;
-  left: 0;
-  z-index: 5;
   transition: opacity 300ms;
   pointer-events: none;
+  position: absolute;
+  left: 0;
+  z-index: 5;
 }
 
 .nt-top-gradient {
@@ -435,10 +426,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   background: var(--bg-toggle-fold-btn-hover);
 }
 
-.nt-toggle-fold-btn:focus-visible + .nt-a {
-  background-color: var(--bg-anchor-hover);
-}
-
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn:focus-visible) {
   background: var(--bg-sub-anchors);
 }
@@ -456,8 +443,26 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:focus-visible)
   border-color: var(--indent-line-highlight);
 }
 
+.nt-toggle-fold-btn:focus-visible + .nt-a {
+  background-color: var(--bg-anchor-hover);
+}
+
 /** UTILITY CLASSES **/
 
 .nt-opacity-1 {
   opacity: 1;
 }
+
+.nt-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/** UNUSED CLASSES **/
+
+/* Use the following classes to see if you like the result */
+
+/*
+- nt-enlightend-a: This class is dynamically only added to anchors in the TOC that refers to sections currently in view.
+*/
