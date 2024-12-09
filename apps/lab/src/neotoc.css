@@ -25,6 +25,7 @@ Syntax of heading comments:
 @import url("themes/github.css");
 @import url("themes/gruvbox.css");
 @import url("themes/vinci.css");
+@import url("themes/moonlight.css");
 
 .nt-widget[data-theme="light"] {
   --bg: hsl(0 0% 100%);

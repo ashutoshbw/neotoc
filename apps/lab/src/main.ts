@@ -5,7 +5,7 @@ import neotoc from "neotoc";
 
 neotoc({
   io: "article >> h* >> #sidebar",
-  theme: "vinci-light",
+  theme: "moonlight-dark",
   ellipsis: true,
 });
 neotoc({
