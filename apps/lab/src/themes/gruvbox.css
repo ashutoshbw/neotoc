@@ -1,0 +1,45 @@
+/* This theme is ChatGPT generated based on Gruvbox theme */
+
+.nt-widget[data-theme="gruvbox-light"] {
+  --bg: hsl(40 30% 95%);
+  --fg: hsl(30 20% 10%);
+  --bg-anchor-hover: hsl(40 20% 88%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(40 20% 85%);
+  --bg-topbar-btn: var(--bg);
+  --bg-topbar-btn-hover: hsl(40 20% 88%);
+  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
+  --bg-topbar-btn-disabled: var(--bg);
+  --fg-topbar-btn-disabled: hsl(30 10% 50%);
+  --border-topbar-btn: hsl(40 20% 85%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(40 20% 75%);
+  --indent-line-highlight: hsl(40 30% 60%);
+  --fold-indicator-gradient-mid: hsl(40 30% 80%);
+  --light-bar: hsl(50 80% 50%);
+  --light-bar-tip-on-fold: hsl(40 90% 70%);
+  --light-opacity: 0.2;
+}
+
+.nt-widget[data-theme="gruvbox-dark"] {
+  --bg: hsl(30 20% 10%);
+  --fg: hsl(40 50% 85%);
+  --bg-anchor-hover: hsl(30 25% 18%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(30 20% 14%);
+  --bg-topbar-btn: var(--bg);
+  --bg-topbar-btn-hover: hsl(30 25% 18%);
+  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
+  --bg-topbar-btn-disabled: var(--bg);
+  --fg-topbar-btn-disabled: hsl(40 20% 50%);
+  --border-topbar-btn: hsl(30 20% 18%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(30 20% 25%);
+  --indent-line-highlight: hsl(40 50% 50%);
+  --fold-indicator-gradient-mid: hsl(30 30% 35%);
+  --light-bar: hsl(40 80% 50%);
+  --light-bar-tip-on-fold: hsl(50 90% 70%);
+  --light-opacity: 0.2;
+}

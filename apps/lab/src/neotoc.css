@@ -23,6 +23,7 @@ Syntax of heading comments:
 /* You will most likely want to tweak these values to match your site's theme */
 
 @import url("themes/github.css");
+@import url("themes/gruvbox.css");
 
 .nt-widget[data-theme="light"] {
   --bg: hsl(0 0% 100%);
