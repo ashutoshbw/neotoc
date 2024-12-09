@@ -37,10 +37,10 @@ export function addHighlight(
 
   tocHolder.append(bar);
 
-  let lastActiveAnchors: Array<HTMLAnchorElement> = [];
+  let lastEnlightendAnchors: Array<HTMLAnchorElement> = [];
 
   const onFoldClassName = 'on-fold';
-  const activeAnchorClassName = 'active-a';
+  const enlightendAnchorClassName = 'enlightend-a';
 
   return (highlightedArea) => {
     if (highlightedArea.isVisible) {
@@ -56,18 +56,20 @@ export function addHighlight(
       if (isBottomInAFold) addClass(barBottomIndicator, onFoldClassName);
       else removeClass(barBottomIndicator, onFoldClassName);
 
-      lastActiveAnchors.forEach((a) => {
-        if (!anchors.includes(a)) removeClass(a, activeAnchorClassName);
+      lastEnlightendAnchors.forEach((a) => {
+        if (!anchors.includes(a)) removeClass(a, enlightendAnchorClassName);
       });
       anchors.forEach((a) => {
-        if (!classContains(a, activeAnchorClassName))
-          addClass(a, activeAnchorClassName);
+        if (!classContains(a, enlightendAnchorClassName))
+          addClass(a, enlightendAnchorClassName);
       });
 
-      lastActiveAnchors = anchors;
+      lastEnlightendAnchors = anchors;
     } else {
       bar.style.display = 'none';
-      lastActiveAnchors.forEach((a) => removeClass(a, activeAnchorClassName));
+      lastEnlightendAnchors.forEach((a) =>
+        removeClass(a, enlightendAnchorClassName),
+      );
     }
   };
 }
