@@ -1,0 +1,45 @@
+/* This theme is ChatGPT generated based on Leonardo Da Vinci's Notebook */
+
+.nt-widget[data-theme="vinci-light"] {
+  --bg: hsl(35 40% 94%); /* Light parchment beige */
+  --fg: hsl(35 30% 15%); /* Rich sepia text */
+  --bg-anchor-hover: hsl(35 35% 88%); /* Slightly darker parchment */
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(35 35% 85%); /* Muted beige */
+  --bg-topbar-btn: var(--bg);
+  --bg-topbar-btn-hover: hsl(35 35% 88%);
+  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
+  --bg-topbar-btn-disabled: var(--bg);
+  --fg-topbar-btn-disabled: hsl(35 25% 50%); /* Soft brown */
+  --border-topbar-btn: hsl(35 35% 85%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(35 30% 75%); /* Subtle line */
+  --indent-line-highlight: hsl(35 40% 60%); /* Parchment brown */
+  --fold-indicator-gradient-mid: hsl(35 40% 80%);
+  --light-bar: hsl(35 50% 50%); /* Soft gold highlight */
+  --light-bar-tip-on-fold: hsl(50 60% 70%); /* Bright golden glow */
+  --light-opacity: 0.2;
+}
+
+.nt-widget[data-theme="vinci-dark"] {
+  --bg: hsl(35 30% 15%); /* Deep parchment brown */
+  --fg: hsl(35 20% 85%); /* Aged ivory text */
+  --bg-anchor-hover: hsl(35 25% 25%); /* Slightly lighter parchment */
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(35 20% 20%); /* Muted brown */
+  --bg-topbar-btn: var(--bg);
+  --bg-topbar-btn-hover: hsl(35 25% 25%);
+  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
+  --bg-topbar-btn-disabled: var(--bg);
+  --fg-topbar-btn-disabled: hsl(35 15% 55%); /* Muted beige */
+  --border-topbar-btn: hsl(35 25% 25%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(35 25% 35%); /* Slightly highlighted brown */
+  --indent-line-highlight: hsl(35 40% 55%); /* Bright parchment highlight */
+  --fold-indicator-gradient-mid: hsl(35 30% 40%);
+  --light-bar: hsl(35 50% 60%); /* Warm parchment glow */
+  --light-bar-tip-on-fold: hsl(50 60% 75%); /* Golden highlight */
+  --light-opacity: 0.2;
+}

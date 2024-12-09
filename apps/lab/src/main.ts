@@ -5,11 +5,11 @@ import neotoc from "neotoc";
 
 neotoc({
   io: "article >> h* >> #sidebar",
-  theme: "gruvbox-light",
+  theme: "vinci-light",
   ellipsis: true,
 });
 neotoc({
   io: "article >> h* >> #sidebar-1",
-  theme: "gruvbox-dark",
+  theme: "vinci-dark",
   ellipsis: true,
 });
