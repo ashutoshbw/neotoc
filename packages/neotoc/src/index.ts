@@ -357,7 +357,7 @@ export default function neotoc({
 
   const toc = genToc(headings);
 
-  if (!toc) return { remove() {} };
+  if (!toc) return () => {};
 
   const appendTarget = document.querySelector(selectorPart3);
   if (!appendTarget) throw new Error('Nothing was found to append Neotoc to!');
@@ -724,10 +724,8 @@ export default function neotoc({
   foldAllBtn.addEventListener('click', () => normalizeFolds(true, 1));
   unfoldAllBtn.addEventListener('click', () => normalizeFolds(false, 5));
 
-  return {
-    remove() {
-      widget.remove();
-      window.cancelAnimationFrame(rafNum);
-    },
+  return () => {
+    widget.remove();
+    window.cancelAnimationFrame(rafNum);
   };
 }

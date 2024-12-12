@@ -20,23 +20,23 @@ const noHeadingsMarkup = fs.readFileSync(noHeadingsMarkupPath).toString();
 
 it('should append the toc widget if headings are found', () => {
   document.body.innerHTML = haveHeadingsMarkup;
-  const toc = neotoc({ io: 'article >> h* >> .toc-widget' });
+  const cleanupFunc = neotoc({ io: 'article >> h* >> .toc-widget' });
   const aside = document.querySelector('.toc-widget');
   const neotocWidget = aside?.firstChild;
 
   expect(neotocWidget).toBeTruthy();
 
-  toc.remove();
+  cleanupFunc();
 });
 
 it('should append nothing if no headings are found', () => {
   document.body.innerHTML = noHeadingsMarkup;
   const aside = document.querySelector('.toc-widget');
-  const toc = neotoc({ io: 'article >> h* >> .toc-widget' });
+  const cleanupFunc = neotoc({ io: 'article >> h* >> .toc-widget' });
 
   expect(aside?.innerHTML).toBe('');
 
-  toc.remove();
+  cleanupFunc();
 });
 
 it('should throw an error if no target element is found to append the toc widget', () => {
