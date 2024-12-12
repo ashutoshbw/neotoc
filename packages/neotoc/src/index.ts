@@ -23,7 +23,6 @@ import { indentWidth, getRelativePadding } from './indents.js';
 
 interface Options {
   io: string;
-  theme?: string;
   title?: string;
   topBar?: boolean;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
@@ -46,7 +45,6 @@ interface Options {
 export default function neotoc({
   io,
   title = 'On this page',
-  theme = 'dark',
   topBar = true,
   fillAnchor = (h) => h.textContent!,
   ellipsis = false,
@@ -359,7 +357,7 @@ export default function neotoc({
 
   const toc = genToc(headings);
 
-  if (!toc) return { remove() {}, setTheme() {} };
+  if (!toc) return { remove() {} };
 
   const appendTarget = document.querySelector(selectorPart3);
   if (!appendTarget) throw new Error('Nothing was found to append Neotoc to!');
@@ -377,7 +375,6 @@ export default function neotoc({
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
 
-  widget.dataset.theme = theme;
   tocHolder.ariaLabel = title;
   tocHolder.tabIndex = 0;
   foldBtn.innerHTML = foldIcon;
@@ -731,9 +728,6 @@ export default function neotoc({
     remove() {
       widget.remove();
       window.cancelAnimationFrame(rafNum);
-    },
-    setTheme(theme: string) {
-      widget.dataset.theme = theme;
     },
   };
 }
