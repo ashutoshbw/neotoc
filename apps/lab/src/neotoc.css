@@ -22,8 +22,49 @@ Syntax of heading comments:
 /** THEME **/
 /* You will most likely want to tweak these values to match your site's theme */
 
-@import url("themes/zinc.css");
-@import url("themes/parchment.css");
+:root.light .nt-widget {
+  --bg: hsl(0 0% 100%);
+  --fg: hsl(240 10% 3.9%);
+  --bg-anchor-hover: hsl(240 4.8% 95.9%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(240 5.9% 90%);
+  --bg-topbar-btn: var(--bg);
+  --bg-topbar-btn-hover: hsl(240 4.8% 95.9%);
+  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
+  --bg-topbar-btn-disabled: var(--bg);
+  --fg-topbar-btn-disabled: hsl(240 3.8% 46.1%);
+  --border-topbar-btn: hsl(240 5.9% 90%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(240 4.9% 75%);
+  --indent-line-highlight: hsl(240 4.9% 60%);
+  --fold-indicator-gradient-mid: hsl(240 5.9% 80%);
+  --light-bar: hsl(210 60% 68%);
+  --light-bar-tip-on-fold: hsl(240 99% 88%);
+  --light-opacity: 0.2;
+}
+
+:root.dark .nt-widget {
+  --bg: hsl(240 10% 3.9%);
+  --fg: hsl(0 0% 98%);
+  --bg-anchor-hover: hsl(240 3.7% 15.9%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(240 5.9% 10%);
+  --bg-topbar-btn: var(--bg);
+  --bg-topbar-btn-hover: hsl(240 3.7% 15.9% / 50%);
+  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
+  --bg-topbar-btn-disabled: var(--bg);
+  --fg-topbar-btn-disabled: hsl(240 5% 64.9%);
+  --border-topbar-btn: hsl(240 3.7% 15.9%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(240 3.7% 28%);
+  --indent-line-highlight: hsl(240 5.2% 49%);
+  --fold-indicator-gradient-mid: hsl(240 5.9% 30%);
+  --light-bar: hsl(210 60% 68%);
+  --light-bar-tip-on-fold: hsl(240 99% 88%);
+  --light-opacity: 0.2;
+}
 
 /** SIZING AND BEHAVIOR **/
 /* Feel free to tweak these values and see what you like most */
@@ -258,7 +299,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-title {
   color: var(--fg);
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
   margin: 0;
   align-self: end;
 }
@@ -282,6 +323,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   svg {
     height: 1.4em;
     width: 1.4em;
+    display: block;
   }
 }
 
