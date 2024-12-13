@@ -326,6 +326,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-top-bar-btn {
+  font: inherit; /* for consistent button size across all browsers */
   color: var(--fg);
   background: var(--bg-topbar-btn);
   box-sizing: content-box;
