@@ -306,6 +306,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   padding-left: var(--padding-left);
   justify-content: space-between;
   gap: 1rem;
+  align-items: center;
 }
 
 .nt-title {
@@ -313,12 +314,10 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   font-size: 1em;
   font-weight: 600;
   margin: 0;
-  align-self: end;
 }
 
 .nt-btn-group {
   display: flex;
-  align-self: end;
   flex-shrink: 0;
   border-radius: 4px;
   border: 1px solid var(--border-topbar-btn);
