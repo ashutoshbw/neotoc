@@ -17,14 +17,7 @@ body {
   flex-shrink: 0;
 }
 
-#sidebar-1 {
-  position: relative;
-  width: 280px;
-  flex-shrink: 0;
-}
-
-#sidebar > *,
-#sidebar-1 > * {
+#sidebar > * {
   position: sticky;
   top: 0;
 }
