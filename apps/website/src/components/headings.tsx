@@ -19,21 +19,25 @@ export function Heading<T extends Types = "h1">({
   return (
     <As
       className={cn(
-        "relative flex scroll-m-20 tracking-tight transition",
-        as !== "h1" && "border-b",
+        "scroll-m-20 tracking-tight",
+        as !== "h1" && "relative flex border-b",
         className
       )}
       {...props}
     >
-      <a href={`#${props.id}`} className="group flex-grow pb-[0.1em]">
-        <span className="absolute left-[-0.8em] w-[0.8em] text-muted-foreground opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition">
-          <HashIcon
-            aria-label="Link to section"
-            className="inline w-[0.7em] h-[0.7em]"
-          />
-        </span>
-        {props.children}
-      </a>
+      {as == "h1" ? (
+        props.children
+      ) : (
+        <a href={`#${props.id}`} className="group flex-grow pb-[0.1em]">
+          <span className="absolute left-[-0.8em] w-[0.8em] text-muted-foreground opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition">
+            <HashIcon
+              aria-label="Link to section"
+              className="inline w-[0.7em] h-[0.7em]"
+            />
+          </span>
+          {props.children}
+        </a>
+      )}
     </As>
   );
 }
