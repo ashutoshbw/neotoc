@@ -18,16 +18,16 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       />
     ),
     h3: (props) => (
-      <Heading as="h1" className="text-2xl font-semibold" {...props} />
+      <Heading as="h3" className="text-2xl font-semibold" {...props} />
     ),
     h4: (props) => (
-      <Heading as="h1" className="text-xl font-semibold" {...props} />
+      <Heading as="h4" className="text-xl font-semibold" {...props} />
     ),
     h5: (props) => (
-      <Heading as="h1" className="text-lg font-semibold" {...props} />
+      <Heading as="h5" className="text-lg font-semibold" {...props} />
     ),
     h6: (props) => (
-      <Heading as="h1" className="text-base font-semibold" {...props} />
+      <Heading as="h6" className="text-base font-semibold" {...props} />
     ),
     ...components,
   };
