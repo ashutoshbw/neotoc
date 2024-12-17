@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import { HashIcon } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
 
@@ -17,13 +17,21 @@ export function Heading<T extends Types = "h1">({
   if (!props.id) return <As className={className} {...props} />;
 
   return (
-    <As className={cn("scroll-m-20 tracking-tight", className)} {...props}>
-      <a href={`#${props.id}`} className="group">
+    <As
+      className={cn(
+        "relative flex scroll-m-20 tracking-tight border-b transition",
+        className
+      )}
+      {...props}
+    >
+      <a href={`#${props.id}`} className="group flex-grow pb-[0.1em]">
+        <span className="absolute left-[-0.8em] w-[0.8em] text-muted-foreground opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition">
+          <HashIcon
+            aria-label="Link to section"
+            className="inline w-[0.7em] h-[0.7em]"
+          />
+        </span>
         {props.children}
-        <Link
-          aria-label="Link to section"
-          className="ml-1 inline w-[0.8em] h-[0.8em] text-muted-foreground transition-opacity opacity-0 group-hover:opacity-100"
-        />
       </a>
     </As>
   );
