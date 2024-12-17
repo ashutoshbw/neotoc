@@ -17,12 +17,12 @@ export function Heading<T extends Types = "h1">({
   if (!props.id) return <As className={className} {...props} />;
 
   return (
-    <As className={cn("", className)} {...props}>
+    <As className={cn("scroll-m-20 tracking-tight", className)} {...props}>
       <a href={`#${props.id}`} className="group">
         {props.children}
         <Link
           aria-label="Link to section"
-          className="ml-1 inline size-3.5 text-muted-foreground transition-opacity opacity-0 group-hover:opacity-100"
+          className="ml-1 inline w-[0.8em] h-[0.8em] text-muted-foreground transition-opacity opacity-0 group-hover:opacity-100"
         />
       </a>
     </As>
