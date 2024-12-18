@@ -5,10 +5,10 @@ import neotoc from "neotoc";
 import "./neotoc.css";
 
 export default function Toc({ from }: { from: string }) {
-  const outEltRef = useRef<HTMLDivElement>(null);
+  const toRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    return neotoc({ io: `${from} >> h*`, to: outEltRef.current! });
+    return neotoc({ io: `${from} >> h*`, to: toRef.current! });
   }, [from]);
-  return <div ref={outEltRef}></div>;
+  return <div ref={toRef}></div>;
 }
