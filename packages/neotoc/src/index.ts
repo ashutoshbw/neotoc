@@ -23,6 +23,7 @@ import { indentWidth, getRelativePadding } from './indents.js';
 
 interface Options {
   io: string;
+  to?: HTMLElement;
   title?: string;
   topBar?: boolean;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
@@ -44,6 +45,7 @@ interface Options {
 
 export default function neotoc({
   io,
+  to,
   title = 'On this page',
   topBar = true,
   fillAnchor = (h) => h.textContent!,
@@ -359,7 +361,9 @@ export default function neotoc({
 
   if (!toc) return () => {};
 
-  const appendTarget = document.querySelector(selectorPart3);
+  const appendTarget = selectorPart3
+    ? document.querySelector(selectorPart3)
+    : to;
   if (!appendTarget) throw new Error('Nothing was found to append Neotoc to!');
 
   const widget = elt('div', 'widget');
