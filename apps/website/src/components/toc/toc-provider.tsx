@@ -3,14 +3,12 @@ import { useState, useEffect } from "react";
 import neotoc from "neotoc";
 import { TocContext } from "./toc-context";
 import "./neotoc.css";
-import "./themes.css";
 
 export function TocProvider({ children }: { children: React.ReactNode }) {
   const [toc, setToc] = useState<HTMLDivElement | null>(null);
   const [autoFold, setAutoFold] = useState(false);
   const [relativeFontSize, setRelativeFontSize] = useState(94);
   const [indentLineGap, setIndentLineGap] = useState(5);
-  const [theme, setTheme] = useState("default");
 
   useEffect(() => {
     const removeToc = neotoc({
@@ -27,17 +25,7 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     toc?.style.setProperty("--relative-font-size", `${relativeFontSize}`);
     toc?.style.setProperty("--indent-line-gap", `${indentLineGap}px`);
-    if (theme !== "default") {
-      console.log(theme);
-      if (toc) {
-        toc.dataset.theme = theme;
-      }
-    } else {
-      if (toc) {
-        delete toc.dataset.theme;
-      }
-    }
-  }, [toc, relativeFontSize, indentLineGap, theme]);
+  }, [toc, relativeFontSize, indentLineGap]);
 
   return (
     <TocContext.Provider
@@ -49,8 +37,6 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
         setIndentLineGap,
         relativeFontSize,
         setRelativeFontSize,
-        theme,
-        setTheme,
       }}
     >
       {children}

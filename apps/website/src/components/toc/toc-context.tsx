@@ -8,8 +8,6 @@ type TocContextType = {
   setRelativeFontSize: Dispatch<SetStateAction<number>>;
   indentLineGap: number;
   setIndentLineGap: Dispatch<SetStateAction<number>>;
-  theme: string;
-  setTheme: Dispatch<SetStateAction<string>>;
 } | null;
 
 export const TocContext = createContext<TocContextType>(null);
