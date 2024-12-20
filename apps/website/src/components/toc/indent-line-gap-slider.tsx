@@ -12,7 +12,7 @@ export function IndentLineGapSlider() {
           <code>--indent-line-gap</code>:
         </span>
         <Slider
-          className="w-[80px] flex-shrink-0"
+          className="w-[80px] flex-shrink-0 cursor-pointer"
           value={[tc.indentLineGap]}
           max={20}
           min={0}

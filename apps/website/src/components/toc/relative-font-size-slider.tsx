@@ -12,7 +12,7 @@ export function RelativeFontSizeSlider() {
           <code>--relative-font-size</code>:
         </span>
         <Slider
-          className="w-[80px] flex-shrink-0"
+          className="w-[80px] flex-shrink-0 cursor-pointer"
           value={[tc.relativeFontSize]}
           max={100}
           min={90}
