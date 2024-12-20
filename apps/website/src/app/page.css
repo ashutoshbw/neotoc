@@ -1,0 +1,30 @@
+:root {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+#sidebar {
+  position: relative;
+  width: 280px;
+  flex-shrink: 0;
+}
+
+#sidebar-1 {
+  position: relative;
+  width: 280px;
+  flex-shrink: 0;
+}
+
+#sidebar > *,
+#sidebar-1 > * {
+  position: sticky;
+  top: 0;
+}
