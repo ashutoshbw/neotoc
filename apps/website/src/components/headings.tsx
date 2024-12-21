@@ -20,7 +20,7 @@ export function Heading<T extends Types = "h1">({
     <As
       className={cn(
         "scroll-m-20 tracking-tight",
-        as !== "h1" && "relative flex border-b",
+        as !== "h1" && "relative flex border-b font-semibold",
         className
       )}
       {...props}
