@@ -13,9 +13,9 @@ export const ThemeToggler = () => {
 
   return (
     <div>
-      <Button variant="outline" size="icon" onClick={toggleTheme}>
-        <Sun className="h-[1.2rem] w-[1.2rem] scale-0 dark:scale-100" />
-        <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-100 dark:scale-0" />
+      <Button variant="ghost" size="icon" onClick={toggleTheme}>
+        <Sun className="h-[1.2rem] w-[1.2rem] scale-100 dark:scale-0" />
+        <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 dark:scale-100" />
         <span className="sr-only">Toggle theme</span>
       </Button>
     </div>
