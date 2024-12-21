@@ -115,9 +115,13 @@ export default function neotoc({
     .split('>>')
     .map((s) => s.trim());
 
-  const headings = document.querySelectorAll<HTMLHeadingElement>(
-    `${selectorPart1} :is(${selectorPart2 == 'h*' ? 'h1,h2,h3,h4,h5,h6' : selectorPart2})`,
-  );
+  function getHeadings() {
+    return document.querySelectorAll<HTMLHeadingElement>(
+      `${selectorPart1} :is(${selectorPart2 == 'h*' ? 'h1,h2,h3,h4,h5,h6' : selectorPart2})`,
+    );
+  }
+
+  let headings = getHeadings();
   const firstHeadingLevel = headings.length > 0 ? +headings[0].tagName[1] : 0;
 
   function genToc(
@@ -517,6 +521,16 @@ export default function neotoc({
         );
       }
     };
+
+    // This is to avoid holding unattached headings to the dom
+    // in Next.js when a simple state change happens in the
+    // parent component where the toc stays. I don't know why
+    // it happens in Next.js. It doesn't happen in Vite. However
+    // the following is a quickfix for this.
+    if (headings[0].getBoundingClientRect().height === 0) {
+      // checking for height 0 is safe because you don't want your headings to of 0 height
+      headings = getHeadings();
+    }
 
     for (let i = 0; i < headings.length; i++) {
       const curH = headings[i];
