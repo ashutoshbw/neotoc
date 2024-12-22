@@ -522,11 +522,15 @@ export default function neotoc({
       }
     };
 
-    // This is to avoid holding unattached headings to the dom
-    // in Next.js when a simple state change happens in the
-    // parent component where the toc stays. I don't know why
-    // it happens in Next.js. It doesn't happen in Vite. However
-    // the following is a quickfix for this.
+    /*
+      When used in Next.js, sometimes probably because of a bug in its mdx
+      logic, when state changes in parent component, headings are forgotten.
+      I found that for the doc website the following file causes the problem:
+      https://github.com/ashutoshbw/neotoc/blob/71f37eeb92ef6f16ec2fd2c5c445828a0b25f944/apps/www/src/components/headings.tsx
+      Though there seems nothing wrong in it.
+      However, following is a way to stay responsive in such cases and you are
+      good to go.
+    */
     if (headings[0].getBoundingClientRect().height === 0) {
       // checking for height 0 is safe because you don't want your headings to of 0 height
       headings = getHeadings();
