@@ -124,6 +124,15 @@ importers:
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: ^0.468.0
+        version: 0.468.0(react@19.0.0)
       next:
         specifier: 15.1.2
         version: 15.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -136,6 +145,12 @@ importers:
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
+      tailwind-merge:
+        specifier: ^2.5.5
+        version: 2.5.5
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.17)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -6078,6 +6093,10 @@ snapshots:
   loupe@3.1.2: {}
 
   lru-cache@10.4.3: {}
+
+  lucide-react@0.468.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   lucide-react@0.468.0(react@19.0.0-rc.1):
     dependencies:
