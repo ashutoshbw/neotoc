@@ -136,6 +136,9 @@ importers:
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@19.0.0)
+      neotoc:
+        specifier: workspace:*
+        version: link:../../packages/neotoc
       next:
         specifier: 15.1.2
         version: 15.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -151,6 +154,9 @@ importers:
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
+      remark-smartypants:
+        specifier: ^3.0.2
+        version: 3.0.2
       tailwind-merge:
         specifier: ^2.5.5
         version: 2.5.5
