@@ -112,6 +112,18 @@ importers:
 
   apps/www:
     dependencies:
+      '@mdx-js/loader':
+        specifier: ^3.1.0
+        version: 3.1.0(acorn@8.14.0)
+      '@mdx-js/react':
+        specifier: ^3.1.0
+        version: 3.1.0(@types/react@19.0.2)(react@19.0.0)
+      '@next/mdx':
+        specifier: ^15.1.0
+        version: 15.1.2(@mdx-js/loader@3.1.0(acorn@8.14.0))(@mdx-js/react@3.1.0(@types/react@19.0.2)(react@19.0.0))
+      '@types/mdx':
+        specifier: ^2.0.13
+        version: 2.0.13
       next:
         specifier: 15.1.2
         version: 15.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -121,6 +133,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      rehype-slug:
+        specifier: ^6.0.0
+        version: 6.0.0
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -4068,6 +4083,12 @@ snapshots:
       '@types/react': 18.3.18
       react: 19.0.0-rc.1
 
+  '@mdx-js/react@3.1.0(@types/react@19.0.2)(react@19.0.0)':
+    dependencies:
+      '@types/mdx': 2.0.13
+      '@types/react': 19.0.2
+      react: 19.0.0
+
   '@next/env@15.1.0': {}
 
   '@next/env@15.1.2': {}
@@ -4086,6 +4107,13 @@ snapshots:
     optionalDependencies:
       '@mdx-js/loader': 3.1.0(acorn@8.14.0)
       '@mdx-js/react': 3.1.0(@types/react@18.3.18)(react@19.0.0-rc.1)
+
+  '@next/mdx@15.1.2(@mdx-js/loader@3.1.0(acorn@8.14.0))(@mdx-js/react@3.1.0(@types/react@19.0.2)(react@19.0.0))':
+    dependencies:
+      source-map: 0.7.4
+    optionalDependencies:
+      '@mdx-js/loader': 3.1.0(acorn@8.14.0)
+      '@mdx-js/react': 3.1.0(@types/react@19.0.2)(react@19.0.0)
 
   '@next/swc-darwin-arm64@15.1.0':
     optional: true
