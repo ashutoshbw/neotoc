@@ -312,7 +312,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   gap: 1rem;
   align-items: flex-end;
   height: var(--top-bar-height);
-  padding-bottom: 0.5rem;
+  padding-block: 0.55rem;
 }
 
 .nt-title {
