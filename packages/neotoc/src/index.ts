@@ -25,7 +25,6 @@ interface Options {
   io: string;
   to?: HTMLElement;
   title?: string;
-  topBar?: boolean;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
   ellipsis?: boolean;
   classPrefix?: string;
@@ -47,7 +46,6 @@ export default function neotoc({
   io,
   to,
   title = 'On this page',
-  topBar = true,
   fillAnchor = (h) => h.textContent!,
   ellipsis = false,
   classPrefix = 'nt-',
@@ -422,7 +420,7 @@ export default function neotoc({
   titleH2.innerHTML = title;
   topBarDiv.append(titleH2, btnGroup);
   tocHolder.append(toc, topGradient, bottomGradient);
-  if (topBar) widget.append(topBarDiv);
+  widget.append(topBarDiv);
   widget.append(tocHolder);
   appendTarget.append(widget);
 
