@@ -23,8 +23,8 @@ Syntax of heading comments:
 /* You will most likely want to tweak these values to match your site's theme */
 
 :root.light .nt-widget {
-  --bg: hsl(0 0% 100%);
-  --fg: hsl(240 10% 3.9%);
+  --bg: hsl(0 0% 97%);
+  --fg: hsl(240 3.8% 36.1%);
   --bg-anchor-hover: hsl(240 4.8% 95.9%);
   --bg-anchor-active: var(--bg-anchor-hover);
   --bg-sub-anchors: hsl(240 5.9% 90%);
@@ -32,7 +32,7 @@ Syntax of heading comments:
   --bg-topbar-btn-hover: hsl(240 4.8% 95.9%);
   --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
   --bg-topbar-btn-disabled: var(--bg);
-  --fg-topbar-btn-disabled: hsl(240 3.8% 46.1%);
+  --fg-topbar-btn-disabled: hsl(240 3.8% 66.1%);
   --border-topbar-btn: hsl(240 5.9% 90%);
   --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
   --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
@@ -45,8 +45,8 @@ Syntax of heading comments:
 }
 
 :root.dark .nt-widget {
-  --bg: hsl(240 10% 3.9%);
-  --fg: hsl(0 0% 98%);
+  --bg: hsl(240 10% 6.9%);
+  --fg: hsl(240 5% 74.9%);
   --bg-anchor-hover: hsl(240 3.7% 15.9%);
   --bg-anchor-active: var(--bg-anchor-hover);
   --bg-sub-anchors: hsl(240 5.9% 10%);
@@ -54,7 +54,7 @@ Syntax of heading comments:
   --bg-topbar-btn-hover: hsl(240 3.7% 15.9% / 50%);
   --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
   --bg-topbar-btn-disabled: var(--bg);
-  --fg-topbar-btn-disabled: hsl(240 5% 64.9%);
+  --fg-topbar-btn-disabled: hsl(240 5% 34.9%);
   --border-topbar-btn: hsl(240 3.7% 15.9%);
   --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
   --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
@@ -64,6 +64,15 @@ Syntax of heading comments:
   --light-bar: hsl(210 60% 68%);
   --light-bar-tip-on-fold: hsl(240 99% 88%);
   --light-opacity: 0.2;
+}
+
+@media (min-width: 768px) {
+  :root.light .nt-widget {
+    --bg: hsl(0 0% 100%);
+  }
+  :root.dark .nt-widget {
+    --bg: hsl(240 10% 3.9%);
+  }
 }
 
 /** SIZING AND BEHAVIOR **/
