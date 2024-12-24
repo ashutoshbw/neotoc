@@ -25,9 +25,9 @@ Syntax of heading comments:
 :root.light .nt-widget {
   --bg: hsl(0 0% 97%);
   --fg: hsl(240 3.8% 36.1%);
-  --bg-anchor-hover: hsl(240 4.8% 95.9%);
+  --bg-anchor-hover: hsl(240 5.9% 87%);
   --bg-anchor-active: var(--bg-anchor-hover);
-  --bg-sub-anchors: hsl(240 5.9% 90%);
+  --bg-sub-anchors: hsl(240 4.8% 92%);
   --bg-topbar-btn: var(--bg);
   --bg-topbar-btn-hover: hsl(240 4.8% 95.9%);
   --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
@@ -69,6 +69,8 @@ Syntax of heading comments:
 @media (min-width: 768px) {
   :root.light .nt-widget {
     --bg: hsl(0 0% 100%);
+    --bg-anchor-hover: hsl(240 5.9% 90%);
+    --bg-sub-anchors: hsl(240 4.8% 95.9%);
   }
   :root.dark .nt-widget {
     --bg: hsl(240 10% 3.9%);
