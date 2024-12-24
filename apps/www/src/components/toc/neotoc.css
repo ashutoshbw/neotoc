@@ -71,7 +71,7 @@ Syntax of heading comments:
 
 .nt-widget {
   --height: calc(
-    100vh - var(--site-header-height) - var(--top-breathing-space) -
+    100dvh - var(--site-header-height) - var(--top-breathing-space) -
       var(--bottom-breathing-space)
   );
   --top-bar-height: 3rem;
@@ -140,7 +140,8 @@ Syntax of heading comments:
   padding-block: 0.5rem;
   padding-right: 0.5rem;
   position: relative;
-  height: calc(var(--height) - var(--top-bar-height));
+  max-height: calc(var(--height) - var(--top-bar-height));
+  transition: max-height 0.15s;
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
