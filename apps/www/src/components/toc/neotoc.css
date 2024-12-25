@@ -112,6 +112,7 @@ Syntax of heading comments:
 
 .nt-widget {
   background: var(--bg);
+  font-size: 0.96em;
   line-height: 1.5;
   animation-name: fade-in;
   animation-duration: 1s;
@@ -329,7 +330,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 
 .nt-title {
   color: var(--fg);
-  font-size: 1em;
+  font-size: 1.1em;
   font-weight: 600;
   margin: 0;
 }
