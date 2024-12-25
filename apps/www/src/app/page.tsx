@@ -4,11 +4,26 @@ import { ThemeToggler } from "@/components/theme-toggler";
 import { TocProvider } from "@/components/toc/toc-provider";
 import Doc from "./doc.mdx";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [tocVisibility, setTocVisibility] = useState(false);
+
+  function handleArticleClick(e: React.MouseEvent<HTMLElement>) {
+    const elt = e.target as HTMLElement;
+    let parent = elt.parentElement;
+    while (parent) {
+      if (parent.tagName === "ARTICLE") break;
+      if (parent.dataset.ntController !== undefined) return;
+      parent = parent.parentElement;
+    }
+
+    if (tocVisibility) {
+      setTocVisibility(false);
+    }
+  }
+
   return (
     <div className="[--site-header-height:3.25rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:20dvh] flex flex-col min-h-[100dvh]">
       <header className="h-[var(--site-header-height)] border-b sticky top-0 z-50 bg-background/60 backdrop-blur">
@@ -25,7 +40,10 @@ export default function Home() {
         </div>
       </header>
       <div className="flex justify-center mb-8">
-        <article className="w-[67ch] mt-8 md:mx-8 mx-4">
+        <article
+          className="w-[67ch] mt-8 md:mx-8 mx-4"
+          onClick={handleArticleClick}
+        >
           <TocProvider>
             <Doc />
           </TocProvider>
