@@ -25,7 +25,7 @@ export default function Home() {
         </div>
       </header>
       <div className="flex justify-center mb-8">
-        <article className="w-[67ch] mt-8 mx-8">
+        <article className="w-[67ch] mt-8 md:mx-8 mx-4">
           <TocProvider>
             <Doc />
           </TocProvider>
