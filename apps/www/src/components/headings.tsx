@@ -29,13 +29,16 @@ export function Heading<T extends Types = "h1">({
         props.children
       ) : (
         <a href={`#${props.id}`} className="group flex-grow pb-[0.1em]">
-          <span className="absolute left-[-0.8em] w-[0.8em] text-muted-foreground opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition">
-            <HashIcon
-              aria-label="Link to section"
-              className="inline w-[0.7em] h-[0.7em]"
-            />
+          <span className="absolute md:inline hidden left-[-0.8em] text-muted-foreground opacity-0 group-hover:opacity-100 transition">
+            <HashIcon className="inline w-[0.7em] h-[0.7em]" />
           </span>
           {props.children}
+          <span className="md:sr-only text-muted-foreground">
+            <HashIcon
+              aria-label="Link to section"
+              className="inline w-[0.7em] h-[0.7em] ml-[0.15em]"
+            />
+          </span>
         </a>
       )}
     </As>
