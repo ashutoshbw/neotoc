@@ -25,7 +25,7 @@ export default function Home() {
   }
 
   return (
-    <div className="[--site-header-height:3.25rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:20dvh] flex flex-col min-h-[100dvh]">
+    <div className="[--site-header-height:3.25rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
       <header className="h-[var(--site-header-height)] border-b sticky top-0 z-50 bg-background/60 backdrop-blur">
         <div className="px-2 flex items-center justify-between h-full">
           <Button
