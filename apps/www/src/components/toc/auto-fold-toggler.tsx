@@ -7,14 +7,16 @@ export function AutoFoldToggler() {
 
   return (
     tc && (
-      <Button
-        onClick={() => {
-          tc.setAutoFold(!tc.autoFold);
-        }}
-        variant="outline"
-      >
-        Turn {tc.autoFold ? "off" : "on"} Auto Folding
-      </Button>
+      <span data-nt-controller>
+        <Button
+          onClick={() => {
+            tc.setAutoFold(!tc.autoFold);
+          }}
+          variant="outline"
+        >
+          Turn {tc.autoFold ? "off" : "on"} Auto Folding
+        </Button>
+      </span>
     )
   );
 }

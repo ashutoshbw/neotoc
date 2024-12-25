@@ -7,14 +7,16 @@ export function EllipsisToggler() {
 
   return (
     tc && (
-      <Button
-        onClick={() => {
-          tc.setEllipsis(!tc.ellipsis);
-        }}
-        variant="outline"
-      >
-        {tc.ellipsis ? "Do not use" : "Use"} Ellipsis(…)
-      </Button>
+      <span data-nt-controller>
+        <Button
+          onClick={() => {
+            tc.setEllipsis(!tc.ellipsis);
+          }}
+          variant="outline"
+        >
+          {tc.ellipsis ? "Do not use" : "Use"} Ellipsis(…)
+        </Button>
+      </span>
     )
   );
 }

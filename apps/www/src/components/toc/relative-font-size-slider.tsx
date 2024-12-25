@@ -7,7 +7,7 @@ export function RelativeFontSizeSlider() {
 
   return (
     tc && (
-      <div className="flex gap-2">
+      <div className="flex gap-2" data-nt-controller>
         <span className="flex-shrink-0">
           <code>--relative-font-size</code>:
         </span>
