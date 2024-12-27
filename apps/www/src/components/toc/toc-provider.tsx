@@ -13,7 +13,7 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const removeToc = neotoc({
-      io: "article >> h* >> #sidebar",
+      io: "article >> h2,h3,h4,h5,h6 >> #sidebar",
       autoFold: autoFold,
       ellipsis: ellipsis,
     });
