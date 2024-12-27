@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import { Heading } from "@/components/headings";
+import { Code, InlineCode } from "@/components/code/code";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -20,6 +21,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     p: (props) => (
       <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />
     ),
+    Code,
+    InlineCode,
     ...components,
   };
 }

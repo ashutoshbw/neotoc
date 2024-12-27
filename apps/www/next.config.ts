@@ -5,12 +5,10 @@ import rehypeSlug from "rehype-slug";
 import { remarkCodeHike, recmaCodeHike, CodeHikeConfig } from "codehike/mdx";
 
 const chConfig: CodeHikeConfig = {
-  // optional (see https://codehike.org/docs/concepts/code):
-  components: { code: "Code" },
-  // if you can't use RSC:
-  // syntaxHighlighting: {
-  //   theme: "github-dark",
-  // },
+  components: { code: "Code", inlineCode: "InlineCode" },
+  syntaxHighlighting: {
+    theme: "github-from-css",
+  },
 };
 
 const nextConfig: NextConfig = {
