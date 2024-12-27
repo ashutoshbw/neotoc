@@ -21,6 +21,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     p: (props) => (
       <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />
     ),
+    ul: (props) => (
+      <ul className="my-6 ml-6 list-disc [&>li]:mt-2 [&_ul]:mt-0" {...props} />
+    ),
     Code,
     InlineCode,
     ...components,
