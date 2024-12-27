@@ -1,7 +1,35 @@
-# Hello world
+import { IndentLineGapSlider } from "@/components/toc/indent-line-gap-slider";
+import { RelativeFontSizeSlider } from "@/components/toc/relative-font-size-slider";
+import { AutoFoldSwitch } from "@/components/toc/auto-fold-switch";
 
-A para
+# Neotoc Doc
+Neotoc creates an interactive TOC(table of contents) by parsing the DOM inside the browser.
 
-## Demo
+The TOC you see on the right is made with neotoc. Let's walk you through some of its features:
 
-Hello Demo
+- __Fluid highlight of the view__: Scroll the page to experience it.
+- __Auto scrolling the toc__: Scroll the page to experience it.
+- __Folding/Unfolding__: Try folding unfolding the toc if you haven't yet!
+- __Auto Folding/Unfolding__: <AutoFoldToggler />
+- __CSSable__: Try playing with sliders below to get an idea:
+  - <RelativeFontSizeSlider />
+  - <IndentLineGapSlider />
+  - and there are many more CSS variables that you can tweak as your need.
+
+It also the following features:
+- Accessibility support.
+- Zero dependency.
+- Performant.
+- Lightweight.
+- Framework agnostic. You can use it in vanilla HTML CSS JS setup to framework like Next.js. This is doc is made with Next.js.
+
+I hope you are now excited to try it out. Let's jump right into it.
+
+## Quick start: The 3 line setup
+
+```js
+import neotoc from "neotoc";
+import "./neotoc.css";
+
+neotoc({ io: "article >> h* >> aside" });
+```
