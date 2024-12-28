@@ -7,8 +7,7 @@ export function EllipsisSwitch() {
 
   return (
     tc && (
-      <span data-nt-controller className="flex items-center gap-2">
-        Ellipsis:{" "}
+      <span data-nt-controller className="relative top-[2px]">
         <Switch
           checked={tc.ellipsis}
           onCheckedChange={(checked) => tc.setEllipsis(checked)}

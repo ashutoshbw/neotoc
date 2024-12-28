@@ -24,10 +24,16 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ul: (props) => (
       <ul className="my-4 ml-6 list-disc [&>li]:mt-2 [&_ul]:my-0" {...props} />
     ),
+    ol: (props) => (
+      <ul
+        className="my-4 ml-6 list-decimal [&>li]:mt-2 [&_ul]:my-0"
+        {...props}
+      />
+    ),
     Code,
     code: (props) => (
       <code
-        className="px-2 py-[4px] rounded bg-zinc-200 dark:bg-zinc-800"
+        className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm"
         {...props}
       />
     ),
