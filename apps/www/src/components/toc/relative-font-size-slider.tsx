@@ -7,21 +7,23 @@ export function RelativeFontSizeSlider() {
 
   return (
     tc && (
-      <div className="flex gap-2" data-nt-controller>
+      <div className="flex gap-2 flex-wrap" data-nt-controller>
         <span className="flex-shrink-0">
           <code>--relative-font-size</code>:
         </span>
-        <Slider
-          className="w-[80px] flex-shrink-0 cursor-pointer"
-          value={[tc.relativeFontSize]}
-          max={100}
-          min={90}
-          step={0.1}
-          onValueChange={([v]) => {
-            tc.setRelativeFontSize(v);
-          }}
-        />
-        <span>{tc.relativeFontSize}</span>
+        <span className="flex gap-2">
+          <Slider
+            className="w-[80px] cursor-pointer"
+            value={[tc.relativeFontSize]}
+            max={100}
+            min={90}
+            step={0.1}
+            onValueChange={([v]) => {
+              tc.setRelativeFontSize(v);
+            }}
+          />
+          <span>{tc.relativeFontSize}</span>
+        </span>
       </div>
     )
   );
