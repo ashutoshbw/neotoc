@@ -16,6 +16,14 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
       io: "article >> h2,h3,h4,h5,h6 >> #sidebar",
       autoFold: autoFold,
       ellipsis: ellipsis,
+      fillAnchor(h) {
+        const a = h.firstChild;
+        const span = document.createElement("span");
+        span.append(
+          ...[...a!.childNodes].slice(1, -1).map((n) => n.cloneNode(true))
+        );
+        return span;
+      },
     });
     const tocWidget = document.querySelector<HTMLDivElement>(
       "#sidebar .nt-widget"
