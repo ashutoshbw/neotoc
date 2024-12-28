@@ -5,7 +5,7 @@ import rehypeSlug from "rehype-slug";
 import { remarkCodeHike, recmaCodeHike, CodeHikeConfig } from "codehike/mdx";
 
 const chConfig: CodeHikeConfig = {
-  components: { code: "Code", inlineCode: "InlineCode" },
+  components: { code: "Code" },
   syntaxHighlighting: {
     theme: "github-from-css",
   },

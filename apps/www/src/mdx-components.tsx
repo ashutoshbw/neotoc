@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import { Heading } from "@/components/headings";
-import { Code, InlineCode } from "@/components/code/code";
+import { Code } from "@/components/code/code";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -22,10 +22,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />
     ),
     ul: (props) => (
-      <ul className="my-6 ml-6 list-disc [&>li]:mt-2 [&_ul]:my-0" {...props} />
+      <ul className="my-4 ml-6 list-disc [&>li]:mt-2 [&_ul]:my-0" {...props} />
     ),
     Code,
-    InlineCode,
+    code: (props) => (
+      <code
+        className="px-2 py-[4px] rounded bg-zinc-200 dark:bg-zinc-800"
+        {...props}
+      />
+    ),
     ...components,
   };
 }
