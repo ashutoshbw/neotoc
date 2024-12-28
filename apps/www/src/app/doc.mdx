@@ -26,8 +26,7 @@ Here are some controllers I made for you to easily experience its customizabilit
 - Turn on/off Auto folding: <AutoFoldSwitch />
 - Turn on/off ellipsis for long headings: <EllipsisSwitch />
 
-There are many many more things that you can do. But that's for the rest of this doc. I hope you are now fully excited to try it out as I'm to share it with you.
-
+There are many many more things that you can do. But that's for the rest of this doc. I hope you are now as excited to try it out as I'm to share it with you.
 
 ## Quick start guide: It is just three lines away
 
@@ -64,7 +63,7 @@ Note that to get things work nicely Neotoc expect two things:
 - Heading that you look for must have ids.
 - And those headings should appear in a sensible order. By sensible order, I mean:
   - First found heading's level is considered the largest one. So if you choose `<h2>` as your first heading, you must not use the `<h1>` heading later.
-  - There must be no gap between two heading levels when going top to bottom. That is after `<h2>`, you should not use the heading `<h4>`.
+  - There must be no gap between two heading levels when going top to bottom. So, after `<h2>` you should not use the heading `<h4>`.
 
 Now you have good foundation knowledge about it. Let's now dive into its API.
 
@@ -76,12 +75,28 @@ Now you have good foundation knowledge about it. Let's now dive into its API.
 import neotoc from "neotoc";
 ```
 
-`neotoc` takes a options object. The only required option is the `io` option.
+`neotoc` takes a options object and returns a cleaup function.
 
-This function returns a cleaup function. If you are using `neotoc` in React or other library/framework, you will probably need to call or return this function where it is needed. For React, the pattern is like below:
+If you are using `neotoc` in React or other library/framework, you will probably need to call or return this function where it is needed. For React for example, the pattern is like below:
 
 ```tsx
-  useEffect(() => {
-    return neotoc({ io: "article >> h2,h3,h4,h5,h6 >> aside" });
-  }, []);
+useEffect(() => {
+  const removeNeotoc = neotoc({
+    io: "article >> h2,h3,h4,h5,h6 >> aside"
+  });
+
+  return () => {
+    removeNeotoc();
+  };
+}, []);
 ```
+
+In you have a vanilla HTML CSS JS setup you usually don't need use the cleanup function.
+
+Now let's see all of it's options in detail.
+
+### Options
+
+#### `io`
+
+This is the only required option.
