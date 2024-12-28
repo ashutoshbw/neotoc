@@ -41,7 +41,7 @@ export default function Home() {
       </header>
       <div className="flex justify-center mb-8">
         <article
-          className="w-[67ch] mt-8 md:mx-8 mx-4"
+          className="w-[67ch] mt-8 md:mx-8 mx-4 overflow-auto"
           onClick={handleArticleClick}
         >
           <TocProvider>
