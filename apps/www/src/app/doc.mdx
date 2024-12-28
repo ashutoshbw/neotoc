@@ -70,4 +70,18 @@ Now you have good foundation knowledge about it. Let's now dive into its API.
 
 ## Neotoc API
 
+`neotoc` package only has a default export. It's the function that you call to create the toc. Here we will name this function as `neotoc` too:
 
+```js
+import neotoc from "neotoc";
+```
+
+`neotoc` takes a options object. The only required option is the `io` option.
+
+This function returns a cleaup function. If you are using `neotoc` in React or other library/framework, you will probably need to call or return this function where it is needed. For React, the pattern is like below:
+
+```tsx
+  useEffect(() => {
+    return neotoc({ io: "article >> h2,h3,h4,h5,h6 >> aside" });
+  }, []);
+```
