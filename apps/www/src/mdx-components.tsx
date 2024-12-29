@@ -30,6 +30,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
+    a: (props) => (
+      <a
+        className="text-blue-600 dark:text-blue-400 hover:underline"
+        {...props}
+      />
+    ),
     Code,
     code: (props) => (
       <code
