@@ -42,8 +42,7 @@ export default function DocLayout({
         id="sidebar"
       ></aside>
       <Button
-        className="md:hidden fixed bottom-4 right-4 [&_svg]:size-6 [&_svg]:stroke-1"
-        variant="secondary"
+        className="md:hidden fixed bottom-4 right-4 [&_svg]:size-6 bg-gradient-to-r from-zinc-500 to-zinc-400 shadow-xl shadow-zinc-500/50"
         size="icon"
         onClick={() => {
           setTocVisibility(!tocVisibility);
