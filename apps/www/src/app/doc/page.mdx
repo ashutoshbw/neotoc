@@ -148,7 +148,15 @@ __Tip__: You can't have the same node in two places in the DOM. You will need to
 #### `ellipsis`
 
 Type: `boolean`<br />
-Default Value: `false`
+Default value: `false`
 
 If `true`, long heading's text is truncated with ... instead of wrapping it to the next line. If you hover of the anchor the full text is shown in the browser default tooltip.
 
+#### `classPrefix`
+
+Type: `string`<br />
+Default value: `nt-`
+
+All the CSS classes assigned to different elements in the TOC UI are by default prefixed with `nt-` as an attempt to avoid class name collision.
+
+This the `nt-` prefix is already used in class names of other elements of your page, you should set a different value here. And in your CSS for neotoc, you will also have to replace all occurances of `nt-` with your chosen prefix.
