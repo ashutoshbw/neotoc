@@ -136,3 +136,12 @@ Default value: `"On this page"`
 
 The title of the TOC UI that appears on the top left of it.
 
+#### `fillAnchor`
+
+Type: `(heading: HTMLHeadingElement) => string | Node`<br />
+Default value: `(heading) => heading.textContent`
+
+It is used to determine the content of anchors elements in the TOC. If your headings have complex structure or contain elements like `<code>` or `<i>`  like in this doc and you want to show them in the TOC, this option can be useful.
+
+__Tip__: You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
+
