@@ -1,3 +1,4 @@
+"use client";
 import { useContext } from "react";
 import { TocContext } from "./toc-context";
 import { Slider } from "@/components/ui/slider";

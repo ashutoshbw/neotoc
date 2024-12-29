@@ -28,7 +28,7 @@ Here are some controllers I made for you to easily experience its customizabilit
 
 There are many many more things that you can do. But that's for the rest of this doc. I hope you are now as excited to try it out as I'm to share it with you.
 
-## Quick start guide: It is just three lines away
+## Quick start guide: _It is just three lines away_
 
 Here I'm writing this quick start guide in the context of Vite's `vanilla` template for simplicity.
 
@@ -51,7 +51,7 @@ Neotoc doesn't ship any CSS with the package to allow you to style it freely. Ho
 
 Now to create TOC, we must call `neotoc` with the `io`(i.e. input output) option. Here you have to give the answer of three questions in the form of _CSS selectors_ seperated by `>>`:
 1. ___Where should it look for headings?___
-    - Here it is `article`.
+    - Here it is the `article` element.
 2. ___Which headings should it consider for creating the TOC?___
     - Here it is `h*`, which means headings of all levels.(Though it's not a valid CSS selector, it's special shortcut that is allowed here).
 3. ___Where should it append the the created TOC?___
@@ -65,7 +65,7 @@ Note that to get things work nicely Neotoc expect two things:
   - First found heading's level is considered the largest one. So if you choose `<h2>` as your first heading, you must not use the `<h1>` heading later.
   - There must be no gap between two heading levels when going top to bottom. So, after `<h2>` you should not use the heading `<h4>`.
 
-Now you have good foundation knowledge about it. Let's now dive into its API.
+Now you have good a foundational knowledge about it. Let's now dive into its API.
 
 ## Neotoc API
 
@@ -93,7 +93,7 @@ useEffect(() => {
 
 In you have a vanilla HTML CSS JS setup you usually don't need use the cleanup function.
 
-Now let's see all of it's options in detail.
+Now, let's see all of its options in detail.
 
 ### Options
 
