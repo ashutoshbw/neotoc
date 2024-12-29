@@ -16,7 +16,8 @@ The TOC you see on the right is made with neotoc. It's main features are:
 - __Performant__ and __Lightweight__.
 - __Framework agnostic__. You can use it in vanilla HTML CSS JS setup to frameworks like Next.js. This is doc is made with Next.js.
 
-If you find this tool useful, <a className="hover:underline" href="https://github.com/ashutoshbw/neotoc" target="_blank">please give it a ⭐ on Github</a>!
+If you find this tool useful, <a className="text-blue-600 dark:text-blue-400 hover:underline" href="https://github.com/ashutoshbw/neotoc" target="_blank">please give it a ⭐ on Github</a>!
+
 
 ## Appetizer 😋
 
@@ -98,6 +99,32 @@ Now, let's see all of its options in detail.
 
 ### Options
 
-#### `io`
+#### `io` and `to`
 
-This is the only required option.
+Type of `io`: `string`<br/>
+Type of `to`: `HTMLElement`
+
+`io` is the ___only required___ option. We have already covered it mostly in the [Quick Start guide](#quick-start-guide-it-is-just-three-lines-away). Let's cover the rest here.
+
+The last part of the `io` can be ommitted if there is a need to provide the corresponding HTML element directly. We can use the `to` option for that purpose.
+
+One use case of `to` option is that it allows you to easily create a wrapper component for it in React:
+
+```tsx
+function Neotoc({
+  from,
+  className,
+}: {
+  from: string;
+  className?: string;
+}) {
+  const toRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    return neotoc({ io: `${from} >> h*`, to: toRef.current! });
+  }, [from]);
+  return <div ref={toRef} className={className}></div>;
+}
+```
+
+Note that if the 3rd part of the `io` option is specified, `to` option is ignored.
