@@ -1,3 +1,4 @@
+import React from "react";
 import type { MDXComponents } from "mdx/types";
 import { Heading } from "@/components/headings";
 import { Code } from "@/components/code/code";
@@ -33,6 +34,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     a: (props) => (
       <a
         className="text-blue-600 dark:text-blue-400 hover:underline"
+        target={props.href.startsWith("#") ? "_self" : "_blank"}
         {...props}
       />
     ),
