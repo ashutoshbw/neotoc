@@ -39,7 +39,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Code,
     code: (props) => (
       <code
-        className="rounded bg-zinc-100 dark:bg-zinc-900/80 px-[0.3rem] py-[0.2rem] font-mono text-sm"
+        className="rounded bg-zinc-100 dark:bg-zinc-900 px-[0.3rem] py-[0.2rem] font-mono text-sm"
         {...props}
       />
     ),
