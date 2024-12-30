@@ -274,6 +274,9 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   border-radius: var(--anchor-border-radius);
   align-self: center;
   grid-column: 1 / -1;
+  code {
+    font-size: 1em;
+  }
 }
 
 .nt-a:hover {
