@@ -14,8 +14,8 @@ export default function Home() {
       </h2>
       <div className="grid place-items-center mt-12">
         <Link href="/doc">
-          <Button className="text-2xl font-bold h-12 shadow-xl shadow-zinc-500/50">
-            Get Started
+          <Button className="text-2xl font-bold p-7 shadow-xl shadow-zinc-500/50">
+            Documentation
           </Button>
         </Link>
       </div>
