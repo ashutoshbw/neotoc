@@ -24,6 +24,7 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
         );
         return span;
       },
+      offsetTop: 80,
     });
     const tocWidget = document.querySelector<HTMLDivElement>(
       "#sidebar .nt-widget"
