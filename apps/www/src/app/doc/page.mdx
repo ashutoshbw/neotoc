@@ -191,3 +191,27 @@ This viewport is reflected in the TOC to show highlighted area.
 These two options allow you to lower the top of edge of the viewport using the `offsetTop` option and raise the bottom edge of the viewport using `offsetBottom`.
 
 This is useful if you have fixed header or footer.
+
+__Note__: In this doc, by nearest scroll container, it is meant the nearest scroll container of the element that is matched by the first part of the `io` option.
+
+#### `autoFold`
+
+Type: `boolean`<br />
+Default value: `false`
+
+Whether or not to auto fold/unfold the TOC based on the what is in view.
+
+#### `autoScroll`
+
+Type: `boolean`<br />
+Default value: `true`
+
+Whether or not to automatically scroll the TOC to have the highlighted portion in view when the nearest scroll container is scrolled.
+
+#### `autoScrollOffset`
+
+Type: `number`<br />
+Unit: `px`<br />
+Default value: `50`
+
+When auto scroll is on, with this you can control the distance the highlighted area should stay away from the top and bottom edge of the TOC UI(the element which by default gets the class `.nt-toc-holder`) when it can.
