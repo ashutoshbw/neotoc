@@ -160,3 +160,18 @@ Default value: `nt-`
 All the CSS classes assigned to different elements in the TOC UI are by default prefixed with `nt-` as an attempt to avoid class name collision.
 
 This the `nt-` prefix is already used in class names of other elements of your page, you should set a different value here. And in your CSS for neotoc, you will also have to replace all occurances of `nt-` with your chosen prefix.
+
+#### `initialFoldLevel`
+
+Type: `number`<br />
+Default value: `6`
+
+It should be a number from `1` to `6`.
+
+If it is `1`, `<h1>` and all lower level heading's corresponding sections in the TOC will be folded initially.
+
+If it is `2`, `<h2>` and all lower level heading's corresponding sections in the TOC will be folded initially.
+
+And so on.
+
+Note that if it is `6` everything is unfolded initially since there is no `<h7>`.
