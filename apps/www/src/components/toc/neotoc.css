@@ -1,4 +1,6 @@
 /*
+Default styling for Neotoc. Customize this to suit your preferences and project needs.
+
 On this Stylesheet:
 
 - SETTINGS
@@ -20,7 +22,7 @@ Syntax of heading comments:
 
 /* SETTINGS  */
 /** THEME **/
-/* You will most likely want to tweak these values to match your site's theme */
+/* The following theme is based on Tailwind CSS's Zinc color palette */
 
 :root.light .nt-widget {
   --bg: hsl(0 0% 97%);
@@ -78,13 +80,12 @@ Syntax of heading comments:
 }
 
 /** SIZING AND BEHAVIOR **/
-/* Feel free to tweak these values and see what you like most */
 
 .nt-widget {
   --height: calc(
     100vh - var(--site-header-height) - var(--top-breathing-space) -
       var(--bottom-breathing-space)
-  );
+  ); /* Here these CSS vars are comming from outside. */
   --top-bar-height: 3rem;
   --relative-font-size: 94; /* do not use percentage sign */
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
