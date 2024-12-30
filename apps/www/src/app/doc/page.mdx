@@ -152,6 +152,8 @@ Default value: `false`
 
 If `true`, long heading's text is truncated with ... instead of wrapping it to the next line. If you hover of the anchor the full text is shown in the browser default tooltip.
 
+__Tip__: If you clone nodes of your headings to populate the content of anchors in the TOC using [`fillAnchor`](#fillanchor) and if your headings have `<code>` elements, make sure their position is `static` when then are in the TOC, otherwise ellipsis may not appear next to them.
+
 #### `classPrefix`
 
 Type: `string`<br />
@@ -175,3 +177,17 @@ If it is `2`, `<h2>` and all lower level heading's corresponding sections in the
 And so on.
 
 Note that if it is `6` everything is unfolded initially since there is no `<h7>`.
+
+#### `offsetTop` and `offsetBottom`
+
+Type of both: `number`<br />
+Unit: `px`<br />
+Default value of both: `0`
+
+Neotoc considers the nearest scroll container's(usually it is the `<html>` element) visible portion on the screen as its viewport. 
+
+This viewport is reflected in the TOC to show highlighted area.
+
+These two options allow you to lower the top of edge of the viewport using the `offsetTop` option and raise the bottom edge of the viewport using `offsetBottom`.
+
+This is useful if you have fixed header or footer.
