@@ -36,9 +36,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="md:[--site-header-height:3.85rem] [--site-header-height:3.25rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
+          <div className="[--site-header-height:3.85rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
             <header className="h-[var(--site-header-height)] border-b sticky top-0 z-50 bg-background/60 backdrop-blur">
-              <div className="md:mx-4 mx-3 flex items-center justify-between h-full">
+              <div className="mx-4 flex items-center justify-between h-full">
                 <Link href="/">
                   <b>Neotoc v0.1.0 Beta</b>
                 </Link>
