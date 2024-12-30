@@ -49,7 +49,7 @@ import "./neotoc.css";
 neotoc({ io: "article >> h* >> aside" });
 ```
 
-Neotoc doesn't ship any CSS with the package to allow you to style it freely. However you don't have to write it from scratch. I've already written the CSS I find appealing. So copy it form Github and paste it in `neotoc.css`(or whatever filename you choose) and tweak it as you like it.
+Neotoc doesn't ship any CSS with the package to allow you to style it freely. However you don't have to write it from scratch. Use the stylesheet that I've written for this site as a starting point. [Copy it form Github](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/components/toc/neotoc.css) and paste it in `neotoc.css`(or whatever filename you choose) and tweak it as you like it.
 
 Now to create TOC, we must call `neotoc` with the `io`(i.e. input output) option. Here you have to give the answer of three questions in the form of _CSS selectors_ seperated by `>>`:
 1. ___Where should it look for headings?___
