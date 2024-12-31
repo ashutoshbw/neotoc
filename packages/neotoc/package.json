@@ -1,6 +1,6 @@
 {
   "name": "neotoc",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Easiest way to make intuitive Table of Contents UI for your webpage.",
   "type": "module",
   "types": "./dist/index.d.ts",
