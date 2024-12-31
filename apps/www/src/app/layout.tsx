@@ -40,7 +40,7 @@ export default function RootLayout({
             <header className="h-[var(--site-header-height)] border-b sticky top-0 z-50 bg-background/60 backdrop-blur">
               <div className="mx-4 flex items-center justify-between h-full">
                 <Link href="/">
-                  <b>Neotoc v0.1.0 Beta</b>
+                  <b>Neotoc v0.1.2 Beta</b>
                 </Link>
                 <span className="flex items-center gap-2">
                   <ThemeToggler />
