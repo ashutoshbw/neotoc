@@ -1,4 +1,4 @@
-# Neotoc(v0.1.0 Beta)
+# Neotoc
 
 Neotoc creates a TOC(Table of Contents) UI by parsing the DOM inside the browser.
 
