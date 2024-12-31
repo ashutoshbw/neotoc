@@ -7,9 +7,26 @@ import { EllipsisSwitch } from "@/components/toc/ellipsis-switch";
 
 Neotoc creates a TOC(Table of Contents) UI by parsing the DOM inside the browser.
 
-The TOC you see on the right is made with neotoc. It's main features are:
+The TOC you see on the right is made with neotoc. If you are on a mobile device, tap the sidebar icon at the bottom right to show/hide it.
 
-- __Fluid highlight of the view__ and __auto scrolling of TOC__.
+## Motivation and inspiration
+
+Most docs have a table of contents UI. But I haven't found one that is really intutive. While scrolling the page up and down, very often the heading title that is highlighted in the TOC is to close what I'm reading, not what it really is.
+
+In my imagination fixing this design issue lead to fluid motion and it became my dream project to turn it into reality.
+
+I also took inspiration for several things from different places on the internet:
+
+- For the tree view design, I took inspriation from the Github's "Files" side panel.
+- The idea of making font size of heading titles in TOC incrementally smaller orignally came from [gwern.net](https://gwern.net/) and then from [joshwcomeau.com](https://www.joshwcomeau.com/).
+- The idea to truncate long headings and show ellipsis came from [vitepress.dev](https://vitepress.dev/).
+- The idea of auto fold came from [tocbot](https://tscanlin.github.io/tocbot/).
+
+## Features
+
+Its main features are:
+
+- __Fluid highlight of the view__ and __smooth auto scrolling of TOC__.
 - Both __manual__ and __auto folding__ support.
 - __Easily stylable__ with dozens of CSS variables.
 - __TypeScript support__.
@@ -17,9 +34,6 @@ The TOC you see on the right is made with neotoc. It's main features are:
 - __Zero dependency__.
 - __Performant__ and __Lightweight__.
 - __Framework agnostic__. You can use it in vanilla HTML CSS JS setup to frameworks like Next.js. This is doc is made with Next.js.
-
-If you find this tool useful, [please give it a ⭐ on Github](https://github.com/ashutoshbw/neotoc)!
-
 
 ## Appetizer 😋
 
@@ -259,3 +273,7 @@ Type: `string`<br />
 Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/)
 
 This is used on the unfold all button on the top bar of the TOC. You can set another SVG icon here with this option.
+
+## Support <span className="text-[0.8em] animate-pulse">❤️</span>
+
+If you think this provides a good user experience and want this project to succeed, please support it by [giving it a ⭐ on Github](https://github.com/ashutoshbw/neotoc)!
