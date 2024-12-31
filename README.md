@@ -13,4 +13,4 @@ Main features:
 - **Performant** and **Lightweight**.
 - **Framework agnostic**. You can use it in vanilla HTML CSS JS setup to frameworks like Next.js. This is doc is made with Next.js.
 
-Read the [Documentation](https://neotoc.vercel.app/) to get started with it.
+Read the [documentation](https://neotoc.vercel.app/) to get started with it.
