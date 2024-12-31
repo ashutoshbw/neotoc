@@ -1,7 +1,7 @@
 {
   "name": "neotoc",
   "version": "0.1.0",
-  "description": "Beautiful Table of Contents UI, crafted for Developer Documentation.",
+  "description": "Easiest way to make intuitive Table of Contents UI for your webpage.",
   "type": "module",
   "types": "./dist/index.d.ts",
   "browser": "./dist/index.js",
@@ -26,10 +26,19 @@
     "table of contents",
     "toc",
     "outline",
-    "on this page"
+    "on this page",
+    "intuitive",
+    "fluid motion"
   ],
   "author": "Ashutosh Biswas",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashutoshbw/neotoc.git",
+    "directory": "packages/neotoc"
+  },
+  "bugs": "https://github.com/ashutoshbw/neotoc/issues",
+  "homepage": "https://neotoc.vercel.app",
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "@types/eslint__js": "^8.42.3",
