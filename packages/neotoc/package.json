@@ -13,6 +13,9 @@
       }
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --clean --format esm --minify --sourcemap --dts",
     "dev": "tsup src/index.ts --format esm --dts --watch",
