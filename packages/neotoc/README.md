@@ -9,7 +9,7 @@ Main features:
 - **Easily stylable** with dozens of CSS variables.
 - **TypeScript support**.
 - **Accessible**.
-- **Zero dependency**.
+- **Zero dependencies**.
 - **Performant** and **Lightweight**.
 - **Framework agnostic**. You can use it in vanilla HTML CSS JS setup to frameworks like Next.js.
 
