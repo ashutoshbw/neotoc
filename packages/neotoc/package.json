@@ -4,7 +4,6 @@
   "description": "Easiest way to make intuitive Table of Contents UI for your webpage.",
   "type": "module",
   "types": "./dist/index.d.ts",
-  "browser": "./dist/index.js",
   "exports": {
     ".": {
       "import": {
