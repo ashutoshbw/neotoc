@@ -12,7 +12,7 @@ export default function Home() {
         webpage.
       </h2>
       <div className="grid place-items-center mt-12">
-        <Link href="/doc">
+        <Link href="/docs">
           <Button className="text-2xl font-bold p-7 shadow-xl shadow-zinc-500/50">
             Documentation
           </Button>
