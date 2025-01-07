@@ -9,7 +9,7 @@ On this Stylesheet:
   - SIZING AND BEHAVIOR
 - NEOTOC STYLE
  - FOUNDATION
- - TOP BAR
+ - HEADER
  - LIGHT BAR
  - TOP AND BOTTOM SHADOWS
  - ACCESSIBILITY
@@ -31,12 +31,12 @@ Syntax of heading comments:
   --bg-anchor-hover: hsl(240 5.9% 87%);
   --bg-anchor-active: var(--bg-anchor-hover);
   --bg-sub-anchors: hsl(240 4.8% 92%);
-  --bg-topbar-btn: var(--bg);
-  --bg-topbar-btn-hover: hsl(240 4.8% 95.9%);
-  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
-  --bg-topbar-btn-disabled: var(--bg);
-  --fg-topbar-btn-disabled: hsl(240 3.8% 66.1%);
-  --border-topbar-btn: hsl(240 5.9% 90%);
+  --bg-header-btn: var(--bg);
+  --bg-header-btn-hover: hsl(240 4.8% 95.9%);
+  --bg-header-btn-active: var(--bg-header-btn-hover);
+  --bg-header-btn-disabled: var(--bg);
+  --fg-header-btn-disabled: hsl(240 3.8% 66.1%);
+  --border-header-btn: hsl(240 5.9% 90%);
   --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
   --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
   --indent-line: hsl(240 4.9% 75%);
@@ -53,12 +53,12 @@ Syntax of heading comments:
   --bg-anchor-hover: hsl(240 3.7% 15.9%);
   --bg-anchor-active: var(--bg-anchor-hover);
   --bg-sub-anchors: hsl(240 5.9% 10%);
-  --bg-topbar-btn: var(--bg);
-  --bg-topbar-btn-hover: hsl(240 3.7% 15.9% / 50%);
-  --bg-topbar-btn-active: var(--bg-topbar-btn-hover);
-  --bg-topbar-btn-disabled: var(--bg);
-  --fg-topbar-btn-disabled: hsl(240 5% 34.9%);
-  --border-topbar-btn: hsl(240 3.7% 15.9%);
+  --bg-header-btn: var(--bg);
+  --bg-header-btn-hover: hsl(240 3.7% 15.9% / 50%);
+  --bg-header-btn-active: var(--bg-header-btn-hover);
+  --bg-header-btn-disabled: var(--bg);
+  --fg-header-btn-disabled: hsl(240 5% 34.9%);
+  --border-header-btn: hsl(240 3.7% 15.9%);
   --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
   --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
   --indent-line: hsl(240 3.7% 28%);
@@ -87,7 +87,7 @@ Syntax of heading comments:
     100vh - var(--site-header-height) - var(--top-breathing-space) -
       var(--bottom-breathing-space)
   ); /* Here these CSS vars are coming from outside. */
-  --top-bar-height: 3rem;
+  --header-height: 3rem;
   --relative-font-size: 94; /* do not use percentage sign */
   --toggle-fold-btn-width: 0.9em; /* should in em unit */
   --indent-line-gap: 5px; /* should be in px unit */
@@ -154,7 +154,7 @@ Syntax of heading comments:
   padding-block: 0.5rem;
   padding-right: 0.5rem;
   position: relative;
-  max-height: calc(var(--height) - var(--top-bar-height));
+  max-height: calc(var(--height) - var(--header-height));
   transition: max-height 0.15s;
   overflow-y: auto;
   overflow-x: hidden;
@@ -320,16 +320,16 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   grid-column: 10 / 13;
 }
 
-/** TOP BAR **/
+/** HEADER **/
 
-.nt-top-bar {
+.nt-header {
   display: flex;
   padding-right: 0.5rem;
   padding-left: var(--padding-left);
   justify-content: space-between;
   gap: 1rem;
   align-items: flex-end;
-  height: var(--top-bar-height);
+  height: var(--header-height);
   padding-block: 0.55rem;
 }
 
@@ -344,14 +344,14 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   display: flex;
   flex-shrink: 0;
   border-radius: 4px;
-  border: 1px solid var(--border-topbar-btn);
+  border: 1px solid var(--border-header-btn);
   overflow: hidden; /* easy fix for perfect rounded corner */
 }
 
-.nt-top-bar-btn {
+.nt-header-btn {
   font: inherit; /* for consistent button size across all browsers */
   color: var(--fg);
-  background: var(--bg-topbar-btn);
+  background: var(--bg-header-btn);
   box-sizing: content-box;
   padding: 3px;
   border: none;
@@ -363,21 +363,21 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   }
 }
 
-.nt-top-bar-btn:not(:first-child) {
-  border-left: 1px solid var(--border-topbar-btn);
+.nt-header-btn:not(:first-child) {
+  border-left: 1px solid var(--border-header-btn);
 }
 
-.nt-top-bar-btn:not([disabled]):hover {
-  background: var(--bg-topbar-btn-hover);
+.nt-header-btn:not([disabled]):hover {
+  background: var(--bg-header-btn-hover);
 }
 
-.nt-top-bar-btn:not([disabled]):active {
-  background: var(--bg-topbar-btn-active);
+.nt-header-btn:not([disabled]):active {
+  background: var(--bg-header-btn-active);
 }
 
-.nt-top-bar-btn[disabled] {
-  color: var(--fg-topbar-btn-disabled);
-  background: var(--bg-topbar-btn-disabled);
+.nt-header-btn[disabled] {
+  color: var(--fg-header-btn-disabled);
+  background: var(--bg-header-btn-disabled);
   cursor: default;
 }
 

@@ -370,14 +370,14 @@ export default function neotoc({
 
   const widget = elt('div', 'widget');
   const tocBody = elt('div', 'body');
-  const topBarDiv = elt('div', 'top-bar');
+  const headerDiv = elt('div', 'header');
   const titleH2 = elt('h2', 'title');
   const btnGroup = elt('div', 'btn-group');
-  const topbarBtnClsName = 'top-bar-btn';
-  const foldBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
-  const foldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
-  const unfoldBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
-  const unfoldAllBtn = elt<HTMLButtonElement>('button', topbarBtnClsName);
+  const headerBtnClsName = 'header-btn';
+  const foldBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
+  const foldAllBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
+  const unfoldBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
+  const unfoldAllBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
 
@@ -418,9 +418,9 @@ export default function neotoc({
   }
 
   titleH2.innerHTML = title;
-  topBarDiv.append(titleH2, btnGroup);
+  headerDiv.append(titleH2, btnGroup);
   tocBody.append(toc, topGradient, bottomGradient);
-  widget.append(topBarDiv);
+  widget.append(headerDiv);
   widget.append(tocBody);
   appendTarget.append(widget);
 
