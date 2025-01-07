@@ -274,6 +274,51 @@ Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify
 
 This is used on the unfold all button on the top bar of the TOC. You can set another SVG icon here with this option.
 
+## Theming 🎨🖌️🌈
+
+I recommend you to [copy the style for the TOC](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/components/toc/neotoc.css) that ou see on the right, and modify it based on your need because this is the style that I always try to keep updated and polished as much as I can.
+
+The goal of this section is to make yourself familiar with this stylesheet. It will not be a exhaustive overview. I will only include things that you most likely want to modify.
+
+The stylesheet has two main parts:
+- __`SETTINGS`__: Things that you will usually want to modify, like colors, and size of stuffs.
+- __`NEOTOC STYLE`__: Styles that define the structure of the TOC and subtle details.
+
+Here I will only discuss about the `SETTINGS`. Let's start with light/dark theme.
+
+### How to make light/dark theme?
+
+You have to use CSS variables(aka custom properties) for this. The default class name for the TOC widget is `.nt-toc-widget`. You should declare colors for light/dark theme via CSS variables here. In the stylesheet it's done like below:
+
+```css
+:root.light .nt-widget {
+  /* light mode color definitions */
+}
+:root.dark .nt-widget {
+  /* dark mode color definitions */
+}
+
+/* styles for medium sized screen and above */
+@media (min-width: 768px) {
+  :root.light .nt-widget {
+  }
+  :root.dark .nt-widget {
+  }
+}
+```
+
+Note it's done in a mobile first approach. Here light/dark theme is determined by whether the `.light` or `.dark` class is present on `<html>` element. Here change the selector to match how you differenciate light/dark theme for your website.
+
+The CSS variable names are descriptive and I hope you will easily figure out where they relate to.
+
+I defined the colors in [HSL](https://www.smashingmagazine.com/2021/07/hsl-colors-css/) because, it's very easy to tweak them. But you can use any other color format of your preference.
+
+Now let's move on to the sizing of stuffs.
+
+### Modifying the sizes of stuffs 📏
+
+Coming soon.
+
 ## Support <span className="text-[0.8em] animate-pulse">❤️</span>
 
 If you think this provides a good user experience and want this project to succeed, please support it by [giving it a ⭐ on Github](https://github.com/ashutoshbw/neotoc)!
