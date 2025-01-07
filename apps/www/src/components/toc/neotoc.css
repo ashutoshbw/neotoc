@@ -99,7 +99,7 @@ Syntax of heading comments:
   --light-bar-width: 1px;
   --light-bar-tip-radius: 2.5px;
   --light-spread-length: 250px;
-  --folding-duration: 300ms;
+  --folding-duration: 0.3s;
 }
 
 /* NEOTOC STYLE */

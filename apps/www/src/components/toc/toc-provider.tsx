@@ -10,7 +10,16 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
   const [ellipsis, setEllipsis] = useState(false);
   const [relativeFontSize, setRelativeFontSize] = useState(94);
   const [indentLineGap, setIndentLineGap] = useState(5);
-  const [toggleFoldBtnWidth, setToggleFoldBtnWidth] = useState(0.9); // in em
+  const [toggleFoldBtnWidth, setToggleFoldBtnWidth] = useState(0.9);
+  const [indentLineWidth, setIndentLineWidth] = useState(1);
+  const [anchorPaddingBlock, setAnchorPaddingBlock] = useState(0.2);
+  const [anchorPaddingInline, setAnchorPaddingInline] = useState(0.3);
+  const [anchorBorderRadius, setAnchorBorderRadius] = useState(4);
+  const [paddingLeft, setPaddingLeft] = useState(1.5);
+  const [lightBarWidth, setLightBarWidth] = useState(1);
+  const [lightBarTipRadius, setLightBarTipRadius] = useState(2.5);
+  const [lightSpreadLength, setLightSpreadLength] = useState(250);
+  const [foldingDuration, setFoldingDuration] = useState(0.3);
 
   useEffect(() => {
     const removeToc = neotoc({
@@ -41,7 +50,34 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
       "--toggle-fold-btn-width",
       `${toggleFoldBtnWidth}em`
     );
-  }, [toc, relativeFontSize, indentLineGap, toggleFoldBtnWidth]);
+    toc?.style.setProperty("--indent-line-width", `${indentLineWidth}px`);
+    toc?.style.setProperty("--anchor-padding-block", `${anchorPaddingBlock}em`);
+    toc?.style.setProperty(
+      "--anchor-padding-inline",
+      `${anchorPaddingInline}em`
+    );
+    toc?.style.setProperty("--anchor-border-radius", `${anchorBorderRadius}px`);
+    toc?.style.setProperty("--padding-left", `${paddingLeft}rem`);
+    toc?.style.setProperty("--light-bar-width", `${lightBarWidth}px`);
+    toc?.style.setProperty("--light-bar-tip-radius", `${lightBarTipRadius}px`);
+    toc?.style.setProperty("--light-bar-tip-radius", `${lightBarTipRadius}px`);
+    toc?.style.setProperty("--light-spread-length", `${lightSpreadLength}px`);
+    toc?.style.setProperty("--folding-duration", `${foldingDuration}s`);
+  }, [
+    toc,
+    relativeFontSize,
+    indentLineGap,
+    toggleFoldBtnWidth,
+    indentLineWidth,
+    anchorPaddingBlock,
+    anchorPaddingInline,
+    anchorBorderRadius,
+    paddingLeft,
+    lightBarWidth,
+    lightBarTipRadius,
+    lightSpreadLength,
+    foldingDuration,
+  ]);
 
   return (
     <TocContext.Provider
@@ -57,6 +93,24 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
         setRelativeFontSize,
         toggleFoldBtnWidth,
         setToggleFoldBtnWidth,
+        indentLineWidth,
+        setIndentLineWidth,
+        anchorPaddingBlock,
+        setAnchorPaddingBlock,
+        anchorPaddingInline,
+        setAnchorPaddingInline,
+        anchorBorderRadius,
+        setAnchorBorderRadius,
+        paddingLeft,
+        setPaddingLeft,
+        lightBarWidth,
+        setLightBarWidth,
+        lightBarTipRadius,
+        setLightBarTipRadius,
+        lightSpreadLength,
+        setLightSpreadLength,
+        foldingDuration,
+        setFoldingDuration,
       }}
     >
       {children}
