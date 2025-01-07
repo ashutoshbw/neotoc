@@ -237,7 +237,7 @@ export default function neotoc({
 
         toggleFoldButton.addEventListener('keydown', (e) => {
           if (e.key == 'Enter' || e.key == ' ') {
-            if (e.key == ' ') e.preventDefault(); // prevents scrolling the tocHolder
+            if (e.key == ' ') e.preventDefault(); // prevents scrolling the tocBody
             handleToggleFold();
           }
         });
@@ -369,7 +369,7 @@ export default function neotoc({
   if (!appendTarget) throw new Error('Nothing was found to append Neotoc to!');
 
   const widget = elt('div', 'widget');
-  const tocHolder = elt('div', 'toc-holder');
+  const tocBody = elt('div', 'body');
   const topBarDiv = elt('div', 'top-bar');
   const titleH2 = elt('h2', 'title');
   const btnGroup = elt('div', 'btn-group');
@@ -381,8 +381,8 @@ export default function neotoc({
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
 
-  tocHolder.ariaLabel = title;
-  tocHolder.tabIndex = 0;
+  tocBody.ariaLabel = title;
+  tocBody.tabIndex = 0;
   foldBtn.innerHTML = foldIcon;
   foldAllBtn.innerHTML = foldAllIcon;
   unfoldBtn.innerHTML = unfoldIcon;
@@ -419,14 +419,14 @@ export default function neotoc({
 
   titleH2.innerHTML = title;
   topBarDiv.append(titleH2, btnGroup);
-  tocHolder.append(toc, topGradient, bottomGradient);
+  tocBody.append(toc, topGradient, bottomGradient);
   widget.append(topBarDiv);
-  widget.append(tocHolder);
+  widget.append(tocBody);
   appendTarget.append(widget);
 
   function updateTopBottomGradientPositions() {
-    const scrollTop = tocHolder.scrollTop;
-    const highestScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
+    const scrollTop = tocBody.scrollTop;
+    const highestScrollTop = tocBody.scrollHeight - tocBody.clientHeight;
 
     topGradient.style.top = scrollTop + 'px';
     bottomGradient.style.bottom = -scrollTop + 'px';
@@ -462,13 +462,7 @@ export default function neotoc({
 
   const scrollContainer = findScrollContainer(contentHolder);
 
-  const draw = addHighlight(
-    tocHolder,
-    elt,
-    addClass,
-    removeClass,
-    classContains,
-  );
+  const draw = addHighlight(tocBody, elt, addClass, removeClass, classContains);
 
   let lastViewportHeight: null | number = null;
   let lastScrollContainerScrollTop: null | number = null;
@@ -486,7 +480,7 @@ export default function neotoc({
 
     // This check is necessary because sometimes in especially firefox,
     // even if there is no scroll in the `scrollContainer`, only scroll in
-    // the `tocHolder` causes update to `topInUnfoldedState` and/or it's
+    // the `tocBody` causes update to `topInUnfoldedState` and/or it's
     // related variables.
     const condition2 =
       scrollContainerScrollTop !== lastScrollContainerScrollTop;
@@ -605,24 +599,24 @@ export default function neotoc({
         );
       }
 
-      const tocHolderTop = tocHolder.getBoundingClientRect().top;
-      const scrolledY = tocHolder.scrollTop;
-      const borderTopWidth = tocHolder.clientTop;
+      const tocBodyTop = tocBody.getBoundingClientRect().top;
+      const scrolledY = tocBody.scrollTop;
+      const borderTopWidth = tocBody.clientTop;
 
       viewportHeight =
         viewportTop === null ? null : viewportBottom! - viewportTop;
 
-      const top = Math.round(y1Min + scrolledY - tocHolderTop - borderTopWidth);
+      const top = Math.round(y1Min + scrolledY - tocBodyTop - borderTopWidth);
       const bottom = Math.round(
-        y2Min + scrolledY - tocHolderTop - borderTopWidth,
+        y2Min + scrolledY - tocBodyTop - borderTopWidth,
       );
 
       scrollContainerScrollTop = scrollContainer.scrollTop;
       topInUnfoldedState = Math.round(
-        y1Max + scrolledY - tocHolderTop - borderTopWidth,
+        y1Max + scrolledY - tocBodyTop - borderTopWidth,
       );
       bottomInUnfoldedState = Math.round(
-        y2Max + scrolledY - tocHolderTop - borderTopWidth,
+        y2Max + scrolledY - tocBodyTop - borderTopWidth,
       );
 
       // See it's definition to be clear about its purpose
@@ -636,7 +630,7 @@ export default function neotoc({
         doAutoFoldIfAllowed();
         if (autoScroll) {
           animateBicycleScrollingIfNeeded(
-            tocHolder,
+            tocBody,
             top,
             bottom,
             autoScrollOffset,
@@ -644,7 +638,7 @@ export default function neotoc({
           );
           initMotorcycleScrolling(
             scrollDir,
-            tocHolder,
+            tocBody,
             top,
             bottom,
             autoScrollOffset,
@@ -656,7 +650,7 @@ export default function neotoc({
 
       if (autoScroll) {
         prepareForBicycleScrolling(
-          tocHolder,
+          tocBody,
           top,
           bottom,
           autoScrollOffset,
@@ -664,7 +658,7 @@ export default function neotoc({
         );
 
         animateMotorcycleScrollingIfNeeded(
-          tocHolder,
+          tocBody,
           curTimestamp,
           autoScrollState,
         );

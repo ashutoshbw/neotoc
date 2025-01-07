@@ -79,7 +79,7 @@ function getClosestFoldableDiv(
   foldableDivClass: string,
 ) {
   // it assumes elt is an anchor or foldable div that is inside generated toc
-  // and that generated toc is in tocHolder
+  // and that generated toc is in tocBody
 
   let mayBeClosestFoldableDiv =
     elt.parentElement!.parentElement!.parentElement!;

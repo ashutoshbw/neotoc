@@ -21,7 +21,7 @@ type ClassModificationFuncType = (elt: HTMLElement, className: string) => void;
 type ClassContains = (elt: HTMLElement, className: string) => boolean;
 
 export function addHighlight(
-  tocHolder: HTMLElement,
+  tocBody: HTMLElement,
   elt: Elt,
   addClass: ClassModificationFuncType,
   removeClass: ClassModificationFuncType,
@@ -35,7 +35,7 @@ export function addHighlight(
   bar.append(barTopIndicator, light, barBottomIndicator);
   bar.style.display = 'none';
 
-  tocHolder.append(bar);
+  tocBody.append(bar);
 
   let lastEnlightendAnchors: Array<HTMLAnchorElement> = [];
 

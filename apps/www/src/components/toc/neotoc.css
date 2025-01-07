@@ -149,7 +149,7 @@ Syntax of heading comments:
   }
 }
 
-.nt-toc-holder {
+.nt-body {
   padding-left: var(--padding-left);
   padding-block: 0.5rem;
   padding-right: 0.5rem;

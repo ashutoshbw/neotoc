@@ -10,7 +10,7 @@
  * It is somewhat similar to riding a bicyle. You need to put effort to make it
  * happen. It happens when scrolling the content, if the highlighted area goes
  * from inside the boundaries(set by `autoScrollOffset`) to outside. The
- * `tocHolder` is then automatically scrolled so that the highlighted area appears
+ * `tocBody` is then automatically scrolled so that the highlighted area appears
  * right on a boundary. Two functions makes it happen together:
  * `prepareForBicycleScrolling` and `animateBicyleScrollingIfNeeded`
  *
@@ -18,7 +18,7 @@
  *
  * Like a motorcyle you just need to start and then it runs automatically!
  * It happens when scrolling the content, if there is any need to scroll the toc
- * in any situation. It then automatially scrolls the `tocHolder` so that the
+ * in any situation. It then automatially scrolls the `tocBody` so that the
  * highlighted area is visible in a sensible way. The function that makes it
  * happen is: `animateMotorcycleScrollingIfNeeded`
  * */
@@ -41,26 +41,23 @@ function easeOutCubic(t: number): number {
 
 export type EasingFunc = (timeFrac: number) => number;
 
-function getBoundaries(
-  tocHolder: HTMLElement,
-  offset: number,
-): [number, number] {
-  const curScrollTop = tocHolder.scrollTop;
-  const tocHolderInnerHeight = tocHolder.clientHeight;
+function getBoundaries(tocBody: HTMLElement, offset: number): [number, number] {
+  const curScrollTop = tocBody.scrollTop;
+  const tocBodyInnerHeight = tocBody.clientHeight;
   const topBoundary = curScrollTop + offset;
-  const bottomBoundary = curScrollTop + tocHolderInnerHeight - offset;
+  const bottomBoundary = curScrollTop + tocBodyInnerHeight - offset;
 
   return [topBoundary, bottomBoundary];
 }
 
 export function prepareForBicycleScrolling(
-  tocHolder: HTMLElement,
+  tocBody: HTMLElement,
   highlightedAreaTop: number,
   highlightedAreaBottom: number,
   offset: number,
   state: AutoScrollState,
 ) {
-  const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
+  const [topBoundary, bottomBoundary] = getBoundaries(tocBody, offset);
   const isTopEndAboveTopBoundary = highlightedAreaTop < topBoundary;
   const isBottomEndBelowBottomBoundary = highlightedAreaBottom > bottomBoundary;
 
@@ -73,29 +70,29 @@ export function prepareForBicycleScrolling(
 // a zoomed in/out view, if you assign a particular scrollTop, it's not
 // sure that exactly that is the resulted scrollTop. Chrome will assign a
 // value close to it. This function ensures that when `incBool` is true,
-// `tocHolder` will always scroll equal to `expected` or a little higher(never lower)
-// ane when `incBool` is false, `tocHolder` will scroll equal to or a little
+// `tocBody` will always scroll equal to `expected` or a little higher(never lower)
+// ane when `incBool` is false, `tocBody` will scroll equal to or a little
 // lower `expected`(never higher).
 function scrollApproximately(
-  tocHolder: HTMLElement,
+  tocBody: HTMLElement,
   expectedScrollTop: number,
   incBool: boolean,
 ) {
   const max = incBool ? 30 : -30;
   const diff = incBool ? 0.5 : -0.5;
   for (let i = 0; incBool ? i < max : i > max; i += diff) {
-    tocHolder.scrollTop = expectedScrollTop + i;
+    tocBody.scrollTop = expectedScrollTop + i;
     if (
       incBool
-        ? tocHolder.scrollTop >= expectedScrollTop
-        : tocHolder.scrollTop <= expectedScrollTop
+        ? tocBody.scrollTop >= expectedScrollTop
+        : tocBody.scrollTop <= expectedScrollTop
     )
       break;
   }
 }
 
 export function animateMotorcycleScrollingIfNeeded(
-  tocHolder: HTMLElement,
+  tocBody: HTMLElement,
   curTimestamp: number,
   state: AutoScrollState,
 ) {
@@ -110,11 +107,11 @@ export function animateMotorcycleScrollingIfNeeded(
       } else if (state.scrollNeeded < 0) {
         incBool = false;
       }
-      scrollApproximately(tocHolder, expected, incBool);
+      scrollApproximately(tocBody, expected, incBool);
       state.isScrolling = false;
     };
 
-    const curScrollTop = tocHolder.scrollTop;
+    const curScrollTop = tocBody.scrollTop;
     state.timeFrac = duration
       ? (curTimestamp - state.motorcycleScrollingStartTime) / duration
       : 1;
@@ -127,9 +124,9 @@ export function animateMotorcycleScrollingIfNeeded(
       state.lastAutoScrollTop === null ||
       state.lastAutoScrollTop === curScrollTop
     ) {
-      tocHolder.scrollTop =
+      tocBody.scrollTop =
         state.motorcycleScrollingStartScrollTop + scrollProgress;
-      state.lastAutoScrollTop = tocHolder.scrollTop;
+      state.lastAutoScrollTop = tocBody.scrollTop;
     } else {
       state.isScrolling = false;
       state.lastAutoScrollTop = null;
@@ -142,14 +139,14 @@ export function animateMotorcycleScrollingIfNeeded(
 }
 
 export function animateBicycleScrollingIfNeeded(
-  tocHolder: HTMLElement,
+  tocBody: HTMLElement,
   highlightedAreaTop: number,
   highlightedAreaBottom: number,
   offset: number,
   state: AutoScrollState,
 ) {
-  const curScrollTop = tocHolder.scrollTop;
-  const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
+  const curScrollTop = tocBody.scrollTop;
+  const [topBoundary, bottomBoundary] = getBoundaries(tocBody, offset);
   const isTopEndAboveTopBoundary = highlightedAreaTop < topBoundary;
   const isBottomEndBelowBottomBoundary = highlightedAreaBottom > bottomBoundary;
 
@@ -161,7 +158,7 @@ export function animateBicycleScrollingIfNeeded(
   if (isTopEndAboveTopBoundary && state.wasTopEndAboveTopBoundary === false) {
     // executed when highlightedAreaTop just went above top boundary
     const expected = curScrollTop - (topBoundary - highlightedAreaTop);
-    scrollApproximately(tocHolder, expected, false);
+    scrollApproximately(tocBody, expected, false);
   }
 
   if (
@@ -170,20 +167,20 @@ export function animateBicycleScrollingIfNeeded(
   ) {
     // executed when highlightedAreaBottom just went below bottom boundary
     const expected = curScrollTop + highlightedAreaBottom - bottomBoundary;
-    scrollApproximately(tocHolder, expected, true);
+    scrollApproximately(tocBody, expected, true);
   }
 }
 
 export function initMotorcycleScrolling(
   scrollDir: 'up' | 'down',
-  tocHolder: HTMLElement,
+  tocBody: HTMLElement,
   highlightedAreaTop: number,
   highlightedAreaBottom: number,
   offset: number,
   curTimestamp: number,
   state: AutoScrollState,
 ) {
-  const [topBoundary, bottomBoundary] = getBoundaries(tocHolder, offset);
+  const [topBoundary, bottomBoundary] = getBoundaries(tocBody, offset);
 
   if (
     highlightedAreaTop > topBoundary &&
@@ -218,8 +215,8 @@ export function initMotorcycleScrolling(
         ? highlightedAreaTop - topBoundary
         : highlightedAreaBottom - bottomBoundary;
 
-    const curScrollTop = tocHolder.scrollTop;
-    const maxScrollTop = tocHolder.scrollHeight - tocHolder.clientHeight;
+    const curScrollTop = tocBody.scrollTop;
+    const maxScrollTop = tocBody.scrollHeight - tocBody.clientHeight;
     const freeScrollTop = curScrollTop + state.scrollNeeded;
 
     if (freeScrollTop < 0) {
