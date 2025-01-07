@@ -12,9 +12,9 @@ export function RelativeFontSizeSlider({ min = 90 }: { min?: number }) {
         <span className="flex-shrink-0">
           <code>--relative-font-size</code>:
         </span>
-        <span className="flex gap-2">
+        <span className="flex gap-2 grow">
           <Slider
-            className="w-[80px] cursor-pointer"
+            className="min-w-[40px] grow cursor-pointer"
             value={[tc.relativeFontSize]}
             max={100}
             min={min}
@@ -23,7 +23,7 @@ export function RelativeFontSizeSlider({ min = 90 }: { min?: number }) {
               tc.setRelativeFontSize(v);
             }}
           />
-          <span>{tc.relativeFontSize}</span>
+          <span className="shrink-0 w-[4em]">{tc.relativeFontSize}</span>
         </span>
       </div>
     )
