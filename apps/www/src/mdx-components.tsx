@@ -3,6 +3,9 @@ import type { MDXComponents } from "mdx/types";
 import { Heading } from "@/components/headings";
 import { Code } from "@/components/code/code";
 
+export const codeClassName =
+  "rounded bg-zinc-100 dark:bg-zinc-900 px-[0.3rem] py-[0.2rem] font-mono text-sm";
+
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h1: (props) => (
@@ -39,12 +42,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       />
     ),
     Code,
-    code: (props) => (
-      <code
-        className="rounded bg-zinc-100 dark:bg-zinc-900 px-[0.3rem] py-[0.2rem] font-mono text-sm"
-        {...props}
-      />
-    ),
+    code: (props) => <code className={codeClassName} {...props} />,
     ...components,
   };
 }

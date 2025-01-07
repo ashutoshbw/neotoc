@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import { TocContext } from "./toc-context";
 import { Slider } from "@/components/ui/slider";
+import { codeClassName } from "@/mdx-components";
 
 export function IndentLineGapSlider({ max = 20 }: { max?: number }) {
   const tc = useContext(TocContext);
@@ -10,7 +11,7 @@ export function IndentLineGapSlider({ max = 20 }: { max?: number }) {
     tc && (
       <div className="flex gap-2 flex-wrap" data-nt-controller>
         <span className="flex-shrink-0">
-          <code>--indent-line-gap</code>:
+          <code className={codeClassName}>--indent-line-gap</code>:
         </span>
         <span className="flex gap-2 grow">
           <Slider

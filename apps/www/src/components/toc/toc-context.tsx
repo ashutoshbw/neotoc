@@ -10,6 +10,8 @@ type TocContextType = {
   setRelativeFontSize: Dispatch<SetStateAction<number>>;
   indentLineGap: number;
   setIndentLineGap: Dispatch<SetStateAction<number>>;
+  toggleFoldBtnWidth: number;
+  setToggleFoldBtnWidth: Dispatch<SetStateAction<number>>;
 } | null;
 
 export const TocContext = createContext<TocContextType>(null);

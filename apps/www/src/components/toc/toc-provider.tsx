@@ -10,6 +10,7 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
   const [ellipsis, setEllipsis] = useState(false);
   const [relativeFontSize, setRelativeFontSize] = useState(94);
   const [indentLineGap, setIndentLineGap] = useState(5);
+  const [toggleFoldBtnWidth, setToggleFoldBtnWidth] = useState(0.9); // in em
 
   useEffect(() => {
     const removeToc = neotoc({
@@ -36,7 +37,11 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     toc?.style.setProperty("--relative-font-size", `${relativeFontSize}`);
     toc?.style.setProperty("--indent-line-gap", `${indentLineGap}px`);
-  }, [toc, relativeFontSize, indentLineGap]);
+    toc?.style.setProperty(
+      "--toggle-fold-btn-width",
+      `${toggleFoldBtnWidth}em`
+    );
+  }, [toc, relativeFontSize, indentLineGap, toggleFoldBtnWidth]);
 
   return (
     <TocContext.Provider
@@ -50,6 +55,8 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
         setIndentLineGap,
         relativeFontSize,
         setRelativeFontSize,
+        toggleFoldBtnWidth,
+        setToggleFoldBtnWidth,
       }}
     >
       {children}
