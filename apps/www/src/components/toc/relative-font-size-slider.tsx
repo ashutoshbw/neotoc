@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { TocContext } from "./toc-context";
 import { Slider } from "@/components/ui/slider";
 
-export function RelativeFontSizeSlider() {
+export function RelativeFontSizeSlider({ min = 90 }: { min?: number }) {
   const tc = useContext(TocContext);
 
   return (
@@ -17,7 +17,7 @@ export function RelativeFontSizeSlider() {
             className="w-[80px] cursor-pointer"
             value={[tc.relativeFontSize]}
             max={100}
-            min={90}
+            min={min}
             step={0.1}
             onValueChange={([v]) => {
               tc.setRelativeFontSize(v);
