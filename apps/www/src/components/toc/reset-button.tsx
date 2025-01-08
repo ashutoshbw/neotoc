@@ -15,7 +15,7 @@ export function ResetButton() {
       tc.setIndentLineWidth(defaultValues.indentLineWidth);
       tc.setAnchorPaddingBlock(defaultValues.anchorPaddingBlock);
       tc.setAnchorPaddingInline(defaultValues.anchorPaddingInline);
-      tc.setAnchorBorderRadius(defaultValues.anchorPaddingBlock);
+      tc.setAnchorBorderRadius(defaultValues.anchorBorderRadius);
       tc.setPaddingLeft(defaultValues.paddingLeft);
       tc.setLightBarWidth(defaultValues.lightBarWidth);
       tc.setLightBarTipRadius(defaultValues.lightBarTipRadius);
