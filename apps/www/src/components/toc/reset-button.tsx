@@ -21,6 +21,8 @@ export function ResetButton() {
       tc.setLightBarTipRadius(defaultValues.lightBarTipRadius);
       tc.setLightSpreadLength(defaultValues.lightSpreadLength);
       tc.setFoldingDuration(defaultValues.foldingDuration);
+      const tocBody = tc.toc?.querySelector(".nt-body");
+      if (tocBody) tocBody.scrollTop = 0;
     }
   };
 

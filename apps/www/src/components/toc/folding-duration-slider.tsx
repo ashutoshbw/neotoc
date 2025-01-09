@@ -17,7 +17,7 @@ export function FoldingDurationSlider() {
           <Slider
             className="min-w-[40px] grow cursor-pointer"
             value={[tc.foldingDuration]}
-            max={3}
+            max={1}
             min={0}
             step={0.1}
             onValueChange={([v]) => {
