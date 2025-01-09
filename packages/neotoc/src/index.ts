@@ -5,10 +5,11 @@ import {
   calculateYBasedOnFolding,
 } from './utils.js';
 
-import {
-  type FoldState,
-  type FoldStates,
-  type FoldStatus,
+import type {
+  FoldState,
+  FoldStates,
+  FoldStatus,
+  AutoFoldScrollState,
 } from './fold-types.js';
 import { doAutoFold } from './autoFold.js';
 import {
@@ -93,6 +94,23 @@ export default function neotoc({
   if (autoFold) initialFoldLevel = 1;
 
   const foldStates: FoldStates = [];
+
+  // This is used to not have black space at the bottom of tocBody
+  // especially after a folding.
+  const foldScrollState = {
+    startTime: 0,
+    duration: 1000,
+    on: false,
+  };
+
+  // This is used to keep the highlight in view, in auto fold, when scrolling
+  // in a upward direction toward a folded section with lot's of items in it.
+  const autoFoldScrollState: AutoFoldScrollState = {
+    startTime: 0,
+    duration: 1000,
+    lastTop: 0,
+    on: false,
+  };
 
   let minHLevel: number = 0,
     maxHLevel: number = 0;
@@ -215,6 +233,9 @@ export default function neotoc({
             toggleClass(toggleFoldButton, toggleFoldButtonFoldedClass);
             toggleClass(hr, opacityUtilityClass);
 
+            if (curFoldState.isFolded) {
+              foldScrollState.on = true;
+            }
             runOnFoldStatusChange();
           },
           foldableDiv, // might be useful in future
@@ -424,6 +445,10 @@ export default function neotoc({
   widget.append(tocBody);
   appendTarget.append(widget);
 
+  const tocBodyTotalBlockPadding =
+    +getComputedStyle(tocBody).paddingTop.slice(0, -2) +
+    +getComputedStyle(tocBody).paddingBottom.slice(0, -2);
+
   function updateTopBottomGradientPositions() {
     const scrollTop = tocBody.scrollTop;
     const highestScrollTop = tocBody.scrollHeight - tocBody.clientHeight;
@@ -510,6 +535,7 @@ export default function neotoc({
           foldStates,
           anchorsToSectionsInView,
           anchorToAncestorAnchorsMap,
+          autoFoldScrollState,
         );
       }
     };
@@ -678,6 +704,26 @@ export default function neotoc({
       });
       updateTopBottomGradientPositions();
 
+      if (autoFoldScrollState.on) {
+        if (autoFoldScrollState.startTime == 0) {
+          autoFoldScrollState.startTime = curTimestamp;
+          autoFoldScrollState.lastTop = top;
+        }
+
+        tocBody.scrollTop =
+          tocBody.scrollTop + (top - autoFoldScrollState.lastTop);
+
+        if (
+          curTimestamp - autoFoldScrollState.startTime >
+          autoFoldScrollState.duration
+        ) {
+          autoFoldScrollState.on = false;
+          autoFoldScrollState.startTime = 0;
+        }
+
+        autoFoldScrollState.lastTop = top;
+      }
+
       lastViewportHeight = viewportHeight;
       lastScrollContainerScrollTop = scrollContainerScrollTop;
       lastTopInUnfoldedState = topInUnfoldedState;
@@ -700,6 +746,27 @@ export default function neotoc({
         lastTopInUnfoldedState =
         lastBottomInUnfoldedState =
           null;
+    }
+
+    if (foldScrollState.on) {
+      if (foldScrollState.startTime === 0) {
+        foldScrollState.startTime = curTimestamp;
+      }
+
+      const sH = tocBody.scrollHeight;
+      let ulH = tocBody.firstElementChild?.getBoundingClientRect().height;
+
+      if (typeof ulH === 'number') {
+        ulH = Math.round(ulH + tocBodyTotalBlockPadding);
+        if (tocBody.scrollTop != 0) {
+          tocBody.scrollTop = tocBody.scrollTop - (sH - ulH);
+        }
+      }
+
+      if (curTimestamp - foldScrollState.startTime > foldScrollState.duration) {
+        foldScrollState.on = false;
+        foldScrollState.startTime = 0;
+      }
     }
   };
 

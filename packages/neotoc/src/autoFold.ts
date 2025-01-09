@@ -1,9 +1,10 @@
-import { type FoldStates } from './fold-types.js';
+import type { FoldStates, AutoFoldScrollState } from './fold-types.js';
 
 export function doAutoFold(
   foldStates: FoldStates,
   anchorsToSectionsInView: HTMLAnchorElement[],
   anchorToAncestorAnchorsMap: Map<HTMLAnchorElement, HTMLAnchorElement[]>,
+  autoFoldScrollState: AutoFoldScrollState,
 ) {
   for (let i = 0; i < foldStates.length; i++) {
     const { anchor, isFolded, toggleFold } = foldStates[i];
@@ -24,16 +25,17 @@ export function doAutoFold(
     };
 
     if (anchorsToSectionsInView.length) {
-      if (
-        anchorsToSectionsInView.includes(anchor) ||
-        ifAncestorAnchor(
-          anchor,
-          anchorsToSectionsInView,
-          anchorToAncestorAnchorsMap,
-        )
-      ) {
+      const isAncestorAnchor = ifAncestorAnchor(
+        anchor,
+        anchorsToSectionsInView,
+        anchorToAncestorAnchorsMap,
+      );
+      if (anchorsToSectionsInView.includes(anchor) || isAncestorAnchor) {
         if (isFolded) {
           toggleFoldIfNeeded();
+          if (isAncestorAnchor) {
+            autoFoldScrollState.on = true;
+          }
         } else {
           forgetManualToggling();
         }
