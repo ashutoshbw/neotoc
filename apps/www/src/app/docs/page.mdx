@@ -1,7 +1,18 @@
 import { IndentLineGapSlider } from "@/components/toc/indent-line-gap-slider";
 import { RelativeFontSizeSlider } from "@/components/toc/relative-font-size-slider";
+import { ToggleFoldBtnWidthSlider } from "@/components/toc/toggle-fold-btn-width-slider";
+import { IndentLineWidthSlider } from "@/components/toc/indent-line-width-slider";
+import { AnchorPaddingBlockSlider } from "@/components/toc/anchor-padding-block-slider";
+import { AnchorPaddingInlineSlider } from "@/components/toc/anchor-padding-inline-slider";
+import { AnchorBorderRadiusSlider } from "@/components/toc/anchor-border-radius-slider";
+import { PaddingLeftSlider } from "@/components/toc/padding-left-slider";
+import { LightBarWidthSlider } from "@/components/toc/light-bar-width-slider";
+import { LightBarTipRadiusSlider } from "@/components/toc/light-bar-tip-radius-slider";
+import { LightSpreadLengthSlider } from "@/components/toc/light-spread-length-slider";
+import { FoldingDurationSlider } from "@/components/toc/folding-duration-slider";
 import { AutoFoldSwitch } from "@/components/toc/auto-fold-switch";
 import { EllipsisSwitch } from "@/components/toc/ellipsis-switch";
+import { ResetButton } from "@/components/toc/reset-button";
 
 # Neotoc Documentation
 
@@ -230,7 +241,7 @@ Type: `number`<br />
 Unit: `px`<br />
 Default value: `50`
 
-When auto scroll is on, with this you can control the distance the highlighted area should stay away from the top and bottom edge of the TOC UI(the element which by default gets the class `.nt-toc-holder`) when it can.
+When auto scroll is on, with this you can control the distance the highlighted area should stay away from the top and bottom edge of the TOC UI(the element which by default gets the class `.nt-body`) when it can.
 
 #### `toggleFoldIcon`
 
@@ -251,44 +262,46 @@ This icon is shown at the left of each anchor text on the TOC which do not have 
 Type: `string`<br />
 Default value: [Unfold less rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-rounded/)
 
-This is used on the fold button on the top bar of the TOC. You can set another SVG icon here with this option.
+This is used on the fold button on the header of the TOC. You can set another SVG icon here with this option.
 
 #### `unfoldIcon`
 
 Type: `string`<br />
 Default value: [Unfold more rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-rounded/)
 
-This is used on the unfold button on the top bar of the TOC. You can set another SVG icon here with this option.
+This is used on the unfold button on the header of the TOC. You can set another SVG icon here with this option.
 
 #### `foldAllIcon`
 
 Type: `string`<br />
 Default value: [Unfold less double rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-double-rounded/)
 
-This is used on the fold all button on the top bar of the TOC. You can set another SVG icon here with this option.
+This is used on the fold all button on the header of the TOC. You can set another SVG icon here with this option.
 
 #### `unfoldAllIcon`
 
 Type: `string`<br />
 Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/)
 
-This is used on the unfold all button on the top bar of the TOC. You can set another SVG icon here with this option.
+This is used on the unfold all button on the header of the TOC. You can set another SVG icon here with this option.
 
-## Theming 🎨🖌️🌈
+## Theming 🎨
 
 I recommend you to [copy the style for the TOC](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/components/toc/neotoc.css) that ou see on the right, and modify it based on your need because this is the style that I always try to keep updated and polished as much as I can.
 
 The goal of this section is to make yourself familiar with this stylesheet. It will not be a exhaustive overview. I will only include things that you most likely want to modify.
 
 The stylesheet has two main parts:
-- __`SETTINGS`__: Things that you will usually want to modify, like colors, and size of stuffs.
+- __`SETTINGS`__: Things that you will usually want to modify, like colors, and size of stuffs and folding duration.
 - __`NEOTOC STYLE`__: Styles that define the structure of the TOC and subtle details.
 
-Here I will only discuss about the `SETTINGS`. Let's start with light/dark theme.
+Here I will mainly discuss about the `SETTINGS` part. I'm leaving the rest of the CSS file for you to explore and understand according to your need.
 
-### How to make light/dark theme?
+Let's start with light/dark theme.
 
-You have to use CSS variables(aka custom properties) for this. The default class name for the TOC widget is `.nt-toc-widget`. You should declare colors for light/dark theme via CSS variables here. In the stylesheet it's done like below:
+### Light/dark mode colors
+
+You have to use CSS variables(aka custom properties) for this. The default class name for the TOC widget is `.nt-widget`. You should declare colors for light/dark theme via CSS variables here. In the stylesheet it's done like below:
 
 ```css
 :root.light .nt-widget {
@@ -315,9 +328,69 @@ I defined the colors in [HSL](https://www.smashingmagazine.com/2021/07/hsl-color
 
 Now let's move on to the sizing of stuffs.
 
-### Modifying the sizes of stuffs 📏
+### Sizing and Timing
 
-Coming soon.
+Here again, we use CSS variables in the `.nt-widget` class(by default) to define these things. The variables are:
+
+- `--height`
+- `--header-height`
+- `--relative-font-size`
+- `--toggle-fold-btn-width`
+- `--indent-line-gap`
+- `--indent-line-width`
+- `--anchor-padding-block`
+- `--anchor-padding-inline`
+- `--anchor-border-radius`
+- `--padding-left`
+- `--light-bar-width`
+- `--light-bar-tip-radius`
+- `--light-spread-length`
+- `--folding-duration`
+
+#### `--height`
+
+It describes the total height of the TOC widget(the element having the class `.nt-widget` by default). (Actually it's the maximum height. But you can change easily if you want. We well see that in the next section.)
+
+I've written it's value tailored for this website(i.e. with the help of external CSS variables). You can use any length value for the height as your need.
+
+Note that TOC widget is composed of two things:
+
+- Header of the TOC (having the title and fold buttons). It has the class `nt-header` by default.
+- Body of the TOC. It has the class `nt-body` by default.
+
+#### `--header-height`
+
+I use a fixed height for this, which makes it possible to use `--height` to determine to full height of the TOC widget:
+
+```css
+/* This is in the FOUNDATION section */
+.nt-body {
+  max-height: calc(var(--height) - var(--header-height));
+}
+```
+
+If you need want it be exact height, just use `height` instead of `max-height`.
+
+#### Some more sliders please!
+
+<div className="[&>ul]:list-none [&>ul]:ml-0">
+
+- <RelativeFontSizeSlider min={60} />
+- <ToggleFoldBtnWidthSlider />
+- <IndentLineGapSlider max={100} />
+- <IndentLineWidthSlider />
+- <AnchorPaddingBlockSlider />
+- <AnchorPaddingInlineSlider />
+- <AnchorBorderRadiusSlider />
+- <PaddingLeftSlider />
+- <LightBarWidthSlider />
+- <LightBarTipRadiusSlider />
+- <LightSpreadLengthSlider />
+- <FoldingDurationSlider />
+
+</div>
+
+<ResetButton />
 
 ## Support <span className="text-[0.8em] animate-pulse">❤️</span>
 
