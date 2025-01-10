@@ -25,7 +25,7 @@ export function doAutoFold(
     };
 
     if (anchorsToSectionsInView.length) {
-      const isAncestorAnchor = ifAncestorAnchor(
+      const isAncestorAnchor = verifyAncestorAnchor(
         anchor,
         anchorsToSectionsInView,
         anchorToAncestorAnchorsMap,
@@ -44,7 +44,7 @@ export function doAutoFold(
   }
 }
 
-function ifAncestorAnchor(
+function verifyAncestorAnchor(
   possibleParent: HTMLAnchorElement,
   anchorsInView: HTMLAnchorElement[],
   anchorToAncestorAnchorsMap: Map<HTMLAnchorElement, HTMLAnchorElement[]>,
