@@ -34,6 +34,7 @@ interface Options {
   offsetBottom?: number;
   autoFold?: boolean;
   autoScroll?: boolean;
+  stickyScroll?: boolean;
   autoScrollOffset?: number;
   toggleFoldIcon?: string;
   unfoldableIcon?: string;
@@ -55,6 +56,7 @@ export default function neotoc({
   offsetBottom = 0,
   autoFold = false,
   autoScroll = true,
+  stickyScroll = true,
   autoScrollOffset = 50,
   // https://icon-sets.iconify.design/charm/chevron-down/
   toggleFoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 5.75L8 10.25l4.25-4.5"/></svg>',
