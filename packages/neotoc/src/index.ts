@@ -26,7 +26,7 @@ interface Options {
   io: string;
   to?: HTMLElement;
   title?: string;
-  fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
+  fillAnchor?: (heading: HTMLHeadingElement, order: number[]) => string | Node;
   ellipsis?: boolean;
   classPrefix?: string;
   initialFoldLevel?: number;
@@ -144,9 +144,11 @@ export default function neotoc({
 
   function genToc(
     headings: HTMLHeadingElement[] | NodeListOf<HTMLHeadingElement>,
+    order: number[] = [],
   ): HTMLUListElement | undefined {
     if (!headings.length) return;
 
+    order.push(1);
     const ul = elt<HTMLUListElement>('ul');
 
     for (let i = 0; i < headings.length; i++) {
@@ -155,7 +157,7 @@ export default function neotoc({
       const anchor = elt<HTMLAnchorElement>('a', 'a');
       const nonFoldable = elt<HTMLSpanElement>('div', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
-      anchor.append(fillAnchor(h));
+      anchor.append(fillAnchor(h, order));
 
       const anchorText = h.textContent!.trim().replace(/\s+/g, ' ');
       if (ellipsis) {
@@ -163,6 +165,7 @@ export default function neotoc({
         nonFoldable.title = anchorText;
       }
 
+      nonFoldable.dataset.order = order.join();
       nonFoldable.append(anchor);
       li.append(nonFoldable);
 
@@ -189,7 +192,7 @@ export default function neotoc({
       const hDepth = curHeadingLevel - firstHeadingLevel;
 
       if (subHeadings.length > 0) {
-        const nestedUl = genToc(subHeadings) as HTMLUListElement;
+        const nestedUl = genToc(subHeadings, order) as HTMLUListElement;
         const toggleFoldButton = elt<HTMLDivElement>('div', 'toggle-fold-btn');
         const foldableDiv = elt<HTMLDivElement>('div', 'foldable');
         const hr = elt('hr', 'fold-indicator-line');
@@ -286,7 +289,9 @@ export default function neotoc({
 
       ul.append(li);
       i = i + subHeadings.length;
+      order[order.length - 1]++;
     }
+    order.pop();
     return ul;
   }
 
