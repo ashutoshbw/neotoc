@@ -51,9 +51,9 @@ function verifyAncestorAnchor(
 ) {
   for (let i = 0; i < anchorsInView.length; i++) {
     const a = anchorsInView[i];
-    const ancestorAnchors = anchorToAncestorAnchorsMap.get(a)!;
+    const ancestorAnchors = anchorToAncestorAnchorsMap.get(a);
 
-    if (ancestorAnchors.includes(possibleParent)) {
+    if (ancestorAnchors?.includes(possibleParent)) {
       return true;
     }
   }
