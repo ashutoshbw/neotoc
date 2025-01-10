@@ -464,7 +464,7 @@ export default function neotoc({
   toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
     const [divs, anchors] = getAncestors(a, 'foldable', classPrefix);
     anchorToAncestorFoldableDivsMap.set(a, divs);
-    anchorToAncestorAnchorsMap.set(a, anchors);
+    if (anchors.length) anchorToAncestorAnchorsMap.set(a, anchors);
   });
 
   // Since there is toc, there is heading with more than 0 items.
