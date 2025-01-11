@@ -128,6 +128,10 @@ export default function neotoc({
     HTMLAnchorElement,
     HTMLAnchorElement[]
   >();
+  const nonFoldableToAncestorNonFoldablesMap = new Map<
+    HTMLElement,
+    HTMLElement[]
+  >(); // used in sticky scroll
 
   const [selectorPart1, selectorPart2, selectorPart3] = io
     .split('>>')
@@ -222,6 +226,12 @@ export default function neotoc({
         foldableDiv.append(nestedUl);
         li.append(foldableDiv);
 
+        if (stickyScroll) {
+          nonFoldable.style.position = 'sticky';
+          nonFoldable.style.zIndex = `${6 - order.length}`;
+          nonFoldable.style.top = '0';
+        }
+
         const curFoldState: FoldState = {
           isFolded,
           level: curHeadingLevel,
@@ -271,6 +281,7 @@ export default function neotoc({
         const unfoldableIconDiv = elt('div', 'unfoldable-icon');
         unfoldableIconDiv.innerHTML = unfoldableIcon;
         nonFoldable.prepend(unfoldableIconDiv);
+        anchor.dataset.leafNode = '';
       }
 
       let gridTemplateIndentColumns = '';
@@ -282,7 +293,11 @@ export default function neotoc({
         anchorPadding = `calc(${indentWidth(power)} ${power == hDepth ? '' : `+ ${getRelativePadding(power)}`} + var(--indent-line-gap)) ${anchorPadding ? `+ ${anchorPadding}` : ``}`;
       }
 
-      nonFoldable.style.cssText = `--max-indent-width: ${indentWidth(hDepth)}; grid-template-columns: ${gridTemplateIndentColumns} var(--toggle-fold-btn-width) 1fr`;
+      nonFoldable.style.setProperty(
+        '--max-indent-width',
+        `${indentWidth(hDepth)}`,
+      );
+      nonFoldable.style.gridTemplateColumns = `${gridTemplateIndentColumns} var(--toggle-fold-btn-width) 1fr`;
 
       anchorPadding = `calc(${anchorPadding ? `${anchorPadding} + ` : ''}var(--toggle-fold-btn-width) + var(--anchor-padding-inline))`;
       anchor.style.paddingLeft = anchorPadding;
@@ -471,7 +486,17 @@ export default function neotoc({
   toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
     const [divs, anchors] = getAncestors(a, 'foldable', classPrefix);
     anchorToAncestorFoldableDivsMap.set(a, divs);
-    if (anchors.length) anchorToAncestorAnchorsMap.set(a, anchors);
+    if (anchors.length) {
+      anchorToAncestorAnchorsMap.set(a, anchors);
+      if (stickyScroll) {
+        if (a.dataset.leafNode === undefined) {
+          nonFoldableToAncestorNonFoldablesMap.set(
+            a.parentElement!,
+            anchors.map((anchor) => anchor.parentElement!),
+          );
+        }
+      }
+    }
   });
 
   // Since there is toc, there is heading with more than 0 items.
@@ -774,6 +799,18 @@ export default function neotoc({
         foldScrollState.on = false;
         foldScrollState.startTime = 0;
       }
+    }
+
+    if (stickyScroll) {
+      nonFoldableToAncestorNonFoldablesMap.forEach(
+        (ancestorNonFoldables, curNonFoldable) => {
+          let totalTop = 0;
+          for (let i = 0; i < ancestorNonFoldables.length; i++) {
+            totalTop += ancestorNonFoldables[i].offsetHeight;
+          }
+          curNonFoldable.style.top = `${totalTop}px`;
+        },
+      );
     }
   };
 

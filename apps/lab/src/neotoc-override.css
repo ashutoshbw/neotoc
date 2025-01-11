@@ -1,3 +1,17 @@
 .nt-widget {
   --height: 300px;
 }
+
+.nt-body {
+  min-height: 200px;
+}
+
+/* Real styles below */
+
+.nt-body {
+  position: relative;
+}
+
+.nt-non-foldable {
+  background: var(--bg);
+}

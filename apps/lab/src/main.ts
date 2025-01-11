@@ -8,5 +8,5 @@ neotoc({
   io: "article >> h* >> #sidebar",
   ellipsis: true,
   title: "On this page",
-  autoFold: true,
+  autoFold: false,
 });
