@@ -22,11 +22,17 @@ import {
 import { addHighlight } from './highlight.js';
 import { indentWidth, getRelativePadding } from './indents.js';
 
+type Breadcrumb = {
+  content: string | Node;
+  hash: string;
+}[];
+
 interface Options {
   io: string;
   to?: HTMLElement;
   title?: string;
   fillAnchor?: (heading: HTMLHeadingElement) => string | Node;
+  onBreadcrumbChange?: (data: Breadcrumb) => void;
   ellipsis?: boolean;
   classPrefix?: string;
   initialFoldLevel?: number;
@@ -48,6 +54,7 @@ export default function neotoc({
   to,
   title = 'On this page',
   fillAnchor = (h) => h.textContent!,
+  onBreadcrumbChange = () => {},
   ellipsis = false,
   classPrefix = 'nt-',
   initialFoldLevel = 6,
@@ -117,6 +124,7 @@ export default function neotoc({
 
   // caches below:
   const idToAnchorMap: { [x: string]: HTMLAnchorElement } = {};
+  const hashToHeadingMap: { [x: string]: HTMLHeadingElement } = {};
 
   const anchorToAncestorFoldableDivsMap = new Map<
     HTMLAnchorElement,
@@ -126,6 +134,7 @@ export default function neotoc({
     HTMLAnchorElement,
     HTMLAnchorElement[]
   >();
+  const anchorToBreadcrumbMap = new Map<HTMLAnchorElement, Breadcrumb>();
 
   const [selectorPart1, selectorPart2, selectorPart3] = io
     .split('>>')
@@ -154,6 +163,8 @@ export default function neotoc({
       const nonFoldable = elt<HTMLSpanElement>('div', 'non-foldable'); // only used when there is fold button
       anchor.href = `#${h.id}`;
       anchor.append(fillAnchor(h));
+
+      hashToHeadingMap[`#${h.id}`] = h;
 
       const anchorText = h.textContent!.trim().replace(/\s+/g, ' ');
       if (ellipsis) {
@@ -465,6 +476,13 @@ export default function neotoc({
     const [divs, anchors] = getAncestors(a, 'foldable', classPrefix);
     anchorToAncestorFoldableDivsMap.set(a, divs);
     anchorToAncestorAnchorsMap.set(a, anchors);
+    anchorToBreadcrumbMap.set(
+      a,
+      [...anchors.reverse(), a].map((aa) => ({
+        content: fillAnchor(hashToHeadingMap[aa.hash]),
+        hash: aa.hash,
+      })),
+    );
   });
 
   // Since there is toc, there is heading with more than 0 items.
@@ -497,6 +515,7 @@ export default function neotoc({
   let scrollContainerScrollTop: null | number = null;
   let topInUnfoldedState: null | number = null;
   let bottomInUnfoldedState: null | number = null;
+  let lastTopAnchor: null | HTMLAnchorElement = null; // used for breadcrumb
 
   const runConditionally = (cb: () => void) => {
     const condition1 =
@@ -520,7 +539,7 @@ export default function neotoc({
   const renderFrame = (curTimestamp: number) => {
     const [viewportTop, viewportBottom] = getViewportYSize(
       scrollContainer,
-      offsetTop,
+      offsetTop + 1, // When scrolling to a heading chrome sometimes makes a fractional positive/negative displacement. Adding 1 makes sure that viewport top edge is always below the top edge of the heading by a fractional amount or by 1px.
       offsetBottom,
     );
 
@@ -703,6 +722,11 @@ export default function neotoc({
         isVisible: true,
       });
       updateTopBottomGradientPositions();
+      const curTopAnchor = anchorsToSectionsInView[0];
+      if (curTopAnchor !== lastTopAnchor) {
+        const breadcrumb = anchorToBreadcrumbMap.get(curTopAnchor);
+        if (breadcrumb) onBreadcrumbChange(breadcrumb);
+      }
 
       if (autoFoldScrollState.on) {
         if (autoFoldScrollState.startTime == 0) {
@@ -728,6 +752,7 @@ export default function neotoc({
       lastScrollContainerScrollTop = scrollContainerScrollTop;
       lastTopInUnfoldedState = topInUnfoldedState;
       lastBottomInUnfoldedState = bottomInUnfoldedState;
+      lastTopAnchor = curTopAnchor;
     } else {
       viewportHeight =
         scrollContainerScrollTop =
@@ -740,11 +765,13 @@ export default function neotoc({
       });
       draw({ isVisible: false, time: curTimestamp });
       updateTopBottomGradientPositions();
+      if (lastTopAnchor) onBreadcrumbChange([]);
 
       lastViewportHeight =
         lastScrollContainerScrollTop =
         lastTopInUnfoldedState =
         lastBottomInUnfoldedState =
+        lastTopAnchor =
           null;
     }
 
