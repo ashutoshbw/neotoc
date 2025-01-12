@@ -479,7 +479,7 @@ export default function neotoc({
     anchorToBreadcrumbMap.set(
       a,
       [...anchors.reverse(), a].map((aa) => ({
-        content: fillAnchor(hashToHeadingMap[aa.hash]),
+        content: fillAnchor(hashToHeadingMap[aa.getAttribute('href')!]),
         hash: aa.hash,
       })),
     );
