@@ -238,6 +238,10 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) {
   background: var(--bg-sub-anchors);
 }
 
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) > .nt-foldable .nt-a {
+  background: var(--bg-sub-anchors);
+}
+
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:hover)
   .nt-indent-block:nth-child(1),
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-2:hover)
@@ -269,6 +273,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 .nt-a {
+  background: var(--bg);
   color: var(--fg);
   text-decoration: none;
   padding-block: var(--anchor-padding-block);
@@ -465,6 +470,12 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 }
 
 li:has(> .nt-non-foldable > .nt-toggle-fold-btn:focus-visible) {
+  background: var(--bg-sub-anchors);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:focus-visible)
+  > .nt-foldable
+  .nt-a {
   background: var(--bg-sub-anchors);
 }
 
