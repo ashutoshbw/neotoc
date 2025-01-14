@@ -15,6 +15,7 @@ On this Stylesheet:
  - ACCESSIBILITY
  - UTILITY CLASSES
  - UNUSED CLASSES
+- EXTRA
 
 Syntax of heading comments:
 - They are capitalized.
@@ -23,7 +24,6 @@ Syntax of heading comments:
 
 /* SETTINGS  */
 /** THEME **/
-/* The following theme is based on Tailwind CSS's Zinc color palette */
 
 :root.light .nt-widget {
   --bg: hsl(0 0% 97%);
@@ -69,6 +69,7 @@ Syntax of heading comments:
   --light-opacity: 0.2;
 }
 
+/* Override colors when viewport width is 768px or up */
 @media (min-width: 768px) {
   :root.light .nt-widget {
     --bg: hsl(0 0% 100%);
@@ -515,3 +516,9 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:focus-visible)
 /*
 - nt-enlightend-a: This class is dynamically only added to anchors in the TOC that refers to sections currently in view.
 */
+
+/** EXTRA **/
+
+:target {
+  color: yellowgreen;
+}
