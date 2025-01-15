@@ -22,7 +22,7 @@ import {
 import { addHighlight } from './highlight.js';
 import { indentWidth, getRelativePadding } from './indents.js';
 
-type Breadcrumb = {
+export type Breadcrumb = {
   content: string | Node;
   hash: string;
 }[];
