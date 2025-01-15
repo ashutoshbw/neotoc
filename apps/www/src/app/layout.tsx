@@ -36,12 +36,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="[--site-header-height:3.85rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
-            <header className="h-[var(--site-header-height)] border-b sticky top-0 z-50 bg-background/60 backdrop-blur">
-              <div className="mx-4 flex items-center justify-between h-full">
-                <Link href="/">
+          <div className="md:[--site-header-height:3.85rem] [--site-header-height:5rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
+            <header className="h-[var(--site-header-height)] flex flex-col border-b dark:md:border-zinc-800 dark:border-zinc-400 border-zinc-600 sticky top-0 z-50 bg-background/80 backdrop-blur">
+              <div className="px-4 flex items-center justify-between gap-2 flex-grow">
+                <Link href="/" className="inline-block w-32 shrink-0">
                   <b>Neotoc v0.1.3</b>
                 </Link>
+                <div
+                  id="nt-breadcrumb"
+                  className="flex-grow h-full md:flex hidden items-center text-nowrap overflow-hidden"
+                ></div>
                 <span className="flex items-center gap-2">
                   <ThemeToggler />
                   <Link
@@ -62,6 +66,10 @@ export default function RootLayout({
                   </Link>
                 </span>
               </div>
+              <div
+                id="nt-breadcrumb-mobile"
+                className="border-t dark:border-zinc-400 border-zinc-600 h-[2rem] px-4 dark:bg-zinc-700 bg-zinc-200 items-center md:hidden flex text-nowrap overflow-hidden"
+              ></div>
             </header>
             <main>{children}</main>
             <footer className="mt-auto py-2 border-t grid place-items-center">

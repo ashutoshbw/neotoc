@@ -20,6 +20,24 @@ export const defaultValues = {
 };
 
 export function TocProvider({ children }: { children: React.ReactNode }) {
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const handleResize = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+    };
+
+    const mediaQueryList = window.matchMedia("(min-width: 768px)");
+
+    setIsDesktop(mediaQueryList.matches);
+
+    mediaQueryList.addEventListener("change", handleResize);
+
+    return () => {
+      mediaQueryList.removeEventListener("change", handleResize);
+    };
+  }, []);
+
   const [toc, setToc] = useState<HTMLDivElement | null>(null);
   const [autoFold, setAutoFold] = useState(false);
   const [ellipsis, setEllipsis] = useState(false);
@@ -59,6 +77,8 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
+    const breadcrumbDesktopDiv = document.querySelector("#nt-breadcrumb");
+    const breadcrumbMobileDiv = document.querySelector("#nt-breadcrumb-mobile");
     const removeToc = neotoc({
       io: "article >> h2,h3,h4,h5,h6 >> #sidebar",
       autoFold: autoFold,
@@ -71,14 +91,35 @@ export function TocProvider({ children }: { children: React.ReactNode }) {
         );
         return span;
       },
-      offsetTop: 80,
+      onBreadcrumbChange(data) {
+        const breadcrumbDiv = isDesktop
+          ? breadcrumbDesktopDiv
+          : breadcrumbMobileDiv;
+        if (breadcrumbDiv) {
+          breadcrumbDiv.innerHTML = "";
+
+          data.forEach((item, i) => {
+            const anchor = document.createElement("a");
+            anchor.append(item.content);
+            anchor.href = item.hash;
+            if (i != 0) {
+              const sep = document.createElement("span");
+              sep.className = "px-1";
+              sep.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m10 17l5-5l-5-5"/></svg>`;
+              breadcrumbDiv.append(sep);
+            }
+            breadcrumbDiv.append(anchor);
+          });
+        }
+      },
+      offsetTop: isDesktop ? 80 : 96,
     });
     const tocWidget = document.querySelector<HTMLDivElement>(
       "#sidebar .nt-widget"
     );
     setToc(tocWidget);
     return removeToc;
-  }, [autoFold, ellipsis]);
+  }, [isDesktop, autoFold, ellipsis]);
 
   useEffect(() => {
     toc?.style.setProperty("--relative-font-size", `${relativeFontSize}`);
