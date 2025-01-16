@@ -28,6 +28,7 @@ export function Header() {
           <ThemeToggler />
           <Link href="https://github.com/ashutoshbw/neotoc" target="_blank">
             <GithubIcon />
+            <span className="sr-only">Github</span>
           </Link>
         </span>
       </div>
