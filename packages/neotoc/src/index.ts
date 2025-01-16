@@ -146,7 +146,7 @@ export default function neotoc({
     );
   }
 
-  let headings = getHeadings();
+  const headings = getHeadings();
   const firstHeadingLevel = headings.length > 0 ? +headings[0].tagName[1] : 0;
 
   function genToc(
@@ -558,20 +558,6 @@ export default function neotoc({
         );
       }
     };
-
-    /*
-      When used in Next.js, sometimes probably because of a bug in its mdx
-      logic, when state changes in parent component, headings are forgotten.
-      I found that for the doc website the following file causes the problem:
-      https://github.com/ashutoshbw/neotoc/blob/71f37eeb92ef6f16ec2fd2c5c445828a0b25f944/apps/www/src/components/headings.tsx
-      Though there seems nothing wrong in it.
-      However, following is a way to stay responsive in such cases and you are
-      good to go.
-    */
-    if (headings[0].getBoundingClientRect().height === 0) {
-      // checking for height 0 is safe because you don't want your headings to of 0 height
-      headings = getHeadings();
-    }
 
     for (let i = 0; i < headings.length; i++) {
       const curH = headings[i];
