@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
 import neotoc from "neotoc";
 import "./neotoc.css";
-import "./theme-colors-hover.css";
 
 export default function DocLayout({
   children,
@@ -156,6 +155,7 @@ export default function DocLayout({
         }}
       >
         {tocVisibility ? <SidebarOpenIcon /> : <SidebarCloseIcon />}
+        <span className="sr-only">Show or hide table of contents sidebar</span>
       </Button>
     </div>
   );

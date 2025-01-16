@@ -36,7 +36,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     a: (props) => (
       <a
-        className="text-blue-600 dark:text-blue-400 hover:underline"
+        className="text-blue-600 dark:text-blue-500 hover:underline"
         target={props.href.startsWith("#") ? "_self" : "_blank"}
         {...props}
       />
