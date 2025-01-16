@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { TocProvider } from "@/components/toc/toc-provider";
 import { Button } from "@/components/ui/button";
 import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
+import neotoc from "neotoc";
+import "./neotoc.css";
 
 export default function DocLayout({
   children,
@@ -11,6 +12,111 @@ export default function DocLayout({
   children: React.ReactNode;
 }>) {
   const [tocVisibility, setTocVisibility] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const handleResize = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+    };
+
+    const mediaQueryList = window.matchMedia("(min-width: 768px)");
+
+    setIsDesktop(mediaQueryList.matches);
+
+    mediaQueryList.addEventListener("change", handleResize);
+
+    return () => {
+      mediaQueryList.removeEventListener("change", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const breadcrumbDiv = isDesktop
+      ? document.querySelector<HTMLDivElement>("#nt-breadcrumb")
+      : document.querySelector<HTMLDivElement>("#nt-breadcrumb-mobile");
+
+    let isDragging = false;
+    let startX: number;
+    let scrollLeft: number;
+
+    const startDragging = (e: MouseEvent | TouchEvent) => {
+      if (breadcrumbDiv) {
+        const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
+        isDragging = true;
+        startX = pageX - breadcrumbDiv.offsetLeft;
+        scrollLeft = breadcrumbDiv.scrollLeft;
+      }
+    };
+
+    const stopDragging = () => {
+      isDragging = false;
+    };
+
+    const onDrag = (e: MouseEvent | TouchEvent) => {
+      if (breadcrumbDiv) {
+        if (!isDragging) return;
+        const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
+        const x = pageX - breadcrumbDiv.offsetLeft;
+        const walk = x - startX;
+        breadcrumbDiv.scrollLeft = scrollLeft - walk;
+      }
+    };
+
+    breadcrumbDiv?.addEventListener("mousedown", startDragging);
+    breadcrumbDiv?.addEventListener("touchstart", startDragging, {
+      passive: true,
+    });
+    breadcrumbDiv?.addEventListener("mouseup", stopDragging);
+    breadcrumbDiv?.addEventListener("touchend", stopDragging, {
+      passive: true,
+    });
+    breadcrumbDiv?.addEventListener("mousemove", onDrag);
+    breadcrumbDiv?.addEventListener("touchmove", onDrag, { passive: true });
+
+    const removeToc = neotoc({
+      io: "article >> h2,h3,h4,h5,h6 >> #sidebar",
+      autoFold: true,
+      ellipsis: true,
+      fillAnchor(h) {
+        const a = h.firstChild;
+        const span = document.createElement("span");
+        span.append(
+          ...[...a!.childNodes].slice(1, -1).map((n) => n.cloneNode(true))
+        );
+        return span;
+      },
+      onBreadcrumbChange(data) {
+        if (breadcrumbDiv) {
+          breadcrumbDiv.innerHTML = "";
+
+          data.forEach((item, i) => {
+            const anchor = document.createElement("a");
+            anchor.append(item.content);
+            anchor.href = item.hash;
+            if (i != 0) {
+              const sep = document.createElement("span");
+              sep.className = "px-1";
+              sep.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m10 17l5-5l-5-5"/></svg>`;
+              breadcrumbDiv.append(sep);
+            }
+            breadcrumbDiv.append(anchor);
+          });
+        }
+      },
+      offsetTop: isDesktop ? 80 : 96,
+    });
+
+    return () => {
+      removeToc();
+      if (breadcrumbDiv) breadcrumbDiv.innerHTML = "";
+      breadcrumbDiv?.removeEventListener("mousedown", startDragging);
+      breadcrumbDiv?.removeEventListener("touchstart", startDragging);
+      breadcrumbDiv?.removeEventListener("mouseup", stopDragging);
+      breadcrumbDiv?.removeEventListener("touchend", stopDragging);
+      breadcrumbDiv?.removeEventListener("mousemove", onDrag);
+      breadcrumbDiv?.removeEventListener("touchmove", onDrag);
+    };
+  }, [isDesktop]);
 
   function handleArticleClick(e: React.MouseEvent<HTMLElement>) {
     const elt = e.target as HTMLElement;
@@ -32,7 +138,7 @@ export default function DocLayout({
         className="max-w-[67ch] mt-8 md:px-8 mx-4 overflow-auto"
         onClick={handleArticleClick}
       >
-        <TocProvider>{children}</TocProvider>
+        {children}
       </article>
       <aside
         className={cn(
