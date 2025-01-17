@@ -89,11 +89,11 @@ Now, let's explore all of its options in detail.
 Type of `io`: `string`<br/>
 Type of `to`: `HTMLElement`
 
-`io` is the ___only required___ option. We have already covered it mostly in the [Quick Start guide](#quick-start-guide-it-is-just-three-lines-away). Let's cover the rest here.
+`io` is the ___only required___ option. We have already covered it mostly in the [Getting started](#getting-started) section. Let's cover the rest of the details here.
 
-The last part of the `io` can be ommitted if there is a need to provide the corresponding HTML element directly. We can use the `to` option for that purpose.
+The last part of the `io` value can be _omitted_ if you need to provide the corresponding HTML element directly. You can use the `to` option for this purpose.
 
-One use case of `to` option is that it allows you to easily create a wrapper component for it in React:
+One use case of the `to` option is that it allows you to easily create a wrapper component for it in React:
 
 ```tsx
 function Neotoc({
@@ -119,14 +119,14 @@ Note that if the 3rd part of the `io` option is specified, `to` option is ignore
 Type: `string`<br />
 Default value: `"On this page"`
 
-The title of the toc UI that appears on the top left of it.
+The title of the TOC UI that appears at the top left of it.
 
 #### `fillAnchor`
 
 Type: `(heading: HTMLHeadingElement) => string | Node`<br />
 Default value: `(heading) => heading.textContent`
 
-It is used to determine the content of anchors elements in the toc. If your headings have complex structure or contain elements like `<code>` or `<i>`  like in this doc and you want to show them in the toc, this option can be useful.
+It is used to determine the content of anchor elements in the TOC. If your headings have a complex structure or contain elements like `<code>` or `<i>`, as seen on this page, and you want to display them in the TOC, this option can be useful.
 
 __Tip__: You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
 
@@ -135,18 +135,18 @@ __Tip__: You can't have the same node in two places in the DOM. You will need to
 Type: `boolean`<br />
 Default value: `false`
 
-If `true`, long heading's text is truncated with ... instead of wrapping it to the next line. If you hover of the anchor the full text is shown in the browser default tooltip.
+If `true`, overflowed text is truncated with ... instead of wrapping to the next line. When you hover over the anchor, the full text is displayed in the browser's default tooltip.
 
-__Tip__: If you clone nodes of your headings to populate the content of anchors in the toc using [`fillAnchor`](#fillanchor) and if your headings have `<code>` elements, make sure their position is `static` when then are in the toc, otherwise ellipsis may not appear next to them.
+__Tip__: When using `fillAnchor` with cloned heading nodes containing `<code>` elements, set their position to `static` in the TOC if it's not, to ensure the ellipsis appears correctly.
 
 #### `classPrefix`
 
 Type: `string`<br />
 Default value: `nt-`
 
-All the CSS classes assigned to different elements in the toc UI are by default prefixed with `nt-` as an attempt to avoid class name collision.
+All CSS classes assigned to elements in the TOC UI are prefixed with `nt-` by default to avoid class name collisions.
 
-This the `nt-` prefix is already used in class names of other elements of your page, you should set a different value here. And in your CSS for neotoc, you will also have to replace all occurances of `nt-` with your chosen prefix.
+If the `nt-` prefix is already used in class names elsewhere on your page, you should set a different value here. Additionally, you'll need to update your Neotoc CSS to replace all occurrences of `nt-` with your chosen prefix.
 
 #### `initialFoldLevel`
 
@@ -155,13 +155,13 @@ Default value: `6`
 
 It should be a number from `1` to `6`.
 
-If it is `1`, `<h1>` and all lower level heading's corresponding sections in the toc will be folded initially.
+If it is `1`, `<h1>` and all lower-level headings' corresponding sections in the TOC will be folded initially.
 
-If it is `2`, `<h2>` and all lower level heading's corresponding sections in the toc will be folded initially.
+If it is `2`, `<h2>` and all lower-level headings' corresponding sections in the TOC will be folded initially.
 
 And so on.
 
-Note that if it is `6` everything is unfolded initially since there is no `<h7>`.
+Note that if it is `6`, everything is unfolded initially since there is no `<h7>`.
 
 #### `offsetTop` and `offsetBottom`
 
@@ -169,29 +169,31 @@ Type of both: `number`<br />
 Unit: `px`<br />
 Default value of both: `0`
 
-Neotoc considers the nearest scroll container's(usually it is the `<html>` element) visible portion on the screen as its viewport. 
+Neotoc considers the portion of the nearest scroll container(usually the `<html>` element) cropped by the screen as its viewport.
 
-This viewport is reflected in the toc to show highlighted area.
+This viewport is reflected in the TOC to highlight the relevant area.
 
-These two options allow you to lower the top of edge of the viewport using the `offsetTop` option and raise the bottom edge of the viewport using `offsetBottom`.
+You can lower the top edge of this viewport using the `offsetTop` option and raise the bottom edge of the viewport using `offsetBottom`.
 
-This is useful if you have fixed header or footer.
+This is useful if you have a fixed header or footer.
 
-__Note__: In this doc, by nearest scroll container, it is meant the nearest scroll container of the element that is matched by the first part of the `io` option.
+Note: Here "nearest scroll container" refers to the nearest scroll container of the element matched by the first part of the `io` option.
+
+__Tip__: If you have a fixed header, to ensure the headings scroll to the correct position, you can use the CSS [`scroll-margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top) property on the heading elements.
 
 #### `autoFold`
 
 Type: `boolean`<br />
 Default value: `false`
 
-Whether or not to auto fold/unfold the toc based on the what is in view.
+Whether or not to automatically fold/unfold the TOC based on what is in the viewport.
 
 #### `autoScroll`
 
 Type: `boolean`<br />
 Default value: `true`
 
-Whether or not to automatically scroll the toc to have the highlighted portion in view when the nearest scroll container is scrolled.
+Whether or not to automatically scroll the TOC to keep the highlighted portion in view when the nearest scroll container is scrolled.
 
 #### `autoScrollOffset`
 
@@ -199,49 +201,49 @@ Type: `number`<br />
 Unit: `px`<br />
 Default value: `50`
 
-When auto scroll is on, with this you can control the distance the highlighted area should stay away from the top and bottom edge of the toc UI(the element which by default gets the class `.nt-body`) when it can.
+When `autoScroll` is `true`, this option allows you to control the distance the highlighted area should stay from the top and bottom edges of the main TOC UI (the element that by default has the class `.nt-body`) when possible.
 
 #### `toggleFoldIcon`
 
 Type: `string`<br />
 Default value: [Chevron down icon(SVG)](https://icon-sets.iconify.design/charm/chevron-down/)
 
-This icon is shown at the left of each anchor text on the toc which has sub anchors underneath it to allow you to fold/unfold it. You can set another SVG icon here with this option.
+This icon is shown at the left of each anchor text on the TOC which has sub anchors underneath it to allow you to fold/unfold it. You can set another SVG icon here with this option.
 
 #### `unfoldableIcon`
 
 Type: `string`<br />
 Default value: [Dot icon(SVG)](https://icon-sets.iconify.design/lucide/dot/)
 
-This icon is shown at the left of each anchor text on the toc which do not have sub anchors underneath it. You can set another SVG icon here with this option.
+This icon is shown at the left of each anchor text on the TOC which do not have sub anchors underneath it. You can set another SVG icon here with this option.
 
 #### `foldIcon`
 
 Type: `string`<br />
 Default value: [Unfold less rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-rounded/)
 
-This is used on the fold button on the header of the toc. You can set another SVG icon here with this option.
+This is used on the fold button on the header of the TOC. You can set another SVG icon here with this option.
 
 #### `unfoldIcon`
 
 Type: `string`<br />
 Default value: [Unfold more rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-rounded/)
 
-This is used on the unfold button on the header of the toc. You can set another SVG icon here with this option.
+This is used on the unfold button on the header of the TOC. You can set another SVG icon here with this option.
 
 #### `foldAllIcon`
 
 Type: `string`<br />
 Default value: [Unfold less double rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-double-rounded/)
 
-This is used on the fold all button on the header of the toc. You can set another SVG icon here with this option.
+This is used on the fold all button on the header of the TOC. You can set another SVG icon here with this option.
 
 #### `unfoldAllIcon`
 
 Type: `string`<br />
 Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/)
 
-This is used on the unfold all button on the header of the toc. You can set another SVG icon here with this option.
+This is used on the unfold all button on the header of the TOC. You can set another SVG icon here with this option.
 
 ## Theming 🎨
 
