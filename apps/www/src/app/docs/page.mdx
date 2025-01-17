@@ -54,15 +54,17 @@ That's everything you need to know to get started with Neotoc.
 
 ## Neotoc API
 
-`neotoc` package only has a default export. It's the function that you call to create the toc. Here we will name this function as `neotoc` too:
+You can import the TOC UI generator function directly from the package as shown below:
 
 ```js
 import neotoc from "neotoc";
 ```
 
-`neotoc` takes a options object and returns a cleaup function.
+You can rename `neotoc` to something else if you wish, as it is a default export.
 
-If you are using `neotoc` in React or other library/framework, you will probably need to call or return this function where it is needed. For React for example, the pattern is like below:
+`neotoc` accepts an options object and returns a cleanup function.
+
+If you're using Neotoc in React or another library/framework, you'll likely need to call or return this function where it is required. For example, in React, the pattern looks like this:
 
 ```tsx
 useEffect(() => {
@@ -76,9 +78,9 @@ useEffect(() => {
 }, []);
 ```
 
-In you have a vanilla HTML CSS JS setup you usually don't need use the cleanup function.
+If you are working with a vanilla HTML, CSS, and JS setup, you typically won't need to use the cleanup function.
 
-Now, let's see all of its options in detail.
+Now, let's explore all of its options in detail.
 
 ### Options
 
