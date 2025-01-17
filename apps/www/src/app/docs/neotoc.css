@@ -97,8 +97,8 @@ Syntax of heading comments:
   --anchor-padding-inline: 0.3em;
   --anchor-border-radius: 6px;
   --padding-left: 1.5rem;
-  --light-bar-width: 1px;
-  --light-bar-tip-radius: 2.5px;
+  --light-bar-width: 4px;
+  --light-bar-tip-radius: 2px;
   --light-spread-length: 250px;
   --folding-duration: 0.3s;
 }
@@ -106,7 +106,7 @@ Syntax of heading comments:
 @media (min-width: 768px) {
   .nt-widget {
     --relative-font-size: 94; /* do not use percentage sign */
-    --toggle-fold-btn-width: 0.9em; /* should in em unit */
+    --toggle-fold-btn-width: 1.3em; /* should in em unit */
     --anchor-padding-block: 0.2em;
     --anchor-border-radius: 4px;
   }
@@ -229,6 +229,10 @@ Syntax of heading comments:
   cursor: pointer;
   svg {
     transition: transform var(--folding-duration);
+    font-size: 0.8em;
+    path {
+      stroke-width: 2px;
+    }
   }
 }
 
