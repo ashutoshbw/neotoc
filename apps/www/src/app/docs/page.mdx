@@ -1,46 +1,27 @@
-# Neotoc Documentation
+# Neotoc Docs
 
-Neotoc creates a TOC(Table of Contents) UI by parsing the DOM inside the browser.
+Crafting a table of contents can be a real challenge. Making it interactive and sleek? That’s a whole new level of complexity. This is where Neotoc comes in—allowing you to create a highly engaging TOC UI with minimal effort, giving users an experience they’ll truly enjoy.
 
-The TOC you see on the right is made with neotoc. If you are on a mobile device, tap the sidebar icon at the bottom right to show/hide it.
+## Getting started
 
-## Motivation and inspiration
+Getting started with Neotoc depends on your project setup. There are two main ways to use Neotoc:
 
-Most docs have a table of contents UI. But I haven't found one that is really intutive. While scrolling the page up and down, very often the heading title that is highlighted in the TOC is to close what I'm reading, not what it really is.
+- If you have a vanilla setup, you can use a CDN like [jsDelivr](https://www.jsdelivr.com/package/npm/neotoc).
+- If your project uses a bundler, you will most likely want to install it via a package manager (e.g., `npm`, `pnpm`, or `yarn`).
 
-In my imagination fixing this design issue lead to fluid motion. I thought I would be cool to experience it. So I decided to work on it to turn it into reality.
+In this guide, I'll cover the getting started section in the context of Vite's `vanilla` template for simplicity. You can easily set one up by running `npm create vite` in your terminal and following the prompts. For more details, refer to [Scaffolding Your First Vite Project](https://vite.dev/guide/#scaffolding-your-first-vite-project).
 
-For many other aspects I took inspiration from different places on the internet. The ones I can think of now are:
-
-- For the architecture of the tree view, I took inspriation from the Github's "Files" side panel.
-- The idea of making font size of heading titles in TOC incrementally smaller orignally came from [Gwern Branwen](https://gwern.net/silk-road) and then from [Joshua Comeau](https://www.joshwcomeau.com/animation/css-transitions/)'s website.
-- The idea to truncate long headings and show ellipsis came from [vitepress.dev](https://vitepress.dev/).
-- The idea of auto fold came from [tocbot](https://tscanlin.github.io/tocbot/).
-
-## Features
-
-Its main features are:
-
-- __Fluid highlight of the view__ and __smooth auto scrolling of TOC__.
-- Both __manual__ and __auto folding__ support.
-- __Easily stylable__ with dozens of CSS variables.
-- __TypeScript support__.
-- __Accessible__.
-- __Zero dependency__.
-- __Performant__ and __Lightweight__.
-- __Framework agnostic__. You can use it in vanilla HTML CSS JS setup to frameworks like Next.js. This is doc is made with Next.js.
-
-## Quick start guide: _It is just three lines away_
-
-Here I'm writing this quick start guide in the context of Vite's `vanilla` template for simplicity.
-
-So after setting up your project, install `neotoc`(with the package manager you are using. I'm using `pnpm` here cause its my favorite):
+After setting up your project, install `neotoc` using the package manager of your choice:
 
 ```sh
+npm install neotoc
+# or
 pnpm add neotoc
+# or
+yarn add neotoc
 ```
 
-Now in your JavaScript file do the following `import`s and call `neotoc` like below:
+In your JavaScript/TypeScript file(most likely `main.js`/`main.ts`), add the following import statements and call `neotoc` as shown below:
 
 ```js
 import neotoc from "neotoc";
@@ -49,25 +30,27 @@ import "./neotoc.css";
 neotoc({ io: "article >> h* >> aside" });
 ```
 
-Neotoc doesn't ship any CSS with the package to allow you to style it freely. However you don't have to write it from scratch. Use the stylesheet that I've written for this site as a starting point. [Copy it form Github](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/components/toc/neotoc.css) and paste it in `neotoc.css`(or whatever filename you choose) and tweak it as you like it.
+Neotoc doesn’t include any CSS by default, giving you complete freedom to style it however you like. That said, you don’t need to start from scratch. You can use the stylesheet I’ve written for this site as a starting point. [Copy it from GitHub](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/docs/neotoc.css), paste it into `neotoc.css` (or any filename of your choice), and customize it to suit your needs.
 
-Now to create TOC, we must call `neotoc` with the `io`(i.e. input output) option. Here you have to give the answer of three questions in the form of _CSS selectors_ seperated by `>>`:
+To create a TOC, you must call `neotoc` with the `io` (input-output) option. Here, you need to answer three questions using CSS selectors separated by `>>`:
+
 1. ___Where should it look for headings?___
-    - Here it is the `article` element.
+    - In this case, it's the `article` element.
 2. ___Which headings should it consider for creating the TOC?___
-    - Here it is `h*`, which means headings of all levels.(Though it's not a valid CSS selector, it's special shortcut that is allowed here).
-3. ___Where should it append the the created TOC?___
-    - Here it is the `aside` element.
+    - Here, it's `h*`, which means headings of all levels. (Although it's not a valid CSS selector, it's a special shortcut allowed here.)
+3. ___Where should it append the created TOC?___
+    - Here, it's the `aside` element.
 
-If you didn't have `article`, heading elements in it and `aside`, create them in your HTML. And make sure those headings have unique ids. Then you should see the TOC in the `aside` element.
+If your HTML does not include an `<article>` element with headings inside it or an `<aside>` element, create them. Ensure the headings have unique IDs. Once these elements are in place, you should see the TOC in the `<aside>` element.
 
-Note that to get things work nicely Neotoc expect two things:
-- Heading that you look for must have unique ids.
-- And those headings should appear in a sensible order. By sensible order, I mean:
-  - First found heading's level is considered the largest one. So if you choose `<h2>` as your first heading, you must not use the `<h1>` heading later.
-  - There must be no gap between two heading levels when going top to bottom. So, after `<h2>` you should not use the heading `<h4>`.
+Note that for Neotoc to work properly, it expects two things:
 
-Now you have good a foundational knowledge about it. Let's now dive into its API.
+- The headings you target must have unique IDs.
+- The headings must appear in a logical order. By logical order, I mean:
+  - The first heading found determines the highest level. For example, if you start with an `<h2>` heading, you should not use an `<h1>` heading later.
+  - There should be no gaps between heading levels when progressing from top to bottom. For instance, after an `<h2>`, you should not use an `<h4>` without including an `<h3>` in between.
+
+That's everything you need to know to get started with Neotoc.
 
 ## Neotoc API
 
@@ -134,14 +117,14 @@ Note that if the 3rd part of the `io` option is specified, `to` option is ignore
 Type: `string`<br />
 Default value: `"On this page"`
 
-The title of the TOC UI that appears on the top left of it.
+The title of the toc UI that appears on the top left of it.
 
 #### `fillAnchor`
 
 Type: `(heading: HTMLHeadingElement) => string | Node`<br />
 Default value: `(heading) => heading.textContent`
 
-It is used to determine the content of anchors elements in the TOC. If your headings have complex structure or contain elements like `<code>` or `<i>`  like in this doc and you want to show them in the TOC, this option can be useful.
+It is used to determine the content of anchors elements in the toc. If your headings have complex structure or contain elements like `<code>` or `<i>`  like in this doc and you want to show them in the toc, this option can be useful.
 
 __Tip__: You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
 
@@ -152,14 +135,14 @@ Default value: `false`
 
 If `true`, long heading's text is truncated with ... instead of wrapping it to the next line. If you hover of the anchor the full text is shown in the browser default tooltip.
 
-__Tip__: If you clone nodes of your headings to populate the content of anchors in the TOC using [`fillAnchor`](#fillanchor) and if your headings have `<code>` elements, make sure their position is `static` when then are in the TOC, otherwise ellipsis may not appear next to them.
+__Tip__: If you clone nodes of your headings to populate the content of anchors in the toc using [`fillAnchor`](#fillanchor) and if your headings have `<code>` elements, make sure their position is `static` when then are in the toc, otherwise ellipsis may not appear next to them.
 
 #### `classPrefix`
 
 Type: `string`<br />
 Default value: `nt-`
 
-All the CSS classes assigned to different elements in the TOC UI are by default prefixed with `nt-` as an attempt to avoid class name collision.
+All the CSS classes assigned to different elements in the toc UI are by default prefixed with `nt-` as an attempt to avoid class name collision.
 
 This the `nt-` prefix is already used in class names of other elements of your page, you should set a different value here. And in your CSS for neotoc, you will also have to replace all occurances of `nt-` with your chosen prefix.
 
@@ -170,9 +153,9 @@ Default value: `6`
 
 It should be a number from `1` to `6`.
 
-If it is `1`, `<h1>` and all lower level heading's corresponding sections in the TOC will be folded initially.
+If it is `1`, `<h1>` and all lower level heading's corresponding sections in the toc will be folded initially.
 
-If it is `2`, `<h2>` and all lower level heading's corresponding sections in the TOC will be folded initially.
+If it is `2`, `<h2>` and all lower level heading's corresponding sections in the toc will be folded initially.
 
 And so on.
 
@@ -186,7 +169,7 @@ Default value of both: `0`
 
 Neotoc considers the nearest scroll container's(usually it is the `<html>` element) visible portion on the screen as its viewport. 
 
-This viewport is reflected in the TOC to show highlighted area.
+This viewport is reflected in the toc to show highlighted area.
 
 These two options allow you to lower the top of edge of the viewport using the `offsetTop` option and raise the bottom edge of the viewport using `offsetBottom`.
 
@@ -199,14 +182,14 @@ __Note__: In this doc, by nearest scroll container, it is meant the nearest scro
 Type: `boolean`<br />
 Default value: `false`
 
-Whether or not to auto fold/unfold the TOC based on the what is in view.
+Whether or not to auto fold/unfold the toc based on the what is in view.
 
 #### `autoScroll`
 
 Type: `boolean`<br />
 Default value: `true`
 
-Whether or not to automatically scroll the TOC to have the highlighted portion in view when the nearest scroll container is scrolled.
+Whether or not to automatically scroll the toc to have the highlighted portion in view when the nearest scroll container is scrolled.
 
 #### `autoScrollOffset`
 
@@ -214,59 +197,59 @@ Type: `number`<br />
 Unit: `px`<br />
 Default value: `50`
 
-When auto scroll is on, with this you can control the distance the highlighted area should stay away from the top and bottom edge of the TOC UI(the element which by default gets the class `.nt-body`) when it can.
+When auto scroll is on, with this you can control the distance the highlighted area should stay away from the top and bottom edge of the toc UI(the element which by default gets the class `.nt-body`) when it can.
 
 #### `toggleFoldIcon`
 
 Type: `string`<br />
 Default value: [Chevron down icon(SVG)](https://icon-sets.iconify.design/charm/chevron-down/)
 
-This icon is shown at the left of each anchor text on the TOC which has sub anchors underneath it to allow you to fold/unfold it. You can set another SVG icon here with this option.
+This icon is shown at the left of each anchor text on the toc which has sub anchors underneath it to allow you to fold/unfold it. You can set another SVG icon here with this option.
 
 #### `unfoldableIcon`
 
 Type: `string`<br />
 Default value: [Dot icon(SVG)](https://icon-sets.iconify.design/lucide/dot/)
 
-This icon is shown at the left of each anchor text on the TOC which do not have sub anchors underneath it. You can set another SVG icon here with this option.
+This icon is shown at the left of each anchor text on the toc which do not have sub anchors underneath it. You can set another SVG icon here with this option.
 
 #### `foldIcon`
 
 Type: `string`<br />
 Default value: [Unfold less rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-rounded/)
 
-This is used on the fold button on the header of the TOC. You can set another SVG icon here with this option.
+This is used on the fold button on the header of the toc. You can set another SVG icon here with this option.
 
 #### `unfoldIcon`
 
 Type: `string`<br />
 Default value: [Unfold more rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-rounded/)
 
-This is used on the unfold button on the header of the TOC. You can set another SVG icon here with this option.
+This is used on the unfold button on the header of the toc. You can set another SVG icon here with this option.
 
 #### `foldAllIcon`
 
 Type: `string`<br />
 Default value: [Unfold less double rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-double-rounded/)
 
-This is used on the fold all button on the header of the TOC. You can set another SVG icon here with this option.
+This is used on the fold all button on the header of the toc. You can set another SVG icon here with this option.
 
 #### `unfoldAllIcon`
 
 Type: `string`<br />
 Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/)
 
-This is used on the unfold all button on the header of the TOC. You can set another SVG icon here with this option.
+This is used on the unfold all button on the header of the toc. You can set another SVG icon here with this option.
 
 ## Theming 🎨
 
-I recommend you to [copy the style for the TOC](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/components/toc/neotoc.css) that ou see on the right, and modify it based on your need because this is the style that I always try to keep updated and polished as much as I can.
+I recommend you to [copy the style for the toc](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/components/toc/neotoc.css) that ou see on the right, and modify it based on your need because this is the style that I always try to keep updated and polished as much as I can.
 
 The goal of this section is to make yourself familiar with this stylesheet. It will not be a exhaustive overview. I will only include things that you most likely want to modify.
 
 The stylesheet has two main parts:
 - __`SETTINGS`__: Things that you will usually want to modify, like colors, and size of stuffs and folding duration.
-- __`NEOTOC STYLE`__: Styles that define the structure of the TOC and subtle details.
+- __`NEOtoc STYLE`__: Styles that define the structure of the toc and subtle details.
 
 Here I will mainly discuss about the `SETTINGS` part. I'm leaving the rest of the CSS file for you to explore and understand according to your need.
 
@@ -274,7 +257,7 @@ Let's start with light/dark theme.
 
 ### Light/dark mode colors
 
-You have to use CSS variables(aka custom properties) for this. The default class name for the TOC widget is `.nt-widget`. You should declare colors for light/dark theme via CSS variables here. In the stylesheet it's done like below:
+You have to use CSS variables(aka custom properties) for this. The default class name for the toc widget is `.nt-widget`. You should declare colors for light/dark theme via CSS variables here. In the stylesheet it's done like below:
 
 ```css
 :root.light .nt-widget {
@@ -302,13 +285,13 @@ I defined the colors in [HSL](https://www.smashingmagazine.com/2021/07/hsl-color
 Now let's move on to the sizing of stuffs.
 
 
-You have the following color related CSS variables at your disposal. Hover over the variable names to highlight relevant part in the TOC on the left in <span className="green-sample-color">green</span>. (Note that states like `hover`, `active`, `disabled` are ignored in highlighting to help you see the things it can ___possibly___ target. When you set color values to such variables they are only applied in the corresponding state.)
+You have the following color related CSS variables at your disposal. Hover over the variable names to highlight relevant part in the toc on the left in <span className="green-sample-color">green</span>. (Note that states like `hover`, `active`, `disabled` are ignored in highlighting to help you see the things it can ___possibly___ target. When you set color values to such variables they are only applied in the corresponding state.)
 
 - `--bg`: Applies background color all the elements that are highlighted when you hover over the variable name on the left.
 - `--fg`: Applies text and icon color.
 - `--bg-anchor-hover`: Anchor's background color in hover state.
 - `--bg-anchor-active`: Anchor's background color in active state.
-- `--bg-sub-anchors`: To see the highlight you will need to unfold/expand a section in the TOC.
+- `--bg-sub-anchors`: To see the highlight you will need to unfold/expand a section in the toc.
 - `--bg-header-btn`
 - `--bg-header-btn-hover`
 - `--bg-header-btn-active`
@@ -319,7 +302,7 @@ You have the following color related CSS variables at your disposal. Hover over 
 - `--bg-toggle-fold-btn-active`
 - `--indent-line`: Note that it applies color to actually a border.
 - `--indent-line-highlight`: It applies when you over of the parent toggle fold button.
-- `--fold-indicator-gradient-mid`: To see it, fold a section in the TOC.
+- `--fold-indicator-gradient-mid`: To see it, fold a section in the toc.
 - `--light-bar`
 - `--light-bar-tip-on-fold`
 - `--light-opacity`
@@ -345,18 +328,18 @@ Here again, we use CSS variables in the `.nt-widget` class(by default) to define
 
 #### `--height`
 
-It describes the total height of the TOC widget(the element having the class `.nt-widget` by default). (Actually it's the maximum height. But you can change easily if you want. We well see that in the next section.)
+It describes the total height of the toc widget(the element having the class `.nt-widget` by default). (Actually it's the maximum height. But you can change easily if you want. We well see that in the next section.)
 
 I've written it's value tailored for this website(i.e. with the help of external CSS variables). You can use any length value for the height as your need.
 
-Note that TOC widget is composed of two things:
+Note that toc widget is composed of two things:
 
-- Header of the TOC (having the title and fold buttons). It has the class `nt-header` by default.
-- Body of the TOC. It has the class `nt-body` by default.
+- Header of the toc (having the title and fold buttons). It has the class `nt-header` by default.
+- Body of the toc. It has the class `nt-body` by default.
 
 #### `--header-height`
 
-I use a fixed height for this, which makes it possible to use `--height` to determine to full height of the TOC widget:
+I use a fixed height for this, which makes it possible to use `--height` to determine to full height of the toc widget:
 
 ```css
 /* This is in the FOUNDATION section */
