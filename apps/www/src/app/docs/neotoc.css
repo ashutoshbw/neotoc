@@ -91,7 +91,7 @@ Syntax of heading comments:
   --header-height: 3rem;
   --relative-font-size: 100; /* do not use percentage sign */
   --toggle-fold-btn-width: 1.7em; /* should in em unit */
-  --indent-line-gap: 5px; /* should be in px unit */
+  --indent-line-gap: 2px; /* should be in px unit */
   --indent-line-width: 1px;
   --anchor-padding-block: 0.4em;
   --anchor-padding-inline: 0.3em;
