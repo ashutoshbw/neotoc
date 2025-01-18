@@ -4,9 +4,9 @@ Use this as a starting point for your project and customize it as needed.
 
 On this Stylesheet:
 
-- SETTINGS
-  - THEME
-  - SIZING AND BEHAVIOR
+- THEMING
+  - COLORS
+  - SIZES AND DURATION
 - NEOTOC STYLE
  - FOUNDATION
  - HEADER
@@ -22,8 +22,8 @@ Syntax of heading comments:
 - No extra asterisks denote top level heading. Additional asterisks denote nesting levels.
 */
 
-/* SETTINGS  */
-/** THEME **/
+/* THEMING  */
+/** COLORS **/
 
 :root.light .nt-widget {
   --bg: hsl(0 0% 97%);
@@ -81,7 +81,7 @@ Syntax of heading comments:
   }
 }
 
-/** SIZING AND BEHAVIOR **/
+/** SIZES AND DURATION **/
 
 .nt-widget {
   --height: calc(
