@@ -267,57 +267,21 @@ Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify
 
 This is used on the unfold all button on the header of the TOC. You can set another SVG icon here with this option.
 
-## Theming 🎨
+## Theming 🎨 Make it yours
 
-I recommend you to [copy the style for the toc](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/components/toc/neotoc.css) that ou see on the right, and modify it based on your need because this is the style that I always try to keep updated and polished as much as I can.
+You can customize many aspects using CSS variables (i.e., custom properties).
 
-The goal of this section is to make yourself familiar with this stylesheet. It will not be a exhaustive overview. I will only include things that you most likely want to modify.
+__Tip__: If you want to interactively change these variables and see the result on the page, you can use your browser's developer tools.
 
-The stylesheet has two main parts:
-- __`SETTINGS`__: Things that you will usually want to modify, like colors, and size of stuffs and folding duration.
-- __`NEOtoc STYLE`__: Styles that define the structure of the toc and subtle details.
+### Colors
 
-Here I will mainly discuss about the `SETTINGS` part. I'm leaving the rest of the CSS file for you to explore and understand according to your need.
+Changing the colors of different parts of the TOC UI is as simple as modifying the default values of the following CSS variables, which are defined on the root TOC UI element (with the default class `nt-widget`):
 
-Let's start with light/dark theme.
-
-### Light/dark mode colors
-
-You have to use CSS variables(aka custom properties) for this. The default class name for the toc widget is `.nt-widget`. You should declare colors for light/dark theme via CSS variables here. In the stylesheet it's done like below:
-
-```css
-:root.light .nt-widget {
-  /* light mode color definitions */
-}
-:root.dark .nt-widget {
-  /* dark mode color definitions */
-}
-
-/* styles for medium sized screen and above */
-@media (min-width: 768px) {
-  :root.light .nt-widget {
-  }
-  :root.dark .nt-widget {
-  }
-}
-```
-
-Note it's done in a mobile first approach. Here light/dark theme is determined by whether the `.light` or `.dark` class is present on `<html>` element. Here change the selector to match how you differenciate light/dark theme for your website.
-
-The CSS variable names are descriptive and I hope you will easily figure out where they relate to.
-
-I defined the colors in [HSL](https://www.smashingmagazine.com/2021/07/hsl-colors-css/) because, it's very easy to tweak them. But you can use any other color format of your preference.
-
-Now let's move on to the sizing of stuffs.
-
-
-You have the following color related CSS variables at your disposal. Hover over the variable names to highlight relevant part in the toc on the left in <span className="green-sample-color">green</span>. (Note that states like `hover`, `active`, `disabled` are ignored in highlighting to help you see the things it can ___possibly___ target. When you set color values to such variables they are only applied in the corresponding state.)
-
-- `--bg`: Applies background color all the elements that are highlighted when you hover over the variable name on the left.
-- `--fg`: Applies text and icon color.
-- `--bg-anchor-hover`: Anchor's background color in hover state.
-- `--bg-anchor-active`: Anchor's background color in active state.
-- `--bg-sub-anchors`: To see the highlight you will need to unfold/expand a section in the toc.
+- `--bg`
+- `--fg`
+- `--bg-anchor-hover`
+- `--bg-anchor-active`
+- `--bg-sub-anchors`
 - `--bg-header-btn`
 - `--bg-header-btn-hover`
 - `--bg-header-btn-active`
@@ -326,16 +290,18 @@ You have the following color related CSS variables at your disposal. Hover over 
 - `--border-header-btn`
 - `--bg-toggle-fold-btn-hover`
 - `--bg-toggle-fold-btn-active`
-- `--indent-line`: Note that it applies color to actually a border.
-- `--indent-line-highlight`: It applies when you over of the parent toggle fold button.
-- `--fold-indicator-gradient-mid`: To see it, fold a section in the toc.
+- `--indent-line`
+- `--indent-line-highlight`
+- `--fold-indicator-gradient-mid`
 - `--light-bar`
 - `--light-bar-tip-on-fold`
 - `--light-opacity`
 
-### Sizing and Timing
+You can change colors responsively using media queries. Additionally, you can define different colors for light and dark modes using CSS selectors that match the color mode. With these variables, you can do anything that CSS allows.
 
-Here again, we use CSS variables in the `.nt-widget` class(by default) to define these things. The variables are:
+### Sizes and duration
+
+Here again, you can use CSS variables in the `.nt-widget`(by default) class to set the sizes of various elements and the folding duration. The variables are:
 
 - `--height`
 - `--header-height`
@@ -352,20 +318,21 @@ Here again, we use CSS variables in the `.nt-widget` class(by default) to define
 - `--light-spread-length`
 - `--folding-duration`
 
+Of these, `--height` and `--header-height` are the ones you’ll mostly want to modify, and they require some special attention. Let’s cover them below:
+
 #### `--height`
 
-It describes the total height of the toc widget(the element having the class `.nt-widget` by default). (Actually it's the maximum height. But you can change easily if you want. We well see that in the next section.)
+It describes the total height of the TOC widget (i.e., the element with the `.nt-widget` class by default). (Technically, it represents the maximum height, but you can easily modify it if needed. We'll cover this in the next section.)
 
-I've written it's value tailored for this website(i.e. with the help of external CSS variables). You can use any length value for the height as your need.
+I’ve set its value specifically for this website using external CSS variables. You can use any length value for the height based on your requirements.
 
-Note that toc widget is composed of two things:
-
-- Header of the toc (having the title and fold buttons). It has the class `nt-header` by default.
-- Body of the toc. It has the class `nt-body` by default.
+Note that the TOC widget consists of two parts:
+- __Header__: Contains the title and fold buttons. It has the class `nt-header` by default.
+- __Body__: Contains the main content of the TOC. It has the class `nt-body` by default.
 
 #### `--header-height`
 
-I use a fixed height for this, which makes it possible to use `--height` to determine to full height of the toc widget:
+I use a fixed height for this, allowing `--height` to define the full height of the TOC widget:
 
 ```css
 /* This is in the FOUNDATION section */
@@ -374,9 +341,8 @@ I use a fixed height for this, which makes it possible to use `--height` to dete
 }
 ```
 
-If you need want it be exact height, just use `height` instead of `max-height`.
+If you want it to have an exact height, simply use `height` instead of `max-height`.
 
+### Beyond CSS variables
 
-## Support <span className="text-[0.8em] animate-pulse">❤️</span>
-
-If you think this provides a good user experience and want this project to succeed, please support it by [giving it a ⭐ on Github](https://github.com/ashutoshbw/neotoc)!
+For advanced customization, you can modify any part of the CSS file to suit your needs.
