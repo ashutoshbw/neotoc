@@ -89,7 +89,7 @@ Syntax of heading comments:
       var(--bottom-breathing-space)
   ); /* Here these CSS vars are coming from outside. */
   --header-height: 3rem;
-  --relative-font-size: 100; /* do not use percentage sign */
+  --relative-font-size: 94; /* do not use percentage sign */
   --toggle-fold-btn-width: 1.7em; /* should in em unit */
   --indent-line-gap: 2px; /* should be in px unit */
   --indent-line-width: 1px;
@@ -105,7 +105,6 @@ Syntax of heading comments:
 
 @media (min-width: 768px) {
   .nt-widget {
-    --relative-font-size: 94; /* do not use percentage sign */
     --toggle-fold-btn-width: 1.3em; /* should in em unit */
     --anchor-padding-block: 0.2em;
     --anchor-border-radius: 4px;
