@@ -130,6 +130,28 @@ It is used to determine the content of anchor elements in the TOC. If your headi
 
 __Tip__: You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
 
+#### `onBreadcrumbChange`
+
+Type: `(data: Breadcrumb) => void`<br />
+Default value: `() => {}`
+
+Here `Breadcrumb` type is:
+
+```ts
+type Breadcrumb = {
+  content: string | Node;
+  hash: string;
+}[]
+```
+
+You can also import the type from Neotoc if needed.
+
+This option allows you to create a breadcrumb similar to the one displayed in the header of this page. Neotoc provides the data at the right time but leaves the breadcrumb construction in your hands.
+
+The value of `content` depends on what is returned from the `fillAnchor` option. You will need the `hash` if you want to create links for the breadcrumb items to jump to the parent section.
+
+Note: Since Neotoc leaves breadcrumb construction to you, you will also need to clean up any side effects, if required. This is typically necessary when using it with a frontend library or framework.
+
 #### `ellipsis`
 
 Type: `boolean`<br />
