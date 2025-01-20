@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/header";
+import Link from "next/link";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,8 +39,9 @@ export default function RootLayout({
           <div className="md:[--site-header-height:3.85rem] [--site-header-height:5rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
             <Header />
             <main>{children}</main>
-            <footer className="mt-auto py-2 border-t grid place-items-center">
-              Built with passion
+            <footer className="mt-auto text-center py-2 border-t ">
+              Built by <Link href="#">Ashutosh Biswas</Link>. See code on
+              Github.
             </footer>
           </div>
         </ThemeProvider>

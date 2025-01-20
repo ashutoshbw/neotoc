@@ -2,6 +2,9 @@
 import { ThemeToggler } from "@/components/theme-toggler";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import NeotocLogoDark from "../../public/logo-dark.svg";
+import NeotocLogoLight from "../../public/logo-light.svg";
 
 export function Header() {
   const pathname = usePathname();
@@ -14,10 +17,34 @@ export function Header() {
           : "h-[3.85rem]"
       } flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
     >
-      <div className="px-4 flex items-center justify-between gap-2 flex-grow">
-        <Link href="/" className="inline-block w-32 shrink-0">
-          <b>Neotoc v0.1.3</b>
-        </Link>
+      <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center justify-between gap-2 flex-grow shrink-0">
+        <span className="flex gap-3 w-[210px] items-center">
+          <Link href="/">
+            <span className="dark:inline hidden relative top-[-1px]">
+              <Image
+                priority
+                className="w-[35px]"
+                src={NeotocLogoDark}
+                alt="Neotoc Logo"
+              />
+            </span>
+            <span className="inline dark:hidden relative top-[-1px]">
+              <Image
+                priority
+                className="w-[35px]"
+                src={NeotocLogoLight}
+                alt="Neotoc Logo"
+              />
+            </span>
+          </Link>
+          <Link
+            className="hover:underline tracking-tighter"
+            href="https://www.npmjs.com/package/neotoc?activeTab=versions"
+            target="_blank"
+          >
+            v1.0.0
+          </Link>
+        </span>
         {pathname != "/" && (
           <div
             id="nt-breadcrumb"
