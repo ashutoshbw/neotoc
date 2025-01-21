@@ -7,39 +7,35 @@ export default function Home() {
   return (
     <div className="max-w-[140ch] mx-auto pb-10">
       <div className="flex justify-center">
-        <div className="md:w-[340px] md:h-[562px] min-w-[170px] md:mt-2 mt-3 md:block">
+        <div className="md:w-[340px] md:h-[562px] min-w-[170px] md:mt-2 mt-3 sm:block hidden">
           <Video />
         </div>
-        <div className="p-4 md:ml-8 w-[400px] sm:block relative sm:left-0 left-[-10px] flex flex-col justify-center">
-          <h1 className="md:mt-24 sm:mt-10 md:block flex justify-center">
-            <span className="dark:block hidden md:relative left-[-34px]">
+        <div className="p-4 md:ml-8 w-[450px] sm:block relative left-0 sm:left-[-10px] flex flex-col justify-center">
+          <h1 className="md:mt-24 sm:mt-10 my-8 md:block flex justify-center">
+            <span className="dark:block hidden md:relative left-[-28px]">
               <Image
                 priority
-                className="block md:w-[300px] sm:w-[260px] w-[180px]"
+                className="block md:w-[300px] sm:w-[260px] w-[250px]"
                 src={NeotocFullTextLogoDark}
                 alt="Neotoc Logo"
               />
             </span>
-            <span className="md:block dark:hidden md:relative left-[-34px]">
+            <span className="block dark:hidden md:relative left-[-28px]">
               <Image
                 priority
-                className="block md:w-[300px] sm:w-[260px] w-[180px]"
+                className="block md:w-[300px] sm:w-[260px] w-[250px]"
                 src={NeotocFullTextLogoLight}
                 alt="Neotoc Logo"
               />
             </span>
           </h1>
-          <p className="mt-6 text-lg italic md:text-left text-center">
-            An open source library
+          <p className="sm:block hidden mt-2">
+            An open source library to help you build table of contents like
+            never before.
           </p>
-          <p className="mt-0 text-lg italic md:text-left text-center">
-            to help you build
-          </p>
-          <p className="mt-0 text-lg italic md:text-left text-center">
-            table of contents
-          </p>
-          <p className="mt-0 text-lg italic md:text-left text-center">
-            like never before.
+          <p className="sm:hidden block mt-2 text-center px-4">
+            An open source library to help you build table of contents like
+            never before.
           </p>
           <div className="md:block sm:flex justify-center hidden mt-8">
             <Link
@@ -60,7 +56,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex gap-2 justify-center mt-8 flex-wrap">
+      <div className="flex gap-2 justify-center my-10 flex-wrap">
         <div className="sm:hidden block">
           <Link
             className="inline-block transition text-xl shadow-lg shadow-blue-500/5  hover:bg-secondary border rounded-full py-2 px-4"
@@ -78,6 +74,11 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      <div className="sm:hidden flex justify-center w-[270px] mx-auto">
+        <Video />
+      </div>
+      <hr />
+      <h2 className="mt-20 font-extrabold text-5xl text-center">Features</h2>
     </div>
   );
 }
