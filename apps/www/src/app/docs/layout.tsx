@@ -4,8 +4,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
 import neotoc from "neotoc";
-import "./neotoc.css";
-import "./styles.css";
 
 export default function DocLayout({
   children,
