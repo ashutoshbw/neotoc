@@ -22,7 +22,6 @@ export function Header() {
           <Link href="/">
             <span className="dark:inline hidden relative top-[-1px]">
               <Image
-                priority
                 className="w-[35px]"
                 src={NeotocLogoDark}
                 alt="Neotoc Logo"
@@ -30,7 +29,6 @@ export function Header() {
             </span>
             <span className="inline dark:hidden relative top-[-1px]">
               <Image
-                priority
                 className="w-[35px]"
                 src={NeotocLogoLight}
                 alt="Neotoc Logo"

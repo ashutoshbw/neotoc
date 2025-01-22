@@ -14,7 +14,6 @@ export default function Home() {
           <h1 className="md:mt-24 sm:mt-10 my-8 md:block flex justify-center">
             <span className="dark:block hidden md:relative left-[-28px]">
               <Image
-                priority
                 className="block md:w-[300px] sm:w-[260px] w-[250px]"
                 src={NeotocFullTextLogoDark}
                 alt="Neotoc Logo"
@@ -22,7 +21,6 @@ export default function Home() {
             </span>
             <span className="block dark:hidden md:relative left-[-28px]">
               <Image
-                priority
                 className="block md:w-[300px] sm:w-[260px] w-[250px]"
                 src={NeotocFullTextLogoLight}
                 alt="Neotoc Logo"
