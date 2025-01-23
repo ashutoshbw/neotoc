@@ -4,7 +4,7 @@ const data = [
   {
     title: "Proportional Highlighting",
     description:
-      "Unlike conventional active section highlighting, this feature uses proportional highlighting to deliver an intuitive and ultra-smooth user experience.",
+      "Neotoc redefines active section highlighting by replacing the conventional, vague approach with precise proportional highlighting, delivering an enjoyable user experience.",
     svg: icons.ruler,
   },
   {
