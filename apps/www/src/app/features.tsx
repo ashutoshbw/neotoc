@@ -1,4 +1,6 @@
 import icons from "./feature-icons";
+import styles from "./animation.module.css";
+import { cn } from "@/lib/utils";
 
 const data = [
   {
@@ -76,14 +78,29 @@ const data = [
 export default function Features() {
   return (
     <div>
-      <h2 className="mt-16 mb-10 font-thin text-5xl text-center">
+      <h2
+        className={cn(
+          styles.animateHeading,
+          "mt-16 mb-10 font-thin text-5xl text-center tracking-tighter"
+        )}
+      >
         Why Neotoc?
       </h2>
-      <div className="grid grid-cols-3 gap-5 mx-5 max-w-screen-xl">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mx-5 max-w-screen-xl mb-20 perspective-dramatic">
         {data.map((feature, i) => (
-          <div key={i} className="border p-4 rounded-lg bg-zinc-900/50">
-            <span className="text-3xl">{feature.svg}</span>
-            <h3 className="text-lg font-semibold mt-4 mb-4">{feature.title}</h3>
+          <div
+            key={i}
+            className={cn(
+              styles.animateFeature,
+              "transition p-4 rounded-lg dark:bg-zinc-900/50 hover:dark:bg-zinc-900/90 bg-zinc-100 hover:bg-zinc-200 shadow-md dark:shadow-black shadow-zinc-300 group"
+            )}
+          >
+            <span className="flex justify-center text-3xl dark:group-hover:[&_svg]:text-[#a1c4e8] group-hover:[&_svg]:text-[#13304e]">
+              {feature.svg}
+            </span>
+            <h3 className="text-lg font-semibold mt-4 mb-4 dark:group-hover:text-[#a1c4e8] group-hover:text-[#13304e]">
+              {feature.title}
+            </h3>
             <p>{feature.description}</p>
           </div>
         ))}
