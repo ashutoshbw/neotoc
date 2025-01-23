@@ -28,11 +28,7 @@ export default function Home() {
               />
             </span>
           </h1>
-          <p className="sm:block hidden mt-2">
-            An open source library to help you build table of contents like
-            never before.
-          </p>
-          <p className="sm:hidden block mt-2 text-center px-4">
+          <p className="mt-2">
             An open source library to help you build table of contents like
             never before.
           </p>
