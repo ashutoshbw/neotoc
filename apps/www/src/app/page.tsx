@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import NeotocFullTextLogoDark from "../../public/logo-full-text-dark.svg";
 import NeotocFullTextLogoLight from "../../public/logo-full-text-light.svg";
+import Features from "./features";
 
 export default function Home() {
   return (
@@ -75,8 +76,7 @@ export default function Home() {
       <div className="sm:hidden flex justify-center w-[270px] mx-auto">
         <Video />
       </div>
-      <hr />
-      <h2 className="mt-20 font-extrabold text-5xl text-center">Features</h2>
+      <Features />
     </div>
   );
 }
