@@ -98,7 +98,7 @@ export default function Features() {
             <span className="flex justify-center text-3xl dark:group-hover:[&_svg]:text-[#a1c4e8] group-hover:[&_svg]:text-[#13304e]">
               {feature.svg}
             </span>
-            <h3 className="text-lg font-semibold mt-4 mb-4 dark:group-hover:text-[#a1c4e8] group-hover:text-[#13304e]">
+            <h3 className="text-lg text-center font-semibold mt-4 mb-4 dark:group-hover:text-[#a1c4e8] group-hover:text-[#13304e]">
               {feature.title}
             </h3>
             <p>{feature.description}</p>
