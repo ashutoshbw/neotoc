@@ -13,7 +13,7 @@ export function Header() {
     <header
       className={`${
         pathname != "/"
-          ? "h-[5.2rem] dark:border-zinc-600 border-zinc-400"
+          ? "h-[5.5rem] dark:border-zinc-600 border-zinc-400"
           : "h-[3.5rem]"
       } flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
     >
@@ -52,7 +52,7 @@ export function Header() {
         </span>
       </div>
       {pathname !== "/" && (
-        <div className="text-sm [line-height:1em] border-t dark:border-zinc-600 border-zinc-400 h-[1.7rem] dark:bg-zinc-800 bg-zinc-200 flex justify-center">
+        <div className="[line-height:1em] border-t dark:border-zinc-600 border-zinc-400 h-[2rem] dark:bg-zinc-800 bg-zinc-200 flex justify-center">
           <div
             id="nt-breadcrumb"
             className="touch-none md:px-12 px-4 md:max-w-[calc(596px+280px+32px)] w-full h-full flex items-center text-nowrap overflow-hidden select-none flex-grow"
