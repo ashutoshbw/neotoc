@@ -34,9 +34,9 @@ const data = [
     svg: icons.breadcrumb,
   },
   {
-    title: "Customize Effortlessly",
+    title: "Customize Easily",
     description:
-      "Leverage dozens of CSS variables to effortlessly tweak colors and sizes, ensuring your project’s design achieves a flawless, cohesive look.",
+      "Leverage dozens of CSS variables to easily tweak colors and sizes, ensuring your project’s design achieves a cohesive look.",
     svg: icons.palette,
   },
   {
