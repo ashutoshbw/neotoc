@@ -13,21 +13,21 @@ export function Header() {
     <header
       className={`${
         pathname != "/"
-          ? "md:h-[3.85rem] h-[5rem] dark:md:border-zinc-800 dark:border-zinc-400 md:border-zinc-300 border-zinc-600"
-          : "h-[3.85rem]"
+          ? "h-[5.2rem] dark:border-zinc-600 border-zinc-400"
+          : "h-[3.5rem]"
       } flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
     >
       <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center justify-between gap-2 flex-grow shrink-0">
-        <span className="flex gap-3 w-[210px] items-center">
+        <span className="flex gap-3 mr-8 items-center">
           <Link href="/">
-            <span className="dark:inline hidden relative top-[-1px]">
+            <span className="dark:inline hidden">
               <Image
                 className="w-[35px]"
                 src={NeotocLogoDark}
                 alt="Neotoc Logo"
               />
             </span>
-            <span className="inline dark:hidden relative top-[-1px]">
+            <span className="inline dark:hidden">
               <Image
                 className="w-[35px]"
                 src={NeotocLogoLight}
@@ -43,12 +43,6 @@ export function Header() {
             v1.0.0
           </Link>
         </span>
-        {pathname != "/" && (
-          <div
-            id="nt-breadcrumb"
-            className="touch-none flex-grow h-full md:flex hidden items-center text-nowrap overflow-hidden"
-          ></div>
-        )}
         <span className="flex items-center gap-2">
           <ThemeToggler />
           <Link href="https://github.com/ashutoshbw/neotoc" target="_blank">
@@ -58,10 +52,12 @@ export function Header() {
         </span>
       </div>
       {pathname !== "/" && (
-        <div
-          id="nt-breadcrumb-mobile"
-          className="touch-none border-t dark:border-zinc-400 border-zinc-600 h-[2rem] px-4 dark:bg-zinc-700 bg-zinc-200 items-center md:hidden flex text-nowrap overflow-hidden select-none"
-        ></div>
+        <div className="text-sm [line-height:1em] border-t dark:border-zinc-600 border-zinc-400 h-[1.7rem] dark:bg-zinc-800 bg-zinc-200 flex justify-center">
+          <div
+            id="nt-breadcrumb"
+            className="touch-none md:px-12 px-4 md:max-w-[calc(596px+280px+32px)] w-full h-full flex items-center text-nowrap overflow-hidden select-none flex-grow"
+          ></div>
+        </div>
       )}
     </header>
   );

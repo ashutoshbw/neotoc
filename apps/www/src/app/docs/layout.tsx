@@ -11,28 +11,10 @@ export default function DocLayout({
   children: React.ReactNode;
 }>) {
   const [tocVisibility, setTocVisibility] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
-    const handleResize = (e: MediaQueryListEvent) => {
-      setIsDesktop(e.matches);
-    };
-
-    const mediaQueryList = window.matchMedia("(min-width: 768px)");
-
-    setIsDesktop(mediaQueryList.matches);
-
-    mediaQueryList.addEventListener("change", handleResize);
-
-    return () => {
-      mediaQueryList.removeEventListener("change", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    const breadcrumbDiv = isDesktop
-      ? document.querySelector<HTMLDivElement>("#nt-breadcrumb")
-      : document.querySelector<HTMLDivElement>("#nt-breadcrumb-mobile");
+    const breadcrumbDiv =
+      document.querySelector<HTMLDivElement>("#nt-breadcrumb");
 
     let isDragging = false;
     let startX: number;
@@ -92,6 +74,7 @@ export default function DocLayout({
             const anchor = document.createElement("a");
             anchor.append(item.content);
             anchor.href = item.hash;
+            anchor.className = "md:hover:underline";
             if (i != 0) {
               const sep = document.createElement("span");
               sep.className = "px-1";
@@ -102,7 +85,7 @@ export default function DocLayout({
           });
         }
       },
-      offsetTop: isDesktop ? 80 : 96,
+      offsetTop: 96,
     });
 
     return () => {
@@ -115,7 +98,7 @@ export default function DocLayout({
       breadcrumbDiv?.removeEventListener("mousemove", onDrag);
       breadcrumbDiv?.removeEventListener("touchmove", onDrag);
     };
-  }, [isDesktop]);
+  }, []);
 
   function handleArticleClick(e: React.MouseEvent<HTMLElement>) {
     const elt = e.target as HTMLElement;
@@ -134,7 +117,7 @@ export default function DocLayout({
   return (
     <div className="flex justify-center mb-8">
       <article
-        className="max-w-[67ch] mt-8 md:px-8 mx-4 overflow-auto"
+        className="max-w-[596px] mt-8 md:px-8 mx-4 overflow-auto"
         onClick={handleArticleClick}
       >
         {children}
