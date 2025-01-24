@@ -68,9 +68,9 @@ const data = [
     svg: icons.feather,
   },
   {
-    title: "Fully Accessible",
+    title: "Accessible",
     description:
-      "Neotoc is built for everyone, offering full accessibility with keyboards, touchscreens, and screen readers.",
+      "Neotoc is accessible with keyboards, touchscreens, and screen readers.",
     svg: icons.a11y,
   },
 ];
