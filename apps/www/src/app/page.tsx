@@ -33,40 +33,19 @@ export default function Home() {
             7.4 KB.
           </p>
           <div className="md:block sm:flex justify-center hidden mt-8">
-            <Link
-              className="inline-block transition text-xl shadow-lg shadow-blue-500/5  hover:bg-secondary border rounded-xl py-2 px-4"
-              href="/docs#get-started"
-            >
-              🚀 Get started
-            </Link>
+            <GetStartedButton />
           </div>
           <div className="md:block sm:flex justify-center hidden mt-3">
-            <Link
-              className="inline-block hover:bg-secondary text-xl shadow-lg shadow-yellow-500/5 border rounded-xl py-2 px-4"
-              href="https://github.com/ashutoshbw/neotoc"
-              target="_blank"
-            >
-              🌟 Star on Github
-            </Link>
+            <StarOnGithubButton />
           </div>
         </div>
       </div>
       <div className="flex gap-2 justify-center my-10 flex-wrap">
         <div className="sm:hidden block">
-          <Link
-            className="inline-block transition text-xl shadow-lg shadow-blue-500/5  hover:bg-secondary border rounded-full py-2 px-4"
-            href="/docs#get-started"
-          >
-            🚀 Get started
-          </Link>
+          <GetStartedButton />
         </div>
         <div className="sm:hidden block">
-          <Link
-            className="inline-block hover:bg-secondary text-xl shadow-lg shadow-yellow-500/5 border rounded-full py-2 px-4"
-            href="https://github.com/ashutoshbw/neotoc"
-          >
-            🌟 Star on Github
-          </Link>
+          <StarOnGithubButton />
         </div>
       </div>
       <div className="sm:hidden flex justify-center w-[270px] mx-auto">
@@ -93,5 +72,28 @@ function Video() {
         </video>
       </div>
     </>
+  );
+}
+
+function GetStartedButton() {
+  return (
+    <Link
+      className="inline-block transition text-xl text-white shadow-lg shadow-purple-500/10 bg-gradient-to-br from-purple-600/80 to-red-600/80 hover:bg-secondary border border-zinc-500/40 hover:border-zinc-500/80 rounded-xl py-2 px-4 hover:translate-y-[-2px]"
+      href="/docs#get-started"
+    >
+      🚀 Get started
+    </Link>
+  );
+}
+
+function StarOnGithubButton() {
+  return (
+    <Link
+      className="inline-block hover:bg-secondary text-xl shadow-lg shadow-yellow-500/5 border rounded-xl py-2 px-4  transition hover:translate-y-[-2px]"
+      href="https://github.com/ashutoshbw/neotoc"
+      target="_blank"
+    >
+      🌟 Star on Github
+    </Link>
   );
 }
