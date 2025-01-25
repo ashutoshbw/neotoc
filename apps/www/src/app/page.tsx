@@ -29,8 +29,8 @@ export default function Home() {
             </span>
           </h1>
           <p className="mt-2">
-            An open source library to help you build table of contents like
-            never before.
+            A feature-packed, lightweight table of contents generator at just
+            7.4 KB.
           </p>
           <div className="md:block sm:flex justify-center hidden mt-8">
             <Link
@@ -46,7 +46,7 @@ export default function Home() {
               href="https://github.com/ashutoshbw/neotoc"
               target="_blank"
             >
-              🌟 on Github
+              🌟 Star on Github
             </Link>
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function Home() {
             className="inline-block hover:bg-secondary text-xl shadow-lg shadow-yellow-500/5 border rounded-full py-2 px-4"
             href="https://github.com/ashutoshbw/neotoc"
           >
-            🌟 on Github
+            🌟 Star on Github
           </Link>
         </div>
       </div>

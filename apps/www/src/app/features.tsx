@@ -41,14 +41,12 @@ const data = [
   },
   {
     title: "Written in TypeScript",
-    description:
-      "Neotoc is built with TypeScript, ensuring seamless integration with both TypeScript and JavaScript projects.",
+    description: "Can be used in both TypeScript and JavaScript projects.",
     svg: icons.ts,
   },
   {
-    title: "Built for the Modern Web",
-    description:
-      "Neotoc is a forward-thinking solution, utilizing modern web features to make every aspect of the user experience as enjoyable as possible.",
+    title: "Excellent Browser Support",
+    description: "Fully compatible with all modern and popular web browsers.",
     svg: icons.browser,
   },
   {
@@ -69,8 +67,7 @@ const data = [
   },
   {
     title: "Accessible",
-    description:
-      "Neotoc is accessible with keyboards, touchscreens, and screen readers.",
+    description: "Accessible with keyboards, touchscreens and screen readers.",
     svg: icons.a11y,
   },
 ];
