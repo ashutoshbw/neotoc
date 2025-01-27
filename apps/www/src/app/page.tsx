@@ -29,11 +29,10 @@ export default function Home() {
             </span>
           </h1>
           <p className="mt-2">
-            A feature-packed, lightweight table of contents generator at just
-            7.4 KB.
+            A tool for creating hyper-smooth table of contents with JavaScript.
           </p>
           <div className="md:block sm:flex justify-center hidden mt-8">
-            <GetStartedButton />
+            <FeelItButton />
           </div>
           <div className="md:block sm:flex justify-center hidden mt-3">
             <StarOnGithubButton />
@@ -42,7 +41,7 @@ export default function Home() {
       </div>
       <div className="flex gap-2 justify-center my-10 flex-wrap">
         <div className="sm:hidden block">
-          <GetStartedButton />
+          <FeelItButton />
         </div>
         <div className="sm:hidden block">
           <StarOnGithubButton />
@@ -75,13 +74,13 @@ function Video() {
   );
 }
 
-function GetStartedButton() {
+function FeelItButton() {
   return (
     <Link
       className="inline-block transition text-xl text-white shadow-lg shadow-purple-500/10 bg-gradient-to-br from-purple-600/80 to-red-600/80 hover:bg-secondary border border-zinc-500/40 hover:border-zinc-500/80 rounded-xl py-2 px-4 hover:translate-y-[-2px]"
       href="/docs#get-started"
     >
-      🚀 Get started
+      ✨ Feel it
     </Link>
   );
 }
@@ -89,11 +88,11 @@ function GetStartedButton() {
 function StarOnGithubButton() {
   return (
     <Link
-      className="inline-block hover:bg-secondary text-xl shadow-lg shadow-yellow-500/5 border rounded-xl py-2 px-4  transition hover:translate-y-[-2px]"
+      className="inline-block hover:bg-secondary text-xl shadow-lg shadow-zinc-300/5 border rounded-xl py-2 px-4  transition hover:translate-y-[-2px]"
       href="https://github.com/ashutoshbw/neotoc"
       target="_blank"
     >
-      🌟 Star on Github
+      Star on Github
     </Link>
   );
 }

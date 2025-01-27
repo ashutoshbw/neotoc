@@ -4,9 +4,17 @@ import { cn } from "@/lib/utils";
 
 const data = [
   {
-    title: "Proportional Highlighting",
-    description:
-      "Neotoc redefines active section highlighting by replacing the conventional, vague approach with precise proportional highlighting, delivering an enjoyable user experience.",
+    title: (
+      <>
+        Out-of-this-World <i>Smoothness</i>
+      </>
+    ),
+    description: (
+      <>
+        Neotoc <b>precisely highlights</b> the relevant part in the TOC to
+        create a <b>hyper-smooth</b> user experience.
+      </>
+    ),
     svg: icons.ruler,
   },
   {
