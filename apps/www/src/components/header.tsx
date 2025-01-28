@@ -52,10 +52,10 @@ export function Header() {
         </span>
       </div>
       {pathname !== "/" && (
-        <div className="[line-height:1em] border-t dark:border-zinc-600 border-zinc-400 h-[2rem] dark:bg-zinc-800 bg-zinc-200 flex justify-center">
+        <div className="grid md:grid-cols-[1fr_minmax(0,596px)_280px_1fr] grid-cols-1 [line-height:1em] border-t dark:border-zinc-600 border-zinc-400 h-[2rem] dark:bg-zinc-800 bg-zinc-200">
           <div
             id="nt-breadcrumb"
-            className="touch-none md:px-12 px-4 md:max-w-[calc(596px+280px+32px)] w-full h-full flex items-center text-nowrap overflow-hidden select-none flex-grow"
+            className="md:col-start-2 touch-none md:px-8 px-4 flex items-center text-nowrap overflow-hidden select-none"
           ></div>
         </div>
       )}

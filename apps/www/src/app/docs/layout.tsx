@@ -115,16 +115,16 @@ export default function DocLayout({
   }
 
   return (
-    <div className="flex justify-center mb-8">
+    <div className="grid md:grid-cols-[1fr_minmax(0,596px)_280px_1fr] grid-cols-1 mb-8">
       <article
-        className="max-w-[596px] mt-8 md:px-8 mx-4 overflow-auto"
+        className="md:col-start-2 md:[font-size:0.98rem] mt-8 md:px-8 px-4"
         onClick={handleArticleClick}
       >
         {children}
       </article>
       <aside
         className={cn(
-          "md:min-h-80 md:block md:static md:border-none transition-all duration-300 fixed border-l border-b rounded-bl-lg overflow-hidden md:overflow-visible md:shadow-none shadow-lg shadow-zinc-950/10 dark:shadow-zinc-950 w-[280px] flex-shrink-0 [&>*:first-child]:sticky [&>*:first-child]:top-[calc(var(--site-header-height)+var(--top-breathing-space))]",
+          "md:[font-size:0.92rem] md:min-h-80 md:block md:static fixed md:border-none transition-all duration-300 border-l border-b rounded-bl-lg overflow-hidden md:overflow-visible md:shadow-none shadow-lg shadow-zinc-950/10 dark:shadow-zinc-950 w-[280px] flex-shrink-0 [&>*:first-child]:sticky [&>*:first-child]:top-[calc(var(--site-header-height)+var(--top-breathing-space))]",
           tocVisibility ? "right-0" : "right-[-300px]"
         )}
         id="sidebar"
