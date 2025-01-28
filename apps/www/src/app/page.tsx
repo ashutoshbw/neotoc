@@ -32,7 +32,7 @@ export default function Home() {
             A tool for creating hyper-smooth table of contents with JavaScript.
           </p>
           <div className="md:block sm:flex justify-center hidden mt-8">
-            <FeelItButton />
+            <CTAButton />
           </div>
           <div className="md:block sm:flex justify-center hidden mt-3">
             <StarOnGithubButton />
@@ -41,7 +41,7 @@ export default function Home() {
       </div>
       <div className="flex gap-2 justify-center my-10 flex-wrap">
         <div className="sm:hidden block">
-          <FeelItButton />
+          <CTAButton />
         </div>
         <div className="sm:hidden block">
           <StarOnGithubButton />
@@ -74,13 +74,13 @@ function Video() {
   );
 }
 
-function FeelItButton() {
+function CTAButton() {
   return (
     <Link
       className="inline-block transition text-xl text-white shadow-lg shadow-purple-500/10 bg-gradient-to-br from-purple-600/80 to-red-600/80 hover:bg-secondary border border-zinc-500/40 hover:border-zinc-500/80 rounded-xl py-2 px-4 hover:translate-y-[-2px]"
       href="/docs#get-started"
     >
-      ✨ Feel it
+      ✨ See it in action
     </Link>
   );
 }
