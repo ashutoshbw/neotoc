@@ -11,11 +11,11 @@ const data = [
     ),
     description: (
       <>
-        Neotoc <b>precisely highlights</b> the relevant part in the TOC to
-        create a <b>hyper-smooth</b> user experience.
+        Neotoc <b>precisely highlights</b> the relevant part in the table of
+        contents to create a <b>hyper-smooth</b> user experience.
       </>
     ),
-    svg: icons.ruler,
+    svg: icons.galaxy,
   },
   {
     title: "Automatic Scrolling",
