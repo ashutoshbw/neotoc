@@ -207,19 +207,11 @@ body {
   --anchor-padding-block: 0.4em;
   --anchor-padding-inline: 0.3em;
   --anchor-border-radius: 6px;
-  --padding-left: 1.5rem;
+  --padding-left: 1rem;
   --light-bar-width: 4px;
   --light-bar-tip-radius: 2px;
   --light-spread-length: 250px;
   --folding-duration: 0.3s;
-}
-
-@media (min-width: 768px) {
-  .nt-widget {
-    --toggle-fold-btn-width: 1.3em; /* should in em unit */
-    --anchor-padding-block: 0.2em;
-    --anchor-border-radius: 4px;
-  }
 }
 
 /* NEOTOC STYLE */
