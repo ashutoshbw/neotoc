@@ -4,94 +4,137 @@ import { cn } from "@/lib/utils";
 
 const data = [
   {
-    title: (
-      <>
-        Out-of-this-World <i>Smoothness</i>
-      </>
-    ),
+    title: <>Partial Highlighting</>,
     description: (
       <>
-        Neotoc <b>precisely highlights</b> the relevant part in the table of
-        contents to create a <b>hyper-smooth</b> user experience.
+        <b>Neotoc</b> can partially highlight any <b>list item</b> in the{" "}
+        <b>table of contents</b>, resulting in a <b>smooth user experience</b>.
       </>
     ),
-    svg: icons.galaxy,
+    svg: icons.crescent,
   },
   {
     title: "Automatic Scrolling",
-    description:
-      "With automatic scrolling, the table of contents stays perfectly in sync with your scrolling, always reflecting your current position on the page.",
+    description: (
+      <>
+        It keeps table of contents <b>perfectly in sync with your scrolling</b>,
+        reflecting your current position on the page.
+      </>
+    ),
     svg: icons.mouse,
   },
   {
     title: "Automatic Folding",
-    description:
-      "With automatic folding enabled, sections in the table of contents magically fold or unfold based on your position on the page. Manual control is always available.",
+    description: (
+      <>
+        It <b>automatically folds or unfolds</b> the table of contents based on{" "}
+        <b>your position on the page</b>. Manual control is always available.
+      </>
+    ),
     svg: icons.folding,
   },
   {
-    title: "Powerful Fold Buttons",
-    description:
-      "Four intuitive buttons at the top-right let you fold or unfold the table of contents by one level or all at once, making navigation effortless.",
+    title: "Handy Fold Buttons",
+    description: (
+      <>
+        Four buttons <b>at the top-right</b> let you <b>fold or unfold</b> the
+        table of contents by <b>one level</b> or <b>all at once</b>.
+      </>
+    ),
     svg: icons.button,
   },
   {
-    title: "Breadcrumb Navigation",
-    description:
-      "Lost in nested sections? Neotoc helps you to create your own breadcrumb to quickly view or navigate to parent sections with ease.",
+    title: "Breadcrumb",
+    description: (
+      <>
+        Neotoc helps you to <b>create your own breadcrumb</b> to quickly view or
+        navigate to parent sections with ease.
+      </>
+    ),
     svg: icons.breadcrumb,
   },
   {
     title: "Customize Easily",
-    description:
-      "Leverage dozens of CSS variables to easily tweak colors and sizes, ensuring your project’s design achieves a cohesive look.",
+    description: (
+      <>
+        Leverage <b>dozens of CSS variables</b> to easily tweak <b>colors</b>{" "}
+        and <b>sizes</b>.
+      </>
+    ),
     svg: icons.palette,
   },
   {
     title: "Written in TypeScript",
-    description: "Can be used in both TypeScript and JavaScript projects.",
+    description: (
+      <>
+        Can be used in both <b>TypeScript</b> and <b>JavaScript</b> projects.
+      </>
+    ),
     svg: icons.ts,
   },
   {
-    title: "Excellent Browser Support",
-    description: "Fully compatible with all modern and popular web browsers.",
+    title: "Browser Support",
+    description: (
+      <>
+        <b>Works well</b> with all <b>modern and popular</b> web browsers.
+      </>
+    ),
     svg: icons.browser,
   },
   {
-    title: "Framework-Agnostic",
-    description: "Designed to work across all major frameworks and libraries.",
+    title: "Usuable in library/frameworks",
+    description: (
+      <>
+        Neotoc gives you a <b>cleanup function</b> to remove any{" "}
+        <b>side effects</b>, making it <b>usuable</b> across{" "}
+        <b>all major libraries and frameworks</b>.
+      </>
+    ),
     svg: icons.framework,
   },
   {
     title: "Zero Dependencies",
-    description: "Built entirely from scratch with no external dependencies.",
+    description: (
+      <>
+        Built entirely from scratch with <b>no external dependencies</b>.
+      </>
+    ),
     svg: icons.tree,
   },
   {
     title: "Lightweight",
-    description:
-      "The JavaScript bundle is just 5.3KB, with default CSS weighing only 2.1KB (both minified and gzipped).",
+    description: (
+      <>
+        The <b>JavaScript bundle</b> is just <b>5.3KB</b>, with default{" "}
+        <b>CSS</b> weighing only <b>2.1KB</b> (both minified and gzipped).
+      </>
+    ),
     svg: icons.feather,
   },
   {
     title: "Accessible",
-    description: "Accessible with keyboards, touchscreens and screen readers.",
+    description: (
+      <>
+        Accessible with <b>keyboards</b>, <b>touchscreens</b> and{" "}
+        <b>screen readers</b>.
+      </>
+    ),
     svg: icons.a11y,
   },
 ];
 
 export default function Features() {
   return (
-    <div>
+    <div className="mx-4">
       <h2
         className={cn(
           styles.animateHeading,
-          "mt-16 mb-10 font-thin text-5xl text-center tracking-tighter"
+          "mt-28 mb-10 font-thin text-5xl text-center tracking-tighter"
         )}
       >
-        Why Neotoc?
+        Features
       </h2>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mx-5 max-w-screen-xl mb-20 perspective-dramatic">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 max-w-screen-xl mb-20 mx-auto">
         {data.map((feature, i) => (
           <div
             key={i}
