@@ -1,4 +1,5 @@
 import { type HighlightedCode, Pre } from "codehike/code";
+import "./github-from-css.css";
 
 export function Code({ codeblock }: { codeblock: HighlightedCode }) {
   return (
