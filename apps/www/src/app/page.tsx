@@ -15,10 +15,8 @@ export default function Home() {
             </h1>
             <h2 className="mt-8 lg:ml-10 lg:text-left text-center lg:text-2xl md:text-xl text-lg font-extralight">
               A tool for generating{" "}
-              <b className="font-extrabold">
-                highly interactive table of contents
-              </b>{" "}
-              with <b className="font-extrabold">JavaScript</b>.
+              <b className="font-bold">highly interactive table of contents</b>{" "}
+              with <b className="font-bold">JavaScript</b>.
             </h2>
             <div className="lg:ml-10 md:flex flex-col hidden gap-2 lg:items-start items-center mt-12">
               <CTAButton />
