@@ -2,9 +2,7 @@
 import { ThemeToggler } from "@/components/theme-toggler";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import NeotocLogoDark from "../../public/logo-dark.svg";
-import NeotocLogoLight from "../../public/logo-light.svg";
+import LogoSmall from "./logo-small";
 
 export function Header() {
   const pathname = usePathname();
@@ -20,20 +18,7 @@ export function Header() {
       <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center justify-between gap-2 flex-grow shrink-0">
         <span className="flex gap-3 mr-8 items-center">
           <Link href="/">
-            <span className="dark:inline hidden">
-              <Image
-                className="w-[35px]"
-                src={NeotocLogoDark}
-                alt="Neotoc Logo"
-              />
-            </span>
-            <span className="inline dark:hidden">
-              <Image
-                className="w-[35px]"
-                src={NeotocLogoLight}
-                alt="Neotoc Logo"
-              />
-            </span>
+            <LogoSmall className="w-[35px]" />
           </Link>
           <span className="text-sm font-mono [letter-spacing:-0.07em] opacity-80">
             v1.0.0
