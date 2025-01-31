@@ -87,9 +87,9 @@ const data = [
     title: "Usuable in library/frameworks",
     description: (
       <>
-        Neotoc gives you a <b>cleanup function</b> to remove any{" "}
-        <b>side effects</b>, making it <b>usuable</b> across{" "}
-        <b>all major libraries and frameworks</b>.
+        Neotoc provides a <b>cleanup function</b> to remove any{" "}
+        <b>side effects</b>, making it <b>usuable</b> across all major libraries
+        and frameworks like <b>React, Next.js etc</b>.
       </>
     ),
     svg: icons.framework,

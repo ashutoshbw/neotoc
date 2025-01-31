@@ -1,7 +1,4 @@
 import Link from "next/link";
-// import Image from "next/image";
-// import NeotocFullTextLogoDark from "../../public/logo-full-text-dark.svg";
-// import NeotocFullTextLogoLight from "../../public/logo-full-text-light.svg";
 import Features from "./features";
 import { cn } from "@/lib/utils";
 import LogoLarge from "@/components/logo-large";
@@ -107,7 +104,7 @@ function CTAButton() {
   return (
     <Link
       className="inline-block transition text-xl text-center text-white shadow-lg shadow-purple-500/10 bg-gradient-to-br from-purple-600/80 to-red-600/80 hover:bg-secondary border border-zinc-500/40 hover:border-zinc-500/80 rounded-xl py-2 px-4 hover:translate-y-[-2px]"
-      href="/docs"
+      href="/docs#get-started"
     >
       🚀 Get started
     </Link>
