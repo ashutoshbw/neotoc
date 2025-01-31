@@ -4,7 +4,7 @@ import Link from "next/link";
 // import NeotocFullTextLogoLight from "../../public/logo-full-text-light.svg";
 import Features from "./features";
 import { cn } from "@/lib/utils";
-import FullTextLogo from "./full-logo";
+import LogoLarge from "@/components/logo-large";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
         <div className="flex md:flex-row flex-col">
           <div className="md:pl-[40px] px-4 flex-shrink-[3]">
             <h1>
-              <FullTextLogo className="lg:max-w-96 max-w-80 lg:ml-0 lg:mt-24 md:mt-16 mt-8 mx-auto" />
+              <LogoLarge className="lg:max-w-96 max-w-80 lg:ml-0 lg:mt-24 md:mt-16 mt-8 mx-auto" />
               <span className="sr-only">Neotoc</span>
             </h1>
             <h2 className="mt-8 lg:ml-10 lg:text-left text-center lg:text-2xl md:text-xl text-lg font-extralight">

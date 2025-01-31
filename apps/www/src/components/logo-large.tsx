@@ -1,4 +1,4 @@
-const FullTextLogo = ({ className }: { className?: string }) => (
+const LogoLarge = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -53,4 +53,4 @@ const FullTextLogo = ({ className }: { className?: string }) => (
     />
   </svg>
 );
-export default FullTextLogo;
+export default LogoLarge;
