@@ -20,9 +20,7 @@ export function Header() {
           <Link href="/">
             <LogoSmall className="w-[35px]" />
           </Link>
-          <span className="text-sm font-mono [letter-spacing:-0.07em] opacity-80">
-            v1.0.0
-          </span>
+          <span className="text-sm font-bold opacity-80">v1.0.0</span>
         </span>
         <span className="flex items-center gap-2">
           <ThemeToggler />
