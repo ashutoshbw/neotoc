@@ -17,8 +17,9 @@ const data = [
     title: "Automatic Scrolling",
     description: (
       <>
-        It keeps table of contents <b>perfectly in sync with your scrolling</b>,
-        reflecting your current position on the page.
+        It keeps the scroll of table of contents{" "}
+        <b>in sync with your page scrolling</b>, reflecting what you are viewing
+        on the page.
       </>
     ),
     svg: icons.mouse,
@@ -28,7 +29,8 @@ const data = [
     description: (
       <>
         It <b>automatically folds or unfolds</b> the table of contents based on{" "}
-        <b>your position on the page</b>. Manual control is always available.
+        the <b>scroll position on the page</b>. Manual control is always
+        available.
       </>
     ),
     svg: icons.folding,
@@ -57,7 +59,7 @@ const data = [
     title: "Customize Easily",
     description: (
       <>
-        Leverage <b>dozens of CSS variables</b> to easily tweak <b>colors</b>{" "}
+        There are <b>dozens of CSS variables</b> to easily tweak <b>colors</b>{" "}
         and <b>sizes</b>.
       </>
     ),
@@ -105,8 +107,8 @@ const data = [
     title: "Lightweight",
     description: (
       <>
-        The <b>JavaScript bundle</b> is just <b>5.3KB</b>, with default{" "}
-        <b>CSS</b> weighing only <b>2.1KB</b> (both minified and gzipped).
+        The <b>JavaScript bundle</b> is <b>5.3KB</b>, with default <b>CSS</b>{" "}
+        weighing <b>2.1KB</b> (both minified and gzipped).
       </>
     ),
     svg: icons.feather,
