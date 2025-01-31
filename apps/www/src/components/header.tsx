@@ -35,13 +35,9 @@ export function Header() {
               />
             </span>
           </Link>
-          <Link
-            className="hover:underline tracking-tighter"
-            href="https://www.npmjs.com/package/neotoc?activeTab=versions"
-            target="_blank"
-          >
+          <span className="text-sm font-mono [letter-spacing:-0.07em] opacity-80">
             v1.0.0
-          </Link>
+          </span>
         </span>
         <span className="flex items-center gap-2">
           <ThemeToggler />
