@@ -86,7 +86,7 @@ export default function DocLayout({
           });
         }
       },
-      offsetTop: 96,
+      offsetTop: 112,
     });
 
     return () => {

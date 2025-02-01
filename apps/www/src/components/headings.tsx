@@ -19,7 +19,7 @@ export function Heading<T extends Types = "h1">({
   return (
     <As
       className={cn(
-        "scroll-mt-24 tracking-tight [&_code]:text-[1em]",
+        "scroll-mt-28 tracking-tight [&_code]:text-[1em]",
         as !== "h1" && "relative flex border-b font-semibold",
         className
       )}
