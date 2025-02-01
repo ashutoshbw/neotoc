@@ -17,21 +17,21 @@ export function Header() {
       } flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
     >
       <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center gap-2 flex-grow shrink-0">
-        <span className="flex gap-3 items-center">
-          <Link href="/">
-            <LogoSmall className="w-[35px]" />
-          </Link>
-          <span className="text-sm font-bold opacity-80">v1.0.0</span>
-        </span>
-        <Link
-          className={cn(
-            pathname == "/docs" && "font-bold",
-            "justify-self-start hover:opacity-100 opacity-80 ml-2 min-[320px]:inline hidden"
-          )}
-          href="/docs"
-        >
-          Docs
+        <Link href="/">
+          <LogoSmall className="w-[35px]" />
         </Link>
+        <span>
+          <span className="text-sm opacity-80 tracking-tight">v1.0.0</span>
+          <Link
+            className={cn(
+              pathname == "/docs" && "font-semibold",
+              "hover:opacity-100 opacity-80 ml-4 min-[320px]:inline hidden"
+            )}
+            href="/docs"
+          >
+            Docs
+          </Link>
+        </span>
         <span className="ml-auto flex items-center gap-2">
           <ThemeToggler />
           <Link href="https://github.com/ashutoshbw/neotoc" target="_blank">
