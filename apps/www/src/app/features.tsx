@@ -84,12 +84,11 @@ const data = [
     svg: icons.browser,
   },
   {
-    title: "Usuable in library/frameworks",
+    title: "Framework agnostic",
     description: (
       <>
-        Neotoc provides a <b>cleanup function</b> to remove any{" "}
-        <b>side effects</b>, making it <b>usuable</b> across all major libraries
-        and frameworks like <b>React, Next.js etc</b>.
+        Neotoc is not tied to any particular library or framework, freeing you
+        to <b>use it anywhere</b> DOM exists.
       </>
     ),
     svg: icons.framework,
