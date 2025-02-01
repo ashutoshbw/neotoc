@@ -41,7 +41,7 @@ function Video() {
   const borderImageBlock = `[border-image:linear-gradient(to_bottom,_transparent_0%,_hsl(var(--border))_40px,_hsl(var(--border))_calc(100%-40px),transparent_100%)_1]`;
   const borderImageInline = `[border-image:linear-gradient(to_right,_transparent_0%,_hsl(var(--border))_40px,_hsl(var(--border))_calc(100%-40px),transparent_100%)_1]`;
   return (
-    <div className="relative m-[40px]">
+    <div className="relative m-[40px] shadow-[0_0_150px_hsl(210deg_60%_68%/0.11)]">
       <div
         className={cn(
           "absolute left-0 w-0 h-[calc(100%+80px)] top-[-40px] border-l",
