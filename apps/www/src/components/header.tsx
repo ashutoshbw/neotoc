@@ -8,8 +8,6 @@ import { cn } from "@/lib/utils";
 export function Header() {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   return (
     <header
       className={`${
