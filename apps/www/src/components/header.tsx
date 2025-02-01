@@ -3,9 +3,12 @@ import { ThemeToggler } from "@/components/theme-toggler";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LogoSmall from "./logo-small";
+import { cn } from "@/lib/utils";
 
 export function Header() {
   const pathname = usePathname();
+
+  console.log(pathname);
 
   return (
     <header
@@ -15,14 +18,23 @@ export function Header() {
           : "h-[3.5rem]"
       } flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
     >
-      <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center justify-between gap-2 flex-grow shrink-0">
-        <span className="flex gap-3 mr-8 items-center">
+      <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center gap-2 flex-grow shrink-0">
+        <span className="flex gap-3 items-center">
           <Link href="/">
             <LogoSmall className="w-[35px]" />
           </Link>
           <span className="text-sm font-bold opacity-80">v1.0.0</span>
         </span>
-        <span className="flex items-center gap-2">
+        <Link
+          className={cn(
+            pathname == "/docs" && "font-bold",
+            "justify-self-start hover:opacity-100 opacity-80 ml-2 min-[320px]:inline hidden"
+          )}
+          href="/docs"
+        >
+          Docs
+        </Link>
+        <span className="ml-auto flex items-center gap-2">
           <ThemeToggler />
           <Link href="https://github.com/ashutoshbw/neotoc" target="_blank">
             <GithubIcon />
