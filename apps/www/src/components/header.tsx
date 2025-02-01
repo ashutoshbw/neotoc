@@ -11,7 +11,7 @@ export function Header() {
   return (
     <header
       className={`${
-        pathname != "/"
+        pathname == "/docs"
           ? "h-[5.5rem] dark:border-zinc-600 border-zinc-400"
           : "h-[3.5rem]"
       } flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
@@ -40,7 +40,7 @@ export function Header() {
           </Link>
         </span>
       </div>
-      {pathname !== "/" && (
+      {pathname == "/docs" && (
         <div className="grid md:grid-cols-[1fr_minmax(0,596px)_280px_1fr] grid-cols-1 [line-height:1em] border-t dark:border-zinc-600 border-zinc-400 h-[2rem] dark:bg-zinc-800 bg-zinc-200">
           <div
             id="nt-breadcrumb"
