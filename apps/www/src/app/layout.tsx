@@ -16,8 +16,10 @@ const notoSansMono = Noto_Sans_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Neotoc",
-  description: "Documentation site of Neotoc",
+  title:
+    "Neotoc—Easily generate highly interactive table of contents with JavaScript",
+  description:
+    "Neotoc is a tool for easily generating highly interactive table of contents with JavaScript.",
 };
 
 export default function RootLayout({

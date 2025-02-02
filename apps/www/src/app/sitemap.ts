@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           title: "Neotoc Demo",
           thumbnail_loc: `${baseURL}/twitter-image.jpg`,
           description:
-            "A tool for generating highly interactive table of contents with JavaScript.",
+            "Neotoc is a tool for easily generating highly interactive table of contents with JavaScript.",
           content_loc: `${baseURL}/neotoc-dark.mp4`,
         },
       ],

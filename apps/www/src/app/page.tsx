@@ -14,7 +14,7 @@ export default function Home() {
               <span className="sr-only">Neotoc</span>
             </h1>
             <h2 className="mt-8 lg:ml-10 lg:text-left text-center lg:text-2xl md:text-xl text-lg font-extralight">
-              A tool for generating{" "}
+              Easily generate{" "}
               <b className="font-bold">highly interactive table of contents</b>{" "}
               with <b className="font-bold">JavaScript</b>.
             </h2>
