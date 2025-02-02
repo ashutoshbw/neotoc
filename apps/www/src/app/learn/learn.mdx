@@ -2,9 +2,9 @@ import { SquarePenIcon } from "lucide-react";
 
 export const lastModified = "2025-02-01";
 
-# Neotoc Docs
+# Learn Neotoc
 
-Crafting a smoothly animated and interactive table of contents for your docs or blog is no trivial task. That’s where Neotoc comes in—enabling you to create a beautiful TOC UI with minimal effort.
+Whether you want to explore an interactive demo of Neotoc or create a table of contents like that for your webpage, you've come to the right place. Enjoy!
 
 ## Get started
 
@@ -34,7 +34,7 @@ import "./neotoc.css";
 neotoc({ io: "article >> h* >> aside" });
 ```
 
-Neotoc doesn’t include any CSS by default, giving you complete freedom to style it however you like. That said, you don’t need to start from scratch. You can use the stylesheet I’ve written for this site as a starting point. [Copy it from GitHub](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/docs/neotoc.css), paste it into `neotoc.css` (or any filename of your choice), and customize it to suit your needs.
+Neotoc doesn’t include any CSS by default, giving you complete freedom to style it however you like. That said, you don’t need to start from scratch. You can use the stylesheet I’ve written for this site as a starting point. [Copy it from GitHub](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/learn/neotoc.css), paste it into `neotoc.css` (or any filename of your choice), and customize it to suit your needs.
 
 To create a TOC, you must call `neotoc` with the `io` (input-output) option. Here, you need to answer three questions using CSS selectors separated by `>>`:
 
@@ -352,4 +352,10 @@ If you want it to have an exact height, simply use `height` instead of `max-heig
 For advanced customization, you can modify any part of the CSS file to suit your needs.
 
 
-<div className="mt-10">[<SquarePenIcon className="inline w-4 h-4 mr-1" />Suggest changes to this page](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/docs/page.mdx)</div>
+
+<div className="mt-10">
+  Found a typo? Other suggestions?<br />
+  [<SquarePenIcon className="inline w-4 h-4 mr-1" />Edit this page on Github](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/learn/learn.mdx)
+
+  Last modified: {lastModified}
+</div>

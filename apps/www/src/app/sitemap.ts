@@ -1,4 +1,4 @@
-import { lastModified } from "./docs/page.mdx";
+import { lastModified } from "./learn/learn.mdx";
 
 import type { MetadataRoute } from "next";
 
@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastModified,
     },
     {
-      url: `${baseURL}/docs`,
+      url: `${baseURL}/learn`,
       lastModified: lastModified,
     },
     {
@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           title: "Neotoc Demo",
           thumbnail_loc: `${baseURL}/twitter-image.jpg`,
           description:
-            "Neotoc is a tool for easily generating highly interactive table of contents with JavaScript.",
+            "Neotoc is a tool for easily generating beautiful table of contents with JavaScript.",
           content_loc: `${baseURL}/neotoc-dark.mp4`,
         },
       ],

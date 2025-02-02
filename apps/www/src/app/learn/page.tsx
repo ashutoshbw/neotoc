@@ -1,17 +1,19 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
+import LearnMDXContent from "./learn.mdx";
 import neotoc from "neotoc";
 import "./neotoc.css";
 
-export default function DocLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function DocsPage() {
   const [tocVisibility, setTocVisibility] = useState(false);
+
+  // Prevent unnecessary re-renders
+  const memoizedMDXContent = useMemo(() => {
+    return <LearnMDXContent />;
+  }, []);
 
   useEffect(() => {
     const breadcrumbDiv =
@@ -118,10 +120,10 @@ export default function DocLayout({
   return (
     <div className="grid md:grid-cols-[1fr_minmax(0,596px)_280px_1fr] grid-cols-1 mb-8">
       <article
-        className="md:col-start-2 md:[font-size:0.98rem] mt-8 md:px-8 px-4"
         onClick={handleArticleClick}
+        className="md:col-start-2 md:[font-size:0.98rem] mt-8 md:px-8 px-4"
       >
-        {children}
+        {memoizedMDXContent}
       </article>
       <aside
         className={cn(
@@ -134,7 +136,7 @@ export default function DocLayout({
         className="md:hidden fixed bottom-4 right-4 [&_svg]:size-6 bg-gradient-to-r from-zinc-500 to-zinc-400 shadow-xl shadow-zinc-500/50"
         size="icon"
         onClick={() => {
-          setTocVisibility(!tocVisibility);
+          setTocVisibility((x) => !x);
         }}
       >
         {tocVisibility ? <SidebarOpenIcon /> : <SidebarCloseIcon />}

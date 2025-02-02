@@ -15,8 +15,8 @@ export default function Home() {
             </h1>
             <h2 className="mt-8 lg:ml-10 lg:text-left text-center lg:text-2xl md:text-xl text-lg font-extralight">
               Easily generate{" "}
-              <b className="font-bold">highly interactive table of contents</b>{" "}
-              with <b className="font-bold">JavaScript</b>.
+              <b className="font-bold">beautiful table of contents</b> with{" "}
+              <b className="font-bold">JavaScript</b>.
             </h2>
             <div className="lg:ml-10 md:flex flex-col hidden gap-2 lg:items-start items-center mt-12">
               <CTAButton />
@@ -102,7 +102,7 @@ function CTAButton() {
   return (
     <Link
       className="inline-block transition text-xl text-center text-white shadow-lg shadow-purple-500/10 bg-gradient-to-br from-purple-600/80 to-red-600/80 hover:bg-secondary border border-zinc-500/40 hover:border-zinc-500/80 rounded-xl py-2 px-4 hover:translate-y-[-2px]"
-      href="/docs#get-started"
+      href="/learn#get-started"
     >
       🚀 Get started
     </Link>
