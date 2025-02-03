@@ -12,7 +12,7 @@
         "default": "./dist/index.js"
       }
     },
-    "./css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css"
   },
   "files": [
     "dist"
