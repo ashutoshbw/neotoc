@@ -10,13 +10,15 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
-    }
+    },
+    "./css": "./dist/styles.css"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --clean --format esm --minify --sourcemap --dts",
+    "build": "tsup src/index.ts --clean --format esm --minify --sourcemap --dts && pnpm build-css",
+    "build-css": "lightningcss --minify --targets \">= 0.25%\" src/styles.css -o dist/styles.css",
     "dev": "tsup src/index.ts --format esm --dts --watch",
     "test": "vitest run --reporter=verbose",
     "lint": "eslint src/",
@@ -48,6 +50,7 @@
     "eslint": "^9.14.0",
     "globals": "^15.12.0",
     "happy-dom": "^15.11.6",
+    "lightningcss-cli": "^1.29.1",
     "prettier": "3.3.3",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
