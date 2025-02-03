@@ -437,6 +437,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 .nt-light-bar-top.nt-on-fold,
 .nt-light-bar-bottom.nt-on-fold {
   background: var(--light-bar-tip-on-fold);
+  box-shadow: 0 0 5px var(--light-bar-tip-on-fold);
   z-index: 1;
 }
 
