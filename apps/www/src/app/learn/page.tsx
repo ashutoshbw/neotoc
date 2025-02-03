@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
 import LearnMDXContent from "./learn.mdx";
 import neotoc from "neotoc";
-import "neotoc/css";
+import "neotoc/styles.css";
 import "./neotoc.css";
 
 export default function DocsPage() {
