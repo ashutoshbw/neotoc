@@ -279,7 +279,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   gap: 1rem;
   align-items: flex-end;
   height: var(--header-height);
-  padding-block: 0.55rem;
+  padding-block: 0.5rem;
 }
 
 .nt-title {
@@ -302,7 +302,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   color: var(--fg);
   background: var(--bg-header-btn);
   box-sizing: content-box;
-  padding: 3px;
+  padding: 5px;
   border: none;
   cursor: pointer;
   svg {
