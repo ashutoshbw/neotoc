@@ -413,6 +413,7 @@ export default function neotoc({
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
 
+  tocBody.style.position = 'relative'; // setting it here instead of in CSS file is to avoid having any initial flicker caused by light bar without the CSS file applied.
   tocBody.ariaLabel = title;
   tocBody.tabIndex = 0;
   foldBtn.innerHTML = foldIcon;

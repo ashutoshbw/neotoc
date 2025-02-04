@@ -92,7 +92,6 @@
   padding-left: var(--padding-left);
   padding-block: 0.5rem;
   padding-right: 0.5rem;
-  position: relative;
   max-height: calc(var(--height) - var(--header-height));
   transition: max-height 0.15s;
   overflow-y: auto;
@@ -337,7 +336,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   background: var(--light-bar);
   width: var(--light-bar-width);
   height: 0;
-  position: absolute;
   left: calc(var(--padding-left) / 2 - var(--light-bar-width) / 2);
   z-index: 1;
 }

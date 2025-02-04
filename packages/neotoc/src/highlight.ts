@@ -33,6 +33,7 @@ export function addHighlight(
   const barBottomIndicator = elt<HTMLDivElement>('div', 'light-bar-bottom');
 
   bar.append(barTopIndicator, light, barBottomIndicator);
+  bar.style.position = 'absolute'; // setting it here instead of in CSS file is to avoid having any initial flicker caused by light bar without the CSS file applied.
   bar.style.display = 'none';
 
   tocBody.append(bar);
