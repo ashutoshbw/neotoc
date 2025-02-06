@@ -55,8 +55,6 @@
   background: var(--bg);
   font-size: 0.96em;
   line-height: 1.5;
-  animation-name: fade-in;
-  animation-duration: 1s;
   * {
     box-sizing: border-box;
     transition: background-color 0.15s;
@@ -76,15 +74,6 @@
     display: inline;
     vertical-align: middle;
     width: 100%;
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 
