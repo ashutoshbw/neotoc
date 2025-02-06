@@ -5,6 +5,9 @@
     "target": "es2022",
     "strict": true,
     "noImplicitReturns": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "declaration": true,
+    "declarationDir": "dist/dts"
+  },
+  "include": ["src"]
 }

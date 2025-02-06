@@ -4,23 +4,30 @@
   "description": "A tool for easily generating beautiful table of contents with JavaScript.",
   "type": "module",
   "types": "./dist/index.d.ts",
-  "browser": "./dist/index.js",
   "exports": {
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.umd.js"
       }
-    },
-    "./styles.css": "./dist/styles.css"
+    }
   },
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.js",
+  "unpkg": "./dist/index.umd.js",
+  "jsdelivr": "./dist/index.umd.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --clean --format esm --minify --sourcemap --dts && pnpm build-css",
+    "build": "rm -rf dist && rollup -c && pnpm run dts-work",
     "build-css": "lightningcss --minify --targets \">= 0.25%\" src/styles.css -o dist/styles.css",
-    "dev": "tsup src/index.ts --format esm --dts --watch",
+    "dev": "rm -rf dist && rollup -c -w && pnpm run dts-work",
+    "dts-work": "rm -rf dist/dts && cp dist/index.d.ts dist/index.d.cts",
     "test": "vitest run --reporter=verbose",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
@@ -48,6 +55,8 @@
   "homepage": "https://neotoc.vercel.app",
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.9.0",
     "eslint": "^9.14.0",
@@ -55,7 +64,8 @@
     "happy-dom": "^15.11.6",
     "lightningcss-cli": "^1.29.1",
     "prettier": "3.3.3",
-    "tsup": "^8.3.5",
+    "rollup": "^4.34.4",
+    "rollup-plugin-dts": "^6.1.1",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.14.0",
     "vitest": "^3.0.5"
