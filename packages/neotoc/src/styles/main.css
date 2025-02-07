@@ -1,0 +1,449 @@
+/* On this Stylesheet :)
+  ===================
+  - DEFAULT THEME SETTINGS
+  - NEOTOC STYLE
+   - FOUNDATION
+   - HEADER
+   - LIGHT BAR
+   - TOP AND BOTTOM SHADOWS
+   - ACCESSIBILITY
+   - UTILITY CLASSES
+   - UNUSED CLASSES
+
+  Syntax of heading comments:
+  - They are capitalized.
+  - No extra asterisks denote top level heading comments. Additional asterisks denote nesting levels.
+*/
+
+/* DEFAULT THEME SETTINGS */
+/** COLORS **/
+.nt-widget {
+  --light-bar: currentColor;
+  --light-opacity: 0.1;
+  /* See https://neotoc.vercel.app/learn#colors to learn about other color variables */
+}
+
+/** SIZES AND DURATION **/
+.nt-widget {
+  --height: 400px;
+  --header-height: 3rem;
+  --relative-font-size: 94; /* do not use percentage sign */
+  --toggle-fold-btn-width: 1.7em; /* should in em unit */
+  --indent-line-gap: 2px; /* should be in px unit */
+  --indent-line-width: 1px;
+  --anchor-padding-block: 0.4em;
+  --anchor-padding-inline: 0.3em;
+  --anchor-border-radius: 6px;
+  --padding-left: 1rem;
+  --light-bar-width: 4px;
+  --light-bar-tip-radius: 2px;
+  --light-spread-length: 250px;
+  --folding-duration: 0.3s;
+}
+
+/* NEOTOC STYLE */
+/*
+ Following are my recommended styles for Neotoc.
+ Not using or changing some of them will break the design,
+ while others are just stylistic preferences. Feel free
+ to make changes for advanced customization.
+*/
+
+/** FOUNDATION **/
+
+.nt-widget {
+  background: var(--bg);
+  font-size: 0.96em;
+  line-height: 1.5;
+  * {
+    box-sizing: border-box;
+    transition: background-color 0.15s;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    border-radius: var(--anchor-border-radius);
+  }
+  li li {
+    font-size: calc(var(--relative-font-size) * 1%);
+  }
+  svg {
+    display: inline;
+    vertical-align: middle;
+    width: 100%;
+  }
+}
+
+.nt-body {
+  padding-left: var(--padding-left);
+  padding-block: 0.5rem;
+  padding-right: 0.5rem;
+  max-height: calc(var(--height) - var(--header-height));
+  transition: max-height 0.15s;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.nt-foldable {
+  display: grid;
+  transition: grid-template-rows var(--folding-duration);
+  grid-template-rows: 1fr;
+  ul {
+    transition:
+      opacity var(--folding-duration),
+      visibility var(--folding-duration);
+  }
+  > ul {
+    overflow: clip;
+    grid-row: 1 / span 2;
+  }
+}
+
+.nt-foldable-folded {
+  grid-template-rows: 0fr;
+  ul {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.nt-non-foldable:has(> .nt-fold-indicator-line) {
+  position: relative;
+}
+
+.nt-fold-indicator-line {
+  margin: 0;
+  width: 100%;
+  border: none;
+  border-top: 1px solid;
+  border-image: linear-gradient(
+      to right,
+      transparent,
+      var(--fold-indicator-gradient-mid),
+      transparent
+    )
+    1;
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  transition: opacity var(--folding-duration);
+  opacity: 0;
+}
+
+.nt-toggle-fold-btn,
+.nt-unfoldable-icon {
+  color: var(--fg);
+  grid-column: -3;
+  padding-block: var(--anchor-padding-block);
+  z-index: 1; /* to keep them above anchor and below the light bar's light */
+}
+
+.nt-toggle-fold-btn {
+  padding-inline: 1px;
+  cursor: pointer;
+  svg {
+    transition: transform var(--folding-duration);
+    font-size: 0.8em;
+    path {
+      stroke-width: 2px;
+    }
+  }
+}
+
+.nt-toggle-fold-btn:first-child {
+  border-top-left-radius: var(--anchor-border-radius);
+  border-bottom-left-radius: var(--anchor-border-radius);
+}
+
+.nt-toggle-fold-btn:hover {
+  background: var(--bg-toggle-fold-btn-hover);
+}
+.nt-toggle-fold-btn:active {
+  background: var(--bg-toggle-fold-btn-active);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) {
+  background: var(--bg-sub-anchors);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:hover) > .nt-foldable .nt-a {
+  background: var(--bg-sub-anchors);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:hover)
+  .nt-indent-block:nth-child(1),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-2:hover)
+  .nt-indent-block:nth-child(2),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-3:hover)
+  .nt-indent-block:nth-child(3),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:hover)
+  .nt-indent-block:nth-child(4),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
+  .nt-indent-block:nth-child(5) {
+  border-color: var(--indent-line-highlight);
+}
+
+.nt-toggle-fold-btn:hover + .nt-a {
+  background-color: var(--bg-anchor-hover);
+}
+
+.nt-toggle-fold-btn-folded svg {
+  transform: rotate(-90deg);
+}
+
+.nt-non-foldable {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.nt-non-foldable > * {
+  grid-row: 1 / -1;
+}
+
+.nt-a {
+  background: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  padding-block: var(--anchor-padding-block);
+  padding-right: var(--anchor-padding-inline);
+  border-radius: var(--anchor-border-radius);
+  align-self: center;
+  grid-column: 1 / -1;
+  code {
+    font-size: 1em;
+  }
+}
+
+.nt-a:hover {
+  background: var(--bg-anchor-hover);
+}
+
+.nt-a:active {
+  background: var(--bg-anchor-active);
+}
+
+.nt-indent-block {
+  transition: border-right calc(var(--folding-duration) / 2);
+  border-right: var(--indent-line-width) solid var(--indent-line);
+  z-index: 1;
+}
+
+.nt-indent-block,
+.nt-unfoldable-icon {
+  pointer-events: none;
+}
+
+.nt-indent-block:first-child {
+  grid-column: 1 / 2;
+}
+
+.nt-indent-block:nth-child(2) {
+  grid-column: 2 / 4;
+}
+
+.nt-indent-block:nth-child(3) {
+  grid-column: 4 / 7;
+}
+
+.nt-indent-block:nth-child(4) {
+  grid-column: 7 / 10;
+}
+
+.nt-indent-block:nth-child(5) {
+  grid-column: 10 / 13;
+}
+
+/** HEADER **/
+
+.nt-header {
+  display: flex;
+  padding-right: 0.5rem;
+  padding-left: var(--padding-left);
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-end;
+  height: var(--header-height);
+  padding-block: 0.5rem;
+}
+
+.nt-title {
+  color: var(--fg);
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.nt-btn-group {
+  display: flex;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid var(--border-header-btn);
+  overflow: hidden; /* easy fix for perfect rounded corner */
+}
+
+.nt-header-btn {
+  font: inherit; /* for consistent button size across all browsers */
+  color: var(--fg);
+  background: var(--bg-header-btn);
+  box-sizing: content-box;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  svg {
+    height: 1.4em;
+    width: 1.4em;
+    display: block;
+  }
+}
+
+.nt-header-btn:not(:first-child) {
+  border-left: 1px solid var(--border-header-btn);
+}
+
+.nt-header-btn:not([disabled]):hover {
+  background: var(--bg-header-btn-hover);
+}
+
+.nt-header-btn:not([disabled]):active {
+  background: var(--bg-header-btn-active);
+}
+
+.nt-header-btn[disabled] {
+  color: var(--fg-header-btn-disabled);
+  background: var(--bg-header-btn-disabled);
+  cursor: default;
+}
+
+/** LIGHT BAR **/
+
+.nt-light-bar {
+  --terminal-side-length: calc(var(--light-bar-tip-radius) * 2);
+  background: var(--light-bar);
+  width: var(--light-bar-width);
+  height: 0;
+  left: calc(var(--padding-left) / 2 - var(--light-bar-width) / 2);
+  z-index: 1;
+}
+
+.nt-light {
+  background: linear-gradient(to left, transparent, var(--light-bar));
+  width: var(--light-spread-length);
+  height: 100%;
+  opacity: var(--light-opacity);
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  left: var(--light-bar-width);
+}
+
+.nt-light-bar-top,
+.nt-light-bar-bottom {
+  background: var(--light-bar);
+  width: var(--terminal-side-length);
+  height: var(--terminal-side-length);
+  border-radius: 50%;
+  position: absolute;
+  left: calc(
+    (var(--terminal-side-length) / 2 * -1) + var(--light-bar-width) / 2
+  );
+}
+
+.nt-light-bar-top {
+  top: calc(var(--terminal-side-length) / 2 * -1);
+}
+
+.nt-light-bar-bottom {
+  bottom: calc(var(--terminal-side-length) / 2 * -1);
+}
+
+.nt-light-bar-top.nt-on-fold,
+.nt-light-bar-bottom.nt-on-fold {
+  background: var(--light-bar-tip-on-fold);
+  box-shadow: 0 0 5px var(--light-bar-tip-on-fold);
+  z-index: 1;
+}
+
+/** TOP AND BOTTOM SHADOWS **/
+
+.nt-top-gradient,
+.nt-bottom-gradient {
+  width: 100%;
+  height: 30px;
+  transition: opacity 300ms;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  z-index: 5;
+}
+
+.nt-top-gradient {
+  opacity: 0;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+}
+
+.nt-bottom-gradient {
+  opacity: 1;
+  background: linear-gradient(to top, var(--bg), transparent);
+}
+
+/** ACCESSIBILITY **/
+.nt-a:focus-visible {
+  outline: none;
+  background: var(--bg-anchor-hover);
+}
+
+.nt-toggle-fold-btn:focus-visible {
+  outline: none;
+  background: var(--bg-toggle-fold-btn-hover);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:focus-visible) {
+  background: var(--bg-sub-anchors);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn:focus-visible)
+  > .nt-foldable
+  .nt-a {
+  background: var(--bg-sub-anchors);
+}
+
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-1:focus-visible)
+  .nt-indent-block:nth-child(1),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-2:focus-visible)
+  .nt-indent-block:nth-child(2),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-3:focus-visible)
+  .nt-indent-block:nth-child(3),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-4:focus-visible)
+  .nt-indent-block:nth-child(4),
+li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:focus-visible)
+  .nt-indent-block:nth-child(5) {
+  border-color: var(--indent-line-highlight);
+}
+
+.nt-toggle-fold-btn:focus-visible + .nt-a {
+  background-color: var(--bg-anchor-hover);
+}
+
+/** UTILITY CLASSES **/
+
+.nt-opacity-1 {
+  opacity: 1;
+}
+
+.nt-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/** UNUSED CLASSES **/
+
+/* Use the following classes to see if you like the result */
+
+/*
+- nt-enlightend-a: This class is dynamically only added to anchors in the TOC that refers to sections currently in view.
+*/
