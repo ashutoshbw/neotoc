@@ -14,20 +14,24 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.umd.js"
       }
-    }
+    },
+    "./styles/base/modern.css": "./dist/base-modern.css"
   },
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
   "unpkg": "./dist/index.umd.js",
   "jsdelivr": "./dist/index.umd.js",
+  "style": "./dist/base-modern.css",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && rollup -c && pnpm run dts-work",
-    "build-css": "lightningcss --minify --targets \">= 0.25%\" src/styles.css -o dist/styles.css",
-    "dev": "rm -rf dist && rollup -c -w && pnpm run dts-work",
+    "build": "rm -rf dist && rollup -c && pnpm run dts-work && pnpm run build-css",
+    "dev": "concurrently \"pnpm run dev-ts\" \"pnpm run dev-css\"",
+    "dev-ts": "mkdir -p dist && rollup -c -w && pnpm run dts-work",
+    "dev-css": "mkdir -p dist && node watch-css.js",
     "dts-work": "rm -rf dist/dts && cp dist/index.d.ts dist/index.d.cts",
+    "build-css": "mkdir -p dist && lightningcss --minify --sourcemap --targets \">= 0.25%\" src/styles/*.css -d dist && node fix-css-sourcemaps.js",
     "test": "vitest run --reporter=verbose",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
@@ -59,6 +63,8 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.9.0",
+    "chalk": "^5.4.1",
+    "chokidar": "^4.0.3",
     "eslint": "^9.14.0",
     "globals": "^15.12.0",
     "happy-dom": "^15.11.6",
