@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
 import LearnMDXContent from "./learn.mdx";
 import neotoc from "neotoc";
-import "neotoc/styles.css";
+import "neotoc/base-modern.css";
+import "neotoc/colors-zinc.css";
 import "./neotoc.css";
 
 export default function DocsPage() {
@@ -60,13 +61,12 @@ export default function DocsPage() {
 
     const removeToc = neotoc({
       io: "article >> h2,h3,h4,h5,h6 >> #sidebar",
-      autoFold: true,
       ellipsis: true,
       fillAnchor(h) {
         const a = h.firstChild;
         const span = document.createElement("span");
         span.append(
-          ...[...a!.childNodes].slice(1, -1).map((n) => n.cloneNode(true))
+          ...[...a!.childNodes].slice(1, -1).map((n) => n.cloneNode(true)),
         );
         return span;
       },
@@ -129,7 +129,7 @@ export default function DocsPage() {
       <aside
         className={cn(
           "md:[font-size:0.92rem] md:min-h-80 md:block md:static fixed md:border-none transition-all duration-300 border-l border-b rounded-bl-lg overflow-hidden md:overflow-visible md:shadow-none shadow-lg shadow-zinc-950/10 dark:shadow-zinc-950 w-[280px] flex-shrink-0 [&>*:first-child]:sticky [&>*:first-child]:top-[calc(var(--site-header-height)+var(--top-breathing-space))]",
-          tocVisibility ? "right-0" : "right-[-300px]"
+          tocVisibility ? "right-0" : "right-[-300px]",
         )}
         id="sidebar"
       ></aside>
