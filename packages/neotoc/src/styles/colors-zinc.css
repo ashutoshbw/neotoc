@@ -1,3 +1,25 @@
+.nt-widget {
+  --bg: hsl(240 10% 3.9%);
+  --fg: hsl(240 5% 74.9%);
+  --bg-anchor-hover: hsl(240 3.7% 15.9%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(240 5.9% 10%);
+  --bg-header-btn: var(--bg);
+  --bg-header-btn-hover: hsl(240 3.7% 15.9% / 50%);
+  --bg-header-btn-active: var(--bg-header-btn-hover);
+  --bg-header-btn-disabled: var(--bg);
+  --fg-header-btn-disabled: hsl(240 5% 34.9%);
+  --border-header-btn: hsl(240 3.7% 15.9%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(240 3.7% 28% / 0.5);
+  --indent-line-highlight: hsl(240 5.2% 49% / 0.5);
+  --fold-indicator-gradient-mid: hsl(240 5.9% 30%);
+  --light-bar: hsl(210 60% 68%);
+  --light-bar-tip-on-fold: hsl(240 99% 88%);
+  --light-opacity: 0.2;
+}
+
 .light .nt-widget {
   --bg: hsl(0 0% 100%);
   --fg: hsl(240 3.8% 36.1%);
@@ -15,28 +37,6 @@
   --indent-line: hsl(240 4.9% 75% / 0.5);
   --indent-line-highlight: hsl(240 4.9% 60% / 0.5);
   --fold-indicator-gradient-mid: hsl(240 5.9% 80%);
-  --light-bar: hsl(210 60% 68%);
-  --light-bar-tip-on-fold: hsl(240 99% 88%);
-  --light-opacity: 0.2;
-}
-
-.dark .nt-widget {
-  --bg: hsl(240 10% 3.9%);
-  --fg: hsl(240 5% 74.9%);
-  --bg-anchor-hover: hsl(240 3.7% 15.9%);
-  --bg-anchor-active: var(--bg-anchor-hover);
-  --bg-sub-anchors: hsl(240 5.9% 10%);
-  --bg-header-btn: var(--bg);
-  --bg-header-btn-hover: hsl(240 3.7% 15.9% / 50%);
-  --bg-header-btn-active: var(--bg-header-btn-hover);
-  --bg-header-btn-disabled: var(--bg);
-  --fg-header-btn-disabled: hsl(240 5% 34.9%);
-  --border-header-btn: hsl(240 3.7% 15.9%);
-  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
-  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
-  --indent-line: hsl(240 3.7% 28% / 0.5);
-  --indent-line-highlight: hsl(240 5.2% 49% / 0.5);
-  --fold-indicator-gradient-mid: hsl(240 5.9% 30%);
   --light-bar: hsl(210 60% 68%);
   --light-bar-tip-on-fold: hsl(240 99% 88%);
   --light-opacity: 0.2;
