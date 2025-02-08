@@ -50,8 +50,9 @@ const data = [
     title: "Breadcrumb",
     description: (
       <>
-        Neotoc helps you to <b>create your own breadcrumb</b> to quickly view or
-        navigate to parent sections with ease.
+        <b>Create breadcrumb</b> to quickly view or{" "}
+        <b>navigate to parent sections</b>
+        with ease.
       </>
     ),
     svg: icons.breadcrumb,
@@ -60,8 +61,8 @@ const data = [
     title: "Ready-made Styles",
     description: (
       <>
-        You can get a head-start with carefully hand-crafted <b>base</b> and{" "}
-        <b>colors</b> styles.
+        Get a head-start with carefully crafted <b>base</b> and <b>colors</b>{" "}
+        styles.
       </>
     ),
     svg: icons.shirt,
