@@ -51,8 +51,7 @@ const data = [
     description: (
       <>
         <b>Create breadcrumb</b> to quickly view or{" "}
-        <b>navigate to parent sections</b>
-        with ease.
+        <b>navigate to parent sections</b> with ease.
       </>
     ),
     svg: icons.breadcrumb,
