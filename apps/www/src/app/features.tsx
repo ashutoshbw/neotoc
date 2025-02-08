@@ -8,7 +8,8 @@ const data = [
     description: (
       <>
         <b>Neotoc</b> can partially highlight any <b>list item</b> in the{" "}
-        <b>table of contents</b>, resulting in a <b>smooth user experience</b>.
+        <b>table of contents</b>, resulting in a <b>smoother user experience</b>
+        .
       </>
     ),
     svg: icons.crescent,
@@ -17,7 +18,7 @@ const data = [
     title: "Automatic Scrolling",
     description: (
       <>
-        It keeps the scroll of table of contents{" "}
+        By default it keeps the scroll of table of contents{" "}
         <b>in sync with your page scrolling</b>, reflecting what you are viewing
         on the page.
       </>
@@ -28,9 +29,9 @@ const data = [
     title: "Automatic Folding",
     description: (
       <>
-        It <b>automatically folds or unfolds</b> the table of contents based on{" "}
-        the <b>scroll position on the page</b>. Manual control is always
-        available.
+        When enabled, it can <b>automatically fold or unfold</b> the table of
+        contents based on the <b>scroll position on the page</b>. Manual control
+        is always available.
       </>
     ),
     svg: icons.folding,
@@ -56,23 +57,23 @@ const data = [
     svg: icons.breadcrumb,
   },
   {
+    title: "Ready-made Styles",
+    description: (
+      <>
+        You can get a head-start with carefully hand-crafted <b>base</b> and{" "}
+        <b>colors</b> styles.
+      </>
+    ),
+    svg: icons.shirt,
+  },
+  {
     title: "Customize Easily",
     description: (
       <>
-        There are <b>dozens of CSS variables</b> to easily tweak <b>colors</b>{" "}
-        and <b>sizes</b>.
+        Easily tweak <b>colors</b> and <b>sizes</b> with <b>CSS variables</b>.
       </>
     ),
     svg: icons.palette,
-  },
-  {
-    title: "Written in TypeScript",
-    description: (
-      <>
-        Can be used in both <b>TypeScript</b> and <b>JavaScript</b> projects.
-      </>
-    ),
-    svg: icons.ts,
   },
   {
     title: "Browser Support",
@@ -84,7 +85,7 @@ const data = [
     svg: icons.browser,
   },
   {
-    title: "Framework agnostic",
+    title: "Framework Agnostic",
     description: (
       <>
         Neotoc is not tied to any particular library or framework, freeing you
@@ -130,7 +131,7 @@ export default function Features() {
       <h2
         className={cn(
           styles.animateHeading,
-          "mt-28 mb-10 font-thin text-5xl text-center tracking-tighter"
+          "mt-28 mb-10 font-thin text-5xl text-center tracking-tighter",
         )}
       >
         Features
@@ -141,7 +142,7 @@ export default function Features() {
             key={i}
             className={cn(
               styles.animateFeature,
-              "transition p-4 rounded-lg dark:bg-zinc-900/50 hover:dark:bg-zinc-900/90 bg-zinc-100 hover:bg-zinc-200 shadow-md dark:shadow-black shadow-zinc-300 group"
+              "transition p-4 rounded-lg dark:bg-zinc-900/50 hover:dark:bg-zinc-900/90 bg-zinc-100 hover:bg-zinc-200 shadow-md dark:shadow-black shadow-zinc-300 group",
             )}
           >
             <span className="flex justify-center text-3xl dark:group-hover:[&_svg]:text-[#a1c4e8] group-hover:[&_svg]:text-[#13304e]">
