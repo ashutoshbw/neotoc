@@ -26,7 +26,6 @@
 /** SIZES AND DURATION **/
 .nt-widget {
   --height: 400px;
-  --header-height: 3rem;
   --relative-font-size: 94; /* do not use percentage sign */
   --toggle-fold-btn-width: 1.7em; /* should in em unit */
   --indent-line-gap: 2px; /* should be in px unit */
@@ -81,7 +80,7 @@
   padding-left: var(--padding-left);
   padding-block: 0.5rem;
   padding-right: 0.5rem;
-  max-height: calc(var(--height) - var(--header-height));
+  max-height: var(--height);
   transition: max-height 0.15s;
   overflow-y: auto;
   overflow-x: hidden;
@@ -266,7 +265,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   justify-content: space-between;
   gap: 1rem;
   align-items: flex-end;
-  height: var(--header-height);
   padding-block: 0.5rem;
 }
 

@@ -37,7 +37,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="[--site-header-height:5.5rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:3rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
+          <div className="[--site-header-height:5.5rem] md:[--top-breathing-space:2rem] md:[--bottom-breathing-space:6rem] [--top-breathing-space:0px] [--bottom-breathing-space:40vh] flex flex-col min-h-[100dvh]">
             <Header />
             <main>{children}</main>
             <footer className="mt-auto text-center py-4 text-sm border-t">
