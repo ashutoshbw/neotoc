@@ -784,7 +784,12 @@ export default function neotoc({
 
   let previousTime: number = 0;
   const step = (timestamp: number) => {
-    if (previousTime === 0 || timestamp - previousTime > 1000 / 60) {
+    if (previousTime === 0 || timestamp - previousTime > 8) {
+      // why 8? Imagine the diff is 7, then the render will happen
+      // after 14ms, not 8ms. So this is to ensure that the delay remains
+      // higher than 8ms(125fps) and less than 16ms(62.5fps) when the screen
+      // refresh rate allows this, otherwise, it will just render(On most
+      // laptops the delay is about 16.7ms).
       renderFrame(timestamp);
       previousTime = timestamp;
     }
