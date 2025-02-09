@@ -1,5 +1,5 @@
 .nt-widget {
-  --bg: hsl(0 0% 10%);
+  --bg: hsl(0 0% 5%);
   --fg: hsl(0 0% 70%);
   --bg-anchor-hover: hsl(0 0% 20%);
   --bg-anchor-active: var(--bg-anchor-hover);
