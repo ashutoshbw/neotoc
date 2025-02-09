@@ -786,7 +786,7 @@ export default function neotoc({
 
   let previousTime: number = 0;
   const step = (timestamp: number) => {
-    if (previousTime === 0 || timestamp - previousTime > 1000 / 48) {
+    if (previousTime === 0 || timestamp - previousTime > 1000 / 60) {
       renderFrame(timestamp);
       previousTime = timestamp;
     }
