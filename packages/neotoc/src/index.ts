@@ -784,13 +784,13 @@ export default function neotoc({
     }
   };
 
-  let previousTime: number;
+  let previousTime: number = 0;
   const step = (timestamp: number) => {
-    if (previousTime !== timestamp) {
+    if (previousTime === 0 || timestamp - previousTime > 1000 / 48) {
       renderFrame(timestamp);
+      previousTime = timestamp;
     }
 
-    previousTime = timestamp;
     rafNum = window.requestAnimationFrame(step);
   };
 
