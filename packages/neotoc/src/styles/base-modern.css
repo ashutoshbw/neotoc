@@ -122,7 +122,7 @@
   border-image: linear-gradient(
       to right,
       transparent,
-      var(--fold-indicator-gradient-mid),
+      var(--fold-indicator-line),
       transparent
     )
     1;
