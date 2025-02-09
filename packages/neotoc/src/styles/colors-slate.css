@@ -1,0 +1,43 @@
+.nt-widget {
+  --bg: hsl(222.2 84% 4.9%);
+  --fg: hsl(215 20% 65%);
+  --bg-anchor-hover: hsl(215 25% 17%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(220 30% 13%);
+  --bg-header-btn: var(--bg);
+  --bg-header-btn-hover: hsl(215 25% 17% / 50%);
+  --bg-header-btn-active: var(--bg-header-btn-hover);
+  --bg-header-btn-disabled: var(--bg);
+  --fg-header-btn-disabled: hsl(215 15% 38%);
+  --border-header-btn: hsl(215 25% 17%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(215 20% 28%);
+  --indent-line-highlight: hsl(215 20% 48%);
+  --fold-indicator-line: var(--indent-line);
+  --light-bar: hsl(200 80% 70%);
+  --light-bar-tip-on-fold: hsl(215 100% 85%);
+  --light-opacity: 0.2;
+}
+
+.light .nt-widget {
+  --bg: hsl(210 40% 98%);
+  --fg: hsl(215 20% 25%);
+  --bg-anchor-hover: hsl(215 25% 92%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(220 30% 95%);
+  --bg-header-btn: var(--bg);
+  --bg-header-btn-hover: hsl(215 25% 92% / 50%);
+  --bg-header-btn-active: var(--bg-header-btn-hover);
+  --bg-header-btn-disabled: var(--bg);
+  --fg-header-btn-disabled: hsl(215 10% 55%);
+  --border-header-btn: hsl(215 25% 85%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(215 15% 80%);
+  --indent-line-highlight: hsl(215 15% 60%);
+  --fold-indicator-line: var(--indent-line);
+  --light-bar: hsl(200 90% 50%);
+  --light-bar-tip-on-fold: hsl(215 85% 40%);
+  --light-opacity: 0.2;
+}
