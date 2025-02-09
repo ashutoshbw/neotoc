@@ -1,12 +1,12 @@
 /* Override colors when viewport width is 767px or less */
 @media (max-width: 767px) {
-  :root.light .nt-widget {
+  .nt-widget {
+    --bg: hsl(240 10% 6.9%);
+  }
+  .light .nt-widget {
     --bg: hsl(0 0% 97%);
     --bg-anchor-hover: hsl(240 5.9% 87%);
     --bg-sub-anchors: hsl(240 4.8% 92%);
-  }
-  :root.dark .nt-widget {
-    --bg: hsl(240 10% 6.9%);
   }
 }
 
