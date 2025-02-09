@@ -11,7 +11,7 @@
 }
 
 .nt-widget {
-  --height: calc(
+  --body-height: calc(
     100vh - var(--site-header-height) - var(--top-breathing-space) -
       var(--bottom-breathing-space)
   ); /* Here these CSS vars are coming from outside. */
