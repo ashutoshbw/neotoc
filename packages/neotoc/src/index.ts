@@ -638,10 +638,8 @@ export default function neotoc({
       viewportHeight =
         viewportTop === null ? null : viewportBottom! - viewportTop;
 
-      const top = Math.round(y1Min + scrolledY - tocBodyTop - borderTopWidth);
-      const bottom = Math.round(
-        y2Min + scrolledY - tocBodyTop - borderTopWidth,
-      );
+      const top = y1Min + scrolledY - tocBodyTop - borderTopWidth;
+      const bottom = y2Min + scrolledY - tocBodyTop - borderTopWidth;
 
       scrollContainerScrollTop = scrollContainer.scrollTop;
       topInUnfoldedState = Math.round(
@@ -697,7 +695,7 @@ export default function neotoc({
       }
 
       draw({
-        height: Math.round(y2Min - y1Min),
+        height: y2Min - y1Min,
         top: top,
         bottom: bottom,
         // Rounding is necssary because where they should be the same,
