@@ -35,7 +35,7 @@
   --anchor-border-radius: 0px;
   --padding-left: 1rem;
   --light-bar-width: 4px;
-  --light-bar-tip-radius: 2px;
+  /* `--light-bar-tip-radius` is not used in base-plain */
   --light-spread-length: 100vw;
   --folding-duration: 0.3s;
 }
@@ -306,7 +306,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
 /** LIGHT BAR **/
 
 .nt-light-bar {
-  --terminal-side-length: calc(var(--light-bar-tip-radius) * 2);
+  --terminal-side-length: var(--light-bar-width);
   background: var(--light-bar);
   width: var(--light-bar-width);
   height: 0;
@@ -330,7 +330,6 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   background: var(--light-bar);
   width: var(--terminal-side-length);
   height: var(--terminal-side-length);
-  border-radius: 50%;
   position: absolute;
   left: calc(
     (var(--terminal-side-length) / 2 * -1) + var(--light-bar-width) / 2

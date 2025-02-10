@@ -16,7 +16,7 @@
   --indent-line-highlight: hsl(0 0% 50%);
   --fold-indicator-line: var(--indent-line);
   --light-bar: hsl(0 0% 60%);
-  --light-bar-tip-on-fold: hsl(0 0% 80%);
+  --light-bar-tip-on-fold: hsl(from var(--light-bar) h s calc(l * 1.15));
   --light-opacity: 0.2;
 }
 
@@ -38,6 +38,6 @@
   --indent-line-highlight: hsl(0 0% 55%);
   --fold-indicator-line: var(--indent-line);
   --light-bar: hsl(0 0% 40%);
-  --light-bar-tip-on-fold: hsl(0 0% 30%);
+  --light-bar-tip-on-fold: hsl(from var(--light-bar) h s calc(l * 0.85));
   --light-opacity: 0.2;
 }
