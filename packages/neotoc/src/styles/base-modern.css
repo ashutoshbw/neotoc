@@ -34,8 +34,8 @@
   --anchor-padding-inline: 0.3em;
   --anchor-border-radius: 6px;
   --padding-left: 1rem;
-  --light-bar-width: 5px;
-  --light-bar-tip-radius: 2.5px;
+  --light-bar-width: 4px;
+  --light-bar-tip-radius: calc(var(--light-bar-width) / 2);
   --light-spread-length: 250px;
   --folding-duration: 0.3s;
 }
@@ -345,7 +345,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   height: var(--terminal-side-length);
   border-radius: 50%;
   position: absolute;
-  transition: all 0.3s;
+  transition: box-shadow 300ms;
   left: calc(
     (var(--terminal-side-length) / 2 * -1) + var(--light-bar-width) / 2
   );
@@ -364,6 +364,10 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   background: var(--light-bar-tip-on-fold);
   box-shadow: 0 0 5px var(--light-bar-tip-on-fold);
   z-index: 1;
+}
+
+.nt-light-bar[style*='height: 0px'] .nt-light-bar-top.nt-on-fold {
+  background-color: transparent;
 }
 
 /** TOP AND BOTTOM SHADOWS **/
