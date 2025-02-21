@@ -1,26 +1,4 @@
 .nt-widget {
-  --bg: hsl(0 0% 5%);
-  --fg: hsl(0 0% 70%);
-  --bg-anchor-hover: hsl(0 0% 20%);
-  --bg-anchor-active: var(--bg-anchor-hover);
-  --bg-sub-anchors: hsl(0 0% 15%);
-  --bg-header-btn: var(--bg);
-  --bg-header-btn-hover: hsl(0 0% 20% / 50%);
-  --bg-header-btn-active: var(--bg-header-btn-hover);
-  --bg-header-btn-disabled: var(--bg);
-  --fg-header-btn-disabled: hsl(0 0% 40%);
-  --border-header-btn: hsl(0 0% 20%);
-  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
-  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
-  --indent-line: hsl(0 0% 30%);
-  --indent-line-highlight: hsl(0 0% 50%);
-  --fold-indicator-line: var(--indent-line);
-  --light-bar: hsl(0 0% 60%);
-  --light-bar-tip-on-fold: hsl(from var(--light-bar) h s calc(l * 1.15));
-  --light-opacity: 0.2;
-}
-
-.light .nt-widget {
   --bg: hsl(0 0% 97%);
   --fg: hsl(0 0% 20%);
   --bg-anchor-hover: hsl(0 0% 85%);
@@ -39,5 +17,27 @@
   --fold-indicator-line: var(--indent-line);
   --light-bar: hsl(0 0% 40%);
   --light-bar-tip-on-fold: hsl(from var(--light-bar) h s calc(l * 0.85));
+  --light-opacity: 0.2;
+}
+
+.dark .nt-widget {
+  --bg: hsl(0 0% 5%);
+  --fg: hsl(0 0% 70%);
+  --bg-anchor-hover: hsl(0 0% 20%);
+  --bg-anchor-active: var(--bg-anchor-hover);
+  --bg-sub-anchors: hsl(0 0% 15%);
+  --bg-header-btn: var(--bg);
+  --bg-header-btn-hover: hsl(0 0% 20% / 50%);
+  --bg-header-btn-active: var(--bg-header-btn-hover);
+  --bg-header-btn-disabled: var(--bg);
+  --fg-header-btn-disabled: hsl(0 0% 40%);
+  --border-header-btn: hsl(0 0% 20%);
+  --bg-toggle-fold-btn-hover: var(--bg-sub-anchors);
+  --bg-toggle-fold-btn-active: var(--bg-toggle-fold-btn-hover);
+  --indent-line: hsl(0 0% 30%);
+  --indent-line-highlight: hsl(0 0% 50%);
+  --fold-indicator-line: var(--indent-line);
+  --light-bar: hsl(0 0% 60%);
+  --light-bar-tip-on-fold: hsl(from var(--light-bar) h s calc(l * 1.15));
   --light-opacity: 0.2;
 }
