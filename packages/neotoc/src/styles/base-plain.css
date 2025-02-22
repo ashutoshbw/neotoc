@@ -256,7 +256,7 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   padding-right: 0.5rem;
   padding-left: var(--padding-left);
   justify-content: space-between;
-  gap: 1rem;
+  gap: 8px;
   align-items: flex-end;
   padding-block: 0.5rem;
 }
@@ -266,11 +266,12 @@ li:has(> .nt-non-foldable > .nt-toggle-fold-btn.nt-level-5:hover)
   font-size: 1.1em;
   font-weight: 600;
   margin: 0;
+  flex-shrink: 1000;
 }
 
 .nt-btn-group {
   display: flex;
-  flex-shrink: 0;
+  flex-shrink: 1;
   overflow: hidden; /* easy fix for perfect rounded corner */
 }
 
