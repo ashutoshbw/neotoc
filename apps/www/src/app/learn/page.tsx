@@ -60,7 +60,7 @@ export default function DocsPage() {
     breadcrumbDiv?.addEventListener("touchmove", onDrag, { passive: true });
 
     const removeToc = neotoc({
-      io: "article >> h2,h3,h4,h5,h6 >> #sidebar",
+      io: "article >> :not(.admonition :is(h2,h3,h4,h5,h6)):is(h2,h3,h4,h5,h6) >> #sidebar",
       ellipsis: true,
       fillAnchor(h) {
         const a = h.firstChild;
