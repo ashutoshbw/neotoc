@@ -45,25 +45,25 @@ function Video() {
       <div
         className={cn(
           "absolute left-0 w-0 h-[calc(100%+80px)] top-[-40px] border-l",
-          borderImageBlock
+          borderImageBlock,
         )}
       ></div>
       <div
         className={cn(
           "absolute right-0 w-0 h-[calc(100%+80px)] top-[-40px] border-l",
-          borderImageBlock
+          borderImageBlock,
         )}
       ></div>
       <div
         className={cn(
           "absolute top-0 h-0 w-[calc(100%+80px)] left-[-40px] border-t",
-          borderImageInline
+          borderImageInline,
         )}
       ></div>
       <div
         className={cn(
           "absolute bottom-0 h-0 w-[calc(100%+80px)] left-[-40px] border-t",
-          borderImageInline
+          borderImageInline,
         )}
       ></div>
       <div className="dark:block hidden">
