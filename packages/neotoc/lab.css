@@ -1,0 +1,20 @@
+:root {
+  scroll-behavior: smooth;
+}
+
+body {
+}
+
+aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+}
+
+article {
+  max-width: 600px;
+}
+
+.nt-widget {
+}

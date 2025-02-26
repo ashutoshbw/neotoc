@@ -33,7 +33,7 @@
     "dev-css": "mkdir -p dist && node watch-css.js",
     "dts-work": "rm -rf dist/dts && cp dist/index.d.ts dist/index.d.cts",
     "build-css": "mkdir -p dist && lightningcss --minify --sourcemap --targets \">= 0.25%\" src/styles/*.css -d dist && node fix-css-sourcemaps.js",
-    "preview": "browser-sync start --server --files dist lab",
+    "preview": "browser-sync start --server --files dist index.html lab.js lab.css",
     "test": "vitest run --reporter=verbose",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
