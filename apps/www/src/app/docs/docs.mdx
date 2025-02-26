@@ -5,57 +5,56 @@ export const lastModified = "2025-02-01";
 
 # Neotoc Docs
 
-Whether you want to explore an interactive demo of Neotoc or create a table of contents like that for your webpage, you've come to the right place. Enjoy!
+A table of contents is really helpful on web pages with many sections. You can now easily generate a beautiful TOC, just like the one on the right.
 
 ## Get started
 
-Getting started with Neotoc depends on your project setup. There are two main ways to use Neotoc:
-
-- If you have a vanilla setup, you can use a CDN like [jsDelivr](https://www.jsdelivr.com/package/npm/neotoc).
-- If your project uses a bundler, you will most likely want to install it via a package manager (e.g., `npm`, `pnpm`, or `yarn`).
-
-In this guide, I'll cover the getting started section in the context of Vite's `vanilla` template for simplicity. You can easily set one up by running `npm create vite` in your terminal and following the prompts. For more details, refer to [Scaffolding Your First Vite Project](https://vite.dev/guide/#scaffolding-your-first-vite-project).
-
-After setting up your project, install `neotoc` using the package manager of your choice:
+The easiest and simplest way to get started with Neotoc is with the `neotoc-playground` CLI. From your terminal, run one of the following commands based on your preference and follow the prompts.
 
 ```sh
-npm install neotoc
-# or
-pnpm add neotoc
-# or
-yarn add neotoc
+npx neotoc-playground
+pnpx neotoc-playground
+yarn dlx neotoc-playground
+bunx neotoc-playground
 ```
 
-In your JavaScript/TypeScript file(most likely `main.js`/`main.ts`), add the following import statements and call `neotoc` as shown below:
+<Admonition type="info" title={"What are npx, pnpx, yarn dlx or bunx?"}>
+These are commands from `npm`, `pnpm`, `yarn`, and `bun`, respectively. They let you fetch an npm package from the registry without installing it to your project or globally and run the default command binary it exposes—perfect for our use case.
+</Admonition>
 
-```js
-import neotoc from "neotoc";
-import "./neotoc.css";
+It will create a neotoc playground with randomly generated dummy content based on your input. Run the dev server with command it prints to open the page in your browser.
 
-neotoc({ io: "article >> h* >> aside" });
+To see the other ways you can create a neotoc playgroud or to learn to remake the dummy content again possibly with different preferences run the following:
+
+```sh
+npx neotoc-playground --help
 ```
 
-Neotoc doesn’t include any CSS by default, giving you complete freedom to style it however you like. That said, you don’t need to start from scratch. You can use the stylesheet I’ve written for this site as a starting point. [Copy it from GitHub](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/docs/neotoc.css), paste it into `neotoc.css` (or any filename of your choice), and customize it to suit your needs.
+Mess around and have fun!
 
-To create a TOC, you must call `neotoc` with the `io` (input-output) option. Here, you need to answer three questions using CSS selectors separated by `>>`:
+## How to get `neotoc`?
 
-1. ___Where should it look for headings?___
-    - In this case, it's the `article` element.
-2. ___Which headings should it consider for creating the TOC?___
-    - Here, it's `h*`, which means headings of all levels. (Although it's not a valid CSS selector, it's a special shortcut allowed here.)
-3. ___Where should it append the created TOC?___
-    - Here, it's the `aside` element.
+To use `neotoc` you need to get it somehow. You can install it in your project using package managers like below:
 
-If your HTML does not include an `<article>` element with headings inside it or an `<aside>` element, create them. Ensure the headings have unique IDs. Once these elements are in place, you should see the TOC in the `<aside>` element.
+```sh
+npm add neotoc@1.0.0
+pnpm add neotoc@1.0.0
+yarn add neotoc@1.0.0
+bun add neotoc@1.0.0
+```
 
-<Admonition type="note" title="Note: Some requirements">
+It is recommended to use the exact version to avoid any breaking changes.
+
+You can also use CDN's like unpkg, jsdelivr, esm.sh.
+
+## Requirements
+
 For Neotoc to work properly, it expects two things:
 
 - The headings you target must have unique IDs.
 - The headings must appear in a logical order. By logical order, I mean:
   - The first heading found determines the highest level. For example, if you start with an `<h2>` heading, you should not use an `<h1>` heading later.
   - There should be no gaps between heading levels when progressing from top to bottom. For instance, after an `<h2>`, you should not use an `<h4>` without including an `<h3>` in between.
-</Admonition>
 
 ## Neotoc API
 
@@ -67,23 +66,13 @@ import neotoc from "neotoc";
 
 You can rename `neotoc` to something else if you wish, as it is a default export.
 
+<Admonition type="info" title="Info">
+If you load neotoc as an UMD module from a CDN, then the TOC generator function will be available under the `neotoc` variable.
+</Admonition>
+
 `neotoc` accepts an options object and returns a cleanup function.
 
-If you're using Neotoc in React or another library/framework, you'll likely need to call or return this function where it is required. For example, in React, the pattern looks like this:
-
-```tsx
-useEffect(() => {
-  const removeNeotoc = neotoc({
-    io: "article >> h2,h3,h4,h5,h6 >> aside"
-  });
-
-  return () => {
-    removeNeotoc();
-  };
-}, []);
-```
-
-If you are working with a vanilla HTML, CSS, and JS setup, you typically won't need to use the cleanup function.
+If you're using Neotoc in React or another library/framework, you'll likely need to call or return this function where it is required. If you are working with a vanilla HTML, CSS, and JS setup, you typically won't need to use the cleanup function.
 
 Now, let's explore all of its options in detail.
 
@@ -94,28 +83,20 @@ Now, let's explore all of its options in detail.
 Type of `io`: `string`<br/>
 Type of `to`: `HTMLElement`
 
-`io` is the ___only required___ option. We have already covered it mostly in the [Get started](#get-started) section. Let's cover the rest of the details here.
+`io` is the ___only required___ option. To create a TOC, you must call `neotoc` with the `io` (input-output) option. Here, you need to answer three questions using CSS selectors separated by `>>`. For example:
+
+```js
+neotoc({ io: "article >> h2,h3,h4,h5,h6 >> nav" });
+```
+
+1. ___Where should it look for headings?___
+    - Here, it's the `<article>` element.
+2. ___Which headings should it consider for creating the TOC?___
+    - Here, it's all headings from `<h2>` to `<h6>`.
+3. ___Where should it append the generated TOC?___
+    - Here, it's the `<nav>` element.
 
 The last part of the `io` value can be _omitted_ if you need to provide the corresponding HTML element directly. You can use the `to` option for this purpose.
-
-One use case of the `to` option is that it allows you to easily create a wrapper component for it in React:
-
-```tsx
-function Neotoc({
-  from,
-  className,
-}: {
-  from: string;
-  className?: string;
-}) {
-  const toRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    return neotoc({ io: `${from} >> h*`, to: toRef.current! });
-  }, [from]);
-  return <div ref={toRef} className={className}></div>;
-}
-```
 
 Note that if the 3rd part of the `io` option is specified, `to` option is ignored.
 
