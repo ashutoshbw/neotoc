@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckCircle, AlertTriangle, Info } from "lucide-react";
+import { AlertTriangle, Info, Lightbulb } from "lucide-react";
 
 type AdmonitionType = "tip" | "warning" | "note";
 
@@ -10,13 +10,13 @@ interface AdmonitionProps {
 }
 
 const iconMap = {
-  tip: <CheckCircle className="text-green-500" />,
+  tip: <Lightbulb className="text-yellow-300" />,
   warning: <AlertTriangle className="text-yellow-500" />,
   note: <Info className="text-blue-500" />,
 };
 
 const bgColorMap = {
-  tip: "bg-zinc-100 dark:bg-zinc-700 border-green-500",
+  tip: "bg-zinc-100 dark:bg-zinc-700 border-yellow-300",
   warning: "bg-zinc-100 dark:bg-zinc-700 border-yellow-500",
   note: "bg-zinc-100 dark:bg-zinc-700 border-blue-500",
 };
