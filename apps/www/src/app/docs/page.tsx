@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
-import LearnMDXContent from "./learn.mdx";
+import DocsMDXContent from "./docs.mdx";
 import neotoc from "neotoc";
 import "neotoc/base-modern.css";
 import "neotoc/colors-zinc.css";
@@ -14,7 +14,7 @@ export default function DocsPage() {
 
   // Prevent unnecessary re-renders
   const memoizedMDXContent = useMemo(() => {
-    return <LearnMDXContent />;
+    return <DocsMDXContent />;
   }, []);
 
   useEffect(() => {

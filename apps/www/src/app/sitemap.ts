@@ -1,4 +1,4 @@
-import { lastModified } from "./learn/learn.mdx";
+import { lastModified } from "./docs/docs.mdx";
 
 import type { MetadataRoute } from "next";
 
@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastModified,
     },
     {
-      url: `${baseURL}/learn`,
+      url: `${baseURL}/docs`,
       lastModified: lastModified,
     },
     {

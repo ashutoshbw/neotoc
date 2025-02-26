@@ -20,7 +20,7 @@
 .nt-widget {
   --light-bar: currentColor;
   --light-opacity: 0.1;
-  /* See https://neotoc.vercel.app/learn#colors to learn about other color variables */
+  /* See https://neotoc.vercel.app/docs#colors to learn about other color variables */
 }
 
 /** SIZES AND DURATION **/
