@@ -10,7 +10,7 @@ interface AdmonitionProps {
 }
 
 const iconMap = {
-  info: <Info className="text-blue-500" />, 
+  info: <Info className="text-blue-500" />,
   tip: <Lightbulb className="text-yellow-300" />,
   warning: <AlertTriangle className="text-yellow-500" />,
   note: <Notebook className="text-blue-500" />,
