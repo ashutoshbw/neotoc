@@ -1,4 +1,5 @@
 import { SquarePenIcon } from "lucide-react";
+import Admonition from "@/components/admonitions";
 
 export const lastModified = "2025-02-01";
 
@@ -47,14 +48,14 @@ To create a TOC, you must call `neotoc` with the `io` (input-output) option. Her
 
 If your HTML does not include an `<article>` element with headings inside it or an `<aside>` element, create them. Ensure the headings have unique IDs. Once these elements are in place, you should see the TOC in the `<aside>` element.
 
-Note that for Neotoc to work properly, it expects two things:
+<Admonition type="note" title="Note: Some requirements">
+For Neotoc to work properly, it expects two things:
 
 - The headings you target must have unique IDs.
 - The headings must appear in a logical order. By logical order, I mean:
   - The first heading found determines the highest level. For example, if you start with an `<h2>` heading, you should not use an `<h1>` heading later.
   - There should be no gaps between heading levels when progressing from top to bottom. For instance, after an `<h2>`, you should not use an `<h4>` without including an `<h3>` in between.
-
-That's everything you need to know to get started with Neotoc.
+</Admonition>
 
 ## Neotoc API
 
@@ -132,7 +133,9 @@ Default value: `(heading) => heading.textContent`
 
 It is used to determine the content of anchor elements in the TOC. If your headings have a complex structure or contain elements like `<code>` or `<i>`, as seen on this page, and you want to display them in the TOC, this option can be useful.
 
-__Tip__: You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
+<Admonition type="note" title="Note">
+You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
+</Admonition>
 
 #### `onBreadcrumbChange`
 
@@ -154,7 +157,9 @@ This option allows you to create a breadcrumb similar to the one displayed in th
 
 The value of `content` depends on what is returned from the `fillAnchor` option. You will need the `hash` if you want to create links for the breadcrumb items to jump to the parent section.
 
-__Note__: Since Neotoc leaves breadcrumb construction to you, you will also need to clean up any side effects, if required. This is typically necessary when using it with a frontend library or framework.
+<Admonition type="note" title="Note: Cleaning up side effects">
+Since Neotoc leaves breadcrumb construction to you, you will also need to clean up any side effects, if required. This is typically necessary when using it with a frontend library or framework.
+</Admonition>
 
 #### `ellipsis`
 
@@ -163,7 +168,9 @@ Default value: `false`
 
 If `true`, overflowed text is truncated with ... instead of wrapping to the next line. When you hover over the anchor, the full text is displayed in the browser's default tooltip.
 
-__Tip__: When using `fillAnchor` with cloned heading nodes containing `<code>` elements, set their position to `static` in the TOC if it's not, to ensure the ellipsis appears correctly.
+<Admonition type="tip" title="Tip">
+When using `fillAnchor` with cloned heading nodes containing `<code>` elements, set their position to `static` in the TOC if it's not, to ensure the ellipsis appears correctly.
+</Admonition>
 
 #### `classPrefix`
 
@@ -203,9 +210,13 @@ You can lower the top edge of this viewport using the `offsetTop` option and rai
 
 This is useful if you have a fixed header or footer.
 
-__Note__: Here "nearest scroll container" refers to the nearest scroll container of the element matched by the first part of the `io` option.
+<Admonition type="note" title="Note: Nearest scroll container">
+Here "nearest scroll container" refers to the nearest scroll container of the element matched by the first part of the `io` option.
+</Admonition>
 
-__Tip__: If you have a fixed header, to ensure the headings scroll to the correct position, you can use the CSS [`scroll-margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top) property on the heading elements.
+<Admonition type="tip" title="Tip: If you have fixed header...">
+If you have a fixed header, to ensure the headings scroll to the correct position, you can use the CSS [`scroll-margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top) property on the heading elements.
+</Admonition>
 
 #### `autoFold`
 
@@ -275,7 +286,9 @@ This is used on the unfold all button on the header of the TOC. You can set anot
 
 You can customize many aspects using CSS variables (i.e., custom properties).
 
-__Tip__: If you want to interactively change these variables and see the result on the page, you can use your browser's developer tools.
+<Admonition type="tip" title="Tip">
+If you want to interactively change these variables and see the result on the page, you can use your browser's developer tools.
+</Admonition>
 
 ### Colors
 
