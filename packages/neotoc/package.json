@@ -15,8 +15,11 @@
         "default": "./dist/index.umd.js"
       }
     },
+    "./base-plain.css": "./dist/base-plain.css",
     "./base-modern.css": "./dist/base-modern.css",
-    "./colors-zinc.css": "./dist/colors-zinc.css"
+    "./colors-monochrome.css": "./dist/colors-monochrome.css",
+    "./colors-zinc.css": "./dist/colors-zinc.css",
+    "./colors-slate.css": "./dist/colors-slate.css"
   },
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
