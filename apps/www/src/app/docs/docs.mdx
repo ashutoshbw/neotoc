@@ -229,7 +229,11 @@ Default value: `nt-`
 
 All CSS classes assigned to elements in the TOC UI are prefixed with `nt-` by default to avoid class name collisions.
 
-If the `nt-` prefix is already used in class names elsewhere on your page, you should set a different value here. Additionally, you'll need to update your Neotoc CSS to replace all occurrences of `nt-` with your chosen prefix.
+If the `nt-` prefix is already used in class names elsewhere on your page, you should set a different value here.
+
+<Admonition type="warning" title="Warning">
+If you set anything else here, as a side-effect, you can't directly use styles that come with neotoc. You need to copy these styles and replace all occurrences of the default `nt-` prefix with your new class prefix and then use them.
+</Admonition>
 
 #### `initialFoldLevel`
 
