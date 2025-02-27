@@ -22,7 +22,7 @@ bunx neotoc-playground
 These are commands from `npm`, `pnpm`, `yarn`, and `bun`, respectively. They let you fetch an npm package from the registry without installing it to your project or globally and run the default command binary it exposes—perfect for our use case.
 </Admonition>
 
-It will create a neotoc playground with randomly generated dummy content based on your input. Run the dev server with command it prints to open the page in your browser.
+It will create a neotoc playground with randomly generated dummy content based on your input. Then run the dev server with the command it prints to open it in your browser.
 
 To see the other ways you can create a neotoc playgroud or to learn to remake the dummy content again possibly with different preferences run the following:
 
@@ -45,7 +45,76 @@ bun add neotoc@1.0.0
 
 It is recommended to use the exact version to avoid any breaking changes.
 
-You can also use CDN's like unpkg, jsdelivr, esm.sh.
+You can also use CDNs like jsdelivr to fetch it. For example:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/neotoc@1.0.0/dist/index.umd.js" defer></script>
+```
+
+## Adding styles
+
+Neotoc also ships some base styles and color schemes to quickly style it.
+
+### Base styles
+
+Base styles style everything other than colors. You must need to add a base style, otherwise the TOC will look like broken.
+
+Available base styles:
+
+- Plain
+- Modern
+
+For example, to load the modern base style from jsDelivr add the following link tag in the head of your HTML:
+
+```html
+<link href="https://cdn.jsdelivr.net/npm/neotoc@1.0.0/dist/base-modern.css" rel="stylesheet">
+```
+
+To use any other base style replace `modern` with the lowercase verion of that base style name.
+
+<Admonition type="warning" title="Warning">
+Make sure you load styles from the same version of neotoc that you are using to avoid any mismatch.
+</Admonition>
+
+If your project setup allows you to import styles in JS/TS files, you can load it like below:
+
+```js
+import "neotoc/base-<name-of-the-base-style>.css";
+```
+
+For example:
+
+```js
+import "neotoc/base-modern.css";
+```
+
+### Color schemes
+
+Available color shemes:
+
+- Monochrome
+- Zinc
+- Slate
+
+For example, to load the slate color scheme from jsDelivr add the following link tag in the head of your HTML:
+
+```html
+<link href="https://cdn.jsdelivr.net/npm/neotoc@1.0.0/dist/colors-slate.css" rel="stylesheet">
+```
+
+To use any other colorscheme replace `slate` with lowercase verion of that colorscheme name.
+
+If your project setup allows you to import styles in JS/TS files, you can load it like below:
+
+```js
+import "neotoc/colors-<name-of-the-colorscheme>.css";
+```
+
+For example:
+
+```js
+import "neotoc/base-slate.css";
+```
 
 ## Requirements
 
