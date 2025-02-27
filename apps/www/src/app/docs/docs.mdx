@@ -332,17 +332,9 @@ Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify
 
 This is used on the unfold all button on the header of the TOC. You can set another SVG icon here with this option.
 
-## Theming 🎨 Make it yours
+## Customizing color schemes
 
-You can customize many aspects using CSS variables (i.e., custom properties).
-
-<Admonition type="tip" title="Tip">
-If you want to interactively change these variables and see the result on the page, you can use your browser's developer tools.
-</Admonition>
-
-### Colors
-
-Changing the colors of different parts of the TOC UI is as simple as modifying the default values of the following CSS variables, which are defined on the root TOC UI element (with the default class `nt-widget`):
+Changing colors of different parts of the TOC UI is as simple as assigning some color value to the following CSS variables, which are defined on the root TOC UI element (with the default class `nt-widget`):
 
 - `--bg`
 - `--fg`
@@ -364,14 +356,27 @@ Changing the colors of different parts of the TOC UI is as simple as modifying t
 - `--light-bar-tip-on-fold`
 - `--light-opacity`
 
-You can change colors responsively using media queries. Additionally, you can define different colors for light and dark modes using CSS selectors that match the color mode. With these variables, you can do anything that CSS allows.
+You can change colors responsively using media queries. Additionally, you can define different colors for light and dark modes using CSS selectors.
 
-### Sizes and duration
+<Admonition type="tip" title="Tip">
+If you want to interactively change these variables and see the result on the page, you can use your browser's developer tools.
+</Admonition>
 
-Here again, you can use CSS variables in the `.nt-widget`(by default) class to set the sizes of various elements and the folding duration. The variables are:
+For example if you only want the light bar color to orange while keeping rest of your color scheme the same, add the following in a stylesheet that comes after the color scheme stylesheet:
 
-- `--height`
-- `--header-height`
+```css
+.nt-widget {
+  --light-bar: orange;
+}
+```
+
+If you not statisfied with changing a color or two, you can even create your own color schemes from scratch in the same way and use it instead of modifying an existing color scheme.
+
+## Customizing the base style
+
+You can modify various aspects of the base style using the following CSS variables:
+
+- `--body-height`
 - `--relative-font-size`
 - `--toggle-fold-btn-width`
 - `--indent-line-gap`
@@ -385,36 +390,28 @@ Here again, you can use CSS variables in the `.nt-widget`(by default) class to s
 - `--light-spread-length`
 - `--folding-duration`
 
-Of these, `--height` and `--header-height` are the ones you’ll mostly want to modify, and they require some special attention. Let’s cover them below:
+<Admonition type="info" title="Info">
+Of these few variables should be in some specific units or types:
 
-#### `--height`
+- `--relative-font-size`: It should not have any units. Just plain number.
+- `--toggle-fold-btn-width`: It should be in `em`.
+- `--indent-line-gap`: It should be in `px`.
+- `--folding-duration`: It should be of [`<time>`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) type.
 
-It describes the total height of the TOC widget (i.e., the element with the `.nt-widget` class by default). (Technically, it represents the maximum height, but you can easily modify it if needed. We'll cover this in the next section.)
+The rest of the variables can be of any [`<length>`](https://developer.mozilla.org/en-US/docs/Web/CSS/length) type.
+</Admonition>
 
-I’ve set its value specifically for this website using external CSS variables. You can use any length value for the height based on your requirements.
-
-Note that the TOC widget consists of two parts:
-- __Header__: Contains the title and fold buttons. It has the class `nt-header` by default.
-- __Body__: Contains the main content of the TOC. It has the class `nt-body` by default.
-
-#### `--header-height`
-
-I use a fixed height for this, allowing `--height` to define the full height of the TOC widget:
+Of these, `--body-height` is the one you will most likely want to modify. It describes the height of body of the TOC UI that is the area except the header of the TOC UI. The default value of this is `400px`. Suppose you want this height to be something dynamic like `calc(100vh - 5rem)`. Add the following in a stylesheet that comes after the base stylesheet of your choice:
 
 ```css
-/* This is in the FOUNDATION section */
-.nt-body {
-  max-height: calc(var(--height) - var(--header-height));
+.nt-widget {
+  --body-height: calc(100vh - 5rem);
 }
 ```
 
-If you want it to have an exact height, simply use `height` instead of `max-height`.
-
-### Beyond CSS variables
-
-For advanced customization, you can modify any part of the CSS file to suit your needs.
-
-
+<Admonition type="tip" title="Tip">
+If you want to interactively change any of these variables and see the result on the page, you can use your browser's developer tools.
+</Admonition>
 
 <div className="mt-10">
   Found a typo? Other suggestions?<br />
