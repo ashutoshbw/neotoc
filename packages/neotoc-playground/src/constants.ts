@@ -1,1 +1,1 @@
-export const NEOTOC_VERSION = '1.0.0';
+export const NEOTOC_VERSION = '0.2.0';

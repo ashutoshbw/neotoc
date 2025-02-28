@@ -21,7 +21,7 @@ export function Header() {
           <LogoSmall className="w-[35px]" />
         </Link>
         <span>
-          <span className="text-sm opacity-80 tracking-tight">v1.0.0</span>
+          <span className="text-sm opacity-80 tracking-tight">v0.2.0</span>
           <Link
             className={cn(
               pathname == "/docs" && "font-semibold",
