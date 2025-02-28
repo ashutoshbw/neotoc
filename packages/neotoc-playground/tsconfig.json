@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    /* Thanks to https://www.totaltypescript.com/tsconfig-cheat-sheet */
+
+    /* Base options */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+
+    /* Not transpiling with TypeScript */
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+
+    /* Not running in the dom */
+    "lib": ["es2022"]
+  }
+}

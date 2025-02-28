@@ -1,0 +1,53 @@
+{
+  "name": "neotoc-playground",
+  "version": "0.1.0",
+  "description": "A tool to generate random dummy content in a basic HTML, CSS, and JS setup for experimenting with Neotoc locally.",
+  "type": "module",
+  "bin": {
+    "neotoc-playground": "./dist/cli.js",
+    "neotoc-playground-remake": "./dist/remake.js",
+    "neotoc-playground-build": "./dist/build-site.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/cli.ts src/remake.ts src/build-site.ts --format esm",
+    "dev": "tsup src/cli.ts src/remake.ts src/build-site.ts --format esm --watch",
+    "lint": "eslint src/",
+    "lint-fix": "eslint src/ --fix",
+    "check-format": "prettier src/ --check",
+    "format": "prettier src/ --write"
+  },
+  "keywords": [
+    "neotoc",
+    "table of contents",
+    "dummy content generator"
+  ],
+  "author": "Ashutosh Biswas",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashutoshbw/neotoc.git",
+    "directory": "packages/neotoc-playground"
+  },
+  "bugs": "https://github.com/ashutoshbw/neotoc/issues",
+  "homepage": "https://neotoc.vercel.app",
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/node": "^22.13.1",
+    "eslint": "^9.20.1",
+    "prettier": "3.5.0",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.3.2",
+    "chalk": "^5.4.1",
+    "lorem-ipsum": "^2.0.8",
+    "mri": "^1.2.0",
+    "node-html-parser": "^7.0.1",
+    "zod": "^3.24.2"
+  }
+}
