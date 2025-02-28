@@ -1,6 +1,6 @@
 {
   "name": "neotoc",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "A tool for easily generating beautiful table of contents with JavaScript.",
   "type": "module",
   "types": "./dist/index.d.ts",
