@@ -12,7 +12,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/cli.ts src/remake.ts src/build-site.ts --format esm",
+    "build": "tsup src/cli.ts src/remake.ts src/build-site.ts --minify --format esm",
     "dev": "tsup src/cli.ts src/remake.ts src/build-site.ts --format esm --watch",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
