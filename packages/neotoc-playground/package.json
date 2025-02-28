@@ -1,6 +1,6 @@
 {
   "name": "neotoc-playground",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A tool to generate random dummy content in a basic HTML, CSS, and JS setup for experimenting with Neotoc locally.",
   "type": "module",
   "bin": {
