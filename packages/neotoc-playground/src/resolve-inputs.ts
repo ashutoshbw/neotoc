@@ -111,10 +111,5 @@ export async function resolveInputs() {
       process.exit(1);
     }
   }
-  if (typeof result.sections === 'number' && result.sections >= 500) {
-    console.log(
-      `\n${chalk.yellow.bold('Warning')}${chalk.yellow(': Too many sections have been specified. Generating the content may take some time, and the browser might become slow or unresponsive when you open the page.')}`,
-    );
-  }
   return result;
 }
