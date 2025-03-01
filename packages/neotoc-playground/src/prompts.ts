@@ -28,22 +28,22 @@ export async function startPrompts() {
         } else return true;
       },
       transformer(text) {
-        return chalk.cyan.bold.italic(text.trim());
+        return chalk.cyan.bold(text.trim());
       },
       theme: {
         style: {
           answer(text: string) {
-            return chalk.cyan.bold.italic(text.trim());
+            return chalk.cyan.bold(text.trim());
           },
           defaultAnswer(text: string) {
-            return chalk.gray.bold.italic(`${text}`);
+            return chalk.gray.bold(`${text}`);
           },
         },
       },
     });
 
     userInput.base = await select({
-      message: `What ${chalk.italic('base style')} do you want to have for TOC?`,
+      message: `What base style do you want to have for TOC?`,
       choices: [
         {
           value: 'plain',
@@ -58,7 +58,7 @@ export async function startPrompts() {
       theme: {
         style: {
           answer(text: string) {
-            return chalk.gray.bold(`→ `) + chalk.cyan.bold.italic(text.trim());
+            return chalk.gray.bold(`→ `) + chalk.cyan.bold(text.trim());
           },
           help() {
             return chalk.gray('Use arrow-keys. Enter to submit.');
@@ -70,7 +70,7 @@ export async function startPrompts() {
               plain: 'No rounded corners and subtle decorative styles.',
               modern: 'Rounded corners with some subtle decorative styles.',
             };
-            return `  ${chalk.cyan(prefix)} ${chalk.cyan.bold.italic(optionName)}${chalk.gray(': ' + descriptions[optionName.toLowerCase()])}`;
+            return `  ${chalk.cyan(prefix)} ${chalk.cyan.bold(optionName)}${chalk.gray(': ' + descriptions[optionName.toLowerCase()])}`;
           },
         },
         helpMode: 'always',
@@ -78,7 +78,7 @@ export async function startPrompts() {
     });
 
     userInput.colors = await select({
-      message: `What kind of ${chalk.italic('colors')} do you want for TOC?`,
+      message: `What kind of colors do you want for TOC?`,
       choices: [
         {
           value: 'monochrome',
@@ -97,7 +97,7 @@ export async function startPrompts() {
       theme: {
         style: {
           answer(text: string) {
-            return chalk.gray.bold(`→ `) + chalk.cyan.bold.italic(text.trim());
+            return chalk.gray.bold(`→ `) + chalk.cyan.bold(text.trim());
           },
           help() {
             return chalk.gray('Use arrow-keys. Enter to submit.');
@@ -110,7 +110,7 @@ export async function startPrompts() {
               zinc: `Based on TailwindCSS's zinc color palette.`,
               slate: `Based on TailwindCSS's slate color palette.`,
             };
-            return `  ${chalk.cyan(prefix)} ${chalk.cyan.bold.italic(optionName)}${chalk.gray(': ' + descriptions[optionName.toLowerCase()])}`;
+            return `  ${chalk.cyan(prefix)} ${chalk.cyan.bold(optionName)}${chalk.gray(': ' + descriptions[optionName.toLowerCase()])}`;
           },
         },
         helpMode: 'always',
@@ -118,7 +118,7 @@ export async function startPrompts() {
     });
 
     userInput.sections = +(await input({
-      message: `${chalk.italic('Number')} of sections to be generated:`,
+      message: `Number of sections to be generated:`,
       default: '25',
       validate(value) {
         const count = Number(value);
@@ -133,22 +133,22 @@ export async function startPrompts() {
         return 'You must provide a valid number to continue.';
       },
       transformer(text) {
-        return chalk.cyan.bold.italic(text.trim());
+        return chalk.cyan.bold(text.trim());
       },
       theme: {
         style: {
           answer(text: string) {
-            return chalk.cyan.bold.italic(text.trim());
+            return chalk.cyan.bold(text.trim());
           },
           defaultAnswer(text: string) {
-            return chalk.gray.bold.italic(`${text}`);
+            return chalk.gray.bold(`${text}`);
           },
         },
       },
     }));
 
     userInput.goDeep = await select({
-      message: `How ${chalk.italic('often')} do you want to have ${chalk('nested sections')}?`,
+      message: `How often do you want to have ${chalk('nested sections')}?`,
       choices: [
         {
           value: 'never',
@@ -175,7 +175,7 @@ export async function startPrompts() {
       theme: {
         style: {
           answer(text: string) {
-            return chalk.gray.bold(`→ `) + chalk.cyan.bold.italic(text.trim());
+            return chalk.gray.bold(`→ `) + chalk.cyan.bold(text.trim());
           },
           help() {
             return chalk.gray('Use arrow-keys. Enter to submit.');
@@ -183,7 +183,7 @@ export async function startPrompts() {
           highlight(t: string) {
             const prefix = t.charAt(0);
             const optionName = t.slice(4);
-            return `  ${chalk.cyan(prefix)} ${chalk.cyan.bold.italic(optionName)}`;
+            return `  ${chalk.cyan(prefix)} ${chalk.cyan.bold(optionName)}`;
           },
         },
         helpMode: 'always',
@@ -191,12 +191,12 @@ export async function startPrompts() {
     });
 
     userInput.noNumbering = !(await confirm({
-      message: `Show ${chalk.italic('hierarchical numbering')} in front of section headings?`,
+      message: `Show hierarchical numbering in front of section headings?`,
       default: true,
       theme: {
         style: {
           answer(text: string) {
-            return chalk.gray.bold(`→ `) + chalk.cyan.bold.italic(text.trim());
+            return chalk.gray.bold(`→ `) + chalk.cyan.bold(text.trim());
           },
         },
       },
@@ -204,7 +204,6 @@ export async function startPrompts() {
   } catch (error) {
     if (error instanceof Error && error.name === 'ExitPromptError') {
       // noop; silence this error
-      console.log('\nCancelled creating the playground 👋 until next time!');
       process.exit(0);
     } else {
       throw error;

@@ -21,10 +21,8 @@ export async function setupProject(data: Data) {
   const projectDirName = path.basename(projectPath);
 
   await mkdir(projectPath);
-  log(
-    `\nCreating a new Neotoc Playground in ${chalk.green.italic(projectPath)}.`,
-  );
-  log(`\nCreating ${chalk.cyan.italic('package.json')}.`);
+  log(`\nCreating a new Neotoc Playground in ${chalk.green(projectPath)}.`);
+  log(`\nCreating ${chalk.cyan('package.json')}.`);
   await writeProjectFile(
     projectPath,
     files.packageJson({ name: projectDirName }),
@@ -33,12 +31,12 @@ export async function setupProject(data: Data) {
   log(chalk.bold(`\nUsing ${packageManager}.\n`));
 
   log('Installing dependencies:');
-  log(`- ${chalk.cyan.italic('neotoc')}`);
+  log(`- ${chalk.cyan('neotoc')}`);
 
   log('\nInstalling devDependencies:');
-  log(`- ${chalk.cyan.italic('prettier')}`);
-  log(`- ${chalk.cyan.italic('browser-sync')}`);
-  log(`- ${chalk.cyan.italic('neotoc-playground')}`);
+  log(`- ${chalk.cyan('prettier')}`);
+  log(`- ${chalk.cyan('browser-sync')}`);
+  log(`- ${chalk.cyan('neotoc-playground')}`);
 
   execSync(`${packageManager} install`, { cwd: projectPath, stdio: 'inherit' });
 
@@ -77,7 +75,7 @@ export async function setupProject(data: Data) {
   log('\nCreating files:');
   for (const file of otherFilesToCreate) {
     await writeProjectFile(projectPath, file);
-    log(`- ${chalk.cyan.italic(file.name)}`);
+    log(`- ${chalk.cyan(file.name)}`);
   }
 
   log('\nPrettifying:');

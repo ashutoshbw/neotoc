@@ -17,5 +17,5 @@ export const versionData = {
 export function printVersion() {
   log(`\
 ${chalk.bold('neotoc-playground v' + versionData.neotocPlayground)}
-Uses ${chalk.italic('neotoc v' + versionData.neotoc)}`);
+Uses ${'neotoc v' + versionData.neotoc}`);
 }

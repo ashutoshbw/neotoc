@@ -8,7 +8,7 @@ const pkgRunner = getPkgRunner(pkgManager);
 export function printHelp() {
   log(`\
 ${chalk.bold('neotoc-playground v' + versionData.neotocPlayground)}
-Uses ${chalk.italic('neotoc v' + versionData.neotoc)}
+Uses ${'neotoc v' + versionData.neotoc}
 
 ${chalk.bold('DESCRIPTION:')}
 A tool to generate random dummy content in a basic HTML, CSS, and JS setup for
@@ -24,7 +24,7 @@ setting up the playground.
 Otherwise, you can use options to customize it:
 
 ${chalk.bold('REQUIRED OPTIONS:')}
-    -n, --name ${chalk.italic('<NAME>')}
+    -n, --name '<NAME>'
         Specifies the directory where the neotoc playground will be created.
         Example usage:
 
@@ -37,36 +37,36 @@ ${chalk.bold('REQUIRED OPTIONS:')}
         This applies to all options that accept values.
 
 ${chalk.bold('OPTIONAL OPTIONS:')}
-    -b, --base ${chalk.italic('<STYLE>')}
+    -b, --base <STYLE>
         Specifies the base style for neotoc.
         Available: 
-           - ${chalk.italic('"plain"')}
-           - ${chalk.italic('"modern"')} (default)
+           - "plain"
+           - "modern" (default)
 
-    -c, --colors ${chalk.italic('<SCHEME>')}
+    -c, --colors <SCHEME>
         Sets the color scheme for neotoc.
         Available: 
-           - ${chalk.italic('"monochrome"')}
-           - ${chalk.italic('"zinc"')} (default)
-           - ${chalk.italic('"slate"')}
+           - "monochrome"
+           - "zinc" (default)
+           - "slate"
 
-    -s, --sections ${chalk.italic('<NUMBER>')}
+    -s, --sections <NUMBER>
         Specifies the number of sections to generate, each with a heading.
-        ${chalk.italic('<NUMBER>')} must be a non-negative integer.
-        Default: ${chalk.italic('25')}
+        <NUMBER> must be a non-negative integer.
+        Default: 25
 
         Note: Sections are a conceptual representation using different 
         heading levels rather than actual "<section>" HTML elements.
 
-    -d, --go-deep ${chalk.italic('<FREQUENCY>')}
+    -d, --go-deep <FREQUENCY>
         Controls the nesting depth of sections (conceptually, without 
         <section> elements).
         Available: 
-            - ${chalk.italic('"never"')}
-            - ${chalk.italic('"rarely"')}
-            - ${chalk.italic('"sometimes"')} (default)
-            - ${chalk.italic('"often"')}
-            - ${chalk.italic('"always"')}
+            - "never"
+            - "rarely"
+            - "sometimes" (default)
+            - "often"
+            - "always"
         Example usage:
 
             ${pkgRunner} neotoc-playground --name=deeplay --go-deep=always
@@ -94,7 +94,7 @@ ${chalk.bold('How to randomly remake the dummy content?')}
     keeping everything else unchanged.
 
     You can modify the dummy content generation configuration in
-    ${chalk.italic('neotoc-playground.json')}. Additional parameters that are not available as CLI
+    'neotoc-playground.json'. Additional parameters that are not available as CLI
     options/interactive prompt can be tweaked there.
 
 ${chalk.bold('AUTHOR:')}

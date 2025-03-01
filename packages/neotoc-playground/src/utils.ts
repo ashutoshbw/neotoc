@@ -68,7 +68,7 @@ export function detectPackageManager() {
 export function exitIfNestingPlaygrounds() {
   if (checkFileExists('neotoc-playground.json')) {
     logError(
-      `Found "${chalk.italic('neotoc-playground.json')}". Most likely you are already inside a neotoc playground! Nesting neotoc playgrounds is not recommended. Cancelled operation.`,
+      `Found neotoc-playground.json. Most likely you are already inside a neotoc playground! Nesting neotoc playgrounds is not recommended. Cancelled operation.`,
     );
     process.exit(1);
   }
