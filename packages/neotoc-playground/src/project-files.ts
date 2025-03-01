@@ -1,6 +1,6 @@
-import { NEOTOC_VERSION } from './constants';
 import { css } from './css';
 import { html } from './html';
+import { versionData } from './version';
 
 export interface ProjectFile {
   name: string;
@@ -81,13 +81,12 @@ export function packageJson({ name }: { name: string }): ProjectFile {
           keywords: [],
           license: 'MIT',
           dependencies: {
-            neotoc: NEOTOC_VERSION,
+            neotoc: versionData.neotoc,
           },
           devDependencies: {
             prettier: '3.5.1',
             'browser-sync': '^3.0.3',
-            'neotoc-playground':
-              '/home/ashutosh/Sandbox/git-play/css/neotoc-playground',
+            'neotoc-playground': versionData.neotocPlayground,
           },
         },
         null,
