@@ -1,7 +1,7 @@
 {
-  "name": "neotoc-playground",
-  "version": "0.2.1",
-  "description": "A tool to generate random dummy content in a basic HTML, CSS, and JS setup for experimenting with Neotoc locally.",
+  "name": "create-neotoc-play",
+  "version": "0.1.0",
+  "description": "Neotoc playground powered by vite and dummy-content",
   "type": "module",
   "bin": {
     "neotoc-playground": "./dist/cli.js",
@@ -29,7 +29,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ashutoshbw/neotoc.git",
-    "directory": "packages/neotoc-playground"
+    "directory": "packages/create-neotoc-play"
   },
   "bugs": "https://github.com/ashutoshbw/neotoc/issues",
   "homepage": "https://neotoc.vercel.app",
