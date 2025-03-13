@@ -3,17 +3,13 @@
   "version": "0.1.0",
   "description": "Neotoc playground powered by vite and dummy-content",
   "type": "module",
-  "bin": {
-    "neotoc-playground": "./dist/cli.js",
-    "neotoc-playground-remake": "./dist/remake.js",
-    "neotoc-playground-build": "./dist/build-site.js"
-  },
+  "bin": ".dist/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/cli.ts src/remake.ts src/build-site.ts --minify --format esm",
-    "dev": "tsup src/cli.ts src/remake.ts src/build-site.ts --format esm --watch",
+    "build": "tsup src/index.ts --minify --format esm",
+    "dev": "tsup src/index.ts --format esm --watch",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
     "check-format": "prettier src/ --check",
@@ -22,7 +18,7 @@
   "keywords": [
     "neotoc",
     "table of contents",
-    "dummy content generator"
+    "playground"
   ],
   "author": "Ashutosh Biswas",
   "license": "MIT",
