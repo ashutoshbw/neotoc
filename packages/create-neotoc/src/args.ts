@@ -1,4 +1,9 @@
+import path from 'node:path';
 import { parseArgs as pa, type ParseArgsConfig } from 'node:util';
+import { checkFileExists } from './utils';
+
+const baseOptions = ['plain', 'modern'];
+const colorsOptions = ['monochrome', 'zinc', 'slate'];
 
 const argsConfig: ParseArgsConfig = {
   options: {
@@ -38,12 +43,10 @@ export function parseArgs() {
   }
 }
 
-const baseOptions = ['plain', 'modern'];
-const colorsOptions = ['monochrome', 'zinc', 'slate'];
-
 export function validateArgs(args: Args) {
-  if (args.dirname) {
-    // check dir existence
+  if (args.dirname && checkFileExists(path.join(process.cwd(), args.dirname))) {
+    console.error(`'${args.dirname}' already exists`);
+    process.exit(1);
   }
 
   if (args.base && !baseOptions.includes(args.base)) {
@@ -56,4 +59,6 @@ export function validateArgs(args: Args) {
     console.error(`Available values:\n- ${colorsOptions.join('\n- ')}`);
     process.exit(1);
   }
+
+  return args;
 }
