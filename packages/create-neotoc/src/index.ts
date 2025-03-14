@@ -27,7 +27,7 @@ if (Object.values(args).every((v) => v === undefined)) {
       `Scaffolding playground in ${path.join(process.cwd(), dirname)}`,
     );
     await scaffoldPlayground(dirname, base, colors, packageManager);
-    console.log('\nDone 😊 Now run:\n');
+    console.log('\nDone ✨ Now run:\n');
     console.log(pc.greenBright(`cd ${dirname}`));
     console.log(pc.greenBright(`${packageManager} install`));
     console.log(pc.greenBright(`${packageManager} run dev\n`));
@@ -36,5 +36,3 @@ if (Object.values(args).every((v) => v === undefined)) {
     );
   }
 }
-
-// console.log(r);

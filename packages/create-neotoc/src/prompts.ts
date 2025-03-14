@@ -10,6 +10,7 @@ import {
 import { scaffoldPlayground } from './scaffold-playground';
 
 export async function startPrompts() {
+  p.intro(`Let's create a neotoc playground!`);
   const defaultDirName = generateNewDirName('neotoc-playground');
   const group = await p.group(
     {
@@ -33,17 +34,37 @@ export async function startPrompts() {
         p.select({
           message: 'Pick base style:',
           options: [
-            { value: 'modern', label: 'Modern' },
-            { value: 'plain', label: 'Plain' },
+            {
+              value: 'modern',
+              label: 'Modern',
+              hint: 'Rounded corners with some subtle decorative styles',
+            },
+            {
+              value: 'plain',
+              label: 'Plain',
+              hint: 'No rounded corners and subtle decorative styles',
+            },
           ],
         }),
       colors: () =>
         p.select({
-          message: 'Pick colorscheme:',
+          message: 'Pick color scheme:',
           options: [
-            { value: 'zinc', label: 'Zinc' },
-            { value: 'slate', label: 'Slate' },
-            { value: 'monochrome', label: 'Monochrome' },
+            {
+              value: 'zinc',
+              label: 'Zinc',
+              hint: `Based on TailwindCSS's zinc color palette`,
+            },
+            {
+              value: 'slate',
+              label: 'Slate',
+              hint: `Based on TailwindCSS's slate color palette`,
+            },
+            {
+              value: 'monochrome',
+              label: 'Monochrome',
+              hint: 'Black and white',
+            },
           ],
         }),
     },
@@ -65,7 +86,7 @@ export async function startPrompts() {
     group.colors,
     packageManager,
   );
-  drawBorderedBoxInPrompts('Done 😊 Now run', [
+  drawBorderedBoxInPrompts('Done ✨ Now run', [
     `cd ${group.name}`,
     `${packageManager} install`,
     `${packageManager} run dev`,

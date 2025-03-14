@@ -21,10 +21,10 @@ export function generateNewDirName(prefix: string) {
 }
 
 export function drawBorderedBoxInPrompts(title: string, messages: string[]) {
-  const paddingRight = 5;
+  const paddingRight = 0;
   const maxWidth = Math.max(...[title, ...messages].map((s) => s.length));
   const printBlankLine = () =>
-    console.log(pc.gray(`│${' '.repeat(2 + maxWidth + paddingRight + 3)}│`));
+    console.log(pc.gray(`│${' '.repeat(2 + maxWidth + paddingRight + 4)}│`));
 
   const titleBorder = pc.gray(
     `${'─'.repeat(1 + maxWidth - title.length + paddingRight)}╮`,
@@ -34,12 +34,12 @@ export function drawBorderedBoxInPrompts(title: string, messages: string[]) {
   messages.forEach((msg) => {
     console.log(
       pc.gray(
-        `│  ${pc.greenBright(msg)}${' '.repeat(maxWidth - msg.length + paddingRight)}   │`,
+        `│  ${pc.greenBright(msg)}${' '.repeat(maxWidth - msg.length + paddingRight + 1)}   │`,
       ),
     );
   });
   printBlankLine();
-  console.log(pc.gray(`├${'─'.repeat(maxWidth + paddingRight + 2)}───╯`));
+  console.log(pc.gray(`├${'─'.repeat(maxWidth + paddingRight + 3)}───╯`));
 }
 
 export function detectPackageManager() {
