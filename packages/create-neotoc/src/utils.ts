@@ -1,10 +1,11 @@
-import { statSync } from 'node:fs';
+import fs from 'node:fs';
+import path from 'node:path';
 import { log } from '@clack/prompts';
 import pc from 'picocolors';
 
 export function checkFileExists(filePath: string) {
   try {
-    statSync(filePath);
+    fs.statSync(filePath);
     return true;
   } catch {
     return false;
@@ -54,4 +55,30 @@ export function detectPackageManager() {
     }
   }
   throw new Error(`Package manager not found`);
+}
+
+export function copy(src: string, dest: string, ignore: string[] = []) {
+  const stat = fs.statSync(src);
+  if (stat.isDirectory()) {
+    copyDir(src, dest, ignore);
+  } else {
+    if (!ignore.includes(path.basename(src))) {
+      fs.copyFileSync(src, dest);
+    }
+  }
+}
+
+export function copyDir(
+  srcDir: string,
+  destDir: string,
+  ignore: string[] = [],
+) {
+  fs.mkdirSync(destDir, { recursive: true });
+  for (const file of fs.readdirSync(srcDir)) {
+    const srcFile = path.resolve(srcDir, file);
+    const destFile = path.resolve(destDir, file);
+    if (!ignore.includes(path.basename(srcFile))) {
+      copy(srcFile, destFile, ignore);
+    }
+  }
 }
