@@ -3,6 +3,26 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { copyDir } from './utils';
 
+const bgColors: {
+  [x: string]: {
+    light: string;
+    dark: string;
+  };
+} = {
+  zinc: {
+    light: 'hsl(0 0% 100%)',
+    dark: 'hsl(240 10% 3.9%)',
+  },
+  slate: {
+    light: 'hsl(210 40% 98%)',
+    dark: 'hsl(222.2 84% 4.9%)',
+  },
+  monochrome: {
+    light: 'hsl(0 0% 97%)',
+    dark: 'hsl(0 0% 5%)',
+  },
+};
+
 export async function scaffoldPlayground(
   dir: string,
   base: string,
@@ -17,7 +37,7 @@ export async function scaffoldPlayground(
   );
   const targetDir = path.resolve(dir);
 
-  copyDir(templateDir, targetDir, ['package.json', 'main.js']);
+  copyDir(templateDir, targetDir, ['package.json', 'main.js', 'base.css']);
 
   const pkg = JSON.parse(
     fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
@@ -33,4 +53,10 @@ export async function scaffoldPlayground(
     .replace('base-?', `base-${base}`)
     .replace('colors-?', `colors-${colors}`);
   fs.writeFileSync(path.join(targetDir, 'src', 'main.js'), mainJS);
+
+  const baseCSS = fs
+    .readFileSync(path.join(templateDir, 'src', `base.css`), 'utf-8')
+    .replace('<bg-light>', bgColors[colors]?.light ?? 'white')
+    .replace('<bg-dark>', bgColors[colors]?.dark ?? 'black');
+  fs.writeFileSync(path.join(targetDir, 'src', 'base.css'), baseCSS);
 }
