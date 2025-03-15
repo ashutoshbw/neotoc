@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import fs from 'node:fs';
 import { copyDir } from './utils';
+import { NEOTOC_VERSION } from './constants';
 
 const bgColors: {
   [x: string]: {
@@ -43,6 +44,7 @@ export async function scaffoldPlayground(
     fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
   );
   pkg.name = path.basename(dir);
+  pkg.dependencies.neotoc = NEOTOC_VERSION;
   fs.writeFileSync(
     path.join(targetDir, 'package.json'),
     JSON.stringify(pkg, null, 2) + '\n',

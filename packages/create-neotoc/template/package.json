@@ -10,7 +10,7 @@
     "fill": "dummy-content --config dummy-content.conf"
   },
   "dependencies": {
-    "neotoc": "0.2.0"
+    "neotoc": "?"
   },
   "devDependencies": {
     "vite": "^6.2.1",
