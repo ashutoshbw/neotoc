@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "fill": "dummy-content --config dummy-content.conf"
+    "refill": "dummy-content --config dummy-content.conf"
   },
   "dependencies": {
     "neotoc": "?"

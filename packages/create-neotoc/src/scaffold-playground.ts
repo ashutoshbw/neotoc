@@ -38,7 +38,12 @@ export async function scaffoldPlayground(
   );
   const targetDir = path.resolve(dir);
 
-  copyDir(templateDir, targetDir, ['package.json', 'main.js', 'base.css']);
+  copyDir(templateDir, targetDir, [
+    'index.html',
+    'package.json',
+    'main.js',
+    'base.css',
+  ]);
 
   const pkg = JSON.parse(
     fs.readFileSync(path.join(templateDir, `package.json`), 'utf-8'),
@@ -49,6 +54,12 @@ export async function scaffoldPlayground(
     path.join(targetDir, 'package.json'),
     JSON.stringify(pkg, null, 2) + '\n',
   );
+
+  const indexHTML = fs
+    .readFileSync(path.join(templateDir, `index.html`), 'utf-8')
+    .replace('(NEOTOC_VERSION)', NEOTOC_VERSION)
+    .replace(/\(packageManager\)/g, packageManager);
+  fs.writeFileSync(path.join(targetDir, 'index.html'), indexHTML);
 
   const mainJS = fs
     .readFileSync(path.join(templateDir, 'src', `main.js`), 'utf-8')
