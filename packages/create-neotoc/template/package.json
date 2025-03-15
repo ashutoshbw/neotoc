@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fill": "dummy-content --config dummy-content.conf"
   },
   "dependencies": {
-    "neotoc": "^0.2.0"
+    "neotoc": "0.2.0"
   },
   "devDependencies": {
-    "vite": "^6.2.1"
+    "vite": "^6.2.1",
+    "dummy-content": "^0.1.0"
   }
 }
