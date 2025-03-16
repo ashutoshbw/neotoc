@@ -9,6 +9,7 @@
   --border: hsl(from var(--bg) h s 76%);
   scroll-behavior: smooth;
   font-family: system-ui, sans-serif;
+  font-size: 18px;
 }
 
 :root.dark {

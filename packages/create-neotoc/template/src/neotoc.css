@@ -6,6 +6,15 @@
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   overflow: hidden;
+  font-size: 0.85em;
+  .nt-indent-block {
+    transition: opacity 0.15s;
+    opacity: 0;
+  }
+}
+
+.nt-widget:hover .nt-indent-block {
+  opacity: 1;
 }
 
 @media (max-width: 767px) {
