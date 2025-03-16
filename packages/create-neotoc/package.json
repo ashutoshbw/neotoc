@@ -41,8 +41,6 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.10.0",
-    "dummy-content": "^0.1.0",
-    "node-html-parser": "^7.0.1",
     "picocolors": "^1.1.1"
   }
 }
