@@ -60,8 +60,8 @@ const data = [
     title: "Ready-made Styles",
     description: (
       <>
-        Get a head-start with carefully crafted <b>base</b> and <b>colors</b>{" "}
-        styles.
+        Get a head-start with carefully crafted <b>base styles</b> and{" "}
+        <b>color schemes</b> styles.
       </>
     ),
     svg: icons.shirt,
