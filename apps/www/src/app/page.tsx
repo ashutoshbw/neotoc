@@ -1,122 +1,148 @@
-import Link from "next/link";
-import Features from "./features";
+"use client";
+import React, { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import LogoLarge from "@/components/logo-large";
+import { Button } from "@/components/ui/button";
+import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
+import DocsMDXContent from "./docs.mdx";
+import neotoc from "neotoc";
+import "neotoc/base-modern.css";
+import "neotoc/colors-zinc.css";
+import "./neotoc.css";
 
-export default function Home() {
+export default function DocsPage() {
+  const [tocVisibility, setTocVisibility] = useState(false);
+
+  // Prevent unnecessary re-renders
+  const memoizedMDXContent = useMemo(() => {
+    return <DocsMDXContent />;
+  }, []);
+
+  useEffect(() => {
+    const breadcrumbDiv =
+      document.querySelector<HTMLDivElement>("#nt-breadcrumb");
+
+    let isDragging = false;
+    let startX: number;
+    let scrollLeft: number;
+
+    const startDragging = (e: MouseEvent | TouchEvent) => {
+      if (breadcrumbDiv) {
+        const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
+        isDragging = true;
+        startX = pageX - breadcrumbDiv.offsetLeft;
+        scrollLeft = breadcrumbDiv.scrollLeft;
+      }
+    };
+
+    const stopDragging = () => {
+      isDragging = false;
+    };
+
+    const onDrag = (e: MouseEvent | TouchEvent) => {
+      if (breadcrumbDiv) {
+        if (!isDragging) return;
+        const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
+        const x = pageX - breadcrumbDiv.offsetLeft;
+        const walk = x - startX;
+        breadcrumbDiv.scrollLeft = scrollLeft - walk;
+      }
+    };
+
+    breadcrumbDiv?.addEventListener("mousedown", startDragging);
+    breadcrumbDiv?.addEventListener("touchstart", startDragging, {
+      passive: true,
+    });
+    breadcrumbDiv?.addEventListener("mouseup", stopDragging);
+    breadcrumbDiv?.addEventListener("touchend", stopDragging, {
+      passive: true,
+    });
+    breadcrumbDiv?.addEventListener("mousemove", onDrag);
+    breadcrumbDiv?.addEventListener("touchmove", onDrag, { passive: true });
+
+    const removeToc = neotoc({
+      io: "article >> :not(.admonition :is(h2,h3,h4,h5,h6)):is(h2,h3,h4,h5,h6) >> #sidebar",
+      ellipsis: true,
+      fillAnchor(h) {
+        const a = h.firstChild;
+        const span = document.createElement("span");
+        span.append(
+          ...[...a!.childNodes].slice(1, -1).map((n) => n.cloneNode(true))
+        );
+        return span;
+      },
+      onBreadcrumbChange(data) {
+        if (breadcrumbDiv) {
+          breadcrumbDiv.innerHTML = "";
+
+          data.forEach((item, i) => {
+            const anchor = document.createElement("a");
+            anchor.append(item.content);
+            anchor.href = item.hash;
+            anchor.className = "md:hover:underline";
+            if (i != 0) {
+              const sep = document.createElement("span");
+              sep.className = "px-1";
+              sep.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m10 17l5-5l-5-5"/></svg>`;
+              breadcrumbDiv.append(sep);
+            }
+            breadcrumbDiv.append(anchor);
+          });
+        }
+      },
+      offsetTop: 112,
+    });
+
+    return () => {
+      removeToc();
+      if (breadcrumbDiv) breadcrumbDiv.innerHTML = "";
+      breadcrumbDiv?.removeEventListener("mousedown", startDragging);
+      breadcrumbDiv?.removeEventListener("touchstart", startDragging);
+      breadcrumbDiv?.removeEventListener("mouseup", stopDragging);
+      breadcrumbDiv?.removeEventListener("touchend", stopDragging);
+      breadcrumbDiv?.removeEventListener("mousemove", onDrag);
+      breadcrumbDiv?.removeEventListener("touchmove", onDrag);
+    };
+  }, []);
+
+  function handleArticleClick(e: React.MouseEvent<HTMLElement>) {
+    const elt = e.target as HTMLElement;
+    let parent = elt.parentElement;
+    while (parent) {
+      if (parent.tagName === "ARTICLE") break;
+      if (parent.dataset.ntController !== undefined) return;
+      parent = parent.parentElement;
+    }
+
+    if (tocVisibility) {
+      setTocVisibility(false);
+    }
+  }
+
   return (
-    <div>
-      <div className="max-w-screen-lg mx-auto">
-        <div className="flex md:flex-row flex-col">
-          <div className="md:pl-[40px] px-4 flex-shrink-[3]">
-            <h1>
-              <LogoLarge className="lg:max-w-96 max-w-80 lg:ml-0 lg:mt-24 md:mt-16 mt-8 mx-auto" />
-              <span className="sr-only">Neotoc</span>
-            </h1>
-            <h2 className="mt-8 lg:ml-10 lg:text-left text-center lg:text-2xl md:text-xl text-lg font-extralight">
-              Easily generate{" "}
-              <b className="font-bold">beautiful table of contents</b> with{" "}
-              <b className="font-bold">JavaScript</b>.
-            </h2>
-            <div className="lg:ml-10 md:flex flex-col hidden gap-2 lg:items-start items-center mt-12">
-              <CTAButton />
-              <StarOnGithubButton />
-            </div>
-          </div>
-          <div className="flex md:justify-end justify-center flex-shrink-1">
-            <Video />
-          </div>
-        </div>
-        <div className="lg:ml-12 md:hidden flex gap-3 items-start lg:justify-start justify-center mt-10 flex-wrap mx-5">
-          <CTAButton />
-          <StarOnGithubButton />
-        </div>
-      </div>
-      <Features />
+    <div className="grid md:grid-cols-[1fr_minmax(0,596px)_280px_1fr] grid-cols-1 mb-8">
+      <article
+        onClick={handleArticleClick}
+        className="md:col-start-2 md:[font-size:0.98rem] mt-8 md:px-8 px-4"
+      >
+        {memoizedMDXContent}
+      </article>
+      <aside
+        className={cn(
+          "md:[font-size:0.92rem] md:min-h-80 md:block md:static fixed md:border-none transition-all duration-300 border-l border-b rounded-bl-lg overflow-hidden md:overflow-visible md:shadow-none shadow-lg shadow-zinc-950/10 dark:shadow-zinc-950 w-[280px] flex-shrink-0 [&>*:first-child]:sticky [&>*:first-child]:top-[calc(var(--site-header-height)+var(--top-breathing-space))]",
+          tocVisibility ? "right-0" : "right-[-300px]"
+        )}
+        id="sidebar"
+      ></aside>
+      <Button
+        className="md:hidden fixed bottom-4 right-4 [&_svg]:size-6 bg-gradient-to-r from-zinc-500 to-zinc-400 shadow-xl shadow-zinc-500/50"
+        size="icon"
+        onClick={() => {
+          setTocVisibility((x) => !x);
+        }}
+      >
+        {tocVisibility ? <SidebarOpenIcon /> : <SidebarCloseIcon />}
+        <span className="sr-only">Show or hide table of contents sidebar</span>
+      </Button>
     </div>
-  );
-}
-
-function Video() {
-  const borderImageBlock = `[border-image:linear-gradient(to_bottom,_transparent_0%,_hsl(var(--border))_40px,_hsl(var(--border))_calc(100%-40px),transparent_100%)_1]`;
-  const borderImageInline = `[border-image:linear-gradient(to_right,_transparent_0%,_hsl(var(--border))_40px,_hsl(var(--border))_calc(100%-40px),transparent_100%)_1]`;
-  return (
-    <div className="relative m-[40px] md:mt-[55.5px] md:ml-[-5px] md:mr-[55px] shadow-[0_0_150px_hsl(210deg_60%_68%/0.11)]">
-      <div
-        className={cn(
-          "absolute left-0 w-0 h-[calc(100%+80px)] top-[-40px] border-l",
-          borderImageBlock,
-        )}
-      ></div>
-      <div
-        className={cn(
-          "absolute right-0 w-0 h-[calc(100%+80px)] top-[-40px] border-l",
-          borderImageBlock,
-        )}
-      ></div>
-      <div
-        className={cn(
-          "absolute top-0 h-0 w-[calc(100%+80px)] left-[-40px] border-t",
-          borderImageInline,
-        )}
-      ></div>
-      <div
-        className={cn(
-          "absolute bottom-0 h-0 w-[calc(100%+80px)] left-[-40px] border-t",
-          borderImageInline,
-        )}
-      ></div>
-      <div className="dark:block hidden">
-        <video
-          width="325"
-          height="524.6732"
-          className="[aspect-ratio:325/524.6732]"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="neotoc-dark.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div className="dark:hidden block">
-        <video
-          width="325"
-          height="524.6732"
-          className="[aspect-ratio:325/524.6732]"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="neotoc-light.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-  );
-}
-
-function CTAButton() {
-  return (
-    <Link
-      className="inline-block transition text-xl text-center text-white shadow-lg shadow-purple-500/10 bg-gradient-to-br from-purple-600/80 to-red-600/80 hover:bg-secondary border border-zinc-500/40 hover:border-zinc-500/80 rounded-xl py-2 px-4 hover:translate-y-[-2px]"
-      href="/docs#get-started"
-    >
-      🚀 Get started
-    </Link>
-  );
-}
-
-function StarOnGithubButton() {
-  return (
-    <Link
-      className="inline-block hover:bg-secondary text-xl shadow-lg shadow-zinc-300/5 border rounded-xl py-2 px-4  transition hover:translate-y-[-2px]"
-      href="https://github.com/ashutoshbw/neotoc"
-      target="_blank"
-    >
-      Star on Github
-    </Link>
   );
 }
