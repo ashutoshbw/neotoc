@@ -18,47 +18,6 @@ export default function DocsPage() {
   }, []);
 
   useEffect(() => {
-    const breadcrumbDiv =
-      document.querySelector<HTMLDivElement>("#nt-breadcrumb");
-
-    let isDragging = false;
-    let startX: number;
-    let scrollLeft: number;
-
-    const startDragging = (e: MouseEvent | TouchEvent) => {
-      if (breadcrumbDiv) {
-        const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
-        isDragging = true;
-        startX = pageX - breadcrumbDiv.offsetLeft;
-        scrollLeft = breadcrumbDiv.scrollLeft;
-      }
-    };
-
-    const stopDragging = () => {
-      isDragging = false;
-    };
-
-    const onDrag = (e: MouseEvent | TouchEvent) => {
-      if (breadcrumbDiv) {
-        if (!isDragging) return;
-        const pageX = e instanceof MouseEvent ? e.pageX : e.touches[0].pageX;
-        const x = pageX - breadcrumbDiv.offsetLeft;
-        const walk = x - startX;
-        breadcrumbDiv.scrollLeft = scrollLeft - walk;
-      }
-    };
-
-    breadcrumbDiv?.addEventListener("mousedown", startDragging);
-    breadcrumbDiv?.addEventListener("touchstart", startDragging, {
-      passive: true,
-    });
-    breadcrumbDiv?.addEventListener("mouseup", stopDragging);
-    breadcrumbDiv?.addEventListener("touchend", stopDragging, {
-      passive: true,
-    });
-    breadcrumbDiv?.addEventListener("mousemove", onDrag);
-    breadcrumbDiv?.addEventListener("touchmove", onDrag, { passive: true });
-
     const removeToc = neotoc({
       io: "article >> :not(.admonition :is(h2,h3,h4,h5,h6)):is(h2,h3,h4,h5,h6) >> #sidebar",
       ellipsis: true,
@@ -70,37 +29,11 @@ export default function DocsPage() {
         );
         return span;
       },
-      onBreadcrumbChange(data) {
-        if (breadcrumbDiv) {
-          breadcrumbDiv.innerHTML = "";
-
-          data.forEach((item, i) => {
-            const anchor = document.createElement("a");
-            anchor.append(item.content);
-            anchor.href = item.hash;
-            anchor.className = "md:hover:underline";
-            if (i != 0) {
-              const sep = document.createElement("span");
-              sep.className = "px-1";
-              sep.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m10 17l5-5l-5-5"/></svg>`;
-              breadcrumbDiv.append(sep);
-            }
-            breadcrumbDiv.append(anchor);
-          });
-        }
-      },
-      offsetTop: 112,
+      offsetTop: 80,
     });
 
     return () => {
       removeToc();
-      if (breadcrumbDiv) breadcrumbDiv.innerHTML = "";
-      breadcrumbDiv?.removeEventListener("mousedown", startDragging);
-      breadcrumbDiv?.removeEventListener("touchstart", startDragging);
-      breadcrumbDiv?.removeEventListener("mouseup", stopDragging);
-      breadcrumbDiv?.removeEventListener("touchend", stopDragging);
-      breadcrumbDiv?.removeEventListener("mousemove", onDrag);
-      breadcrumbDiv?.removeEventListener("touchmove", onDrag);
     };
   }, []);
 

@@ -5,7 +5,7 @@ import LogoSmall from "./logo-small";
 export function Header() {
   return (
     <header
-      className={`h-[5.5rem] dark:border-zinc-600 border-zinc-400 flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
+      className={`h-[3.5rem] flex flex-col border-b sticky top-0 z-50 bg-background/80 backdrop-blur`}
     >
       <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center gap-2 flex-grow shrink-0">
         <Link href="/">
@@ -21,12 +21,6 @@ export function Header() {
             <span className="sr-only">Github</span>
           </Link>
         </span>
-      </div>
-      <div className="grid md:grid-cols-[1fr_minmax(0,596px)_280px_1fr] grid-cols-1 [line-height:1em] border-t dark:border-zinc-600 border-zinc-400 h-[2rem] dark:bg-zinc-800 bg-zinc-200">
-        <div
-          id="nt-breadcrumb"
-          className="md:col-start-2 touch-none md:px-8 px-4 flex items-center text-nowrap overflow-hidden select-none"
-        ></div>
       </div>
     </header>
   );
