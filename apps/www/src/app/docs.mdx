@@ -1,55 +1,56 @@
 import { SquarePenIcon } from "lucide-react";
 import Admonition from "@/components/admonitions";
 
-export const lastModified = "2025-02-28";
+export const lastModified = "2025-03-19";
 
-# Neotoc
+# Neotoc - Table of Contents Reimagined
 
-A table of contents is really helpful on web pages with many sections. You can now easily generate a beautiful TOC, just like the one on the right.
+Some years ago, I had its idea like the aha moment and its in my dream since then. I didn't have enough skills back then. A few months ago I decided to give it a shot since I haven't found anyone working on something like this.
 
-## Get started
+But unfortunately I haven't found anything better than `requestAnimationFrame` for the animation. The problem with it is it runs on main thread. However I haven't exeperienced any jankiness unless very long document is used like having hundreds of headings. Sometimes even though when there are no perceivable jankiness, the browser console shows performance related warnings which I've no idea how to get rid of.
 
-The easiest and simplest way to get started with Neotoc is with the `neotoc-playground` CLI. From your terminal, run one of the following commands based on your preference and follow the prompts.
+This is one of my passion project. I'm always open to learning about improving it and making it better. I need your support to keep this project alive and evolving. You can do it various ways:
 
-```sh
-npx neotoc-playground
-pnpx neotoc-playground
-yarn dlx neotoc-playground
-bunx neotoc-playground
-```
+- Giving this project [a star on github](https://github.com/ashutoshbw/neotoc) if you find it interesting or useful.
+- Sharing it with your friends.
+- Helping me improve it by sharing your thoughts through gihtub issues.
+- Finding bugs. And maybe fixing them via pull requests.
 
-<Admonition type="info" title={"What are npx, pnpx, yarn dlx or bunx?"}>
-These are commands from `npm`, `pnpm`, `yarn`, and `bun`, respectively. They let you fetch an npm package from the registry without installing it to your project or globally and run the default command binary it exposes—perfect for our use case.
-</Admonition>
+What you see on the right is something that took me months to craft. It's not 100% perfect. But it's something that works and is very close to how I wanted it to be. You can use it in your projects too. How to do that is what the rest of this page is all about.
 
-It will create a neotoc playground with randomly generated dummy content based on your input. Then run the dev server with the command it prints to open it in your browser.
+## The playground
 
-To see the other ways you can create a neotoc playgroud or to learn to remake the dummy content possibly with different settings run the following to see the instructions:
+I've created a CLI to to scaffold a vite powered playground to easily experiment with neotoc. (You'll need Nodejs installed on your system to run it). Run the following on your terminal:
 
 ```sh
-npx neotoc-playground --help
+npx create-neotoc
 ```
 
-Mess around and have fun!
+You will see something like below. Follow the prompts to set it up.
 
-## How to get `neotoc`?
+![create neotoc cli](/create-neotoc.png)
 
-You can install it in your project using your favorite package manager like below:
+Doing `npm run dev` will start a local web server. Open the given URL in a web browser and you will find further instructions there.
+
+I'm very much sure you will be able to a create TOC with Neotoc in no time after passing some time with this playground and reading this page.
+
+The playground is only for experiment and learning purpose. If you prefer starting with a blank HTML page and setting it up from scratch, then go for it.
+
+## Installation
+
+From npm:
 
 ```sh
-npm add neotoc@0.2.0
-pnpm add neotoc@0.2.0
-yarn add neotoc@0.2.0
-bun add neotoc@0.2.0
+npm install neotoc@0.2.0
 ```
-
-It is recommended to use the exact version to avoid any breaking changes.
 
 You can also use CDNs like jsDelivr to fetch it. For example:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/neotoc@0.2.0/dist/index.umd.js" defer></script>
 ```
+
+It is recommended to use the exact version to avoid any breaking changes.
 
 ## Adding styles
 
@@ -61,8 +62,8 @@ Base styles style everything other than colors. You must need to add a base styl
 
 Available base styles:
 
-- Plain
-- Modern
+- __Modern__: Rounded corners with some subtle decorative styles.
+- __Plain__: No rounded corners and subtle decorative styles.
 
 For example, to load the modern base style from jsDelivr, add the following link tag in the head of your HTML:
 
@@ -70,7 +71,7 @@ For example, to load the modern base style from jsDelivr, add the following link
 <link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.0/dist/base-modern.css" rel="stylesheet">
 ```
 
-To use any other base style replace `modern` with the lowercase verion of that base style name.
+To use any other base style replace `modern` with the lowercase version of that base style name.
 
 <Admonition type="warning" title="Warning">
 Make sure you load styles from the same version of neotoc that you are using to avoid any mismatch.
@@ -92,9 +93,9 @@ import "neotoc/base-modern.css";
 
 Available color shemes:
 
-- Monochrome
-- Zinc
-- Slate
+- __Zinc__: Based on TailwindCSS's zinc color palette.
+- __Slate__: Based on TailwindCSS's slate color palette.
+- __Monochrome__: Black and white.
 
 For example, to load the slate color scheme from jsDelivr, add the following link tag in the head of your HTML:
 
@@ -113,7 +114,7 @@ import "neotoc/colors-<name-of-the-colorscheme>.css";
 For example:
 
 ```js
-import "neotoc/base-slate.css";
+import "neotoc/colors-slate.css";
 ```
 
 ## Requirements
@@ -133,7 +134,7 @@ You can import the TOC UI generator function directly from the package as shown 
 import neotoc from "neotoc";
 ```
 
-You can rename `neotoc` to something else if you wish, as it is a default export.
+You can rename `neotoc` to something else if you wish, as it is the default export.
 
 <Admonition type="info" title="Info">
 If you load neotoc as an UMD module from a CDN, then the TOC generator function will be available under the `neotoc` variable.
@@ -203,7 +204,7 @@ type Breadcrumb = {
 
 You can also import the type from Neotoc if needed.
 
-This option allows you to create a breadcrumb similar to the one displayed in the header of this page. Neotoc provides the data at the right time but leaves the breadcrumb construction in your hands.
+Neotoc provides the data at the right time but leaves the breadcrumb construction in your hands.
 
 The value of `content` depends on what is returned from the `fillAnchor` option. You will need the `hash` if you want to create links for the breadcrumb items to jump to the parent section.
 
@@ -374,7 +375,7 @@ For example if you only want the light bar color to orange while keeping rest of
 }
 ```
 
-If you not statisfied with changing a color or two, you can even create your own color schemes from scratch in the same way and use it instead of modifying an existing color scheme.
+If you are not statisfied with changing a color or two, you can even create your own color schemes from scratch in the same way and use it instead of modifying an existing color scheme.
 
 ## Customizing the base style
 
@@ -405,7 +406,7 @@ Of these few variables should be in some specific units or types:
 The rest of the variables can be of any [`<length>`](https://developer.mozilla.org/en-US/docs/Web/CSS/length) type.
 </Admonition>
 
-Of these, `--body-height` is the one you will most likely want to modify. It describes the height of body of the TOC UI that is the area except the header of the TOC UI. The default value of this is `400px`. Suppose you want this height to be something dynamic like `calc(100vh - 5rem)`. Add the following in a stylesheet that comes after the base stylesheet of your choice:
+Of these, `--body-height` is the one you will most likely want to modify. It describes the height of body of the TOC UI that is the area except the header of the TOC UI. The default value of this is `400px`. Suppose you want this height to be something dynamic like `calc(100vh - 5rem)`. Then add the following in a stylesheet that comes after the base stylesheet of your choice:
 
 ```css
 .nt-widget {
@@ -419,7 +420,7 @@ If you want to interactively change any of these variables and see the result on
 
 <div className="mt-10">
   Found a typo? Other suggestions?<br />
-  [<SquarePenIcon className="inline w-4 h-4 mr-1" />Edit this page on Github](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/docs/docs.mdx)
+  [<SquarePenIcon className="inline w-4 h-4 mr-1" />Edit this page on Github](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/docs.mdx)
 
   Last modified: {lastModified}
 </div>
