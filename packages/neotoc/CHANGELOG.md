@@ -1,5 +1,11 @@
 # neotoc
 
+## 0.2.2
+
+### Patch Changes
+
+- 4db3aa4: Update package description.
+
 ## 0.2.1
 
 ### Patch Changes
