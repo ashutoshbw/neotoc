@@ -1,7 +1,7 @@
 {
   "name": "neotoc",
   "version": "0.2.1",
-  "description": "A tool for easily generating beautiful table of contents with JavaScript.",
+  "description": "Neotoc is a smoothly animated, foldable table of contents generator.",
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
