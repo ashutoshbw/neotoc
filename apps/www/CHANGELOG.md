@@ -1,5 +1,12 @@
 # www
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [4c621f9]
+  - neotoc@0.2.1
+
 ## 0.1.4
 
 ### Patch Changes

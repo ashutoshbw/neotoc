@@ -1,5 +1,11 @@
 # neotoc
 
+## 0.2.1
+
+### Patch Changes
+
+- 4c621f9: Update `README.md`.
+
 ## 0.2.0
 
 ### Minor Changes
