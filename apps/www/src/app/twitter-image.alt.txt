@@ -1,1 +1,1 @@
-Neotoc is a tool for easily generating beautiful table of contents with JavaScript.
+Neotoc is a smoothly animated, foldable table of contents generator.

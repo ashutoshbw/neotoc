@@ -16,9 +16,9 @@ const notoSansMono = Noto_Sans_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Neotoc—Easily generate beautiful table of contents with JavaScript",
+  title: "Neotoc—Table of Contents Reimagined",
   description:
-    "Neotoc is a tool for easily generating beautiful table of contents with JavaScript.",
+    "Neotoc is a smoothly animated, foldable table of contents generator.",
 };
 
 export default function RootLayout({
