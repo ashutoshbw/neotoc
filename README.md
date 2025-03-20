@@ -2,7 +2,7 @@
   <img src="https://github.com/ashutoshbw/neotoc/blob/main/.github/assets/logo-dark.svg" width="200px" align="center" alt="Neotoc Logo" />
   <h1 align="center">Neotoc</h1>
   <p align="center">
-    Smothly animated, foldable table of contents generator
+    Smoothly animated, foldable table of contents generator
     <br/>
     <a href="https://neotoc.vercel.app/">neotoc.vercel.app</a>
   </p>
