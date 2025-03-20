@@ -1,7 +1,7 @@
 import { SquarePenIcon } from "lucide-react";
 import Admonition from "@/components/admonitions";
 
-export const lastModified = "2025-03-20";
+export const lastModified = "2025-03-21";
 
 # Neotoc—Table of Contents Reimagined
 
@@ -24,19 +24,17 @@ What you see on the right is something that took me months to craft. It's not 10
 
 ## The playground
 
-I've created a CLI to to scaffold a vite powered playground to easily experiment with neotoc. (You'll need Nodejs installed on your system to run it). Run the following on your terminal:
+The easiest way to start playing with Neotoc locally is to use the `create-neotoc` CLI. This is an interactive CLI I've created to scaffold a vite powered playground to easily experiment with neotoc. (You'll need Nodejs installed on your system to run it). Run the following on your terminal:
 
 ```sh
 npx create-neotoc
 ```
 
-You will see something like below. Follow the prompts to set it up.
+Follow the prompts to set it up.
 
 ![create neotoc cli](/create-neotoc.png)
 
 Doing `npm run dev` will start a local web server. Open the given URL in a web browser and you will find further instructions there.
-
-I'm very much sure you will be able to a create TOC with Neotoc in no time after passing some time with this playground and reading this page.
 
 The playground is only for experiment and learning purpose. If you prefer starting with a blank HTML page and setting it up from scratch, then go for it.
 
@@ -45,13 +43,13 @@ The playground is only for experiment and learning purpose. If you prefer starti
 From npm:
 
 ```sh
-npm install neotoc@0.2.0
+npm install neotoc@0.2.1
 ```
 
 You can also use CDNs like jsDelivr to fetch it. For example:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/neotoc@0.2.0/dist/index.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/neotoc@0.2.1/dist/index.umd.js" defer></script>
 ```
 
 It is recommended to use the exact version to avoid any breaking changes.
@@ -72,7 +70,7 @@ Available base styles:
 For example, to load the modern base style from jsDelivr, add the following link tag in the head of your HTML:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.0/dist/base-modern.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.1/dist/base-modern.css" rel="stylesheet">
 ```
 
 To use any other base style replace `modern` with the lowercase version of that base style name.
@@ -104,7 +102,7 @@ Available color shemes:
 For example, to load the slate color scheme from jsDelivr, add the following link tag in the head of your HTML:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.0/dist/colors-slate.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.1/dist/colors-slate.css" rel="stylesheet">
 ```
 
 To use any other colorscheme replace `slate` with lowercase verion of that colorscheme name.
