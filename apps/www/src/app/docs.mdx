@@ -1,13 +1,17 @@
 import { SquarePenIcon } from "lucide-react";
 import Admonition from "@/components/admonitions";
 
-export const lastModified = "2025-03-19";
+export const lastModified = "2025-03-20";
 
 # Neotoc - Table of Contents Reimagined
 
-Some years ago, I had its idea like the aha moment and its in my dream since then. I didn't have enough skills back then. A few months ago I decided to give it a shot since I haven't found anyone working on something like this.
+By [Ashutosh Biswas](https://github.com/ashutoshbw)
 
-But unfortunately I haven't found anything better than `requestAnimationFrame` for the animation. The problem with it is it runs on main thread. However I haven't exeperienced any jankiness unless very long document is used like having hundreds of headings. Sometimes even though when there are no perceivable jankiness, the browser console shows performance related warnings which I've no idea how to get rid of.
+Welcome! Look at the UI on the right. If you are on a smartphone, tap the button on the bottom right corner to open the table of contents. Scroll the page. Play with it a bit. Doesn’t it feel way better than the usual TOC UIs?
+
+Some years ago, I had its idea like the aha moment and its in my dream since then. I didn't have enough skills back then. A few months ago I decided to give it a shot since I haven't found anyone working on something like this and I also gained some experience with TypeScript and React. Note that Neotoc is not tied to React, but React knowledge helped me writing the cleanup function and to be honest, I very much wanted Neotoc to use in my React projects. And I made it. This website is built with Next.js.
+
+When making Neotoc, unfortunately, I haven't found anything better than `requestAnimationFrame` for the animation. The problem with it is it runs on main thread. However I haven't exeperienced any jankiness unless very long document is used like having hundreds of headings. Sometimes even though when there are no perceivable jankiness, the browser console shows performance related warnings which I've no idea how to get rid of.
 
 This is one of my passion project. I'm always open to learning about improving it and making it better. I need your support to keep this project alive and evolving. You can do it various ways:
 
