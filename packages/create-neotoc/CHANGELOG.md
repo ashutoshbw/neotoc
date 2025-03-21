@@ -1,5 +1,11 @@
 # create-neotoc
 
+## 0.2.1
+
+### Patch Changes
+
+- b7ffed7: Fix typo in README.
+
 ## 0.2.0
 
 ### Minor Changes
