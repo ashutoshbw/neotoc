@@ -9,11 +9,11 @@
 </p>
 
 <div align="center">
-  <img src="https://img.shields.io/npm/v/neotoc?style=for-the-badge" alt="npm version">
-  <img src="https://img.shields.io/github/license/ashutoshbw/neotoc?style=for-the-badge" alt="GitHub license">
-  <img src="https://img.shields.io/npm/dw/neotoc?style=for-the-badge" alt="npm weekly downloads">
-  <img src="https://img.shields.io/bundlephobia/minzip/neotoc?style=for-the-badge" alt="bundle size">
-  <img src="https://img.shields.io/github/stars/ashutoshbw/neotoc?style=for-the-badge" alt="GitHub Repo stars">
+  <img src="https://img.shields.io/npm/v/neotoc" alt="npm version">
+  <img src="https://img.shields.io/github/license/ashutoshbw/neotoc" alt="GitHub license">
+  <img src="https://img.shields.io/npm/dw/neotoc" alt="npm weekly downloads">
+  <img src="https://img.shields.io/bundlephobia/minzip/neotoc" alt="bundle size">
+  <img src="https://img.shields.io/github/stars/ashutoshbw/neotoc" alt="GitHub Repo stars">
 </div>
 
 <br/>
