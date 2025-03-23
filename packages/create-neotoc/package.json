@@ -1,6 +1,6 @@
 {
   "name": "create-neotoc",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Neotoc playground powered by vite and dummy-content",
   "type": "module",
   "bin": "./dist/index.js",

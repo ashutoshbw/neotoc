@@ -1,5 +1,11 @@
 # create-neotoc
 
+## 0.2.2
+
+### Patch Changes
+
+- 545a201: Template is updated. `neotoc` and `dummy-content` version is also updated.
+
 ## 0.2.1
 
 ### Patch Changes
