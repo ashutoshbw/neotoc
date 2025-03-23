@@ -4,10 +4,9 @@
   <p align="center">
     Smoothly animated, foldable table of contents generator
     <br/>
-    <a href="https://neotoc.vercel.app/">neotoc.vercel.app</a>
+    <b><a href="https://neotoc.vercel.app/">Documentation</a></b>
   </p>
 </p>
-<p align="center">
 
 <div align="center">
   <img src="https://img.shields.io/npm/v/neotoc?style=for-the-badge" alt="npm version">
@@ -21,8 +20,20 @@
 
 ![Neotoc Demo](https://github.com/ashutoshbw/neotoc/blob/main/.github/assets/neotoc-demo.gif)
 
-🚀 [**See live demo + read the docs**](https://neotoc.vercel.app/)
+Check out [this CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) if you’re feeling impatient!
 
-⭐ If you like this project, consider giving it a star on [GitHub](https://github.com/ashutoshbw/neotoc)!
+To try it out in the comfort of your favorite code editor run the following in your terminal to scaffold a Vite-powered Neotoc playground:
 
-🤝 Interested in contributing? Get started by reading [CONTRIBUTING.md](https://github.com/ashutoshbw/neotoc/blob/main/CONTRIBUTING.md).
+```sh
+npx create-neotoc
+```
+
+**Note**: You will node [NodeJS](https://nodejs.org/en) installed on your system to have the [`npx`](https://docs.npmjs.com/cli/v11/commands/npx) command available.
+
+It will prompt you to set it up, and you’ll see something like this:
+
+![create-neotoc](https://github.com/ashutoshbw/neotoc/blob/main/.github/assets/create-neotoc.png)
+
+Please give it a star on [GitHub](https://github.com/ashutoshbw/neotoc)!
+
+Interested in contributing? Get started by reading [CONTRIBUTING.md](https://github.com/ashutoshbw/neotoc/blob/main/CONTRIBUTING.md).

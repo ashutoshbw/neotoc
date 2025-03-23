@@ -1,32 +1,32 @@
 import { SquarePenIcon } from "lucide-react";
 import Admonition from "@/components/admonitions";
 
-export const lastModified = "2025-03-21";
+export const lastModified = "2025-03-23";
 
 # Neotoc—Table of Contents Reimagined
 
 By [Ashutosh Biswas](https://github.com/ashutoshbw)
 
-Welcome! On a desktop, the TOC UI is on the right. On a smartphone, tap the bottom-right button to open it. Scroll around and try it out—cool, right?
+Welcome! On mobile, tap the bottom-right button to open the TOC. On desktop, you’ll see it right away. Scroll around, fold/unfold, and give it a try if you haven’t already—pretty cool, right?
 
-A few years ago, I had this idea in an aha moment, and it’s been in my dreams since then. I didn't have enough skills back then. A few months ago I decided to give it a shot since I hadn't seen anyone working on something like this and I also gained some experience with TypeScript and React. Note that Neotoc is not tied to React, but React knowledge helped me writing the cleanup function and to be honest, I very much wanted Neotoc to use in my React projects too. And I made it. This website is built with Next.js(I agree, it's kind a overkill for single page docs like this, but I did it to know it's possible).
+<Admonition type="warning" title="Heads up">
+That slick, smooth user experience comes with a performance trade-off. It leans on `requestAnimationFrame`, which ties calculations to your display’s refresh rate and runs on the main thread. I haven’t noticed any jankiness myself—unless you’re dealing with a massive document packed with hundreds of headings. That said, even when it feels buttery smooth, the browser console might still toss out performance warnings, especially on startup. Still digging into how to squash those completely.
+</Admonition>
 
-Note that this smooth user experience also has a performance cost. It's the calculation that `requesntAnimationFrame` does at your display refresh rate. It runs on the main thread. However I haven't exeperienced any jankiness unless very long document is used like having hundreds of headings. But sometimes even though there are no perceivable jankiness, the browser console shows performance related warnings especially on startup only which I don't know yet how to eliminate.
+This is a passion project of mine, and I'm always eager to learn and improve it. Your support is essential to keeping it alive and evolving. There are several ways you can contribute:
 
-This is one of my passion project. I'm always open to learning about improving it and making it better. I need your support to keep this project alive and evolving. You can do it various ways:
+- ⭐ Star the project on [GitHub](https://github.com/ashutoshbw/neotoc).
+- 📢 Share it with your friends and community.
+- 💡 Contribute ideas and suggestions through [GitHub issues](https://github.com/ashutoshbw/neotoc/issues).
+- 🐛 Report bugs via [GitHub issues](https://github.com/ashutoshbw/neotoc/issues) — or even fix them with a pull request! 🚀
 
-- Giving this project [a star on github](https://github.com/ashutoshbw/neotoc) if you find it interesting or useful.
-- Sharing it with your friends.
-- Helping me improve it by sharing your thoughts through gihtub issues.
-- Finding bugs. And maybe fixing them via pull requests.
-
-What you see on the right is something that took me months to craft. It's not 100% perfect. But it's something that works and is very close to how I wanted it to be. You can use it in your projects too. How to do that is what the rest of this page is all about.
+After several months of grinding away, Neotoc’s finally in solid shape—stable enough to roll out in production. Ready to jump in and give it a spin?
 
 ## The playground
 
-Check out [this CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp).
+Check out [this CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) if you’re feeling impatient!
 
-If you want to try out Neotoc with the comfort of your favorite code editor and with some extra features, you can use the `create-neotoc` CLI to scaffold a Vite powered Neotoc playground. Run the following in your terminal (you'll need NodeJS installed on your system to run it):
+If you’d like to try out Neotoc in the comfort of your favorite code editor with some extra bells and whistles, just use the `create-neotoc` CLI to set up a Vite-powered Neotoc playground. To get started, run the following in your terminal (you’ll need NodeJS installed on your system):
 
 ```sh
 npx create-neotoc
@@ -38,20 +38,20 @@ and follow the prompts to set it up. It will look something like below:
 
 Doing `npm run dev` will start a local web server. Open the given URL in a web browser and you will find further instructions there.
 
-The playground is only for experiment and learning purpose. If you prefer starting with a blank HTML page and setting it up from scratch, then go for it.
+The playground is just for experimenting and learning. But if you’d like to start from scratch, feel free to go for it!
 
 ## Installation
 
 From npm:
 
 ```sh
-npm install neotoc@0.2.2
+npm install neotoc@0.2.3
 ```
 
 You can also use CDNs like jsDelivr to fetch it. For example:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/neotoc@0.2.2/dist/index.umd.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/neotoc@0.2.3/dist/index.umd.js" defer></script>
 ```
 
 It is recommended to use the exact version to avoid any breaking changes.
@@ -72,7 +72,7 @@ Available base styles:
 For example, to load the modern base style from jsDelivr, add the following link tag in the head of your HTML:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.2/dist/base-modern.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.3/dist/base-modern.css" rel="stylesheet">
 ```
 
 To use any other base style replace `modern` with the lowercase version of that base style name.
@@ -104,7 +104,7 @@ Available color shemes:
 For example, to load the slate color scheme from jsDelivr, add the following link tag in the head of your HTML:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.2/dist/colors-slate.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.3/dist/colors-slate.css" rel="stylesheet">
 ```
 
 To use any other colorscheme replace `slate` with lowercase verion of that colorscheme name.
