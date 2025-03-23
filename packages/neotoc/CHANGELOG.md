@@ -1,5 +1,11 @@
 # neotoc
 
+## 0.2.3
+
+### Patch Changes
+
+- b501802: Update `README.md`.
+
 ## 0.2.2
 
 ### Patch Changes

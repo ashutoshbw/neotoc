@@ -1,5 +1,12 @@
 # www
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [b501802]
+  - neotoc@0.2.3
+
 ## 0.1.6
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "neotoc",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Neotoc is a smoothly animated, foldable table of contents generator.",
   "type": "module",
   "types": "./dist/index.d.ts",
