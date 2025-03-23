@@ -7,6 +7,8 @@
   border-bottom-left-radius: 10px;
   overflow: hidden;
   font-size: 0.85em;
+
+  /* This class is applied to the building blocks of indent lines */
   .nt-indent-block {
     transition: opacity 0.15s;
     opacity: 0;
@@ -20,7 +22,10 @@
 @media (max-width: 767px) {
   .nt-widget {
     --body-height: calc(50vh);
-    border: none;
+    border: 1px solid var(--border);
     border-radius: 0;
+    border-top: none;
+    border-right: none;
+    border-bottom-left-radius: 10px;
   }
 }

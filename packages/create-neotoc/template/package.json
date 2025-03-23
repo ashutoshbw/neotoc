@@ -16,6 +16,6 @@
   "devDependencies": {
     "vite": "^6.2.1",
     "prettier": "3.5.0",
-    "dummy-content": "^1.0.2"
+    "dummy-content": "^1.0.3"
   }
 }

@@ -16,4 +16,4 @@ You can also use cli options. For more info run:
 npx create-neotoc --help
 ```
 
-To see the _live demo_ or to _read the docs_ visit its [website](https://neotoc.vercel.app/).
+Read Neotoc docs [here](https://neotoc.vercel.app).

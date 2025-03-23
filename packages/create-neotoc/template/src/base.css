@@ -100,11 +100,6 @@ header {
     width: 70vw;
     top: 3rem;
     right: 0;
-    border: 1px solid var(--border);
-    border-top: none;
-    border-right: none;
-    border-bottom-left-radius: 10px;
-    overflow: hidden;
   }
 }
 
