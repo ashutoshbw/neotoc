@@ -1,7 +1,7 @@
 import { SquarePenIcon } from "lucide-react";
 import Admonition from "@/components/admonitions";
 
-export const lastModified = "2025-03-23";
+export const lastModified = "2025-03-24";
 
 # Neotoc—Table of Contents Reimagined
 
@@ -9,24 +9,13 @@ By [Ashutosh Biswas](https://github.com/ashutoshbw)
 
 Welcome! On mobile, tap the bottom-right button to open the TOC. On desktop, you’ll see it right away. Scroll around, fold/unfold, and give it a try if you haven’t already—pretty cool, right?
 
-<Admonition type="warning" title="Heads up">
-That slick, smooth user experience comes with a performance trade-off. It leans on `requestAnimationFrame`, which ties calculations to your display’s refresh rate and runs on the main thread. I haven’t noticed any jankiness myself—unless you’re dealing with a massive document packed with hundreds of headings. That said, even when it feels buttery smooth, the browser console might still toss out performance warnings, especially on startup. Still digging into how to squash those completely.
-</Admonition>
-
-This is a passion project of mine, and I'm always eager to learn and improve it. Your support is essential to keeping it alive and evolving. There are several ways you can contribute:
-
-- Star the project on [GitHub](https://github.com/ashutoshbw/neotoc).
-- Share it with your friends and community.
-- Contribute ideas and suggestions through [GitHub issues](https://github.com/ashutoshbw/neotoc/issues).
-- Report bugs via [GitHub issues](https://github.com/ashutoshbw/neotoc/issues) — or even fix them with a pull request!
-
-After several months of grinding away, Neotoc’s finally in solid shape—stable enough to roll out in production. Ready to jump in and give it a spin?
+Let's get started.
 
 ## The playground
 
-Check out [this CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) if you’re feeling impatient!
+Check out this [CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) for experimenting with it instantly.
 
-If you’d like to try out Neotoc in the comfort of your favorite code editor with some extra bells and whistles, just use the `create-neotoc` CLI to set up a Vite-powered Neotoc playground. To get started, run the following in your terminal (you’ll need NodeJS installed on your system):
+To easily experiment with it in the comfort of your favorite code editor and with some extra tooling, I've created a CLI called `create-neotoc`. It scaffolds a Vite-powered Neotoc playground. To get started, run the following command in your terminal (you’ll need Node.js installed on your system):
 
 ```sh
 npx create-neotoc
