@@ -54,7 +54,7 @@ export default function neotoc({
   to,
   title = 'On this page',
   fillAnchor = (h) => h.textContent!,
-  onBreadcrumbChange = () => {},
+  onBreadcrumbChange = () => { },
   ellipsis = false,
   classPrefix = 'nt-',
   initialFoldLevel = 6,
@@ -393,7 +393,7 @@ export default function neotoc({
 
   const toc = genToc(headings);
 
-  if (!toc) return () => {};
+  if (!toc) return () => { };
 
   const appendTarget = selectorPart3
     ? document.querySelector(selectorPart3)
@@ -440,6 +440,9 @@ export default function neotoc({
   unfoldAllBtn.ariaLabel = foldBtnNames[3];
   unfoldAllBtn.title = foldBtnNames[3];
 
+  titleH2.innerHTML = title;
+  headerDiv.append(titleH2);
+
   if (foldStates.length) {
     const depth = maxHLevel - minHLevel;
     if (depth > 1) {
@@ -447,11 +450,10 @@ export default function neotoc({
     } else {
       btnGroup.append(foldBtn, unfoldBtn);
     }
+    headerDiv.append(btnGroup);
     runOnFoldStatusChange();
   }
 
-  titleH2.innerHTML = title;
-  headerDiv.append(titleH2, btnGroup);
   tocBody.append(toc, topGradient, bottomGradient);
   widget.append(headerDiv);
   widget.append(tocBody);
@@ -743,7 +745,7 @@ export default function neotoc({
         scrollContainerScrollTop =
         topInUnfoldedState =
         bottomInUnfoldedState =
-          null;
+        null;
 
       runConditionally(() => {
         doAutoFoldIfAllowed();
@@ -757,7 +759,7 @@ export default function neotoc({
         lastTopInUnfoldedState =
         lastBottomInUnfoldedState =
         lastTopAnchor =
-          null;
+        null;
     }
 
     if (foldScrollState.on) {
