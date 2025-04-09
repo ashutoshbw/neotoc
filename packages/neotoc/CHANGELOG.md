@@ -1,5 +1,11 @@
 # neotoc
 
+## 0.2.4
+
+### Patch Changes
+
+- 2839e41: Append `btnGroup` to `headerDiv` only when needed (fixes #12).
+
 ## 0.2.3
 
 ### Patch Changes
