@@ -140,13 +140,9 @@ export default function neotoc({
     .split('>>')
     .map((s) => s.trim());
 
-  function getHeadings() {
-    return document.querySelectorAll<HTMLHeadingElement>(
-      `${selectorPart1} :is(${selectorPart2 == 'h*' ? 'h1,h2,h3,h4,h5,h6' : selectorPart2})`,
-    );
-  }
-
-  const headings = getHeadings();
+  const headings = document.querySelectorAll<HTMLHeadingElement>(
+    `${selectorPart1} :is(${selectorPart2})`,
+  );
   const firstHeadingLevel = headings.length > 0 ? +headings[0].tagName[1] : 0;
 
   function genToc(
