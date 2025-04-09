@@ -1,5 +1,12 @@
 # www
 
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [2839e41]
+  - neotoc@0.2.4
+
 ## 0.1.7
 
 ### Patch Changes
