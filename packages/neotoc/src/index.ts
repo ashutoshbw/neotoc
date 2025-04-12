@@ -640,12 +640,8 @@ export default function neotoc({
       const bottom = y2Min + scrolledY - tocBodyTop - borderTopWidth;
 
       scrollContainerScrollTop = scrollContainer.scrollTop;
-      topInUnfoldedState = Math.round(
-        y1Max + scrolledY - tocBodyTop - borderTopWidth,
-      );
-      bottomInUnfoldedState = Math.round(
-        y2Max + scrolledY - tocBodyTop - borderTopWidth,
-      );
+      topInUnfoldedState = y1Max + scrolledY - tocBodyTop - borderTopWidth;
+      bottomInUnfoldedState = y2Max + scrolledY - tocBodyTop - borderTopWidth;
 
       // See it's definition to be clear about its purpose
       runConditionally(() => {
