@@ -9,9 +9,7 @@ import type {
   FoldState,
   FoldStates,
   FoldStatus,
-  AutoFoldScrollState,
 } from './fold-types.js';
-import { doAutoFold } from './autoFold.js';
 import {
   initMotorcycleScrolling,
   prepareForBicycleScrolling,
@@ -32,7 +30,6 @@ interface Options {
   initialFoldLevel?: number;
   offsetTop?: number;
   offsetBottom?: number;
-  autoFold?: boolean;
   autoScroll?: boolean;
   autoScrollOffset?: number;
   toggleFoldIcon?: string;
@@ -53,7 +50,6 @@ export default function neotoc({
   initialFoldLevel = 6,
   offsetTop = 0,
   offsetBottom = 0,
-  autoFold = false,
   autoScroll = true,
   autoScrollOffset = 50,
   // https://icon-sets.iconify.design/charm/chevron-down/
@@ -91,8 +87,6 @@ export default function neotoc({
     elt.classList.toggle(classPrefix + className);
   }
 
-  if (autoFold) initialFoldLevel = 1;
-
   const foldStates: FoldStates = [];
 
   // This is used to not have black space at the bottom of tocBody
@@ -100,15 +94,6 @@ export default function neotoc({
   const foldScrollState = {
     startTime: 0,
     duration: 1000,
-    on: false,
-  };
-
-  // This is used to keep the highlight in view, in auto fold, when scrolling
-  // in a upward direction toward a folded section with lot's of items in it.
-  const autoFoldScrollState: AutoFoldScrollState = {
-    startTime: 0,
-    duration: 1000,
-    lastTop: 0,
     on: false,
   };
 
@@ -121,10 +106,6 @@ export default function neotoc({
   const anchorToAncestorFoldableDivsMap = new Map<
     HTMLAnchorElement,
     HTMLDivElement[]
-  >();
-  const anchorToAncestorAnchorsMap = new Map<
-    HTMLAnchorElement,
-    HTMLAnchorElement[]
   >();
 
   const [selectorPart1, selectorPart2, selectorPart3] = io
@@ -234,17 +215,11 @@ export default function neotoc({
             }
             runOnFoldStatusChange();
           },
-          foldableDiv, // might be useful in future
-          anchor, // only useful in autoFold
-          isManuallyToggledFoldInAutoFold: false, // only useful in autoFold
         };
 
         foldStates.push(curFoldState);
 
         const handleToggleFold = () => {
-          if (autoFold) {
-            curFoldState.isManuallyToggledFoldInAutoFold = true;
-          }
           curFoldState.toggleFold();
         };
 
@@ -297,12 +272,10 @@ export default function neotoc({
       if (foldType) {
         if (!isFolded && level >= refLevel) {
           toggleFold();
-          if (autoFold) foldStates[i].isManuallyToggledFoldInAutoFold = true;
         }
       } else {
         if (isFolded && level <= refLevel) {
           toggleFold();
-          if (autoFold) foldStates[i].isManuallyToggledFoldInAutoFold = true;
         }
       }
     }
@@ -461,9 +434,8 @@ export default function neotoc({
   updateTopBottomGradientPositions();
 
   toc.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
-    const [divs, anchors] = getAncestors(a, 'foldable', classPrefix);
+    const divs = getAncestors(a, 'foldable', classPrefix);
     anchorToAncestorFoldableDivsMap.set(a, divs);
-    anchorToAncestorAnchorsMap.set(a, anchors);
   });
 
   // Since there is toc, there is heading with more than 0 items.
@@ -527,17 +499,6 @@ export default function neotoc({
     let intersectionRatioOfFirstSection: null | number = null;
     let intersectionRatioOfLastSection: null | number = null;
     let topOffsetRatio: null | number = null;
-
-    const doAutoFoldIfAllowed = () => {
-      if (autoFold) {
-        doAutoFold(
-          foldStates,
-          anchorsToSectionsInView,
-          anchorToAncestorAnchorsMap,
-          autoFoldScrollState,
-        );
-      }
-    };
 
     for (let i = 0; i < headings.length; i++) {
       const curH = headings[i];
@@ -632,7 +593,6 @@ export default function neotoc({
         const scrollDir =
           scrollDiff > 0 ? 'down' : scrollDiff < 0 ? 'up' : 'down';
 
-        doAutoFoldIfAllowed();
         if (autoScroll) {
           animateBicycleScrollingIfNeeded(
             tocBody,
@@ -683,26 +643,6 @@ export default function neotoc({
       });
       updateTopBottomGradientPositions();
 
-      if (autoFoldScrollState.on) {
-        if (autoFoldScrollState.startTime == 0) {
-          autoFoldScrollState.startTime = curTimestamp;
-          autoFoldScrollState.lastTop = top;
-        }
-
-        tocBody.scrollTop =
-          tocBody.scrollTop + (top - autoFoldScrollState.lastTop);
-
-        if (
-          curTimestamp - autoFoldScrollState.startTime >
-          autoFoldScrollState.duration
-        ) {
-          autoFoldScrollState.on = false;
-          autoFoldScrollState.startTime = 0;
-        }
-
-        autoFoldScrollState.lastTop = top;
-      }
-
       lastViewportHeight = viewportHeight;
       lastScrollContainerScrollTop = scrollContainerScrollTop;
       lastTopInUnfoldedState = topInUnfoldedState;
@@ -714,9 +654,6 @@ export default function neotoc({
         bottomInUnfoldedState =
         null;
 
-      runConditionally(() => {
-        doAutoFoldIfAllowed();
-      });
       draw({ isVisible: false, time: curTimestamp });
       updateTopBottomGradientPositions();
 

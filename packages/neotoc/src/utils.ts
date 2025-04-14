@@ -97,24 +97,19 @@ export function getAncestors(
   anchor: HTMLAnchorElement,
   foldableDivClass: string,
   classPrefix: string,
-): [HTMLDivElement[], HTMLAnchorElement[]] {
+): HTMLDivElement[] {
   const ancestorDivs: HTMLDivElement[] = [];
-  const ancestorAnchors: HTMLAnchorElement[] = [];
   const fullFoldableDivClass = classPrefix + foldableDivClass;
   let ancestorDiv = getClosestFoldableDiv(anchor, fullFoldableDivClass);
 
   while (ancestorDiv) {
     ancestorDivs.push(ancestorDiv);
 
-    ancestorAnchors.push(
-      ancestorDiv.previousSibling!.lastChild!
-        .previousSibling as HTMLAnchorElement,
-    );
 
     ancestorDiv = getClosestFoldableDiv(ancestorDiv, fullFoldableDivClass);
   }
 
-  return [ancestorDivs, ancestorAnchors];
+  return ancestorDivs;
 }
 
 export function calculateYBasedOnFolding(
