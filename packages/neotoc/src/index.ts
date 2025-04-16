@@ -30,7 +30,6 @@ interface Options {
   initialFoldLevel?: number;
   offsetTop?: number;
   offsetBottom?: number;
-  autoScroll?: boolean;
   autoScrollOffset?: number;
 }
 
@@ -44,7 +43,6 @@ export default function neotoc({
   initialFoldLevel = 6,
   offsetTop = 0,
   offsetBottom = 0,
-  autoScroll = true,
   autoScrollOffset = 50,
 }: Options) {
   // https://icon-sets.iconify.design/charm/chevron-down/
@@ -536,41 +534,37 @@ export default function neotoc({
         const scrollDir =
           scrollDiff > 0 ? 'down' : scrollDiff < 0 ? 'up' : 'down';
 
-        if (autoScroll) {
-          animateBicycleScrollingIfNeeded(
-            tocBody,
-            top,
-            bottom,
-            autoScrollOffset,
-            autoScrollState,
-          );
-          initMotorcycleScrolling(
-            scrollDir,
-            tocBody,
-            top,
-            bottom,
-            autoScrollOffset,
-            curTimestamp,
-            autoScrollState,
-          );
-        }
-      });
-
-      if (autoScroll) {
-        prepareForBicycleScrolling(
+        animateBicycleScrollingIfNeeded(
           tocBody,
           top,
           bottom,
           autoScrollOffset,
           autoScrollState,
         );
-
-        animateMotorcycleScrollingIfNeeded(
+        initMotorcycleScrolling(
+          scrollDir,
           tocBody,
+          top,
+          bottom,
+          autoScrollOffset,
           curTimestamp,
           autoScrollState,
         );
-      }
+      });
+
+      prepareForBicycleScrolling(
+        tocBody,
+        top,
+        bottom,
+        autoScrollOffset,
+        autoScrollState,
+      );
+
+      animateMotorcycleScrollingIfNeeded(
+        tocBody,
+        curTimestamp,
+        autoScrollState,
+      );
 
       draw({
         height: y2Min - y1Min,
