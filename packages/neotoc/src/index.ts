@@ -34,9 +34,7 @@ interface Options {
   autoScrollOffset?: number;
   toggleFoldIcon?: string;
   unfoldableIcon?: string;
-  foldIcon?: string;
   foldAllIcon?: string;
-  unfoldIcon?: string;
   unfoldAllIcon?: string;
 }
 
@@ -57,13 +55,9 @@ export default function neotoc({
   // https://icon-sets.iconify.design/lucide/dot/
   unfoldableIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><circle cx="12.1" cy="12.1" r="1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.65"/></svg>',
   // https://icon-sets.iconify.design/material-symbols/unfold-less-rounded/
-  foldIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12 16.9l-2.4 2.4q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l3.1-3.1q.15-.15.325-.212t.375-.063t.375.063t.325.212l3.1 3.1q.275.275.275.7t-.275.7t-.7.275t-.7-.275zm0-9.8l2.4-2.4q.275-.275.7-.275t.7.275t.275.7t-.275.7l-3.1 3.1q-.15.15-.325.213T12 9.475t-.375-.062T11.3 9.2L8.2 6.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275z"/></svg>',
-  // https://icon-sets.iconify.design/material-symbols/unfold-less-double-rounded/
-  foldAllIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12.025 20.8L9.55 23.25q-.275.275-.687.288t-.713-.288q-.275-.275-.275-.7t.275-.7l3.175-3.175q.15-.15.325-.213t.375-.062t.375.063t.325.212L15.9 21.85q.275.275.275.688t-.275.712q-.3.3-.712.3t-.713-.3zm0-5L9.55 18.25q-.275.275-.687.288t-.713-.288q-.275-.275-.275-.7t.275-.7l3.175-3.175q.15-.15.325-.213t.375-.062t.375.063t.325.212L15.9 16.85q.275.275.275.688t-.275.712q-.3.3-.712.3t-.713-.3zm0-7.65l2.45-2.45q.3-.3.713-.3t.712.3t.3.7t-.3.7l-3.175 3.2q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.2-3.2q-.3-.3-.288-.712t.313-.713t.713-.3t.712.3zm0-5L14.475.7q.3-.3.713-.3t.712.3t.3.7t-.3.7l-3.175 3.2q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.2-3.2q-.3-.3-.288-.712T8.15.675t.713-.3t.712.3z"/></svg>',
+  foldAllIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12 16.9l-2.4 2.4q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l3.1-3.1q.15-.15.325-.212t.375-.063t.375.063t.325.212l3.1 3.1q.275.275.275.7t-.275.7t-.7.275t-.7-.275zm0-9.8l2.4-2.4q.275-.275.7-.275t.7.275t.275.7t-.275.7l-3.1 3.1q-.15.15-.325.213T12 9.475t-.375-.062T11.3 9.2L8.2 6.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275z"/></svg>',
   // https://icon-sets.iconify.design/material-symbols/unfold-more-rounded/
-  unfoldIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12 18.1l2.325-2.325q.3-.3.725-.3t.725.3t.3.725t-.3.725L12.7 20.3q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.075-3.075q-.3-.3-.3-.725t.3-.725t.725-.3t.725.3zM12 6L9.675 8.325q-.3.3-.725.3t-.725-.3t-.3-.725t.3-.725L11.3 3.8q.15-.15.325-.213T12 3.526t.375.063t.325.212l3.075 3.075q.3.3.3.725t-.3.725t-.725.3t-.725-.3z"/></svg>',
-  // https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/
-  unfoldAllIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12.025 21.15l2.475-2.475q.3-.3.7-.288t.7.313q.275.3.287.7t-.287.7l-3.175 3.175q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213L8.15 20.1q-.275-.275-.288-.687t.288-.713q.275-.275.7-.275t.7.275zm0-5l2.475-2.475q.3-.3.7-.287t.7.312q.275.3.287.7t-.287.7l-3.175 3.175q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213L8.15 15.1q-.275-.275-.288-.687t.288-.713q.275-.275.7-.275t.7.275zm0-8.325L9.55 10.3q-.3.3-.712.288t-.713-.313t-.3-.712t.3-.713l3.2-3.175q.15-.15.325-.213t.375-.062t.375.062t.325.213l3.175 3.2q.3.3.3.7t-.3.7t-.713.3t-.712-.3zm0-5L9.55 5.3q-.3.3-.712.288t-.713-.313t-.3-.712t.3-.713l3.2-3.175q.15-.15.325-.212T12.025.4t.375.063t.325.212l3.175 3.2q.3.3.3.7t-.3.7t-.713.3t-.712-.3z"/></svg>',
+  unfoldAllIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12 18.1l2.325-2.325q.3-.3.725-.3t.725.3t.3.725t-.3.725L12.7 20.3q-.15.15-.325.213t-.375.062t-.375-.062t-.325-.213l-3.075-3.075q-.3-.3-.3-.725t.3-.725t.725-.3t.725.3zM12 6L9.675 8.325q-.3.3-.725.3t-.725-.3t-.3-.725t.3-.725L11.3 3.8q.15-.15.325-.213T12 3.526t.375.063t.325.212l3.075 3.075q.3.3.3.725t-.3.725t-.725.3t-.725-.3z"/></svg>',
 }: Options) {
   function elt<T extends HTMLElement>(type: string, className?: string): T {
     const e = document.createElement(type) as T;
@@ -289,18 +283,12 @@ export default function neotoc({
       if (foldStatus == 'allFolded') {
         foldAllBtn.disabled = true;
         unfoldAllBtn.disabled = false;
-        foldBtn.disabled = true;
-        unfoldBtn.disabled = false;
       } else if (foldStatus == 'allUnfolded') {
         foldAllBtn.disabled = false;
         unfoldAllBtn.disabled = true;
-        foldBtn.disabled = false;
-        unfoldBtn.disabled = true;
       } else if (foldStatus == 'mixed') {
         foldAllBtn.disabled = false;
         unfoldAllBtn.disabled = false;
-        foldBtn.disabled = false;
-        unfoldBtn.disabled = false;
       }
     }
 
@@ -324,31 +312,6 @@ export default function neotoc({
     }
   }
 
-  function getFoldBoundaryInfo() {
-    // 1 is lowest, 5 is highest
-    let highestUnfoldedLevel: number | undefined;
-    let lowestFoldedLevel: number | undefined;
-
-    for (let i = 0; i < foldStates.length; i++) {
-      const { isFolded, level } = foldStates[i];
-      if (isFolded) {
-        if (!lowestFoldedLevel) {
-          lowestFoldedLevel = level;
-        } else if (level < lowestFoldedLevel) {
-          lowestFoldedLevel = level;
-        }
-      } else {
-        if (!highestUnfoldedLevel) {
-          highestUnfoldedLevel = level;
-        } else if (level > highestUnfoldedLevel) {
-          highestUnfoldedLevel = level;
-        }
-      }
-    }
-
-    return [lowestFoldedLevel, highestUnfoldedLevel];
-  }
-
   const toc = genToc(headings);
 
   if (!toc) return () => { };
@@ -364,9 +327,7 @@ export default function neotoc({
   const titleH2 = elt('h2', 'title');
   const btnGroup = elt('div', 'btn-group');
   const headerBtnClsName = 'header-btn';
-  const foldBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
   const foldAllBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
-  const unfoldBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
   const unfoldAllBtn = elt<HTMLButtonElement>('button', headerBtnClsName);
   const topGradient = elt<HTMLDivElement>('div', 'top-gradient');
   const bottomGradient = elt<HTMLDivElement>('div', 'bottom-gradient');
@@ -374,40 +335,25 @@ export default function neotoc({
   tocBody.style.position = 'relative'; // setting it here instead of in CSS file is to avoid having any initial flicker caused by light bar without the CSS file applied.
   tocBody.ariaLabel = title;
   tocBody.tabIndex = 0;
-  foldBtn.innerHTML = foldIcon;
   foldAllBtn.innerHTML = foldAllIcon;
-  unfoldBtn.innerHTML = unfoldIcon;
   unfoldAllBtn.innerHTML = unfoldAllIcon;
 
   const foldBtnNames = [
-    'Fold one level',
     'Fold all',
-    'Unfold one level',
     'Unfold all',
   ];
 
-  foldBtn.ariaLabel = foldBtnNames[0];
-  foldBtn.title = foldBtnNames[0];
+  foldAllBtn.ariaLabel = foldBtnNames[0];
+  foldAllBtn.title = foldBtnNames[0];
 
-  foldAllBtn.ariaLabel = foldBtnNames[1];
-  foldAllBtn.title = foldBtnNames[1];
-
-  unfoldBtn.ariaLabel = foldBtnNames[2];
-  unfoldBtn.title = foldBtnNames[2];
-
-  unfoldAllBtn.ariaLabel = foldBtnNames[3];
-  unfoldAllBtn.title = foldBtnNames[3];
+  unfoldAllBtn.ariaLabel = foldBtnNames[1];
+  unfoldAllBtn.title = foldBtnNames[1];
 
   titleH2.innerHTML = title;
   headerDiv.append(titleH2);
 
   if (foldStates.length) {
-    const depth = maxHLevel - minHLevel;
-    if (depth > 1) {
-      btnGroup.append(foldBtn, unfoldBtn, foldAllBtn, unfoldAllBtn);
-    } else {
-      btnGroup.append(foldBtn, unfoldBtn);
-    }
+    btnGroup.append(foldAllBtn, unfoldAllBtn);
     headerDiv.append(btnGroup);
     runOnFoldStatusChange();
   }
@@ -703,25 +649,6 @@ export default function neotoc({
 
   rafNum = window.requestAnimationFrame(step);
   /**** ANIMATION LOGIC END ****/
-
-  foldBtn.addEventListener('click', () => {
-    const [lowestFoldedLevel, highestUnfoldedLevel] = getFoldBoundaryInfo();
-
-    if (lowestFoldedLevel) {
-      normalizeFolds(true, lowestFoldedLevel - 1);
-    } else if (highestUnfoldedLevel) {
-      normalizeFolds(true, highestUnfoldedLevel);
-    }
-  });
-
-  unfoldBtn.addEventListener('click', () => {
-    const [lowestFoldedLevel] = getFoldBoundaryInfo();
-
-    if (lowestFoldedLevel) {
-      normalizeFolds(true, lowestFoldedLevel + 1);
-      normalizeFolds(false, lowestFoldedLevel);
-    }
-  });
 
   foldAllBtn.addEventListener('click', () => normalizeFolds(true, 1));
   unfoldAllBtn.addEventListener('click', () => normalizeFolds(false, 5));
