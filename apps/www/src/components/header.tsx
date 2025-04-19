@@ -12,7 +12,7 @@ export function Header() {
           <LogoSmall className="w-[35px]" />
         </Link>
         <span>
-          <span className="text-sm opacity-80 tracking-tight">v0.2.3</span>
+          <span className="text-sm opacity-80 tracking-tight">v1.0.0</span>
         </span>
         <span className="ml-auto flex items-center gap-2">
           <ThemeToggler />
