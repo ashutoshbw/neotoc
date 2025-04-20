@@ -181,30 +181,6 @@ It is used to determine the content of anchor elements in the TOC. If your headi
 You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
 </Admonition>
 
-#### `onBreadcrumbChange`
-
-Type: `(data: Breadcrumb) => void`<br />
-Default value: `() => {}`
-
-Here `Breadcrumb` type is:
-
-```ts
-type Breadcrumb = {
-  content: string | Node;
-  hash: string;
-}[]
-```
-
-You can also import the type from Neotoc if needed.
-
-Neotoc provides the data at the right time but leaves the breadcrumb construction in your hands.
-
-The value of `content` depends on what is returned from the `fillAnchor` option. You will need the `hash` if you want to create links for the breadcrumb items to jump to the parent section.
-
-<Admonition type="note" title="Note: Cleaning up side effects">
-Since Neotoc leaves breadcrumb construction to you, you will also need to clean up any side effects, if required. This is typically necessary when using it with a frontend library or framework.
-</Admonition>
-
 #### `ellipsis`
 
 Type: `boolean`<br />
@@ -266,69 +242,13 @@ Here "nearest scroll container" refers to the nearest scroll container of the el
 If you have a fixed header, to ensure the headings scroll to the correct position, you can use the CSS [`scroll-margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top) property on the heading elements.
 </Admonition>
 
-#### `autoFold`
-
-Type: `boolean`<br />
-Default value: `false`
-
-Whether or not to automatically fold/unfold the TOC based on what is in the viewport.
-
-#### `autoScroll`
-
-Type: `boolean`<br />
-Default value: `true`
-
-Whether or not to automatically scroll the TOC to keep the highlighted portion in view when the nearest scroll container is scrolled.
-
 #### `autoScrollOffset`
 
 Type: `number`<br />
 Unit: `px`<br />
 Default value: `50`
 
-When `autoScroll` is `true`, this option allows you to control the distance the highlighted area should stay from the top and bottom edges of the main TOC UI (the element that by default has the class `.nt-body`) when possible.
-
-#### `toggleFoldIcon`
-
-Type: `string`<br />
-Default value: [Chevron down icon(SVG)](https://icon-sets.iconify.design/charm/chevron-down/)
-
-This icon is shown at the left of each anchor text on the TOC which has sub anchors underneath it to allow you to fold/unfold it. You can set another SVG icon here with this option.
-
-#### `unfoldableIcon`
-
-Type: `string`<br />
-Default value: [Dot icon(SVG)](https://icon-sets.iconify.design/lucide/dot/)
-
-This icon is shown at the left of each anchor text on the TOC which do not have sub anchors underneath it. You can set another SVG icon here with this option.
-
-#### `foldIcon`
-
-Type: `string`<br />
-Default value: [Unfold less rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-rounded/)
-
-This is used on the fold button on the header of the TOC. You can set another SVG icon here with this option.
-
-#### `unfoldIcon`
-
-Type: `string`<br />
-Default value: [Unfold more rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-rounded/)
-
-This is used on the unfold button on the header of the TOC. You can set another SVG icon here with this option.
-
-#### `foldAllIcon`
-
-Type: `string`<br />
-Default value: [Unfold less double rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-double-rounded/)
-
-This is used on the fold all button on the header of the TOC. You can set another SVG icon here with this option.
-
-#### `unfoldAllIcon`
-
-Type: `string`<br />
-Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/)
-
-This is used on the unfold all button on the header of the TOC. You can set another SVG icon here with this option.
+This option allows you to control the distance the highlighted area should stay from the top and bottom edges of the main TOC UI (the element that by default has the class `.nt-body`) when possible.
 
 ## Customizing color schemes
 
