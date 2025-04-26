@@ -25,22 +25,10 @@
 
 <br/>
 
-![Neotoc Demo](https://github.com/ashutoshbw/neotoc/blob/main/.github/assets/neotoc-demo.gif)
+## 📖 Documentation
 
-Check out [this CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) if you’re feeling impatient!
+For documentation, visit [neotoc.vercel.app](https://neotoc.vercel.app/).
 
-To try it out in the comfort of your favorite code editor run the following in your terminal to scaffold a Vite-powered Neotoc playground:
-
-```sh
-npx create-neotoc
-```
-
-**Note**: You will node [NodeJS](https://nodejs.org/en) installed on your system to have the [`npx`](https://docs.npmjs.com/cli/v11/commands/npx) command available.
-
-It will prompt you to set it up, and you’ll see something like this:
-
-![create-neotoc](https://github.com/ashutoshbw/neotoc/blob/main/.github/assets/create-neotoc.png)
-
-Please give it a star on [GitHub](https://github.com/ashutoshbw/neotoc)!
+## 🤝 Contributing
 
 Interested in contributing? Get started by reading [CONTRIBUTING.md](https://github.com/ashutoshbw/neotoc/blob/main/CONTRIBUTING.md).
