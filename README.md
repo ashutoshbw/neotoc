@@ -25,6 +25,14 @@
 
 <br/>
 
+## 🪄 Features
+
+- **Ultra-smooth**: It accurately highlights exactly where you are on the page, resulting in an ultra-smooth user experience.
+- **Auto-scroll**: Neotoc keeps itself in sync with your scroll, so you never have to hunt for your position.
+- **Foldable**: Easily fold and unfold nested sections.
+- **Opinionated**: Neotoc focuses on a single DOM structure and convention of style, so it stays efficient and free of bloat.
+- **Framework-agnostic**: Whether you're using plain old JavaScript or modern tools like React with TypeScript, Neotoc just works.
+
 ## 📖 Documentation
 
 For documentation, visit [neotoc.vercel.app](https://neotoc.vercel.app/).
@@ -32,3 +40,11 @@ For documentation, visit [neotoc.vercel.app](https://neotoc.vercel.app/).
 ## 🤝 Contributing
 
 Interested in contributing? Get started by reading [CONTRIBUTING.md](https://github.com/ashutoshbw/neotoc/blob/main/CONTRIBUTING.md).
+
+## 📄 License
+
+The Neotoc is licensed under the [MIT License](https://github.com/ashutoshbw/neotoc/blob/main/LICENSE).
+
+## 🏅 Acknowledgments
+
+The TOC tree view is inspired by GitHub’s file tree interface.
