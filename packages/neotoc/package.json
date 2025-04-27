@@ -1,7 +1,7 @@
 {
   "name": "neotoc",
   "version": "0.2.3",
-  "description": "Neotoc is a smoothly animated, foldable table of contents generator.",
+  "description": "Ultra-smooth table of contents UI generator for your docs and blogs.",
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -45,12 +45,11 @@
   "keywords": [
     "toc",
     "table of contents",
-    "outline",
-    "on this page",
     "generator",
     "smooth",
-    "intuitive",
-    "DOM"
+    "framework-agnostic",
+    "docs",
+    "blogs"
   ],
   "author": "Ashutosh Biswas",
   "license": "MIT",
