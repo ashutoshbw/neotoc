@@ -8,7 +8,7 @@
 
 <p align="center">
   <p align="center">
-    Ultra-smooth table of contents UI generator for your docs and blogs
+    Ultra-smooth table of contents UI generator for your docs and blogs.
     <br/>
     <b><a href="https://neotoc.vercel.app/" target="_blank">Documentation</a></b> | <b><a href="https://codepen.io/ashutoshbw/pen/Jojvvbp" target="_blank">CodePen</a></b>
   </p>
@@ -24,6 +24,8 @@
 </div>
 
 <br/>
+
+Neotoc frees you from the hassle of building beautiful tables of contents, so you can focus on making game-changing docs and blogs.
 
 ## 🪄 Features
 
