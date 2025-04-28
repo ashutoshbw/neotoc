@@ -1,1 +1,1 @@
-Neotoc is a smoothly animated, foldable table of contents generator.
+Neotoc is an ultra-smooth table of contents generator for your docs and blogs.
