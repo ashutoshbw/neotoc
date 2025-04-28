@@ -12,15 +12,15 @@ export function Header() {
           <Image
             className="hidden dark:inline"
             src="/logo-dark.png"
-            width={35}
-            height={35}
+            width={28}
+            height={28}
             alt="Neotoc logo"
           />
           <Image
             className="dark:hidden"
             src="/logo-light.png"
-            width={35}
-            height={35}
+            width={28}
+            height={28}
             alt="Neotoc logo"
           />
         </Link>
