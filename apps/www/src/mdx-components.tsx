@@ -16,21 +16,21 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       />
     ),
     h2: (props) => (
-      <Heading as="h2" className="text-3xl first:mt-0 mt-12" {...props} />
+      <Heading as="h2" className="text-3xl first:mt-0 mt-10" {...props} />
     ),
     h3: (props) => <Heading as="h3" className="text-2xl mt-8" {...props} />,
     h4: (props) => <Heading as="h4" className="text-xl mt-8" {...props} />,
     h5: (props) => <Heading as="h5" className="text-lg mt-8" {...props} />,
     h6: (props) => <Heading as="h6" className="text-base mt-8" {...props} />,
     p: (props) => (
-      <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />
+      <p className="leading-7 [&:not(:first-child)]:mt-4" {...props} />
     ),
     ul: (props) => (
-      <ul className="mt-6 ml-6 list-disc [&>li]:mt-2 [&_ul]:my-0" {...props} />
+      <ul className="mt-4 ml-6 list-disc [&>li]:mt-2 [&_ul]:my-0" {...props} />
     ),
     ol: (props) => (
       <ul
-        className="mt-6 ml-6 list-decimal [&>li]:mt-2 [&_ul]:my-0"
+        className="mt-4 ml-6 list-decimal [&>li]:mt-2 [&_ul]:my-0"
         {...props}
       />
     ),
