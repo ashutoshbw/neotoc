@@ -1,15 +1,15 @@
 import { SquarePenIcon } from "lucide-react";
 import Admonition from "@/components/admonitions";
 
-export const lastModified = "2025-04-19";
+export const lastModified = "2025-04-28";
 
-# Neotoc—Table of Contents Reimagined
-
-By [Ashutosh Biswas](https://github.com/ashutoshbw)
+# Neotoc
 
 Neotoc is a tool designed to make navigating within a page a joy. On mobile, tap the bottom-right button to open the TOC. On desktop, you’ll see it right away.
 
 It's made for use in documentation and technical blogs — but you're free to use it wherever it feels right.
+
+Check out this [CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) for experimenting with it instantly.
 
 ## Features
 
@@ -24,30 +24,33 @@ It's made for use in documentation and technical blogs — but you're free to us
 - **Lightweight**: The JavaScript bundle is 4.2KB, with ready-made CSS bundle weighing about 2.1KB (both minified and gzipped).
 - **Accessible**: Accessible with keyboards, touchscreens and screen readers.
 
-## The playground
+## Try it out locally
 
-Check out this [CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) for experimenting with it instantly.
+The [`create-neotoc`](https://www.npmjs.com/package/create-neotoc) CLI tool is the easiest way experiment with Neotoc in the comfort of your favorite code editor. It spins up a simple Neotoc playground with configurable [dummy content](https://www.npmjs.com/package/dummy-content), making it super easy to experiment.
 
-To easily experiment with it in the comfort of your favorite code editor and with some extra tooling, I've created a CLI called `create-neotoc`. It scaffolds a Vite-powered Neotoc playground. To get started, run the following command in your terminal (you’ll need Node.js installed on your system):
+To get started, run the following command in your terminal (you’ll need Node.js installed on your system):
 
 ```sh
 npx create-neotoc
 ```
 
-and follow the prompts to set it up. It will look something like below:
+and follow the prompts to set it up.
 
-![create neotoc cli](/create-neotoc.png)
+To learn how to set it up manually read the following section.
 
-Doing `npm run dev` will start a local web server. Open the given URL in a web browser and you will find further instructions there.
+## Setup guide
 
-The playground is just for experimenting and learning. But if you’d like to start from scratch, feel free to go for it!
+Here you will see how to get Neotoc and its ready-made styles. To learn how to use Neotoc to create the TOC UI jump to [Neotoc API](#neotoc-api) section.
 
-## Installation
+### Neotoc library
 
-From npm:
+Install it from npm with your favorite package manager:
 
 ```sh
 npm install neotoc@1.0.0
+pnpm add neotoc@1.0.0
+yarn add neotoc@1.0.0
+bun add neotoc@1.0.0
 ```
 
 You can also use CDNs like jsDelivr to fetch it. For example:
@@ -61,11 +64,11 @@ You can also use CDNs like jsDelivr to fetch it. For example:
 
 It is recommended to use the exact version to avoid any breaking changes.
 
-## Adding styles
+### Ready-made styles
 
 Neotoc ships some base styles and color schemes to quickly style it.
 
-### Base styles
+#### Base styles
 
 Base styles style everything other than colors. You must need to add a base style, otherwise the TOC will look like broken.
 
@@ -102,7 +105,7 @@ For example:
 import "neotoc/base-modern.css";
 ```
 
-### Color schemes
+#### Color schemes
 
 Available color shemes:
 
@@ -132,15 +135,6 @@ For example:
 ```js
 import "neotoc/colors-slate.css";
 ```
-
-## Requirements
-
-For Neotoc to work properly, it expects two things:
-
-- The headings you target must have unique IDs.
-- The headings must appear in a logical order. By logical order, I mean:
-  - The first heading found determines the highest level. For example, if you start with an `<h2>` heading, you should not use an `<h1>` heading later.
-  - There should be no gaps between heading levels when progressing from top to bottom. For instance, after an `<h2>`, you should not use an `<h4>` without including an `<h3>` in between.
 
 ## Neotoc API
 
@@ -186,6 +180,15 @@ neotoc({ io: "article >> h2,h3,h4,h5,h6 >> nav" });
 The last part of the `io` value can be _omitted_ if you need to provide the corresponding HTML element directly. You can use the `to` option for this purpose.
 
 Note that if the 3rd part of the `io` option is specified, `to` option is ignored.
+
+<Admonition type="info" title="For Neotoc to work properly, it expects two things">
+
+- The headings you target must have unique IDs.
+- The headings must appear in a logical order. By logical order, I mean:
+  - The first heading found determines the highest level. For example, if you start with an `<h2>` heading, you should not use an `<h1>` heading later.
+  - There should be no gaps between heading levels when progressing from top to bottom. For instance, after an `<h2>`, you should not use an `<h4>` without including an `<h3>` in between.
+
+</Admonition>
 
 #### `title`
 
