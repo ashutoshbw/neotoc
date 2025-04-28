@@ -25,15 +25,18 @@
 
 <br/>
 
-Neotoc frees you from the hassle of building beautiful tables of contents, so you can focus on making game-changing docs and blogs.
-
 ## 🪄 Features
 
 - **Ultra-smooth**: It accurately highlights exactly where you are on the page, resulting in an ultra-smooth user experience.
 - **Auto-scroll**: Neotoc keeps itself in sync with your scroll, so you never have to hunt for your position.
 - **Foldable**: Easily fold and unfold nested sections.
 - **Opinionated**: Neotoc focuses on a single DOM structure and convention of style, so it stays efficient and free of bloat.
-- **Framework-agnostic**: Whether you're using plain old JavaScript or modern tools like React with TypeScript, Neotoc just works.
+- **Ready-made styles**: Get styled easily with carefully crafted base styles and color schemes.
+- **Framework-agnostic**: Neotoc is not tied to any particular library or framework, freeing you to use it anywhere DOM exists.
+- **Zero dependencies**: Built entirely from scratch, with no external dependencies.
+- **Browser support**: Works smoothly across all modern and popular web browsers.
+- **Lightweight**: The JavaScript bundle is 4.2KB, with ready-made CSS bundle weighing about 2.1KB (both minified and gzipped).
+- **Accessible**: Accessible with keyboards, touchscreens and screen readers.
 
 ## 📖 Documentation
 
