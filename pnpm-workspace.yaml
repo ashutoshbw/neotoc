@@ -6,3 +6,4 @@ onlyBuiltDependencies:
   - esbuild
   - lightningcss-cli
   - sharp
+  - unrs-resolver
