@@ -11,7 +11,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h1: (props) => (
       <Heading
         as="h1"
-        className="text-4xl font-extrabold lg:text-5xl"
+        className="text-4xl font-extrabold lg:text-5xl mb-10 mt-3"
         {...props}
       />
     ),
