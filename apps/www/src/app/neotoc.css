@@ -16,7 +16,3 @@
       var(--bottom-breathing-space)
   ); /* Here these CSS vars are coming from outside. */
 }
-
-:target {
-  font-style: italic;
-}

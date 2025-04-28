@@ -26,17 +26,17 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />
     ),
     ul: (props) => (
-      <ul className="my-4 ml-6 list-disc [&>li]:mt-2 [&_ul]:my-0" {...props} />
+      <ul className="mt-6 ml-6 list-disc [&>li]:mt-2 [&_ul]:my-0" {...props} />
     ),
     ol: (props) => (
       <ul
-        className="my-4 ml-6 list-decimal [&>li]:mt-2 [&_ul]:my-0"
+        className="mt-6 ml-6 list-decimal [&>li]:mt-2 [&_ul]:my-0"
         {...props}
       />
     ),
     a: (props) => (
       <a
-        className="text-blue-600 dark:text-blue-500 hover:underline"
+        className="text-blue-800 dark:text-blue-400 hover:underline"
         target={props.href.startsWith("#") ? "_self" : "_blank"}
         {...props}
       />
