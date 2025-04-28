@@ -9,6 +9,9 @@
    id="svg1"
    inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
    sodipodi:docname="logo-light.svg"
+   inkscape:export-filename="../../apps/www/public/logo-light.png"
+   inkscape:export-xdpi="413.36182"
+   inkscape:export-ydpi="413.36182"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -23,13 +26,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.56"
-     inkscape:cx="45.703125"
-     inkscape:cy="30.273438"
-     inkscape:window-width="681"
-     inkscape:window-height="747"
-     inkscape:window-x="683"
-     inkscape:window-y="19"
+     inkscape:zoom="7.2407734"
+     inkscape:cx="14.708373"
+     inkscape:cy="21.199393"
+     inkscape:window-width="1366"
+     inkscape:window-height="731"
+     inkscape:window-x="0"
+     inkscape:window-y="37"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -40,6 +43,12 @@
        width="78.444656"
        height="79.549515"
        id="rect11-7-71" />
+    <rect
+       x="355.48688"
+       y="369.84998"
+       width="78.444656"
+       height="79.549515"
+       id="rect11-7-7-4" />
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -47,43 +56,41 @@
      id="layer1"
      transform="translate(-20.637496,-47.889578)">
     <g
-       id="g21-2"
-       transform="matrix(1.316073,0,0,1.316073,-109.16679,-123.14772)"
-       style="stroke-width:0.759836"
-       inkscape:export-filename="../git-play/neotoc/apps/www/public/logo-light.png"
+       id="g1"
+       inkscape:export-filename="../../apps/www/public/logo-light.png"
        inkscape:export-xdpi="413.36182"
        inkscape:export-ydpi="413.36182">
       <rect
-         style="opacity:1;fill:#2e2e2e;fill-opacity:1;stroke:none;stroke-width:1.26514;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         style="fill:#1d1d1d;fill-opacity:1;stroke:none;stroke-width:1.66502;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
          id="rect8-2-7"
-         width="8.9644699"
-         height="8.9644699"
-         x="98.630005"
-         y="129.96034"
-         rx="1.550293"
-         ry="1.550293" />
-      <rect
-         style="opacity:0.802521;fill:#a5a5a5;fill-opacity:1;stroke:none;stroke-width:1.26514;stroke-linecap:round;stroke-linejoin:round"
-         id="rect9-6-2"
-         width="0.64595515"
-         height="2.3850644"
-         x="98.630005"
-         y="134.04135" />
+         width="11.797896"
+         height="11.797896"
+         x="20.637497"
+         y="47.889576"
+         rx="2.0402987"
+         ry="2.0402987" />
       <text
          xml:space="preserve"
-         transform="matrix(0.20744477,0,0,0.20744477,27.012551,53.535679)"
+         transform="matrix(0.27301246,0,0,0.27301246,-73.616301,-52.690858)"
          id="text10-5-2"
-         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:37.856px;line-height:1.25;font-family:'JetBrainsMono Nerd Font';-inkscape-font-specification:'JetBrainsMono Nerd Font, Ultra-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect11-7-71);display:inline;fill:#dfdfdf;fill-opacity:1;stroke-width:0.970649;stroke-dasharray:none"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:37.856px;line-height:1.25;font-family:'JetBrainsMono Nerd Font';-inkscape-font-specification:'JetBrainsMono Nerd Font, Ultra-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect11-7-71);display:inline;fill:#f2f2f2;fill-opacity:1;stroke-width:0.970649;stroke-dasharray:none"><tspan
            x="355.48633"
            y="403.83397"
-           id="tspan2">N</tspan></text>
+           id="tspan1">N</tspan></text>
       <rect
-         style="fill:#ffffff;fill-opacity:0.168627;stroke:none;stroke-width:1.26514;stroke-linecap:round;stroke-linejoin:round"
+         style="opacity:0.262439;fill:#999999;fill-opacity:1;stroke:none;stroke-width:1.66502;stroke-linecap:round;stroke-linejoin:round"
          id="rect10-8-1"
-         width="8.318511"
-         height="2.3850725"
-         x="99.275963"
-         y="134.04135" />
+         width="10.68119"
+         height="3.737685"
+         x="21.754198"
+         y="52.661728" />
+      <rect
+         style="opacity:0.802521;fill:#c0c0c0;fill-opacity:1;stroke:none;stroke-width:1.66502;stroke-linecap:round;stroke-linejoin:round"
+         id="rect9-6-7-3-2"
+         width="1.1167037"
+         height="3.737684"
+         x="20.637497"
+         y="52.661728" />
     </g>
   </g>
 </svg>
