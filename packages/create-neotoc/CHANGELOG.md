@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 9752714: Fix broken banner image link README.
+- 9752714: Updated to use neotoc v1.0.1.
 
 ## 0.2.3
 

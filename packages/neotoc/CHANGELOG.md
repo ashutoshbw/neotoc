@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 9752714: Fix broken banner image link README.
+- 9752714: Fix broken banner image link in README.
 
 ## 1.0.0
 
