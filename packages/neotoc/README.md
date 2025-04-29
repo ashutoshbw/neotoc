@@ -1,8 +1,8 @@
 <a href="https://neotoc.vercel.app" target="_blank">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ashutoshbw/neotoc/refs/heads/update-for-v1.0.0/.github/assets/readme-banner-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ashutoshbw/neotoc/refs/heads/update-for-v1.0.0/.github/assets/readme-banner-light.png">
-    <img alt="Neotoc" src="https://raw.githubusercontent.com/ashutoshbw/neotoc/refs/heads/update-for-v1.0.0/.github/assets/readme-banner-light.png"">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ashutoshbw/neotoc/refs/heads/main/.github/assets/readme-banner-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ashutoshbw/neotoc/refs/heads/main/.github/assets/readme-banner-light.png">
+    <img alt="Neotoc" src="https://raw.githubusercontent.com/ashutoshbw/neotoc/refs/heads/main/.github/assets/readme-banner-light.png">
   </picture>
 </a>
 
