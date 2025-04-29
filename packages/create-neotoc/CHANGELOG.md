@@ -1,5 +1,11 @@
 # create-neotoc
 
+## 0.2.3
+
+### Patch Changes
+
+- 4166d68: Updated to use neotoc v1.0.0.
+
 ## 0.2.2
 
 ### Patch Changes
