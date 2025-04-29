@@ -1,5 +1,11 @@
 # neotoc
 
+## 1.0.1
+
+### Patch Changes
+
+- 9752714: Fix broken banner image link README.
+
 ## 1.0.0
 
 ### Major Changes

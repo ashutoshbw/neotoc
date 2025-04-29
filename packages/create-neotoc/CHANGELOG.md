@@ -1,5 +1,11 @@
 # create-neotoc
 
+## 0.2.4
+
+### Patch Changes
+
+- 9752714: Fix broken banner image link README.
+
 ## 0.2.3
 
 ### Patch Changes
