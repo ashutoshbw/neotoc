@@ -1,5 +1,13 @@
 # www
 
+## 0.1.9
+
+### Patch Changes
+
+- 9752714: Fix broken banner image link README.
+- Updated dependencies [9752714]
+  - neotoc@1.0.1
+
 ## 0.1.8
 
 ### Patch Changes
