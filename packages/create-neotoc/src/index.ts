@@ -6,7 +6,7 @@ import { startPrompts } from './prompts';
 import { printHelp } from './help';
 import { printVersion } from './version';
 import { generateNewDirName, detectPackageManager } from './utils';
-import { scaffoldPlayground } from './scaffold-playground';
+import { createPlayground } from './create-playground';
 
 const args = validateArgs(parseArgs());
 if (Object.values(args).every((v) => v === undefined)) {
@@ -23,10 +23,8 @@ if (Object.values(args).every((v) => v === undefined)) {
     const base = args.base || 'modern';
     const colors = args.colors || 'zinc';
     const packageManager = detectPackageManager();
-    console.log(
-      `Scaffolding playground in ${path.join(process.cwd(), dirname)}`,
-    );
-    await scaffoldPlayground(dirname, base, colors, packageManager);
+    console.log(`Creating playground in ${path.join(process.cwd(), dirname)}`);
+    await createPlayground(dirname, base, colors, packageManager);
     console.log('\nDone ✨ Now run:\n');
     console.log(pc.greenBright(`cd ${dirname}`));
     console.log(pc.greenBright(`${packageManager} install`));

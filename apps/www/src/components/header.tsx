@@ -1,6 +1,6 @@
 import { ThemeToggler } from "@/components/theme-toggler";
 import Link from "next/link";
-import LogoSmall from "./logo-small";
+import Image from "next/image";
 
 export function Header() {
   return (
@@ -9,12 +9,26 @@ export function Header() {
     >
       <div className="mx-auto max-w-screen-xl w-full px-4 flex items-center gap-2 flex-grow shrink-0">
         <Link href="/">
-          <LogoSmall className="w-[35px]" />
+          <Image
+            className="hidden dark:inline"
+            src="/logo-dark.png"
+            width={28}
+            height={28}
+            alt="Neotoc logo"
+          />
+          <Image
+            className="dark:hidden"
+            src="/logo-light.png"
+            width={28}
+            height={28}
+            alt="Neotoc logo"
+          />
         </Link>
         <span>
-          <span className="text-sm opacity-80 tracking-tight">v0.2.3</span>
+          <span className="text-sm opacity-80 tracking-tight">v1.0.0</span>
         </span>
-        <span className="ml-auto flex items-center gap-2">
+        <span className="mx-auto hidden sm:inline"><span className="scale-x-[-1] inline-block">🎉</span> Neotoc v1.0.0 released 🎉</span>
+        <span className="ml-auto sm:ml-0 flex items-center gap-2">
           <ThemeToggler />
           <Link href="https://github.com/ashutoshbw/neotoc" target="_blank">
             <GithubIcon />

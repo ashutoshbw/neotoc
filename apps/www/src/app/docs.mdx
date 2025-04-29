@@ -1,73 +1,96 @@
 import { SquarePenIcon } from "lucide-react";
 import Admonition from "@/components/admonitions";
 
-export const lastModified = "2025-03-24";
+export const lastModified = "2025-04-28";
 
-# Neotoc—Table of Contents Reimagined
+# Neotoc
 
-By [Ashutosh Biswas](https://github.com/ashutoshbw)
+Neotoc is a **table of contents**(TOC) **generator** designed to make navigating within a page a joy. On mobile, tap the bottom-right button to open the TOC. On desktop, you’ll see it right away.
 
-Welcome! On mobile, tap the bottom-right button to open the TOC. On desktop, you’ll see it right away. Scroll around, fold/unfold, and give it a try if you haven’t already—pretty cool, right?
-
-Let's get started.
-
-## The playground
+It's made for use in documentation and technical blogs — but you're free to use it wherever it feels right.
 
 Check out this [CodePen](https://codepen.io/ashutoshbw/pen/Jojvvbp) for experimenting with it instantly.
 
-To easily experiment with it in the comfort of your favorite code editor and with some extra tooling, I've created a CLI called `create-neotoc`. It scaffolds a Vite-powered Neotoc playground. To get started, run the following command in your terminal (you’ll need Node.js installed on your system):
+## Features
+
+- **Ultra-smooth**: It accurately highlights exactly where you are on the page, resulting in an ultra-smooth user experience.
+- **Auto-scroll**: Neotoc keeps itself in sync with your scroll, so you never have to hunt for your position.
+- **Foldable**: Easily fold and unfold nested sections.
+- **Opinionated**: Neotoc focuses on a single DOM structure and convention of style, so it stays efficient and free of bloat.
+- **Ready-made styles**: Get styled easily with carefully crafted base styles and color schemes.
+- **Framework-agnostic**: Neotoc is not tied to any particular library or framework, freeing you to use it anywhere DOM exists.
+- **Zero dependencies**: Built entirely from scratch, with no external dependencies.
+- **Browser support**: Works smoothly across all modern and popular web browsers.
+- **Lightweight**: The JavaScript bundle is 4.2KB, with ready-made CSS bundle weighing about 2.1KB (both minified and gzipped).
+- **Accessible**: Accessible with keyboards, touchscreens and screen readers.
+
+## Try it out locally
+
+The [`create-neotoc`](https://www.npmjs.com/package/create-neotoc) CLI tool is the easiest way experiment with Neotoc in the comfort of your favorite code editor. It spins up a simple Neotoc playground with configurable [dummy content](https://www.npmjs.com/package/dummy-content), making it super easy to experiment.
+
+To get started, run the following command in your terminal (you’ll need Node.js installed on your system):
 
 ```sh
 npx create-neotoc
 ```
 
-and follow the prompts to set it up. It will look something like below:
+and follow the prompts to set it up.
 
-![create neotoc cli](/create-neotoc.png)
+To learn how to set it up manually read the following section.
 
-Doing `npm run dev` will start a local web server. Open the given URL in a web browser and you will find further instructions there.
+## Setup guide
 
-The playground is just for experimenting and learning. But if you’d like to start from scratch, feel free to go for it!
+Here you will see how to get Neotoc and its ready-made styles. To learn how to use Neotoc to create the TOC UI jump to [Neotoc API](#neotoc-api) section.
 
-## Installation
+### Neotoc library
 
-From npm:
+Install it from npm with your favorite package manager:
 
 ```sh
-npm install neotoc@0.2.3
+npm install neotoc@1.0.0
+pnpm add neotoc@1.0.0
+yarn add neotoc@1.0.0
+bun add neotoc@1.0.0
 ```
 
 You can also use CDNs like jsDelivr to fetch it. For example:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/neotoc@0.2.3/dist/index.umd.js" defer></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/neotoc@1.0.0/dist/index.umd.js"
+  defer
+></script>
 ```
 
 It is recommended to use the exact version to avoid any breaking changes.
 
-## Adding styles
+### Ready-made styles
 
 Neotoc ships some base styles and color schemes to quickly style it.
 
-### Base styles
+#### Base styles
 
 Base styles style everything other than colors. You must need to add a base style, otherwise the TOC will look like broken.
 
 Available base styles:
 
-- __Modern__: Rounded corners with some subtle decorative styles.
-- __Plain__: No rounded corners and subtle decorative styles.
+- **Modern**: Rounded corners with some subtle decorative styles.
+- **Plain**: No rounded corners and subtle decorative styles.
 
 For example, to load the modern base style from jsDelivr, add the following link tag in the head of your HTML:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.3/dist/base-modern.css" rel="stylesheet">
+<link
+  href="https://cdn.jsdelivr.net/npm/neotoc@1.0.0/dist/base-modern.css"
+  rel="stylesheet"
+/>
 ```
 
 To use any other base style replace `modern` with the lowercase version of that base style name.
 
 <Admonition type="warning" title="Warning">
-Make sure you load styles from the same version of neotoc that you are using to avoid any mismatch.
+  Make sure you load styles from the same version of neotoc that you are using
+  to avoid any mismatch.
 </Admonition>
 
 If your project setup allows you to import styles in JS/TS files, you can load it like below:
@@ -82,18 +105,21 @@ For example:
 import "neotoc/base-modern.css";
 ```
 
-### Color schemes
+#### Color schemes
 
-Available color shemes:
+Available color schemes:
 
-- __Zinc__: Based on TailwindCSS's zinc color palette.
-- __Slate__: Based on TailwindCSS's slate color palette.
-- __Monochrome__: Black and white.
+- **Zinc**: Based on TailwindCSS's zinc color palette.
+- **Slate**: Based on TailwindCSS's slate color palette.
+- **Monochrome**: Black and white.
 
 For example, to load the slate color scheme from jsDelivr, add the following link tag in the head of your HTML:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/neotoc@0.2.3/dist/colors-slate.css" rel="stylesheet">
+<link
+  href="https://cdn.jsdelivr.net/npm/neotoc@1.0.0/dist/colors-slate.css"
+  rel="stylesheet"
+/>
 ```
 
 To use any other colorscheme replace `slate` with lowercase verion of that colorscheme name.
@@ -110,15 +136,6 @@ For example:
 import "neotoc/colors-slate.css";
 ```
 
-## Requirements
-
-For Neotoc to work properly, it expects two things:
-
-- The headings you target must have unique IDs.
-- The headings must appear in a logical order. By logical order, I mean:
-  - The first heading found determines the highest level. For example, if you start with an `<h2>` heading, you should not use an `<h1>` heading later.
-  - There should be no gaps between heading levels when progressing from top to bottom. For instance, after an `<h2>`, you should not use an `<h4>` without including an `<h3>` in between.
-
 ## Neotoc API
 
 You can import the TOC UI generator function directly from the package as shown below:
@@ -130,7 +147,8 @@ import neotoc from "neotoc";
 You can rename `neotoc` to something else if you wish, as it is the default export.
 
 <Admonition type="info" title="Info">
-If you load neotoc as an UMD module from a CDN, then the TOC generator function will be available under the `neotoc` variable.
+  If you load neotoc as an UMD module from a CDN, then the TOC generator
+  function will be available under the `neotoc` variable.
 </Admonition>
 
 `neotoc` accepts an options object and returns a cleanup function.
@@ -146,22 +164,31 @@ Now, let's explore all of its options in detail.
 Type of `io`: `string`<br/>
 Type of `to`: `HTMLElement`
 
-`io` is the ___only required___ option. To create a TOC, you must call `neotoc` with the `io` (input-output) option. Here, you need to answer three questions using CSS selectors separated by `>>`. For example:
+`io` is the **_only required_** option. To create a TOC, you must call `neotoc` with the `io` (input-output) option. Here, you need to answer three questions using CSS selectors separated by `>>`. For example:
 
 ```js
 neotoc({ io: "article >> h2,h3,h4,h5,h6 >> nav" });
 ```
 
-1. ___Where should it look for headings?___
-    - Here, it's the `<article>` element.
-2. ___Which headings should it consider for creating the TOC?___
-    - Here, it's all headings from `<h2>` to `<h6>`.
-3. ___Where should it append the generated TOC?___
-    - Here, it's the `<nav>` element.
+1. **_Where should it look for headings?_**
+   - Here, it's the `<article>` element.
+2. **_Which headings should it consider for creating the TOC?_**
+   - Here, it's all headings from `<h2>` to `<h6>`.
+3. **_Where should it append the generated TOC?_**
+   - Here, it's the `<nav>` element.
 
 The last part of the `io` value can be _omitted_ if you need to provide the corresponding HTML element directly. You can use the `to` option for this purpose.
 
 Note that if the 3rd part of the `io` option is specified, `to` option is ignored.
+
+<Admonition type="info" title="For Neotoc to work properly, it expects two things">
+
+- The headings you target must have unique IDs.
+- The headings must appear in a logical order. By logical order, I mean:
+  - The first heading found determines the highest level. For example, if you start with an `<h2>` heading, you should not use an `<h1>` heading later.
+  - There should be no gaps between heading levels when progressing from top to bottom. For instance, after an `<h2>`, you should not use an `<h4>` without including an `<h3>` in between.
+
+</Admonition>
 
 #### `title`
 
@@ -178,31 +205,8 @@ Default value: `(heading) => heading.textContent`
 It is used to determine the content of anchor elements in the TOC. If your headings have a complex structure or contain elements like `<code>` or `<i>`, as seen on this page, and you want to display them in the TOC, this option can be useful.
 
 <Admonition type="note" title="Note">
-You can't have the same node in two places in the DOM. You will need to [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
-</Admonition>
-
-#### `onBreadcrumbChange`
-
-Type: `(data: Breadcrumb) => void`<br />
-Default value: `() => {}`
-
-Here `Breadcrumb` type is:
-
-```ts
-type Breadcrumb = {
-  content: string | Node;
-  hash: string;
-}[]
-```
-
-You can also import the type from Neotoc if needed.
-
-Neotoc provides the data at the right time but leaves the breadcrumb construction in your hands.
-
-The value of `content` depends on what is returned from the `fillAnchor` option. You will need the `hash` if you want to create links for the breadcrumb items to jump to the parent section.
-
-<Admonition type="note" title="Note: Cleaning up side effects">
-Since Neotoc leaves breadcrumb construction to you, you will also need to clean up any side effects, if required. This is typically necessary when using it with a frontend library or framework.
+  You can't have the same node in two places in the DOM. You will need to
+  [clone](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) it.
 </Admonition>
 
 #### `ellipsis`
@@ -226,7 +230,10 @@ All CSS classes assigned to elements in the TOC UI are prefixed with `nt-` by de
 If the `nt-` prefix is already used in class names elsewhere on your page, you should set a different value here.
 
 <Admonition type="warning" title="Warning">
-If you set anything else here, as a side-effect, you can't directly use styles that come with neotoc. You need to copy these styles and replace all occurrences of the default `nt-` prefix with your new class prefix and then use them.
+  If you set anything else here, as a side-effect, you can't directly use styles
+  that come with neotoc. You need to copy these styles and replace all
+  occurrences of the default `nt-` prefix with your new class prefix and then
+  use them.
 </Admonition>
 
 #### `initialFoldLevel`
@@ -259,26 +266,16 @@ You can lower the top edge of this viewport using the `offsetTop` option and rai
 This is useful if you have a fixed header or footer.
 
 <Admonition type="note" title="Note: Nearest scroll container">
-Here "nearest scroll container" refers to the nearest scroll container of the element matched by the first part of the `io` option.
+  Here "nearest scroll container" refers to the nearest scroll container of the
+  element matched by the first part of the `io` option.
 </Admonition>
 
 <Admonition type="tip" title="Tip: If you have fixed header...">
-If you have a fixed header, to ensure the headings scroll to the correct position, you can use the CSS [`scroll-margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top) property on the heading elements.
+  If you have a fixed header, to ensure the headings scroll to the correct
+  position, you can use the CSS
+  [`scroll-margin-top`](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top)
+  property on the heading elements.
 </Admonition>
-
-#### `autoFold`
-
-Type: `boolean`<br />
-Default value: `false`
-
-Whether or not to automatically fold/unfold the TOC based on what is in the viewport.
-
-#### `autoScroll`
-
-Type: `boolean`<br />
-Default value: `true`
-
-Whether or not to automatically scroll the TOC to keep the highlighted portion in view when the nearest scroll container is scrolled.
 
 #### `autoScrollOffset`
 
@@ -286,49 +283,7 @@ Type: `number`<br />
 Unit: `px`<br />
 Default value: `50`
 
-When `autoScroll` is `true`, this option allows you to control the distance the highlighted area should stay from the top and bottom edges of the main TOC UI (the element that by default has the class `.nt-body`) when possible.
-
-#### `toggleFoldIcon`
-
-Type: `string`<br />
-Default value: [Chevron down icon(SVG)](https://icon-sets.iconify.design/charm/chevron-down/)
-
-This icon is shown at the left of each anchor text on the TOC which has sub anchors underneath it to allow you to fold/unfold it. You can set another SVG icon here with this option.
-
-#### `unfoldableIcon`
-
-Type: `string`<br />
-Default value: [Dot icon(SVG)](https://icon-sets.iconify.design/lucide/dot/)
-
-This icon is shown at the left of each anchor text on the TOC which do not have sub anchors underneath it. You can set another SVG icon here with this option.
-
-#### `foldIcon`
-
-Type: `string`<br />
-Default value: [Unfold less rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-rounded/)
-
-This is used on the fold button on the header of the TOC. You can set another SVG icon here with this option.
-
-#### `unfoldIcon`
-
-Type: `string`<br />
-Default value: [Unfold more rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-rounded/)
-
-This is used on the unfold button on the header of the TOC. You can set another SVG icon here with this option.
-
-#### `foldAllIcon`
-
-Type: `string`<br />
-Default value: [Unfold less double rounded icon(SVG)](https://icon-sets.iconify.design/material-symbols/unfold-less-double-rounded/)
-
-This is used on the fold all button on the header of the TOC. You can set another SVG icon here with this option.
-
-#### `unfoldAllIcon`
-
-Type: `string`<br />
-Default value: [Unfold more double rounded icon (SVG)](https://icon-sets.iconify.design/material-symbols/unfold-more-double-rounded/)
-
-This is used on the unfold all button on the header of the TOC. You can set another SVG icon here with this option.
+This option allows you to control the distance the highlighted area should stay from the top and bottom edges of the main TOC UI (the element that by default has the class `.nt-body`) when possible.
 
 ## Customizing color schemes
 
@@ -357,7 +312,8 @@ Changing colors of different parts of the TOC UI is as simple as assigning some 
 You can change colors responsively using media queries. Additionally, you can define different colors for light and dark modes using CSS selectors.
 
 <Admonition type="tip" title="Tip">
-If you want to interactively change these variables and see the result on the page, you can use your browser's developer tools.
+  If you want to interactively change these variables and see the result on the
+  page, you can use your browser's developer tools.
 </Admonition>
 
 For example if you only want the light bar color to orange while keeping rest of your color scheme the same, add the following in a stylesheet that comes after the color scheme stylesheet:
@@ -397,6 +353,7 @@ Of these few variables should be in some specific units or types:
 - `--folding-duration`: It should be of [`<time>`](https://developer.mozilla.org/en-US/docs/Web/CSS/time) type.
 
 The rest of the variables can be of any [`<length>`](https://developer.mozilla.org/en-US/docs/Web/CSS/length) type.
+
 </Admonition>
 
 Of these, `--body-height` is the one you will most likely want to modify. It describes the height of body of the TOC UI that is the area except the header of the TOC UI. The default value of this is `400px`. Suppose you want this height to be something dynamic like `calc(100vh - 5rem)`. Then add the following in a stylesheet that comes after the base stylesheet of your choice:
@@ -408,12 +365,14 @@ Of these, `--body-height` is the one you will most likely want to modify. It des
 ```
 
 <Admonition type="tip" title="Tip">
-If you want to interactively change any of these variables and see the result on the page, you can use your browser's developer tools.
+  If you want to interactively change any of these variables and see the result
+  on the page, you can use your browser's developer tools.
 </Admonition>
 
 <div className="mt-10">
   Found a typo? Other suggestions?<br />
   [<SquarePenIcon className="inline w-4 h-4 mr-1" />Edit this page on Github](https://github.com/ashutoshbw/neotoc/blob/main/apps/www/src/app/docs.mdx)
 
-  Last modified: {lastModified}
+Last modified: {lastModified}
+
 </div>
