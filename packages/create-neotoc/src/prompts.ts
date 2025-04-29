@@ -7,7 +7,7 @@ import {
   drawBorderedBoxInPrompts,
   generateNewDirName,
 } from './utils';
-import { scaffoldPlayground } from './scaffold-playground';
+import { createPlayground } from './create-playground';
 
 export async function startPrompts() {
   p.intro(`Let's create a neotoc playground!`);
@@ -76,16 +76,9 @@ export async function startPrompts() {
     },
   );
   group.name = group.name === undefined ? defaultDirName : group.name.trim();
-  p.log.step(
-    `Scaffolding playground in ${path.join(process.cwd(), group.name)}`,
-  );
+  p.log.step(`Creating playground in ${path.join(process.cwd(), group.name)}`);
   const packageManager = detectPackageManager();
-  await scaffoldPlayground(
-    group.name,
-    group.base,
-    group.colors,
-    packageManager,
-  );
+  await createPlayground(group.name, group.base, group.colors, packageManager);
   drawBorderedBoxInPrompts('Done ✨ Now run', [
     `cd ${group.name}`,
     `${packageManager} install`,

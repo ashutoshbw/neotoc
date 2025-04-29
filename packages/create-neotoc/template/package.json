@@ -14,7 +14,7 @@
     "neotoc": "?"
   },
   "devDependencies": {
-    "vite": "^6.2.1",
+    "vite": "^6.3.3",
     "prettier": "3.5.0",
     "dummy-content": "^1.0.3"
   }

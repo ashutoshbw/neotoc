@@ -24,7 +24,7 @@ const bgColors: {
   },
 };
 
-export async function scaffoldPlayground(
+export async function createPlayground(
   dir: string,
   base: string,
   colors: string,
