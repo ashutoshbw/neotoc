@@ -1,5 +1,18 @@
 # neotoc
 
+## 1.0.0
+
+### Major Changes
+
+- 11d53e9: Made auto scrolling compulsory. Removed all icon options. Only kept fold all and unfold all buttons in the TOC header.
+- cc3a95f: Remove breadcrumb and auto fold features due to high complexity and increasing bundle size.
+
+### Patch Changes
+
+- 0920f36: Fix bug(#15) in auto-scrolling.
+- 2839e41: Append `btnGroup` to `headerDiv` only when needed (fixes #12).
+- 7e5b015: Base plain style is updated. Light bar top and bottom indicators are now only visible when they are on a fold.
+
 ## 0.2.3
 
 ### Patch Changes

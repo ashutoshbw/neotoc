@@ -1,6 +1,6 @@
 {
   "name": "neotoc",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "description": "Ultra-smooth table of contents UI generator for your docs and blogs.",
   "type": "module",
   "types": "./dist/index.d.ts",
