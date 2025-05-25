@@ -27,19 +27,7 @@ export function Header() {
         <span>
           <span className="text-sm opacity-80 tracking-tight">v1.0.1</span>
         </span>
-        <span className="mx-auto hidden sm:inline">
-          <span className="scale-x-[-1] inline-block">🎉</span> Neotoc just got
-          a major upgrade! See{" "}
-          <Link
-            className="text-blue-800 dark:text-blue-400 hover:underline"
-            href="https://github.com/ashutoshbw/neotoc/blob/main/packages/neotoc/CHANGELOG.md#100"
-            target="_blank"
-          >
-            changelog
-          </Link>
-          . 🎉
-        </span>
-        <span className="ml-auto sm:ml-0 flex items-center gap-2">
+        <span className="ml-auto flex items-center gap-2">
           <ThemeToggler />
           <Link href="https://github.com/ashutoshbw/neotoc" target="_blank">
             <GithubIcon />

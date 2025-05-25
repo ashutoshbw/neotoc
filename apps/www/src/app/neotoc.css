@@ -15,4 +15,18 @@
     100vh - var(--site-header-height) - var(--top-breathing-space) -
       var(--bottom-breathing-space)
   ); /* Here these CSS vars are coming from outside. */
+  --light-bar: hsl(5, 87%, 62%);
+
+  .nt-indent-block {
+    transition: opacity 0.15s;
+    opacity: 0;
+  }
+}
+
+.dark .nt-widget {
+  --light-bar: hsl(5, 87%, 62%);
+}
+
+.nt-widget:hover .nt-indent-block {
+  opacity: 1;
 }
