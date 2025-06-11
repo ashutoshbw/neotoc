@@ -1,21 +1,9 @@
-/* Override colors when viewport width is 767px or less */
-@media (max-width: 767px) {
-  .nt-widget {
-    --bg: hsl(240 10% 6.9%);
-  }
-  .light .nt-widget {
-    --bg: hsl(0 0% 97%);
-    --bg-anchor-hover: hsl(240 5.9% 87%);
-    --bg-sub-anchors: hsl(240 4.8% 92%);
-  }
-}
-
 .nt-widget {
   --body-height: calc(
     100vh - var(--site-header-height) - var(--top-breathing-space) -
       var(--bottom-breathing-space)
   ); /* Here these CSS vars are coming from outside. */
-  --light-bar: hsl(5, 87%, 62%);
+  --light-bar: hsl(0, 0%, 39%);
 
   .nt-indent-block {
     transition: opacity 0.15s;
@@ -24,7 +12,7 @@
 }
 
 .dark .nt-widget {
-  --light-bar: hsl(5, 87%, 62%);
+  --light-bar: hsl(0, 0%, 75%);
 }
 
 .nt-widget:hover .nt-indent-block {

@@ -6,7 +6,7 @@ import { SidebarOpenIcon, SidebarCloseIcon } from "lucide-react";
 import DocsMDXContent from "./docs.mdx";
 import neotoc from "neotoc";
 import "neotoc/base-modern.css";
-import "neotoc/colors-monochrome.css";
+import "neotoc/colors-zinc.css";
 import "./neotoc.css";
 
 export default function DocsPage() {
